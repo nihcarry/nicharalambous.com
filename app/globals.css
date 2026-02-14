@@ -1,0 +1,100 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Global styles for nicharalambous.com
+ *
+ * Design tokens and base styles. Tailwind handles utility classes.
+ * Typography plugin provides prose styles for blog/CMS content.
+ */
+
+/* ---------- Custom Theme ---------- */
+
+@theme {
+  /* Brand colors */
+  --color-brand-900: #0f172a;
+  --color-brand-800: #1e293b;
+  --color-brand-700: #334155;
+  --color-brand-600: #475569;
+  --color-brand-500: #64748b;
+  --color-brand-400: #94a3b8;
+  --color-brand-300: #cbd5e1;
+  --color-brand-200: #e2e8f0;
+  --color-brand-100: #f1f5f9;
+  --color-brand-50: #f8fafc;
+
+  /* Accent — used for CTAs, links, highlights */
+  --color-accent-600: #2563eb;
+  --color-accent-500: #3b82f6;
+  --color-accent-400: #60a5fa;
+  --color-accent-100: #dbeafe;
+
+  /* Surface colors */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+
+  /* Text colors */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+
+  /* Spacing scale — consistent vertical rhythm */
+  --spacing-section: 6rem;
+  --spacing-section-sm: 4rem;
+
+  /* Typography scale */
+  --font-family-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-family-heading: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-family-mono: ui-monospace, "SF Mono", "Fira Code", monospace;
+
+  /* Container */
+  --container-max-width-content: 48rem;
+  --container-max-width-wide: 72rem;
+}
+
+/* ---------- Base Styles ---------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-family-sans);
+    color: var(--color-text-primary);
+    background-color: var(--color-surface);
+  }
+
+  /* Heading defaults */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Utility Layers ---------- */
+
+@layer utilities {
+  /* Content container — 48rem max for readability */
+  .container-content {
+    max-width: var(--container-max-width-content);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Wide container — 72rem max for layouts */
+  .container-wide {
+    max-width: var(--container-max-width-wide);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+}
