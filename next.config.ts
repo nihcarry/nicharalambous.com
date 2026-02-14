@@ -1,9 +1,4 @@
 import type { NextConfig } from "next";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 /**
  * Next.js configuration for nicharalambous.com
@@ -23,9 +18,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-
-  // Suppress lockfile warning — project lockfile is the correct one
-  outputFileTracingRoot: __dirname,
 };
 
 export default nextConfig;
