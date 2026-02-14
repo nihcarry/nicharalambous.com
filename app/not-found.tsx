@@ -4,6 +4,7 @@
  * Provides helpful navigation back to key pages.
  * Includes search suggestion and links to main sections.
  */
+import Link from "next/link";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 
@@ -28,21 +29,21 @@ export default function NotFound() {
       <div className="mt-12 text-sm text-brand-400">
         <p>Looking for something specific? Try these:</p>
         <div className="mt-4 flex flex-wrap justify-center gap-4">
-          <a href="/blog" className="text-accent-600 hover:underline">
+          <Link href="/blog" className="text-accent-600 hover:underline">
             Blog
-          </a>
-          <a href="/keynotes" className="text-accent-600 hover:underline">
+          </Link>
+          <Link href="/keynotes" className="text-accent-600 hover:underline">
             Keynotes
-          </a>
-          <a href="/topics" className="text-accent-600 hover:underline">
+          </Link>
+          <Link href="/topics" className="text-accent-600 hover:underline">
             Topics
-          </a>
-          <a href="/about" className="text-accent-600 hover:underline">
+          </Link>
+          <Link href="/about" className="text-accent-600 hover:underline">
             About
-          </a>
-          <a href="/contact" className="text-accent-600 hover:underline">
+          </Link>
+          <Link href="/contact" className="text-accent-600 hover:underline">
             Contact
-          </a>
+          </Link>
         </div>
       </div>
     </Section>

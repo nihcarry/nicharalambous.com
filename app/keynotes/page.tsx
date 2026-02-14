@@ -5,6 +5,7 @@
  * Every keynote card links back to /speaker per internal linking strategy.
  */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 
@@ -71,9 +72,9 @@ export default function KeynotesPage() {
         <p className="mt-4 text-lg text-brand-600">
           Each keynote is grounded in 20+ years of real entrepreneurial
           experience and tailored to your audience.{" "}
-          <a href="/speaker" className="text-accent-600 hover:underline">
+          <Link href="/speaker" className="text-accent-600 hover:underline">
             Learn more about booking Nic &rarr;
-          </a>
+          </Link>
         </p>
       </Section>
 
