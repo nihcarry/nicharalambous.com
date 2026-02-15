@@ -64,9 +64,9 @@ export default async function KeynotesPage() {
             <Link
               key={keynote.slug}
               href={`/keynotes/${keynote.slug}`}
-              className="group flex flex-col gap-6 rounded-xl border border-brand-200 p-8 transition-all hover:border-accent-400 hover:shadow-md md:flex-row md:items-start"
+              className="group flex flex-col gap-6 rounded-xl border border-brand-200 p-8 transition-all hover:border-accent-400 hover:shadow-md"
             >
-              <div className="flex-1">
+              <div>
                 <h2 className="text-2xl font-bold text-brand-900 group-hover:text-accent-600">
                   {keynote.title}
                 </h2>
@@ -90,7 +90,7 @@ export default async function KeynotesPage() {
                   })}
                 </div>
               </div>
-              <div className="shrink-0 space-y-2 text-sm text-brand-500 md:text-right">
+              <div className="space-y-2 border-t border-brand-200 pt-6 text-sm text-brand-500">
                 <p>
                   <span className="font-medium text-brand-700">Format:</span>{" "}
                   {keynote.deliveryFormat === "virtual"

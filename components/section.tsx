@@ -29,7 +29,7 @@ export function Section({
   return (
     <Component
       id={id}
-      className={`py-(--spacing-section-sm) md:py-(--spacing-section) ${widthStyles[width]} ${className}`}
+      className={`py-[var(--spacing-section-sm)] md:py-[var(--spacing-section)] ${widthStyles[width]} ${className}`}
     >
       {children}
     </Component>
