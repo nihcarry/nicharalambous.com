@@ -10,6 +10,7 @@ import { Inter } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { personJsonLd, websiteJsonLd } from "@/lib/metadata";
 import "./globals.css";
 
@@ -55,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="flex min-h-screen flex-col">
+        <GoogleAnalytics />
         {/* Sitewide structured data */}
         <JsonLd data={personJsonLd()} />
         <JsonLd data={websiteJsonLd()} />

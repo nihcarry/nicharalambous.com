@@ -793,6 +793,9 @@ This is a pure verification pass. No new features — only testing and fixing wh
 - [ ] Test forms submit correctly
 - [ ] Test on mobile devices and multiple browsers
 - [ ] Run Lighthouse audit on key pages — target >95 performance
+- [ ] Add runtime HTML sanitization (`isomorphic-dompurify`) to `dangerouslySetInnerHTML` in blog and archive post templates
+- [ ] Add build-time validation for `NEXT_PUBLIC_FORMSPREE_ENDPOINT` — remove placeholder fallback so missing env var fails the build
+- [ ] Add Escape key handler to close mobile navigation drawer in `components/header.tsx`
 
 ### Block 10: Launch
 

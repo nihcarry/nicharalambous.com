@@ -14,6 +14,7 @@ const footerLinks = {
     { href: "/contact", label: "Book Nic" },
   ],
   explore: [
+    { href: "/businesses", label: "Building" },
     { href: "/blog", label: "Blog" },
     { href: "/topics", label: "Topics" },
     { href: "/books", label: "Books" },
@@ -22,7 +23,7 @@ const footerLinks = {
   connect: [
     { href: "/about", label: "About Nic" },
     { href: "/contact", label: "Contact" },
-    { href: "/newsletter", label: "Newsletter" },
+    { href: "https://nichasgottago.substack.com/", label: "Newsletter" },
   ],
 };
 
@@ -106,12 +107,23 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {footerLinks.connect.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-brand-600 transition-colors hover:text-brand-900"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.href.startsWith("http") ? (
+                    <a
+                      href={link.href}
+                      className="text-sm text-brand-600 transition-colors hover:text-brand-900"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.label} &rarr;
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-brand-600 transition-colors hover:text-brand-900"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
               {socialLinks.map((link) => (

@@ -1,15 +1,16 @@
 /**
  * About Page — /about
  *
- * Consolidated bio, businesses/exits timeline, and media logos.
- * Redirects from /meet-nic-haralambous and /businesses land here.
+ * Consolidated bio, key facts, business highlights, and media logos.
+ * Full businesses history lives at /businesses.
  *
  * Sections:
  * 1. Hero with bio
- * 2. Businesses/exits timeline (CMS-driven)
- * 3. Key facts / numbers
+ * 2. Key facts / numbers
+ * 3. Business highlights (top entries + link to /businesses)
  * 4. Media logos
- * 5. CTA → /speaker
+ * 5. Books teaser
+ * 6. CTA → /speaker
  *
  * JSON-LD: AboutPage + Person (sitewide)
  */
@@ -106,13 +107,19 @@ export default async function AboutPage() {
         </div>
       </Section>
 
-      {/* Businesses / exits timeline */}
+      {/* Business highlights — full list at /businesses */}
       <Section width="content">
         <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
           Businesses &amp; Exits
         </h2>
+        <p className="mt-2 text-base text-brand-500">
+          20+ ventures across two decades.{" "}
+          <Link href="/businesses" className="text-accent-600 hover:underline">
+            View the full list &rarr;
+          </Link>
+        </p>
         <div className="mt-10 space-y-0">
-          {displayBusinesses.map((biz, i) => (
+          {displayBusinesses.slice(0, 5).map((biz, i) => (
             <div
               key={biz._id || `biz-${i}`}
               className="relative border-l-2 border-brand-200 py-6 pl-8 last:pb-0"
@@ -167,6 +174,11 @@ export default async function AboutPage() {
               )}
             </div>
           ))}
+        </div>
+        <div className="mt-8 text-center">
+          <CTAButton href="/businesses" variant="secondary">
+            View All Businesses
+          </CTAButton>
         </div>
       </Section>
 

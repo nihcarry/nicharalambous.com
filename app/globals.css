@@ -52,6 +52,13 @@
   /* Container */
   --container-max-width-content: 48rem;
   --container-max-width-wide: 72rem;
+
+  /* Nav bar — Zoom-style dark bar */
+  --color-nav-bg: #232323;
+  --color-nav-text: #f1f5f9;
+  --color-nav-green: #00dc82;
+  --color-nav-blue: #0d6efd;
+  --color-nav-red: #dc3545;
 }
 
 /* ---------- Base Styles ---------- */
