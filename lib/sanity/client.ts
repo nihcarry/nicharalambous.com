@@ -28,7 +28,7 @@ export const apiVersion =
  * module tree.
  */
 export const client = {
-  async fetch<T>(query: string, params?: Record<string, string>): Promise<T> {
+  async fetch<T>(query: string, params?: Record<string, string | string[]>): Promise<T> {
     const searchParams = new URLSearchParams({ query });
     if (params) {
       for (const [key, value] of Object.entries(params)) {

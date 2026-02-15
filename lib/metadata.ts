@@ -156,3 +156,78 @@ export function serviceJsonLd({
     areaServed: "Worldwide",
   };
 }
+
+/** Book schema for /books/[slug] pages */
+export function bookJsonLd({
+  title,
+  description,
+  url,
+  isbn,
+  image,
+  publishedYear,
+}: {
+  title: string;
+  description: string;
+  url: string;
+  isbn?: string;
+  image?: string;
+  publishedYear?: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: title,
+    description,
+    url,
+    author: personJsonLd(),
+    ...(isbn && { isbn }),
+    ...(image && { image }),
+    ...(publishedYear && { datePublished: String(publishedYear) }),
+  };
+}
+
+/** CollectionPage schema for listing pages (books, media, topics) */
+export function collectionPageJsonLd({
+  name,
+  description,
+  url,
+}: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url,
+    author: personJsonLd(),
+  };
+}
+
+/** ContactPage schema for /contact */
+export function contactPageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact Nic Haralambous",
+    description:
+      "Book Nic Haralambous for your next virtual keynote. Enquire about speaking engagements, conferences, and corporate events.",
+    url: `${SITE_URL}/contact`,
+    mainEntity: personJsonLd(),
+  };
+}
+
+/** AboutPage schema for /about */
+export function aboutPageJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About Nic Haralambous",
+    description:
+      "Entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+    url: `${SITE_URL}/about`,
+    mainEntity: personJsonLd(),
+  };
+}

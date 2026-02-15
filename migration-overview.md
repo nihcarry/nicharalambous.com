@@ -20,7 +20,7 @@ Migrating nicharalambous.com from Squarespace to a custom-built, statically-expo
 | **4. Money Pages** | Core conversion pages | `/speaker` (the primary money page) and `/keynotes/*` — full content, testimonials, structured data, CTAs. These are the pages that generate bookings. |
 | **5. Supporting Pages** | Everything else | Homepage, `/about`, `/books`, `/media`, `/contact` (booking form), `/topics` (7 topic hub pages). Can run in parallel with Block 4. |
 | **6. Blog System** | Templates & features | Blog listing with pagination, individual post template, archive template for legacy posts, RSS feed, topic filtering, related posts. Can run in parallel with Blocks 4–5. |
-| **7. Core Blog Migration** | Content migration | Export from Squarespace, parse XML, triage posts into top 30–50 (optimize) vs. everything else (archive for later). Migrate images, convert HTML to Portable Text, resolve slug collisions, import to Sanity, build redirect map. |
+| **7. Core Blog Migration** | Content migration | Parse Medium + Substack HTML from `Legacy Content/`, import as-is (no edits) to Sanity as published posts. Resolve slug collisions. Squarespace XML is deferred to Block 11 (archive). |
 | **8. SEO & Launch Prep** | Verification | Deploy redirects, `llms.txt`, `robots.txt`, sitemaps. Audit internal links, meta tags, structured data. Set up Search Console + GA4. Full crawl for broken links. Lighthouse audits (target >95). Mobile/browser testing. |
 | **9. Launch** | Go live | Switch DNS from Squarespace to CloudFront. Submit sitemaps. Request indexing for key pages. Keep Squarespace active (redirecting) for 30 days as a safety net. |
 
@@ -28,7 +28,7 @@ Migrating nicharalambous.com from Squarespace to a custom-built, statically-expo
 
 | Block | What | Summary |
 |-------|------|---------|
-| **10. Archive Import** | Remaining content | Import all remaining blog posts as `archived` with raw HTML. AI categorizes by topic cluster. Update redirects to point to `/archive/{slug}` instead of catch-all. |
+| **10. Archive Import** | Squarespace content | Parse `Legacy Content/Squarespace-Wordpress-Export-*.xml`, import all posts as `archived` with raw HTML. AI categorizes by topic cluster. Update redirects to point to `/archive/{slug}` instead of catch-all. |
 | **11. AI Content Pipeline** | Ongoing optimization | AI agent optimizes archive posts (calibration batch of 20–30 first, then scale), generates new posts from keynote transcripts and books, targets keyword gaps. You review every draft before publish. This never "finishes." |
 
 ---
@@ -43,7 +43,7 @@ Each block has a clear "done when" condition. These are the critical gates:
 | **Scaffold complete** | Site has working layout, navigation, and auto-deploys on push. |
 | **CMS complete** | All schemas defined, content flows from Sanity to Next.js, webhook triggers rebuild. |
 | **Money pages complete** | `/speaker` and `/keynotes/*` render with real content; structured data validates. |
-| **Blog migration complete** | Top 30–50 posts live in Sanity as published. Redirect map covers ALL old URLs. |
+| **Blog migration complete** | All Medium + Substack articles live in Sanity as published. Redirect map covers Squarespace old URLs (catch-all until archive imported). |
 | **Launch-ready** | Redirects work, sitemaps correct, full crawl shows no broken links, Lighthouse >95, forms work, mobile tested. |
 | **Launch** | DNS switched, Search Console receiving data, Squarespace still active as fallback. |
 | **Squarespace cancellation** | 30 days of stable post-launch operation. |
@@ -62,7 +62,7 @@ Each block has a clear "done when" condition. These are the critical gates:
 - **Comprehensive redirects.** Pattern-based rule handles `/blog/YYYY/MM/DD/slug` → `/blog/slug` or `/archive/slug`. Exact-match map handles page-level redirects. Every old URL is accounted for.
 - **Slug collision resolution.** When flattening 17 years of date-based URLs, the post with more traffic/backlinks keeps the clean slug; the other gets `{slug}-{yyyy}`.
 - **30-day Squarespace overlap.** Squarespace stays active and redirecting for 30 days post-launch as a safety net against ranking loss.
-- **Content triage is binary.** Top 30–50 posts get full optimization and launch at `/blog/{slug}`. Everything else goes to `/archive/{slug}` — nothing is deleted or 404'd without deliberate decision. 410 (Gone) is reserved only for actively harmful content.
+- **Launch blog = Medium + Substack.** Articles from `Legacy Content/` are imported as-is at `/blog/{slug}`. Squarespace content goes to `/archive/{slug}` post-launch (Block 10) — nothing is deleted or 404'd without deliberate decision. 410 (Gone) is reserved only for actively harmful content.
 
 ### Technical
 - **Static-only architecture.** No server runtime. Every page is pre-built HTML served from CloudFront edge. This guarantees performance (LCP <2s, Lighthouse >95) and keeps costs at $4–9/month.

@@ -1,7 +1,7 @@
 # nicharalambous.com — Build & Launch Plan (v2)
 
-**Status:** In progress — Blocks 1-4 complete. Money pages live with CMS content, JSON-LD, internal links.
-**Overall Progress:** 33% (4/12 blocks)
+**Status:** In progress — Blocks 1-6 complete. Blog system fully built: listing with pagination + topic filtering, post template (Portable Text + raw HTML), archive template, FAQ component, Related Posts, Contextual CTA, Article + FAQPage JSON-LD, RSS feed. Ready for content import (Block 7).
+**Overall Progress:** 50% (6/12 blocks)
 **Last Updated:** 2026-02-15
 
 ---
@@ -274,12 +274,35 @@ The agent has access to:
 
 ## Part 5: Migration Strategy
 
-### Export & Inventory
+### Content Priority for Launch
 
-1. Export from Squarespace (WordPress XML format): Settings → Advanced → Import/Export
-2. Build Node.js parser script: XML → structured JSON with title, slug, publish date, HTML body, featured image URL, categories/tags, original URL
-3. Generate inventory CSV: `id, title, slug, publishedAt, oldUrl, newUrl, hasImages, hasEmbeds, wordCount, topicCluster, qualityScore`
-4. AI agent categorizes each post by topic cluster and scores content quality
+Blog content is sourced from two locations in `Legacy Content/`:
+
+| Source | Location | Launch Action | Rationale |
+|---|---|---|---|
+| **Medium articles** | `Legacy Content/Medium Articles/*.html` | Import as published posts at `/blog/{slug}` | Most recent, relevant, up-to-date, contextual for SEO targets |
+| **Substack articles** | `Legacy Content/Substack Articles/*.html` | Import as published posts at `/blog/{slug}` | Same as Medium — recent, relevant, SEO-aligned |
+| **Squarespace/WordPress export** | `Legacy Content/Squarespace-Wordpress-Export-*.xml` | **Archive only** (Block 11) — not launch-blocking | 17 years of legacy content; triage and optimize post-launch |
+
+**Launch approach:** Medium and Substack articles are uploaded **as-is with no changes** before go-live. No AI optimization, no content edits. They form the starting point for the blog. Squarespace content is deferred to the archive for later pickup.
+
+### Launch Content: Medium & Substack Inventory
+
+1. Parse HTML files from `Legacy Content/Medium Articles/` and `Legacy Content/Substack Articles/`
+2. Extract: title, slug, publish date, HTML body, original URL (Medium/Substack canonical)
+3. Generate inventory: `id, title, slug, publishedAt, sourceUrl, source (medium|substack), hasImages, wordCount`
+4. Resolve any slug collisions across both sources (prefer more recent; use `-{yyyy}` suffix when needed)
+
+**File naming conventions:**
+- Medium: `YYYY-MM-DD_Title-slug-{id}.html` — date and title are parseable
+- Substack: `{id}.{slug}.html` — ID + slug in filename
+
+### Archive Content: Squarespace Export (post-launch)
+
+1. Parse `Legacy Content/Squarespace-Wordpress-Export-*.xml` (WordPress XML format)
+2. Build inventory CSV: `id, title, slug, publishedAt, oldUrl, newUrl, hasImages, hasEmbeds, wordCount, topicCluster, qualityScore`
+3. All Squarespace posts import to Sanity as `contentStatus: "archived"` at `/archive/{slug}` (Block 11)
+4. AI agent categorizes and optimizes archive posts post-launch (Block 12)
 
 **Squarespace export limitations:**
 - Images are URLs only (not included in export) — need separate scraping
@@ -288,52 +311,44 @@ The agent has access to:
 
 ### Content Triage (simplified)
 
-Two tiers, not four:
-
-| Tier | Criteria | Action |
+| Tier | Source | Action |
 |---|---|---|
-| **Optimize** (top 30-50) | Has measurable search traffic, strong backlinks, or high-quality evergreen content | Full Portable Text conversion, image migration, AI optimization, published at `/blog/{slug}` |
-| **Archive** (everything else) | Low/no traffic, dated, or thin content | Raw HTML in basic template at `/archive/{slug}`, enters AI optimization queue |
-
-Use Search Console click data + backlink data to identify the top tier. The decision is binary: optimize now, or archive for later.
+| **Launch blog** | Medium + Substack from Legacy Content | Import as-is, no edits. Published at `/blog/{slug}`. Raw HTML or basic Portable Text. |
+| **Archive** | Squarespace WordPress XML | Import as `archived` at `/archive/{slug}`. Enters AI optimization queue post-launch. |
 
 **Default for genuinely toxic/embarrassing content:** 301 redirect to nearest relevant page. Reserve 410 (Gone) only for content that would actively harm the site's reputation. The bar for 410 is high.
 
 ### Image Migration
 
-Only for top-tier posts at launch:
-1. Scrape image URLs from top-tier post HTML
-2. Download images locally
-3. Optimize (resize, compress, WebP)
-4. Upload to Sanity asset pipeline (CDN + on-the-fly transforms)
-5. Update image references in Portable Text content
+**Launch (Medium/Substack):** Medium and Substack HTML may contain embedded image URLs. Options: (a) preserve original URLs as-is in the imported HTML, or (b) scrape, download, optimize, and upload to Sanity for posts with images. Decision: keep as-is at launch for speed; images can be migrated later if needed.
 
-Archive posts keep their original Squarespace image URLs until they're promoted to `/blog/`.
+**Archive (Squarespace):** Archive posts keep their original Squarespace image URLs until they're promoted to `/blog/`.
 
 ### HTML → Portable Text Conversion
 
-For top-tier posts only. Build a converter script that:
-1. Takes HTML content
-2. Converts to Portable Text using `@sanity/block-tools` or `html-to-portable-text`
-3. Handles: YouTube/Vimeo embeds → `videoEmbed` block, code blocks → `codeBlock`, pull quotes → `pullQuote`, image galleries → `gallery`
-4. Outputs Sanity-compatible document JSON
+**Launch (Medium/Substack):** Import as-is. Store HTML in `rawHtmlBody` and render in blog template (same approach as archive). No Portable Text conversion at launch — content displays with minimal processing.
+
+**Archive promotion (future):** When promoting archive posts to `/blog/`, use full HTML → Portable Text converter: embeds → `videoEmbed`, code blocks → `codeBlock`, pull quotes → `pullQuote`, galleries → `gallery`. Built in Block 12 tooling.
 
 ### Slug Collision Resolution
 
-When flattening URLs from `/blog/YYYY/MM/DD/slug` to `/blog/slug`, collisions are possible across 17 years.
-
-Resolution:
-1. During inventory parsing, flag any duplicate slugs
-2. The post with more search traffic or backlinks keeps `/blog/{slug}`
+When combining Medium + Substack articles, slug collisions are possible. Resolution:
+1. During inventory parsing, flag any duplicate slugs across both sources
+2. The more recent post keeps `/blog/{slug}`
 3. The other gets `/blog/{slug}-{yyyy}` using its publish year
-4. Redirect map accounts for both resolved URLs
+4. Redirect map (for Medium/Substack canonical URLs) accounts for both resolved URLs
+
+Squarespace slug collisions are resolved in Block 11 when the archive is imported.
 
 ### Import to Sanity
 
-1. Top-tier posts: import as Portable Text documents with `contentStatus: "published"`
-2. Archive posts: import with raw HTML body and `contentStatus: "archived"`
-3. All posts: preserve `publishedAt` dates, `originalUrl`, `rawHtmlBody`
-4. Import to `staging` dataset first, verify, then promote to `production`
+**Launch:**
+1. Medium + Substack: import with `rawHtmlBody`, `contentStatus: "published"`, preserve `publishedAt`, `originalUrl` (Medium/Substack canonical)
+2. Import to `staging` dataset first, verify, then promote to `production`
+
+**Post-launch (Block 11):**
+3. Squarespace archive: import with `rawHtmlBody` and `contentStatus: "archived"`
+4. Preserve `publishedAt`, `originalUrl`, `rawHtmlBody` for all archive posts
 
 ---
 
@@ -602,80 +617,117 @@ Work is ordered by dependency. Each block depends on the one before it (with som
    - Dataset: `production`
    - Status: Enabled
 
-### Block 5: Supporting Pages
+### Block 5: Supporting Pages 🟩
 
 **Depends on:** Block 3 (CMS schemas exist). Can run in parallel with Block 4.
 **Done when:** All supporting pages render with real content.
 
-- [ ] Build homepage (hero + featured keynotes + recent posts + social proof)
-- [ ] Build `/about` page (bio, businesses/exits timeline, media logos)
-- [ ] Build `/books` listing and `/books/[slug]` pages
-- [ ] Build `/media` page (press, podcasts, videos)
-- [ ] Build `/contact` page with booking form (Formspree/Formspark)
-- [ ] Build `/topics` listing and `/topics/[slug]` hub pages
-- [ ] Create content for all supporting pages in Sanity (including 7 topic hub pages)
-- [ ] Implement JSON-LD for all page types
-- [ ] Verify: all pages render, all internal links work, all structured data validates
+- [x] Build homepage (hero + featured keynotes + recent posts + social proof) — CMS-driven with hardcoded fallbacks, shows recent posts when available
+- [x] Build `/about` page (bio, businesses/exits timeline, media logos) — timeline with exit badges, key facts, media logos, book teasers
+- [x] Build `/books` listing and `/books/[slug]` pages — cover images, buy links, Portable Text descriptions, Book JSON-LD
+- [x] Build `/media` page (press, podcasts, videos) — grouped by type (podcast/video/press/broadcast), media outlet logos
+- [x] Build `/contact` page with booking form (Formspree) — 10-field structured inquiry form, client component with server metadata wrapper
+- [x] Build `/topics` listing and `/topics/[slug]` hub pages — 7 topic hubs with definition, why it matters, related keynotes, featured posts, cross-topic navigation
+- [ ] Create content for all supporting pages in Sanity (including 7 topic hub pages) — *deferred: pages work with hardcoded fallbacks, CMS content can be added anytime*
+- [x] Implement JSON-LD for all page types — AboutPage, Book, CollectionPage, ContactPage added to `lib/metadata.ts`
+- [x] Verify: all pages render (24 static pages), `npm run build` passes, sitemap generates, no linter errors
 
-### Block 6: Blog System
+**Architecture notes (2026-02-15):**
+- All pages follow the established pattern: async server component → GROQ query → CMS data || hardcoded fallback
+- Contact form split into server page (metadata export) + client component (`contact-form.tsx`) for form interactivity
+- GROQ queries added: homepage (featured keynotes, recent posts, testimonials), about (businesses, site settings), books (list + by slug), media appearances, topic hubs (list + by slug + posts by topic)
+- TypeScript interfaces for all new query shapes in `lib/sanity/queries.ts`
+- New JSON-LD helpers: `bookJsonLd()`, `collectionPageJsonLd()`, `contactPageJsonLd()`, `aboutPageJsonLd()`
+- Formspree endpoint configurable via `NEXT_PUBLIC_FORMSPREE_ENDPOINT` env var
+- Topic hub pages include cross-topic navigation and "Explore as a keynote" sections linking to /speaker
+
+**Build verification (2026-02-15):**
+- `next build` compiles successfully in 5.4s
+- Static export generates 24 pages including all new routes
+- All dynamic pages generate via `generateStaticParams`: 2 book slugs, 7 topic slugs
+- First Load JS: 106KB (pages), 104KB (contact form), 1.61MB (studio)
+- Sitemap generated: `sitemap-0.xml` with all new routes
+- No TypeScript errors, no linter errors
+
+### Block 6: Blog System 🟩
 
 **Depends on:** Block 3 (post schema exists). Can run in parallel with Blocks 4-5.
-**Done when:** Blog listing, individual posts, and archive template all render. RSS works.
+**Done when:** Blog listing, individual posts, and archive template all render. RSS works. Blog template supports both Portable Text (`body`) and raw HTML (`rawHtmlBody`) for as-is Medium/Substack imports.
 
-- [ ] Build `/blog` listing page with pagination
-- [ ] Build `/blog/[slug]` post template (TL;DR, body, key takeaways, FAQ section, related topic hub link, related keynote link, CTA)
-- [ ] Build FAQ component (renders 5 Q&A pairs with `FAQPage` JSON-LD)
-- [ ] Build `/archive/[slug]` template (basic rendering of raw HTML, "From the archive" banner, link to `/blog`)
-- [ ] Implement topic filtering on blog listing
-- [ ] Add "Related posts" component (same topic hub)
-- [ ] Add contextual CTA component (links to relevant keynote)
-- [ ] Implement `Article` + `FAQPage` JSON-LD on blog posts
-- [ ] Generate RSS feed (`/rss.xml`)
-- [ ] Verify: create test posts in Sanity, confirm rendering, pagination, RSS, archive template
+- [x] Build `/blog` listing page with pagination — client-side pagination (12 posts/page) with `BlogList` component
+- [x] Build `/blog/[slug]` post template — supports `body` (Portable Text) and `rawHtmlBody` (for as-is imports). Includes: TL;DR, body, FAQ section, topic hub links, related posts, contextual CTA
+- [x] Build FAQ component (`FaqSection`) — expand/collapse Q&A pairs, used on blog posts and any page with FAQ content
+- [x] Build `/archive/[slug]` template — basic rendering of raw HTML, "From the archive" banner, link to `/blog`, `noIndex` metadata
+- [x] Implement topic filtering on blog listing — topic filter chips in `BlogList` component, client-side filtering
+- [x] Add "Related posts" component (`RelatedPosts`) — displays up to 3 posts from same topic hub, excludes current post
+- [x] Add contextual CTA component (`ContextualCta`) — links to related keynote when set, falls back to generic /speaker CTA
+- [x] Implement `Article` + `FAQPage` JSON-LD on blog posts — `articleJsonLd()` always present, `faqJsonLd()` when FAQs exist
+- [x] Generate RSS feed (`/rss.xml`) — route handler with `force-static`, RSS 2.0, latest 50 posts, Atom self-link
+- [x] Verify: `npm run build` passes, 28 static pages generated (25 HTML + RSS + sitemaps), all routes compile
 
-### Block 7a: Export & Inventory (launch-blocking)
+**Architecture notes (2026-02-15):**
+- Blog listing uses a server/client split: server component fetches all posts from Sanity, passes to `BlogList` client component for interactive pagination and topic filtering. All data embedded in static HTML.
+- Blog post template supports dual rendering: Portable Text (`body`) for new/optimized posts, raw HTML (`rawHtmlBody`) for as-is Medium/Substack imports. Falls back to `descriptionText` array for placeholder posts.
+- GROQ queries added: blog listing (all published), blog post by slug (full data), blog post slugs (for generateStaticParams), related posts (same topic, excluding current), archive post by slug, archive slugs, blog topic filters, RSS feed posts
+- TypeScript interfaces: `BlogPostListItem`, `BlogPostData`, `ArchivePostData`, `RelatedPostItem`, `RssFeedPost`
+- New components: `FaqSection` (client, expand/collapse), `BlogList` (client, pagination + filtering), `RelatedPosts` (server), `ContextualCta` (server)
+- RSS feed generated at `/rss.xml` via Next.js route handler with `dynamic = "force-static"` for static export compatibility
+- Added `accent-50` and `accent-800` to Tailwind theme tokens for blog UI elements
+- RSS feed discoverable via `<link>` tag in root layout (`alternates.types`)
+- `lib/sanity/client.ts` param type widened to `Record<string, string | string[]>` to support GROQ array params (related posts query)
+
+**Next.js static export note:**
+- `generateStaticParams()` must return at least one entry with `output: "export"` — returning an empty array triggers a misleading "missing generateStaticParams" build error (Next.js 15.5.12). All dynamic routes use `FALLBACK_SLUGS` to ensure non-empty arrays, matching the pattern established in Blocks 4-5.
+
+**Build verification (2026-02-15):**
+- `next build` compiles successfully in ~7s
+- Static export generates 28 pages including all new blog routes
+- Dynamic pages: `/blog/placeholder`, `/archive/placeholder` (from fallback slugs, replaced by real slugs when Sanity has content)
+- RSS feed: valid XML at `/rss.xml` with proper escaping and Atom self-link
+- First Load JS: 106KB (blog post), 107KB (blog listing with client component), 106KB (archive)
+- Sitemap generated: all new routes included in `sitemap-0.xml`
+- No TypeScript errors, no linter errors
+
+### Block 7a: Medium & Substack Inventory (launch-blocking)
 
 **Depends on:** Block 6 (blog template exists).
-**Done when:** You have structured JSON for every Squarespace post and a triage CSV that categorizes each post as "optimize" or "archive."
+**Done when:** You have structured JSON for every Medium and Substack article in `Legacy Content/` and a complete inventory CSV.
 
-This is the first of three migration sub-blocks. The full archive import happens post-launch (Block 12).
+Launch blog content comes from Medium + Substack only. Squarespace XML is deferred to Block 11 (archive).
 
-- [ ] Export content from Squarespace (WordPress XML format)
-- [ ] Build parser script: XML → structured JSON inventory
-- [ ] Generate inventory CSV: `id, title, slug, publishedAt, oldUrl, newUrl, hasImages, hasEmbeds, wordCount, topicCluster, qualityScore`
-- [ ] Identify top 30-50 posts using Search Console data + content quality
-- [ ] Flag any duplicate slugs in the inventory (from URL flattening)
-- [ ] Verify: inventory CSV is complete and every post in the Squarespace export is accounted for
+- [ ] Build parser script: Medium HTML (`Legacy Content/Medium Articles/*.html`) → structured JSON (title, slug, publishedAt, body HTML, originalUrl)
+- [ ] Build parser script: Substack HTML (`Legacy Content/Substack Articles/*.html`) → structured JSON (title, slug, publishedAt, body HTML, originalUrl)
+- [ ] Generate combined inventory CSV: `id, title, slug, publishedAt, source (medium|substack), sourceUrl, newUrl, hasImages, wordCount`
+- [ ] Flag any duplicate slugs across Medium + Substack; resolve with `-{yyyy}` suffix for older post
+- [ ] Verify: inventory CSV is complete and every article in both folders is accounted for
 
-### Block 7b: Conversion Tooling (launch-blocking)
+**Note:** Squarespace export (`Legacy Content/Squarespace-Wordpress-Export-*.xml`) is not parsed in this block. It is inventoried in Block 11 when the archive is imported.
 
-**Depends on:** Block 7a (inventory exists, top-tier posts identified).
-**Done when:** The image scraper, HTML → Portable Text converter, and Sanity importer all work correctly on a sample of 5 posts.
+### Block 7b: Import Tooling (launch-blocking)
 
-Build and validate all migration tooling before running the full batch.
+**Depends on:** Block 7a (Medium + Substack inventory exists).
+**Done when:** The Sanity importer works correctly on a sample of 5 articles (mix of Medium + Substack). Content imports as-is with no conversion.
 
-- [ ] Build image scraper: download images for top-tier posts from Squarespace CDN
-- [ ] Build HTML → Portable Text converter script (handle: embeds, code blocks, galleries, pull quotes)
-- [ ] Build Sanity import script (creates documents with correct schema, preserves dates, sets `contentStatus`)
-- [ ] **Sample run:** Pick 5 posts spanning different content types (one with embeds, one with images, one with code blocks, etc.)
-- [ ] Run image scraper → upload to Sanity asset pipeline on sample posts
-- [ ] Run HTML → Portable Text conversion on sample posts
-- [ ] Import sample posts to Sanity `staging` dataset
-- [ ] Verify: sample posts render correctly in Next.js — check formatting, images, embeds, links, metadata
-- [ ] Fix any conversion or import issues before proceeding
+Medium and Substack articles are imported with raw HTML body — no Portable Text conversion, no image migration at launch.
 
-### Block 7c: Full Migration Run (launch-blocking)
+- [ ] Build Sanity import script: creates `post` documents with `rawHtmlBody`, `contentStatus: "published"`, preserves `publishedAt`, `originalUrl`, extracts title and slug from inventory
+- [ ] Ensure blog template supports rendering `rawHtmlBody` when `body` (Portable Text) is empty
+- [ ] **Sample run:** Pick 5 articles spanning Medium + Substack (variety of content: images, links, lists)
+- [ ] Import sample articles to Sanity `staging` dataset
+- [ ] Verify: sample posts render correctly in Next.js — check formatting, images, links, metadata
+- [ ] Fix any import or rendering issues before proceeding
 
-**Depends on:** Block 7b (tooling validated on sample posts).
-**Done when:** Top 30-50 posts are in Sanity as published blog posts. Redirect map covers ALL old URLs (pointing either to `/blog/{slug}` for migrated posts or to a catch-all for everything else).
+### Block 7c: Full Medium & Substack Import (launch-blocking)
 
-- [ ] Run image scraper and upload for all top-tier posts
-- [ ] Run HTML → Portable Text conversion on all top-tier posts
-- [ ] Resolve any slug collisions (higher-value post keeps `/blog/{slug}`, other gets `/blog/{slug}-{yyyy}`)
-- [ ] Import all top-tier posts to Sanity as `contentStatus: "published"`
-- [ ] Spot-check all migrated posts for formatting, images, embeds
-- [ ] Fix conversion issues, re-import as needed
-- [ ] Generate redirect map: old URL → new `/blog/{slug}` for migrated posts, old URL → catch-all (e.g. `/blog`) for everything else until archive is imported
+**Depends on:** Block 7b (import tooling validated on sample articles).
+**Done when:** All Medium and Substack articles are in Sanity as published blog posts. Redirect map covers Medium/Substack canonical URLs.
+
+- [ ] Resolve any slug collisions (more recent post keeps `/blog/{slug}`, other gets `/blog/{slug}-{yyyy}`)
+- [ ] Import all Medium articles to Sanity as `contentStatus: "published"` with `rawHtmlBody`
+- [ ] Import all Substack articles to Sanity as `contentStatus: "published"` with `rawHtmlBody`
+- [ ] Spot-check migrated posts for formatting, images, links
+- [ ] Fix import issues, re-import as needed
+- [ ] Generate redirect map: Squarespace old URLs → catch-all (e.g. `/blog`) until Block 11 archive import. (Medium/Substack content is net-new on this domain; no legacy URL redirects needed for those.)
 
 ### Block 8: Launch Features
 
@@ -713,7 +765,7 @@ This is a pure verification pass. No new features — only testing and fixing wh
 **Depends on:** Block 9 (everything verified).
 **Done when:** DNS points to CloudFront, site is live, Search Console is receiving data.
 
-The site launches with: all main pages, core blog posts, topic hubs, keynote pages, redirects, and analytics. No archive yet.
+The site launches with: all main pages, Medium + Substack blog posts (imported as-is), topic hubs, keynote pages, redirects, and analytics. Squarespace archive is not imported yet — that happens in Block 11.
 
 - [ ] Final content review in Sanity production
 - [ ] Switch DNS from Squarespace to CloudFront
@@ -730,15 +782,20 @@ Everything below happens after the site is live. None of it blocks launch.
 
 ---
 
-### Block 11: Archive Import (post-launch)
+### Block 11: Squarespace Archive Import (post-launch)
 
 **Depends on:** Block 10 (site is live, redirects are working).
-**Done when:** All remaining blog posts are in Sanity as `archived`, `/archive/{slug}` pages render, redirects updated to point to archive URLs instead of catch-all.
+**Done when:** All Squarespace/WordPress export content is in Sanity as `archived`, `/archive/{slug}` pages render, redirects updated to point to archive URLs instead of catch-all.
 
-- [ ] Import all remaining posts to Sanity as `contentStatus: "archived"` with `rawHtmlBody`
+This block processes the full Squarespace WordPress XML in `Legacy Content/`. All of it goes to archive — no launch triage.
+
+- [ ] Build parser: `Legacy Content/Squarespace-Wordpress-Export-*.xml` → structured JSON inventory
+- [ ] Generate inventory CSV: `id, title, slug, publishedAt, oldUrl, newUrl, hasImages, hasEmbeds, wordCount`
+- [ ] Import all Squarespace posts to Sanity as `contentStatus: "archived"` with `rawHtmlBody`
+- [ ] Flag and resolve duplicate slugs (higher-value or more recent keeps `/archive/{slug}`, other gets `/archive/{slug}-{yyyy}`)
 - [ ] AI agent categorizes each archive post by topic cluster and scores quality
 - [ ] Verify `/archive/{slug}` pages render correctly
-- [ ] Update redirect map: old URLs now point to `/archive/{slug}` instead of catch-all
+- [ ] Update redirect map: Squarespace old URLs now point to `/archive/{slug}` instead of catch-all
 - [ ] Deploy updated CloudFront Function with new redirect destinations
 
 ### Block 12: AI Content Pipeline (post-launch)
