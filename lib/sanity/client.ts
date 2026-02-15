@@ -37,7 +37,8 @@ export const client = {
     }
 
     const url = `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?${searchParams.toString()}`;
-    const response = await fetch(url, { cache: "no-store" });
+
+    const response = await fetch(url, { cache: "force-cache" });
 
     if (!response.ok) {
       throw new Error(`Sanity fetch failed: ${response.status}`);

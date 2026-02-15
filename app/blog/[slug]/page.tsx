@@ -242,7 +242,33 @@ export default async function BlogPostPage({
           <PortableText value={post.body} className="mt-8" />
         ) : hasRawHtmlBody ? (
           <div
-            className="mt-8 [&>p]:mt-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700 [&>h2]:mt-10 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900 [&>h3]:mt-8 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900 [&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700 [&>ol]:mt-4 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700 [&>blockquote]:mt-6 [&>blockquote]:border-l-4 [&>blockquote]:border-accent-400 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-brand-600 [&>img]:my-6 [&>img]:w-full [&>img]:rounded-lg [&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500"
+            className={[
+              "prose-imported mt-8",
+              /* Paragraphs */
+              "[&>p]:mt-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700",
+              /* Headings */
+              "[&>h2]:mt-10 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900",
+              "[&>h3]:mt-8 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900",
+              "[&>h4]:mt-6 [&>h4]:text-lg [&>h4]:font-semibold [&>h4]:text-brand-800",
+              /* Lists */
+              "[&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700",
+              "[&>ol]:mt-4 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700",
+              "[&_li]:text-base [&_li]:leading-relaxed",
+              /* Blockquotes */
+              "[&>blockquote]:mt-6 [&>blockquote]:border-l-4 [&>blockquote]:border-accent-400 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-brand-600",
+              /* Images — standalone and inside figures */
+              "[&>img]:my-6 [&>img]:w-full [&>img]:rounded-lg",
+              "[&>figure]:my-6 [&_figure_img]:w-full [&_figure_img]:rounded-lg",
+              "[&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:italic [&_figcaption]:text-brand-500",
+              /* Horizontal rules */
+              "[&>hr]:my-8 [&>hr]:border-brand-200",
+              /* Iframes (embedded video etc.) */
+              "[&>iframe]:my-6 [&>iframe]:aspect-video [&>iframe]:w-full [&>iframe]:rounded-lg",
+              /* Links (any depth) */
+              "[&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500",
+              /* Strikethrough */
+              "[&_s]:text-brand-400",
+            ].join(" ")}
             dangerouslySetInnerHTML={{ __html: post.rawHtmlBody! }}
           />
         ) : (

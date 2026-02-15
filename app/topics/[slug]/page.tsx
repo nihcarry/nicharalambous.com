@@ -19,7 +19,9 @@ import { client } from "@/lib/sanity/client";
 import {
   topicHubBySlugQuery,
   topicHubSlugListQuery,
+  postsByTopicQuery,
   type TopicHubData,
+  type TopicHubPost,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
@@ -37,6 +39,17 @@ async function getTopicHub(slug: string): Promise<TopicHubData | null> {
     return data;
   } catch {
     return null;
+  }
+}
+
+async function getPostsByTopic(topicId: string): Promise<TopicHubPost[]> {
+  try {
+    const data = await client.fetch<TopicHubPost[]>(postsByTopicQuery, {
+      topicId,
+    });
+    return data || [];
+  } catch {
+    return [];
   }
 }
 
@@ -99,6 +112,11 @@ export default async function TopicHubPage({
   if (!topic) {
     notFound();
   }
+
+  /* Fetch recent posts tagged with this topic (dynamic, not curated) */
+  const recentPosts = cmsTopic
+    ? await getPostsByTopic(cmsTopic._id)
+    : [];
 
   const hasCmsDefinition =
     cmsTopic?.definition && cmsTopic.definition.length > 0;
@@ -207,6 +225,52 @@ export default async function TopicHubPage({
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cmsTopic.featuredPosts.map((post) => (
+              <Link
+                key={post._id}
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+              >
+                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                  {post.title}
+                </h3>
+                {post.excerpt && (
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
+                    {post.excerpt}
+                  </p>
+                )}
+                <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
+                  {post.publishedAt && (
+                    <time dateTime={post.publishedAt}>
+                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </time>
+                  )}
+                  {post.estimatedReadTime && (
+                    <span>{post.estimatedReadTime} min read</span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 text-center">
+            <CTAButton href="/blog" variant="secondary">
+              Read More on the Blog
+            </CTAButton>
+          </div>
+        </Section>
+      )}
+
+      {/* Recent posts in this topic (dynamic, from topic references) */}
+      {recentPosts.length > 0 && (
+        <Section width="wide">
+          <h2 className="text-2xl font-bold text-brand-900">
+            Recent Articles on {topic.title}
+          </h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentPosts.map((post) => (
               <Link
                 key={post._id}
                 href={`/blog/${post.slug}`}
