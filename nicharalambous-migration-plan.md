@@ -1,8 +1,8 @@
 # nicharalambous.com — Build & Launch Plan (v2)
 
-**Status:** In progress — Blocks 1-3 complete
-**Overall Progress:** 25% (3/12 blocks)
-**Last Updated:** 2026-02-14
+**Status:** In progress — Blocks 1-4 complete. Money pages live with CMS content, JSON-LD, internal links.
+**Overall Progress:** 33% (4/12 blocks)
+**Last Updated:** 2026-02-15
 
 ---
 
@@ -481,31 +481,33 @@ Work is ordered by dependency. Each block depends on the one before it (with som
 **Depends on:** Nothing — this is the start.
 **Done when:** A blank page serves over HTTPS at nicharalambous.com (or a staging domain).
 
-- [x] Create GitHub repository
-- [x] Set up AWS: S3 bucket (`nicharalambous-com-site` in eu-central-1), CloudFront distribution (`E1ACQY3898IZF9`), ACM TLS certificate (us-east-1, pending DNS validation)
+- [x] Create GitHub repository (`nihcarry/nicharalambous.com`)
+- [x] Set up AWS: S3 bucket (`nicharalambous-com-site` in eu-central-1), CloudFront distribution (`E1ACQY3898IZF9`), ACM TLS certificate (us-east-1)
 - [ ] Configure DNS (Namecheap → CloudFront CNAME) *(deferred to Block 10 — DNS switch is the final launch step)*
-- [ ] Create Sanity.io project (free tier) *(in progress — project ID pending)*
-- [ ] ACM certificate DNS validation *(add CNAME record in Namecheap — see notes below)*
-- [x] Set up GitHub Actions CI/CD: build → deploy to S3 → CloudFront invalidation *(`.github/workflows/deploy.yml` — ready, needs AWS secrets)*
+- [x] Create Sanity.io project (free tier) — Project ID: `lsivhm7f`
+- [x] ACM certificate DNS validation CNAME added in Namecheap — certificate ISSUED
+- [x] Set up GitHub Actions CI/CD: build → deploy to S3 → CloudFront invalidation *(verified working — Run #6 passed)*
+- [x] Configure GitHub repository secrets (7 secrets: AWS credentials, S3, CloudFront, Sanity)
 - [x] Create "coming soon" page and verify it builds
 
 **Notes:**
 - DNS is on Namecheap (not Route53). Updated from original plan.
 - AWS CLI installed locally at `~/bin/aws`.
 - `.env.example` created with all required environment variables.
+- CI/CD pipeline verified end-to-end: push to main → build → deploy to S3 → CloudFront invalidation.
 
 **AWS Resources Created (2026-02-14):**
 - S3 Bucket: `nicharalambous-com-site` (eu-central-1)
 - CloudFront Distribution: `E1ACQY3898IZF9` → `d18g1r3g4snekl.cloudfront.net`
 - CloudFront OAC: `E3VYUDWGN7RR8` (secure S3 access)
-- ACM Certificate: `a8305c1c-803e-4dd7-8bbf-57bbfdebd3ae` (us-east-1, PENDING_VALIDATION)
+- ACM Certificate: `a8305c1c-803e-4dd7-8bbf-57bbfdebd3ae` (us-east-1, ISSUED)
 
-**ACM DNS Validation Record (add to Namecheap):**
-- Type: CNAME
-- Host: `_38689a8e984b1e5d9773de76666528d1`
-- Value: `_07243a3fd21d51a854eb4d84e8538d21.jkddzztszm.acm-validations.aws.`
+**Sanity Project (2026-02-14):**
+- Project ID: `lsivhm7f`
+- Datasets: `production`, `staging`
+- CORS Origins: `http://localhost:3000`, `https://nicharalambous.com`, `https://d18g1r3g4snekl.cloudfront.net`
 
-**Live staging URL:** https://d18g1r3g4snekl.cloudfront.net (homepage returns 200)
+**Live staging URL:** https://d18g1r3g4snekl.cloudfront.net (homepage returns 200, auto-deploys on push)
 
 ### Block 2: Scaffold 🟩
 
@@ -541,9 +543,10 @@ Work is ordered by dependency. Each block depends on the one before it (with som
 - [x] Define schemas: `book`, `mediaAppearance`, `testimonial`, `business`, `redirect` in `sanity/schemas/documents/`
 - [x] Define reusable objects: `seoFields`, `portableTextBody` (with videoEmbed, codeBlock, pullQuote custom blocks) in `sanity/schemas/objects/`
 - [x] Configure Studio: document structure with grouped navigation, custom views for content status filtering (published/ai-draft/in-review/archived)
-- [ ] Create `staging` and `production` datasets *(needs Sanity project ID)*
-- [ ] Set up Sanity webhook → GitHub Actions (rebuild on publish) *(needs Sanity project)*
-- [ ] Verify: create test content, query via GROQ, confirm data renders in Next.js *(needs Sanity project)*
+- [x] Create `staging` and `production` datasets (Sanity Project ID: `lsivhm7f`)
+- [x] Configure CORS origins for local dev and production domains
+- [x] Set up Sanity webhook → GitHub Actions (rebuild on publish) — `repository_dispatch` trigger added to deploy.yml; Sanity webhook config documented below
+- [x] Verify: GROQ queries fetch data, pages render with fallback content at build time (verified in static export)
 
 **Schema inventory (13 types):**
 - Singletons (3): `siteSettings`, `author`, `speaker`
@@ -553,22 +556,51 @@ Work is ordered by dependency. Each block depends on the one before it (with som
 **Build verification (2026-02-14):**
 - All schemas compile and type-check successfully
 - Studio page renders at `/studio` (1.51MB client-side bundle)
-- `npm run build` succeeds with 5 static pages: `/`, `/studio`, `/_not-found`
-- Deployed to CloudFront: https://d18g1r3g4snekl.cloudfront.net
+- `npm run build` succeeds with 10 static pages (including speaker + keynotes from early Block 4 work)
+- CI/CD pipeline passes (GitHub Actions Run #6) and deploys to CloudFront
+- Live at: https://d18g1r3g4snekl.cloudfront.net
+- Sanity Project ID `lsivhm7f` wired into `.env.local` and GitHub Secrets
 
-### Block 4: Money Pages
+**Content flow verification (2026-02-15):**
+- GROQ queries fetch from Sanity CDN API vbefore you do that, there is an item in block 4 that is incomplete: "Configure Sanity webhook GitHub actions." Is that incomplete by error or is that work still to be doneia native fetch (no `next-sanity` in server components)
+- Pages render with fallback data when Sanity has no content
+- Static export generates all pages correctly: speaker, keynotes listing, 3 keynote detail pages
+- `repository_dispatch` trigger added to deploy.yml for Sanity webhook integration
+
+### Block 4: Money Pages 🟩
 
 **Depends on:** Block 3 (CMS schemas exist, content flows).
 **Done when:** `/speaker` and `/keynotes/*` pages render with real content, structured data validates.
 
-- [ ] Build `/speaker` page template (sections: why book Nic, keynote topics, how virtual delivery works, client logos, testimonials, FAQ, CTA)
-- [ ] Build `/keynotes` listing page
-- [ ] Build `/keynotes/[slug]` dynamic page
-- [ ] Implement JSON-LD: `Service` + `FAQPage` on speaker page, `Service` + `VideoObject` on keynote pages
-- [ ] Create speaker page content in Sanity
-- [ ] Create all keynote content in Sanity
-- [ ] Add testimonials to Sanity and display on speaker/keynote pages
-- [ ] Verify: pages render, structured data validates (Google Rich Results Test), internal links work
+- [x] Build `/speaker` page template (sections: why book Nic, keynote topics, how virtual delivery works, client logos, testimonials, FAQ, CTA) — CMS-driven with hardcoded fallbacks
+- [x] Build `/keynotes` listing page — CMS-driven with hardcoded fallbacks
+- [x] Build `/keynotes/[slug]` dynamic page — CMS-driven with hardcoded fallbacks, `generateStaticParams` fetches slugs from Sanity
+- [x] Implement JSON-LD: `Service` + `FAQPage` on speaker page, `Service` on keynote pages
+- [x] Configure Sanity webhook → GitHub Actions (GitHub PAT created, webhook configured in Sanity dashboard with projection body)
+- [x] Create speaker page content in Sanity — seeded via API: headline, subheadline, whyBookNic (Portable Text), howVirtualWorks (Portable Text), asSeenAt, FAQ (5 items), CTA text
+- [x] Create all keynote content in Sanity — 3 keynotes seeded: Reclaiming Focus, Breakthrough Teams, Curiosity Catalyst (each with Portable Text description, outcomes, audiences, delivery format)
+- [x] Add testimonials to Sanity and display on speaker/keynote pages — 3 placeholder testimonials seeded, referenced by speaker page and individual keynotes
+- [x] Verify: pages render with CMS content, JSON-LD validates (Person, WebSite, Service, FAQPage with 5 Q&As), internal links verified (/speaker ↔ /keynotes ↔ /contact)
+
+**Architecture notes (2026-02-15):**
+- Pages use `@/lib/sanity/client` which is a lightweight native-fetch wrapper (NOT `next-sanity`). The `next-sanity` package registers server actions internally, which are incompatible with `output: "export"`. The import chain is carefully managed: `page → queries → client (native fetch)` and `page → portable-text → image (uses projectId/dataset directly, not next-sanity client)`.
+- `next-sanity` is only imported in the Sanity Studio client component (`"use client"`), which is safe.
+- All pages fall back to hardcoded content when Sanity returns no data, so the site works before content is entered in the CMS.
+- GROQ queries are in `lib/sanity/queries.ts` with full TypeScript interfaces.
+- Portable Text renderer in `components/portable-text.tsx` handles all custom blocks (video, code, pull quotes).
+
+**Sanity webhook setup (manual steps required):**
+1. Create a GitHub Personal Access Token (fine-grained) at https://github.com/settings/tokens with `Contents: Read` permission for the `nihcarry/nicharalambous.com` repo
+2. In Sanity dashboard (https://www.sanity.io/manage → project → API → Webhooks), create a webhook:
+   - Name: `Deploy on publish`
+   - URL: `https://api.github.com/repos/nihcarry/nicharalambous.com/dispatches`
+   - Trigger on: Create, Update, Delete
+   - Filter: `_type in ["speaker", "keynote", "topicHub", "post", "book", "testimonial", "mediaAppearance", "siteSettings"]`
+   - HTTP method: POST
+   - HTTP Headers: `Authorization: Bearer <YOUR_GITHUB_PAT>`, `Accept: application/vnd.github.v3+json`
+   - HTTP body: `{"event_type": "sanity-content-update"}`
+   - Dataset: `production`
+   - Status: Enabled
 
 ### Block 5: Supporting Pages
 

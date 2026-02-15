@@ -2,7 +2,8 @@
 #
 # Triggers:
 # 1. Push to main branch (code changes)
-# 2. Manual dispatch (for Sanity webhook-triggered rebuilds)
+# 2. Manual dispatch (for ad-hoc rebuilds)
+# 3. Repository dispatch (for Sanity webhook-triggered rebuilds)
 #
 # Required GitHub Secrets:
 # - AWS_ACCESS_KEY_ID
@@ -19,6 +20,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  repository_dispatch:
+    types: [sanity-content-update]
 
 permissions:
   contents: read
