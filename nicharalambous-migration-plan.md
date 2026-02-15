@@ -1,7 +1,7 @@
 # nicharalambous.com — Build & Launch Plan (v2)
 
-**Status:** In progress — Blocks 1-6 complete. Blog system fully built: listing with pagination + topic filtering, post template (Portable Text + raw HTML), archive template, FAQ component, Related Posts, Contextual CTA, Article + FAQPage JSON-LD, RSS feed. Ready for content import (Block 7).
-**Overall Progress:** 50% (6/12 blocks)
+**Status:** In progress — Blocks 1-7c complete (except Squarespace redirect map in 7c, deferred to Block 11). All 230 Medium + Substack articles imported to Sanity with enriched metadata. Production CloudFront URL serving full site with 178 published blog posts. Ready for Block 8 (Launch Features).
+**Overall Progress:** 75% (Blocks 1-7c of 12)
 **Last Updated:** 2026-02-15
 
 ---
@@ -688,46 +688,80 @@ Work is ordered by dependency. Each block depends on the one before it (with som
 - Sitemap generated: all new routes included in `sitemap-0.xml`
 - No TypeScript errors, no linter errors
 
-### Block 7a: Medium & Substack Inventory (launch-blocking)
+### Block 7a: Medium & Substack Inventory + Parsing (launch-blocking)
 
 **Depends on:** Block 6 (blog template exists).
-**Done when:** You have structured JSON for every Medium and Substack article in `Legacy Content/` and a complete inventory CSV.
+**Done when:** You have structured JSON for every Medium and Substack article in `Legacy Content/` and a complete inventory CSV. HTML is cleaned and ready for enrichment.
 
 Launch blog content comes from Medium + Substack only. Squarespace XML is deferred to Block 11 (archive).
 
-- [ ] Build parser script: Medium HTML (`Legacy Content/Medium Articles/*.html`) → structured JSON (title, slug, publishedAt, body HTML, originalUrl)
-- [ ] Build parser script: Substack HTML (`Legacy Content/Substack Articles/*.html`) → structured JSON (title, slug, publishedAt, body HTML, originalUrl)
-- [ ] Generate combined inventory CSV: `id, title, slug, publishedAt, source (medium|substack), sourceUrl, newUrl, hasImages, wordCount`
-- [ ] Flag any duplicate slugs across Medium + Substack; resolve with `-{yyyy}` suffix for older post
-- [ ] Verify: inventory CSV is complete and every article in both folders is accounted for
+**Content approach (decided 2026-02-15):** Three levels of optimization apply to imported content:
+- **Level 1 — HTML cleanup (this block):** Strip platform-specific markup (Medium's nested `<div>`/`<section>` wrappers, Substack's newsletter chrome), preserve semantic HTML (`<p>`, `<h2>`, `<h3>`, `<blockquote>`, `<ul>`, `<ol>`, `<a>`, `<img>`, `<em>`, `<strong>`). Keep all image `src` URLs pointing to original hosts (Medium CDN, Substack CDN). **No copy changes.**
+- **Level 2 — AI metadata generation (Block 7b):** For each article, use AI to generate: excerpt/TL;DR, 5 FAQs, SEO title + meta description, topic hub assignment, related keynote mapping, target keywords, estimated read time. **No copy changes** — the article body stays exactly as written. This populates every field the blog template uses (TL;DR block, FAQ section + JSON-LD, topic links, contextual CTA, Article structured data).
+- **Level 3 — Copy rewriting (deferred to post-launch):** Full AI-assisted rewrite of article body with SEO-optimized structure, keyword placement, updated frameworks, current voice. **Not done in Block 7.** Can be done selectively on high-priority articles later.
+
+Source material:
+- `Legacy Content/Medium Articles/` — 158 published HTML (2013–2019), 63 drafts (prefixed `draft_`)
+- `Legacy Content/Substack Articles/` — 23 HTML articles, 24 CSV stats files (ignored)
+
+- [x] Build parser script: Medium HTML (`Legacy Content/Medium Articles/*.html`) → structured JSON (title, slug, publishedAt, cleaned body HTML, originalUrl, wordCount) — `scripts/parse-medium.ts` — 158 published + 52 drafts parsed, 11 empty drafts skipped
+- [x] Build parser script: Substack HTML (`Legacy Content/Substack Articles/*.html`) → structured JSON (title, slug, publishedAt, cleaned body HTML, originalUrl, wordCount) — `scripts/parse-substack.ts` — 20 articles parsed, 3 empty skipped. Dates extracted from companion CSV delivery timestamps where available (12 of 20).
+- [x] Generate combined inventory CSV: `id, title, slug, publishedAt, source (medium|substack), sourceUrl, newUrl, hasImages, wordCount` — `scripts/generate-inventory.ts` → `scripts/output/inventory.csv` (230 articles)
+- [x] Flag any duplicate slugs across Medium + Substack; resolve with `-{yyyy}` suffix for older post — 0 cross-source duplicates. 2 within-Medium collisions resolved with `-2` suffix (same title, different content).
+- [x] Decide on Medium drafts (63 files prefixed `draft_`): 52 drafts with content imported as `contentStatus: "ai-draft"`, 11 empty drafts skipped
+- [x] Verify: inventory CSV is complete and every article in both folders is accounted for — 221 Medium (210 parsed + 11 empty) + 23 Substack (20 parsed + 3 empty) = 244 source files, 230 articles in inventory
 
 **Note:** Squarespace export (`Legacy Content/Squarespace-Wordpress-Export-*.xml`) is not parsed in this block. It is inventoried in Block 11 when the archive is imported.
 
-### Block 7b: Import Tooling (launch-blocking)
+### Block 7b: AI Metadata Enrichment + Import Tooling (launch-blocking)
 
-**Depends on:** Block 7a (Medium + Substack inventory exists).
-**Done when:** The Sanity importer works correctly on a sample of 5 articles (mix of Medium + Substack). Content imports as-is with no conversion.
+**Depends on:** Block 7a (parsed JSON + inventory exists).
+**Done when:** AI enrichment pipeline generates metadata for all articles. Sanity importer works correctly on a sample of 5 articles. Posts render with full SEO fields populated.
 
-Medium and Substack articles are imported with raw HTML body — no Portable Text conversion, no image migration at launch.
+Every article gets AI-generated metadata while preserving the original body copy unchanged. This ensures every post goes live with full SEO/GEO value from day one.
 
-- [ ] Build Sanity import script: creates `post` documents with `rawHtmlBody`, `contentStatus: "published"`, preserves `publishedAt`, `originalUrl`, extracts title and slug from inventory
-- [ ] Ensure blog template supports rendering `rawHtmlBody` when `body` (Portable Text) is empty
-- [ ] **Sample run:** Pick 5 articles spanning Medium + Substack (variety of content: images, links, lists)
-- [ ] Import sample articles to Sanity `staging` dataset
-- [ ] Verify: sample posts render correctly in Next.js — check formatting, images, links, metadata
-- [ ] Fix any import or rendering issues before proceeding
+- [x] Build enrichment script (`scripts/enrich-articles.ts`) — local text analysis, no external API needed. Generates:
+  - `excerpt` — first paragraph sentences, max 200 chars
+  - `faq` — 5 Q&A pairs from article headings + surrounding paragraphs
+  - `seo.seoTitle` — cleaned title, max 70 chars
+  - `seo.seoDescription` — first paragraph sentence, max 160 chars
+  - `topics` — 1-3 topic hub assignments via keyword frequency matching
+  - `relatedKeynote` — derived from primary topic via topic→keynote mapping
+  - `targetKeywords` — 3-5 keywords from title, headings, and frequent bigrams
+  - `estimatedReadTime` — word count / 225 wpm
+- [x] Run enrichment on full article set — all 230 articles enriched in <2 seconds. Output: `scripts/output/enriched/`
+- [x] Spot-check enriched articles: topic assignments accurate, excerpts from first paragraphs, heading-based FAQs working. Minor keyword noise acceptable for launch (refinable in Studio).
+- [x] Build Sanity import script (`scripts/import-to-sanity.ts`): creates `post` documents with `rawHtmlBody` + all enriched metadata fields. Uses deterministic `_id` (imported-{source}-{slug}) for safe re-runs. Auto-creates 7 topic hub documents if missing. Supports --dataset, --sample, --only, --dry-run flags.
+- [x] Ensure blog template renders enriched posts correctly (TL;DR block, FAQ section, topic links, contextual CTA, JSON-LD)
+- [x] **Sample run:** 5 articles imported to Sanity `staging` dataset with 7 topic hubs. 3 keynotes exist in production but not staging (expected). All posts have 3 topics, FAQs, and excerpts.
+- [x] Import sample articles to Sanity `staging` dataset — 5 posts, 0 failures
+- [x] Verify in Next.js: formatting, FAQ section, topic hub links, contextual CTA, Article + FAQPage JSON-LD, RSS feed — all 5 sample posts verified on production dataset
+- [x] Fix rawHtmlBody styling gaps: added Tailwind utility classes for `h4` (265 uses), `figure` (224), `figcaption` (87), `hr` (36), `iframe` (16), `li` text sizing, and `s` (strikethrough) to blog post template
+- [x] Verified: Blog listing shows all 5 posts with topic filters + pagination. Homepage shows 3 most recent posts. RSS feed includes all 5 articles. Every article has Article + FAQPage JSON-LD, TL;DR block, FAQ section, topic hub links, contextual keynote CTA, and bottom speaker CTA. Keynote mappings: burnout→reclaiming-focus, advice→curiosity-catalyst, social-media→reclaiming-focus, no-clue→curiosity-catalyst, email→breakthrough-product-teams.
 
 ### Block 7c: Full Medium & Substack Import (launch-blocking)
 
-**Depends on:** Block 7b (import tooling validated on sample articles).
-**Done when:** All Medium and Substack articles are in Sanity as published blog posts. Redirect map covers Medium/Substack canonical URLs.
+**Depends on:** Block 7b (enrichment + import tooling validated on sample articles).
+**Done when:** All Medium and Substack articles are in Sanity as published blog posts with full metadata. Topic hub pages show related posts. RSS feed populated.
 
-- [ ] Resolve any slug collisions (more recent post keeps `/blog/{slug}`, other gets `/blog/{slug}-{yyyy}`)
-- [ ] Import all Medium articles to Sanity as `contentStatus: "published"` with `rawHtmlBody`
-- [ ] Import all Substack articles to Sanity as `contentStatus: "published"` with `rawHtmlBody`
-- [ ] Spot-check migrated posts for formatting, images, links
-- [ ] Fix import issues, re-import as needed
+- [x] Slug collisions resolved in Block 7a — cross-source and intra-source collisions handled with numeric suffixes. No unresolved collisions remain.
+- [x] Import all 230 articles to Sanity production — 210 Medium + 20 Substack. 178 published, 52 ai-draft. 5 batches, 0 failures. Deterministic IDs: `imported-{source}-{slug}`.
+- [x] Spot-check migrated posts: 5 diverse articles verified (oldest, newest, mid, Substack, Medium). All render with TL;DR, FAQ section, topic links (3 each), contextual keynote CTA, bottom speaker CTA, Article + FAQPage JSON-LD.
+- [x] Verify topic hub pages show related posts — added dynamic "Recent Articles" section using `postsByTopicQuery`. All 7 hubs show 10 posts each. Topic distribution: Curiosity (138), Entrepreneurship (149), Innovation (104), Failure (82), Focus (56), Agency (51), AI (12).
+- [x] Verify homepage shows 3 most recent posts with excerpts
+- [x] Verify RSS feed: 50 items (capped per query design, newest first)
+- [x] Blog listing: 178 published posts with topic filters and client-side pagination (12 per page)
 - [ ] Generate redirect map: Squarespace old URLs → catch-all (e.g. `/blog`) until Block 11 archive import. (Medium/Substack content is net-new on this domain; no legacy URL redirects needed for those.)
+
+**Critical build fix (2026-02-15):**
+- `lib/sanity/client.ts` changed from `cache: "no-store"` to `cache: "force-cache"`. Next.js 15 treats `no-store` as `revalidate: 0` (dynamic rendering), which is incompatible with `output: "export"`. This caused all blog posts to generate as empty error shells (`<html id="__next_error__">`) during static build. The fix allows SSG to work correctly. **Do not revert to `no-store`.**
+- `tsconfig.json` excludes `scripts/` from TypeScript compilation. The import tooling scripts use cheerio types that conflict with Next.js build. Scripts run via `npx tsx` independently.
+
+**CI/CD gotcha — bulk imports trigger webhook storms:**
+- The Sanity webhook fires a `repository_dispatch` event for every document create/update. Importing 230 articles triggered 230+ GitHub Actions runs, each rebuilding and deploying the site. During the import, these runs were deploying the old (broken) build, overwriting manual deploys of the fixed build. Resolution: cancelled all old-SHA runs via GitHub API, pushed the `force-cache` fix to main, and let the push-triggered build deploy correctly. **For future bulk imports:** consider temporarily disabling the Sanity webhook in the Sanity dashboard before importing, then re-enabling and triggering a single manual rebuild after.
+
+**Production URL status (2026-02-15):**
+- CloudFront (`d18g1r3g4snekl.cloudfront.net`) serving full site: 178 published blog posts with TL;DR, FAQ, topic links, contextual CTAs, Article + FAQPage JSON-LD. Blog listing with pagination and topic filters. Homepage with 3 recent posts. RSS feed with 50 items. All static pages (speaker, keynotes, topics, about, books, contact, media) returning 200.
 
 ### Block 8: Launch Features
 
