@@ -1,0 +1,9 @@
+---
+description: Always start the dev server automatically after making changes
+globs: 
+alwaysApply: true
+---
+
+# Dev Server Rule
+
+Always run `npm run dev` yourself after making code changes — don't ask the user to do it. Start the dev server proactively so the user can immediately preview changes in the browser.

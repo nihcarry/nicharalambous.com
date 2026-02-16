@@ -2,24 +2,35 @@
  * Site header with navigation.
  *
  * Zoom-style sticky bar: dark pill-shaped container, two rows (main nav with
- * icon+label, status/CTA row). Mobile: hamburger opens drawer with same layout.
+ * icon+label, status/CTA row with theme switcher). Mobile: hamburger opens
+ * drawer with same layout.
  */
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const navLinks = [
-  { href: "/speaker", label: "Speaker", icon: "mic", showChevron: true, isActive: true },
+  { href: "/", label: "Home", icon: "home", showChevron: false },
+  { href: "/speaker", label: "Speaker", icon: "mic", showChevron: true },
   { href: "/keynotes", label: "Keynotes", icon: "play", showChevron: true },
   { href: "/businesses", label: "Building", icon: "rocket", showChevron: true },
   { href: "/topics", label: "Topics", icon: "tag", showChevron: true },
   { href: "/blog", label: "Blog", icon: "document", showChevron: true },
   { href: "/books", label: "Books", icon: "book", showChevron: true },
-  { href: "/about", label: "About", icon: "person", showChevron: true },
 ];
 
 const iconClass = "h-4 w-4 shrink-0 text-nav-text";
+
+function ChevronUp({ className }: { className?: string } = {}) {
+  return (
+    <svg className={className ?? "h-3 w-3 shrink-0 text-nav-text"} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+    </svg>
+  );
+}
 
 function ChevronDown({ className }: { className?: string } = {}) {
   return (
@@ -31,6 +42,12 @@ function ChevronDown({ className }: { className?: string } = {}) {
 
 function NavIcon({ name }: { name: string }) {
   switch (name) {
+    case "home":
+      return (
+        <svg className={iconClass} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955a1.126 1.126 0 0 1 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
+      );
     case "mic":
       return (
         <svg className={iconClass} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
@@ -112,17 +129,24 @@ function NavItem({
         ) : (
           iconEl
         )}
-        {showChevron && <ChevronDown />}
+        {showChevron && (isActive ? <ChevronDown /> : <ChevronUp />)}
       </div>
       <span className="text-xs font-medium">{label}</span>
     </Link>
   );
 }
 
-/** Main nav row only — icon+label links with chevrons. Edit this separately from the status bar. */
+/** Check if a nav link is active for the current path. */
+function isNavLinkActive(pathname: string, href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
+/** Main nav row only — icon+label links with chevrons. */
 function MainNav({ onNavClick }: { onNavClick?: () => void }) {
+  const pathname = usePathname();
   return (
-    <ul className="flex flex-nowrap items-center justify-evenly gap-2.5" style={{ padding: "5px" }} role="list">
+    <ul className="flex flex-nowrap items-center justify-evenly gap-5" style={{ paddingTop: "2.5px", paddingBottom: "2.5px", paddingLeft: "12px", paddingRight: "12px" }} role="list">
       {navLinks.map((link) => (
         <li key={link.href}>
           <NavItem
@@ -130,7 +154,7 @@ function MainNav({ onNavClick }: { onNavClick?: () => void }) {
             label={link.label}
             icon={link.icon}
             showChevron={link.showChevron}
-            isActive={link.isActive}
+            isActive={isNavLinkActive(pathname, link.href)}
             onClick={onNavClick}
           />
         </li>
@@ -139,11 +163,15 @@ function MainNav({ onNavClick }: { onNavClick?: () => void }) {
   );
 }
 
-/** Bottom status/CTA row — green left section, red right section. overflow-hidden clips to the pill shape. */
+/** Bottom status/CTA row — green left section, theme switcher right section. */
 function NavStatusBar({ onNavClick }: { onNavClick?: () => void }) {
+  const pathname = usePathname();
+  const isContactActive = isNavLinkActive(pathname, "/contact");
+  const isAboutActive = isNavLinkActive(pathname, "/about");
+
   return (
-    <div className="flex w-fit flex-nowrap items-stretch overflow-hidden rounded-b-2xl">
-      {/* Green section: caret, Book Nic, shield, Available */}
+    <div className="flex w-fit flex-nowrap items-stretch overflow-hidden rounded-b-lg">
+      {/* Green section: caret, Book Nic, shield, About Nic */}
       <div
         className="flex flex-nowrap items-center gap-2 pt-0.5 pb-px pl-3 pr-2"
         style={{ backgroundColor: "var(--color-nav-green)" }}
@@ -154,14 +182,15 @@ function NavStatusBar({ onNavClick }: { onNavClick?: () => void }) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75 12 8.25l7.5 7.5" />
           </svg>
         </span>
-        {/* 2. Blue "Book Nic" */}
+        {/* 2. Blue "Book Nic" — links to contact/booking page */}
         <Link
           href="/contact"
           onClick={onNavClick}
-          className="rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
+          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
           style={{ backgroundColor: "var(--color-nav-blue)" }}
         >
           Book Nic
+          {isContactActive ? <ChevronDown className="h-3 w-3 shrink-0" /> : <ChevronUp className="h-3 w-3 shrink-0" />}
         </Link>
         {/* 3. Shield */}
         <span className="flex shrink-0 items-center justify-center text-[#374151]" aria-hidden>
@@ -169,27 +198,26 @@ function NavStatusBar({ onNavClick }: { onNavClick?: () => void }) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
           </svg>
         </span>
-        {/* 4. Dark "Available" capsule */}
-        <span className="flex items-center gap-1.5 rounded-lg border border-white/15 bg-nav-bg px-2.5 py-1 text-xs font-medium leading-tight text-nav-text shadow-sm">
+        {/* 4. Dark "About Nic" capsule — clickable */}
+        <Link
+          href="/about"
+          onClick={onNavClick}
+          className="flex items-center gap-1.5 rounded-lg border border-white/15 bg-nav-bg px-2.5 py-1 text-xs font-medium leading-tight text-nav-text shadow-sm transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
+        >
           <svg className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
           </svg>
-          <span>Available</span>
-          <ChevronDown className="h-3 w-3 shrink-0 text-nav-text" />
-        </span>
+          <span>About Nic</span>
+          {isAboutActive ? <ChevronDown className="h-3 w-3 shrink-0 text-nav-text" /> : <ChevronUp className="h-3 w-3 shrink-0 text-nav-text" />}
+        </Link>
       </div>
-      {/* Red section: Contact */}
-      <Link
-        href="/contact"
-        onClick={onNavClick}
-        className="flex items-center gap-1.5 px-3 pt-0.5 pb-px text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
+      {/* Red section: Theme switcher (replaced Share) */}
+      <div
+        className="flex items-center px-3 pt-0.5 pb-px"
         style={{ backgroundColor: "var(--color-nav-red)" }}
       >
-        <svg className="h-3 w-3 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-          <rect width="10" height="10" x="7" y="7" rx="1" />
-        </svg>
-        Contact
-      </Link>
+        <ThemeSwitcher />
+      </div>
     </div>
   );
 }
@@ -198,7 +226,7 @@ function NavBarContent({ onNavClick }: { onNavClick?: () => void }) {
   return (
     <>
       <MainNav onNavClick={onNavClick} />
-      <div className="flex justify-center border-t border-white/10">
+      <div className="flex justify-center">
         <NavStatusBar onNavClick={onNavClick} />
       </div>
     </>
@@ -209,10 +237,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex flex-col items-center px-3 pt-3">
+    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center px-3 pt-3 pointer-events-none">
       {/* Dark bar: width fits content only */}
       <div
-        className="w-fit min-w-[480px] overflow-hidden rounded-2xl bg-nav-bg"
+        className="pointer-events-auto w-fit min-w-[480px] overflow-hidden rounded-2xl bg-nav-bg"
         style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
       >
         {/* Desktop: main nav only */}
@@ -247,20 +275,20 @@ export function Header() {
       </div>
 
       {/* Status bar row: below dark bar, desktop only */}
-      <div className="hidden md:flex justify-center border-t border-white/10">
+      <div className="pointer-events-auto hidden md:block">
         <NavStatusBar />
       </div>
 
       {/* Mobile drawer — Zoom-style layout */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          className="pointer-events-auto fixed inset-0 z-40 bg-black/50 md:hidden"
           aria-hidden
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
       <div
-        className={`fixed inset-x-3 top-16 z-50 max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl bg-nav-bg transition-opacity md:hidden ${
+        className={`pointer-events-auto fixed inset-x-3 top-16 z-50 max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl bg-nav-bg transition-opacity md:hidden ${
           mobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
@@ -270,7 +298,9 @@ export function Header() {
       >
         {mobileMenuOpen && (
           <nav aria-label="Mobile navigation">
-            <NavBarContent onNavClick={() => setMobileMenuOpen(false)} />
+            <NavBarContent
+              onNavClick={() => setMobileMenuOpen(false)}
+            />
           </nav>
         )}
       </div>

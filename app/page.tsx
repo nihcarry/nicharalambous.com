@@ -1,14 +1,21 @@
 /**
  * Homepage — nicharalambous.com
  *
+ * Keynote-style slide deck layout. Each section is a full-viewport slide
+ * that snaps into view on desktop, creating a presentation feel.
+ * Mobile reverts to standard vertical scroll.
+ *
  * The authority hub page. Primary goal: drive visitors to /speaker and /contact.
  *
- * Sections:
+ * Slides:
  * 1. Hero with core positioning
  * 2. Featured keynote topics (CMS-driven)
- * 3. Recent blog posts (CMS-driven)
- * 4. Social proof (testimonials + "As seen at")
- * 5. Final CTA → /speaker
+ * 3. Recent blog posts (CMS-driven, conditional)
+ * 4. Explore Topics
+ * 5. What Clients Say (testimonials)
+ * 6. As Seen At (logos)
+ * 7. Final CTA → /speaker
+ * 8. Footer
  *
  * Content is fetched from Sanity at build time. Falls back to hardcoded
  * defaults if Sanity data is not yet published.
@@ -24,7 +31,11 @@ import {
   type HomepageTestimonial,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
+import { Slide } from "@/components/slide";
+import { SlideImage } from "@/components/slide-image";
+import { SlideDeck } from "@/components/slide-deck";
+import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
+import { FooterContent } from "@/components/footer-content";
 
 /* ---------- Data fetching ---------- */
 
@@ -68,212 +79,273 @@ export default async function HomePage() {
   const displayTestimonials = testimonials || FALLBACK_TESTIMONIALS;
 
   return (
-    <>
-      {/* Hero section */}
-      <Section width="content" className="flex flex-col items-center text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
-          Entrepreneur, AI product builder, and{" "}
-          <span className="text-accent-600">virtual keynote speaker</span>
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-brand-600">
-          With 4 startup exits, 3 books, and 20+ years building technology
-          businesses, Nic Haralambous helps modern teams unlock curiosity,
-          build with AI, and turn innovation into profit.
-        </p>
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <CTAButton href="/speaker">Book a Virtual Keynote</CTAButton>
-          <CTAButton href="/keynotes" variant="secondary">
-            Explore Keynotes
-          </CTAButton>
-        </div>
-      </Section>
+    <SlideDeck>
+      {/* Slide 1: Hero — big headline over portrait */}
+      <Slide
+        variant="hero"
+        id="hero"
+        className="md:pb-24"
+        image={
+          <SlideParallaxImage>
+            {/* Portrait — positioned right, behind content (z-0) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/nic-hero-cropped.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 right-0 hidden h-[92vh] w-auto max-w-none select-none object-contain object-bottom drop-shadow-2xl md:block lg:right-[4%]"
+            />
+          </SlideParallaxImage>
+        }
+      >
+        <SlideContent>
+          {/* Headline — full width, punchy, the dominant element */}
+          <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+            <span className="text-accent-600">Keynote speaker,</span>
+            <br />
+            entrepreneur,
+            <br />
+            AI product
+            <br />
+            builder.
+          </h1>
 
-      {/* Featured keynote topics — CMS-driven */}
-      <Section width="wide" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          What Nic Speaks About
-        </h2>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {displayKeynotes.map((keynote) => (
-            <Link
-              key={keynote.slug}
-              href={`/keynotes/${keynote.slug}`}
-              className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
-            >
-              <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
-                {keynote.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                {keynote.tagline}
-              </p>
-              {keynote.topics && keynote.topics.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {keynote.topics.map((topic) => (
-                    <span
-                      key={topic._id}
-                      className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
-                    >
-                      {topic.title}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </Link>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <CTAButton href="/keynotes" variant="secondary">
-            View All Keynotes
-          </CTAButton>
-        </div>
-      </Section>
+          {/* Body + CTAs — below the headline, left-aligned, away from the image */}
+          <div className="mt-6 flex flex-col items-start md:mt-8 md:max-w-[45%]">
+            <p className="max-w-xl text-base leading-relaxed text-brand-600 md:text-lg">
+              With 4 startup exits, 3 books, and 20+ years building technology
+              businesses, Nic Haralambous helps modern teams unlock curiosity,
+              build with AI, and turn innovation into profit.
+            </p>
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row md:mt-8">
+              <CTAButton href="/speaker">Book a Virtual Keynote</CTAButton>
+              <CTAButton href="/keynotes" variant="secondary">
+                Explore Keynotes
+              </CTAButton>
+            </div>
+          </div>
+        </SlideContent>
+      </Slide>
 
-      {/* Recent blog posts — CMS-driven, hidden if no posts yet */}
-      {posts && posts.length > 0 && (
-        <Section width="wide">
+      {/* Slide 2: Featured keynote topics — CMS-driven */}
+      <Slide
+        variant="grid-3"
+        background="bg-brand-50"
+        id="keynotes"
+        image={<SlideParallaxImage><SlideImage src="/slides/ideas-light.jpg" position="top-right" /></SlideParallaxImage>}
+      >
+        <SlideContent>
           <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-            Latest Thinking
+            What Nic Speaks About
           </h2>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {displayKeynotes.map((keynote) => (
               <Link
-                key={post._id}
-                href={`/blog/${post.slug}`}
-                className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                key={keynote.slug}
+                href={`/keynotes/${keynote.slug}`}
+                className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
               >
                 <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
-                  {post.title}
+                  {keynote.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
-                  {post.excerpt}
+                <p className="mt-2 text-sm leading-relaxed text-brand-600">
+                  {keynote.tagline}
                 </p>
-                <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
-                  {post.publishedAt && (
-                    <time dateTime={post.publishedAt}>
-                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                  )}
-                  {post.estimatedReadTime && (
-                    <span>{post.estimatedReadTime} min read</span>
-                  )}
-                </div>
+                {keynote.topics && keynote.topics.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {keynote.topics.map((topic) => (
+                      <span
+                        key={topic._id}
+                        className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
+                      >
+                        {topic.title}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </Link>
             ))}
           </div>
           <div className="mt-8 text-center">
-            <CTAButton href="/blog" variant="secondary">
-              Read the Blog
+            <CTAButton href="/keynotes" variant="secondary">
+              View All Keynotes
             </CTAButton>
           </div>
-        </Section>
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 3: Recent blog posts — CMS-driven, conditional */}
+      {posts && posts.length > 0 && (
+        <Slide variant="grid-3" id="thinking">
+          <SlideContent>
+            <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+              Latest Thinking
+            </h2>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => (
+                <Link
+                  key={post._id}
+                  href={`/blog/${post.slug}`}
+                  className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                >
+                  <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                    {post.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
+                    {post.excerpt}
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
+                    {post.publishedAt && (
+                      <time dateTime={post.publishedAt}>
+                        {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </time>
+                    )}
+                    {post.estimatedReadTime && (
+                      <span>{post.estimatedReadTime} min read</span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <CTAButton href="/blog" variant="secondary">
+                Read the Blog
+              </CTAButton>
+            </div>
+          </SlideContent>
+        </Slide>
       )}
 
-      {/* Topics preview — always visible, links to topic hubs */}
-      <Section width="wide" className={posts ? "bg-brand-50" : ""}>
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          Explore Topics
-        </h2>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {TOPIC_PREVIEWS.map((topic) => (
-            <Link
-              key={topic.href}
-              href={topic.href}
-              className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
-            >
-              <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
-                {topic.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                {topic.description}
-              </p>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <CTAButton href="/topics" variant="secondary">
-            All Topics
-          </CTAButton>
-        </div>
-      </Section>
-
-      {/* Social proof — testimonials */}
-      <Section width="wide">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          What Clients Say
-        </h2>
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {displayTestimonials.map((testimonial, i) => (
-            <blockquote
-              key={testimonial._id || `fallback-${i}`}
-              className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
-            >
-              <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
-                &ldquo;{testimonial.quote}&rdquo;
-              </p>
-              <footer className="mt-4 border-t border-brand-100 pt-4">
-                <p className="text-sm font-semibold text-brand-900">
-                  {testimonial.authorName}
-                </p>
-                <p className="text-xs text-brand-500">
-                  {testimonial.authorTitle}
-                  {testimonial.company && `, ${testimonial.company}`}
-                </p>
-              </footer>
-            </blockquote>
-          ))}
-        </div>
-      </Section>
-
-      {/* "As seen at" logos */}
-      <Section width="wide" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          As Seen At
-        </h2>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
-          {AS_SEEN_AT.map((name) => (
-            <span
-              key={name}
-              className="text-lg font-semibold tracking-wide"
-            >
-              {name}
-            </span>
-          ))}
-        </div>
-      </Section>
-
-      {/* Final CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
+      {/* Slide 4: Topics preview */}
+      <Slide
+        variant="grid-6"
+        background={posts ? "bg-brand-50" : ""}
+        id="topics"
       >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Want Nic at Your Next Event?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual keynotes for conferences, corporate events, team offsites, and
-          webinars. Worldwide delivery.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/contact"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            Book Nic for Your Event
-          </CTAButton>
-          <CTAButton
-            href="/speaker"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+        <SlideContent>
+          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+            Explore Topics
+          </h2>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {TOPIC_PREVIEWS.map((topic) => (
+              <Link
+                key={topic.href}
+                href={topic.href}
+                className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
+              >
+                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                  {topic.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-brand-600">
+                  {topic.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <CTAButton href="/topics" variant="secondary">
+              All Topics
+            </CTAButton>
+          </div>
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 5: Social proof — testimonials */}
+      <Slide
+        variant="grid-3"
+        id="testimonials"
+        image={<SlideParallaxImage><SlideImage src="/slides/stage-glow.jpg" position="background" /></SlideParallaxImage>}
+      >
+        <SlideContent>
+          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+            What Clients Say
+          </h2>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {displayTestimonials.map((testimonial, i) => (
+              <blockquote
+                key={testimonial._id || `fallback-${i}`}
+                className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
+              >
+                <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <footer className="mt-4 border-t border-brand-100 pt-4">
+                  <p className="text-sm font-semibold text-brand-900">
+                    {testimonial.authorName}
+                  </p>
+                  <p className="text-xs text-brand-500">
+                    {testimonial.authorTitle}
+                    {testimonial.company && `, ${testimonial.company}`}
+                  </p>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 6: "As seen at" logos */}
+      <Slide variant="logos" background="bg-brand-50" id="logos">
+        <SlideContent>
+          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+            As Seen At
+          </h2>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
+            {AS_SEEN_AT.map((name) => (
+              <span
+                key={name}
+                className="text-lg font-semibold tracking-wide"
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 7: Final CTA */}
+      <Slide
+        variant="cta"
+        background="bg-accent-600"
+        className="text-center text-white"
+        id="cta"
+        image={<SlideParallaxImage><SlideImage src="/slides/stage-glow.jpg" position="background" /></SlideParallaxImage>}
+      >
+        <SlideContent>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            Want Nic at Your Next Event?
+          </h2>
+          <p className="mt-4 text-lg text-accent-100">
+            Virtual keynotes for conferences, corporate events, team offsites, and
+            webinars. Worldwide delivery.
+          </p>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <CTAButton
+              href="/contact"
+              className="bg-white !text-accent-600 hover:bg-accent-100"
+            >
+              Book Nic for Your Event
+            </CTAButton>
+            <CTAButton
+              href="/speaker"
+              className="border-white !text-white hover:bg-white/10"
+              variant="secondary"
+            >
+              About Nic as a Speaker
+            </CTAButton>
+          </div>
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 8: Footer */}
+      <Slide variant="footer" background="bg-brand-50" id="footer">
+        <FooterContent />
+      </Slide>
+    </SlideDeck>
   );
 }
 
