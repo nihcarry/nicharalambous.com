@@ -64,7 +64,7 @@ export default function RootLayout({
           <JsonLd data={websiteJsonLd()} />
 
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>
       </body>

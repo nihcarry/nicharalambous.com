@@ -170,7 +170,7 @@ function NavStatusBar({ onNavClick }: { onNavClick?: () => void }) {
   const isAboutActive = isNavLinkActive(pathname, "/about");
 
   return (
-    <div className="flex w-fit flex-nowrap items-stretch overflow-hidden rounded-b-lg">
+    <div className="flex w-fit flex-nowrap items-stretch overflow-clip rounded-b-lg">
       {/* Green section: caret, Book Nic, shield, About Nic */}
       <div
         className="flex flex-nowrap items-center gap-2 pt-0.5 pb-px pl-3 pr-2"
@@ -237,10 +237,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center px-3 pt-3 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center px-3 pt-3 pointer-events-none bg-transparent">
       {/* Dark bar: width fits content only */}
       <div
-        className="pointer-events-auto w-fit min-w-[480px] overflow-hidden rounded-2xl bg-nav-bg"
+        className="pointer-events-auto w-fit min-w-[480px] overflow-clip rounded-2xl bg-nav-bg"
         style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
       >
         {/* Desktop: main nav only */}

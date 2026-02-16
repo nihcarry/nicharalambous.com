@@ -1,12 +1,15 @@
 /**
  * Slide animation wrappers — Framer Motion effects for the keynote slide deck.
  *
- * Provides two client-side wrappers:
+ * Provides client-side wrappers:
  * - SlideParallaxImage: Parallax effect on decorative slide images
+ * - SlideForeground: Parallax + fade for foreground elements
  * - SlideContent: Fade/slide-up animation when content enters the viewport
  *
- * Both respect prefers-reduced-motion via useReducedMotion().
- * These are thin wrappers around Framer Motion — keep them minimal.
+ * All respect prefers-reduced-motion via useReducedMotion().
+ * SlideContent and SlideForeground use the SlideDeck scroll container as the
+ * IntersectionObserver root so animations trigger correctly inside the nested
+ * scroll container.
  */
 "use client";
 
@@ -17,6 +20,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
+import { useSlideDeck } from "@/components/slide-deck";
 
 /* ---------- Parallax image wrapper ---------- */
 
@@ -32,9 +36,11 @@ interface SlideParallaxImageProps {
 export function SlideParallaxImage({ children }: SlideParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const { containerRef } = useSlideDeck();
 
   const { scrollYProgress } = useScroll({
     target: ref,
+    container: containerRef,
     offset: ["start end", "end start"],
   });
 
@@ -68,9 +74,11 @@ interface SlideForegroundProps {
 export function SlideForeground({ children, className = "" }: SlideForegroundProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const { containerRef } = useSlideDeck();
 
   const { scrollYProgress } = useScroll({
     target: ref,
+    container: containerRef,
     offset: ["start end", "end start"],
   });
 
@@ -88,7 +96,7 @@ export function SlideForeground({ children, className = "" }: SlideForegroundPro
       style={{ y }}
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3, root: containerRef }}
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
       {children}
@@ -106,11 +114,12 @@ interface SlideContentProps {
 
 /**
  * Wraps slide content with a subtle fade-in + slide-up animation
- * triggered when the element scrolls into view.
+ * triggered when the element scrolls into view within the SlideDeck.
  * Disabled when user prefers reduced motion.
  */
 export function SlideContent({ children, className = "" }: SlideContentProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { containerRef } = useSlideDeck();
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
@@ -121,7 +130,7 @@ export function SlideContent({ children, className = "" }: SlideContentProps) {
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.2, root: containerRef }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {children}

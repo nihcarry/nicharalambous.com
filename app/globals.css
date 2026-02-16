@@ -59,6 +59,13 @@
   --color-nav-green: #00dc82;
   --color-nav-blue: #0d6efd;
   --color-nav-red: #dc3545;
+
+  /* Fixed header height — used for main content top padding so H1s aren’t covered */
+  --header-height-mobile: 5rem;
+  --header-height-desktop: 8rem;
+
+  /* Slide content max height — keeps heading + content + CTA above the fold when constrained */
+  --slide-content-max-height: 85vh;
 }
 
 /* ---------- Base Styles ---------- */

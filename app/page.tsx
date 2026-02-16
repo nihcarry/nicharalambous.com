@@ -36,6 +36,7 @@ import { SlideImage } from "@/components/slide-image";
 import { SlideDeck } from "@/components/slide-deck";
 import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
+import { NextSlideIndicator } from "@/components/next-slide-indicator";
 
 /* ---------- Data fetching ---------- */
 
@@ -80,6 +81,7 @@ export default async function HomePage() {
 
   return (
     <SlideDeck>
+      <NextSlideIndicator />
       {/* Slide 1: Hero — big headline over portrait */}
       <Slide
         variant="hero"
@@ -98,7 +100,8 @@ export default async function HomePage() {
           </SlideParallaxImage>
         }
       >
-        <SlideContent>
+        {/* Hero copy not wrapped in SlideContent so it’s always visible */}
+        <div className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
           {/* Headline — full width, punchy, the dominant element */}
           <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             <span className="text-accent-600">Keynote speaker,</span>
@@ -124,7 +127,7 @@ export default async function HomePage() {
               </CTAButton>
             </div>
           </div>
-        </SlideContent>
+        </div>
       </Slide>
 
       {/* Slide 2: Featured keynote topics — CMS-driven */}
@@ -132,6 +135,7 @@ export default async function HomePage() {
         variant="grid-3"
         background="bg-brand-50"
         id="keynotes"
+        constrainHeight
         image={<SlideParallaxImage><SlideImage src="/slides/ideas-light.jpg" position="top-right" /></SlideParallaxImage>}
       >
         <SlideContent>
@@ -176,7 +180,7 @@ export default async function HomePage() {
 
       {/* Slide 3: Recent blog posts — CMS-driven, conditional */}
       {posts && posts.length > 0 && (
-        <Slide variant="grid-3" id="thinking">
+        <Slide variant="grid-3" id="thinking" constrainHeight>
           <SlideContent>
             <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
               Latest Thinking
@@ -225,6 +229,7 @@ export default async function HomePage() {
         variant="grid-6"
         background={posts ? "bg-brand-50" : ""}
         id="topics"
+        constrainHeight
       >
         <SlideContent>
           <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
@@ -345,6 +350,7 @@ export default async function HomePage() {
       <Slide variant="footer" background="bg-brand-50" id="footer">
         <FooterContent />
       </Slide>
+      <NextSlideIndicator />
     </SlideDeck>
   );
 }

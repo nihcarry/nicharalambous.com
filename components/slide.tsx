@@ -26,6 +26,11 @@ interface SlideProps {
   image?: React.ReactNode;
   /** Optional foreground element rendered above content (e.g. hero portrait). */
   foreground?: React.ReactNode;
+  /**
+   * When true (desktop only), cap content height so heading + content + CTA fit in view.
+   * Content overflows with internal scroll. Use on slides with a primary CTA at the bottom.
+   */
+  constrainHeight?: boolean;
 }
 
 /**
@@ -50,7 +55,16 @@ export function Slide({
   id,
   image,
   foreground,
+  constrainHeight = false,
 }: SlideProps) {
+  const contentClasses = [
+    "relative z-10",
+    variantWidth[variant],
+    constrainHeight && "md:max-h-[var(--slide-content-max-height)] md:overflow-y-auto md:overflow-x-hidden md:[scrollbar-width:thin]",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <section
       id={id}
@@ -73,7 +87,7 @@ export function Slide({
       {/* Decorative image layer — behind content */}
       {image}
       {/* Content sits above the decorative image layer */}
-      <div className={`relative z-10 ${variantWidth[variant]}`}>{children}</div>
+      <div className={contentClasses}>{children}</div>
       {/* Foreground layer — renders above content (e.g. hero portrait) */}
       {foreground}
     </section>
