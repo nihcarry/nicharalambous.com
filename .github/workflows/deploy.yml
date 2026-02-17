@@ -42,6 +42,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify Sanity API (speaker content)
+        run: npm run verify:sanity
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: "2026-02-14"
+
       - name: Build
         run: npm run build
         env:
@@ -61,6 +68,7 @@ jobs:
         run: |
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
+            --size-only \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
             --exclude "sitemap*.xml" \
@@ -68,8 +76,14 @@ jobs:
             --exclude "rss.xml" \
             --exclude "llms.txt"
 
-          # HTML and dynamic files get short cache (invalidated on deploy)
+          # HTML and dynamic files get short cache (invalidated on deploy).
+          # --delete: remove from S3 any HTML/sitemap/robots/rss/llms that no longer
+          # exist in out/ (e.g. deleted blog posts), so removed routes stop being served.
+          # Do NOT use --size-only here: HTML files can be the same byte size
+          # across builds while referencing different JS chunk hashes. Skipping
+          # the upload causes 403 ChunkLoadErrors in production.
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET_NAME }} \
+            --delete \
             --exclude "*" \
             --include "*.html" \
             --include "sitemap*.xml" \

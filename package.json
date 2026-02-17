@@ -18,7 +18,8 @@
     "import:sanity": "tsx scripts/import-to-sanity.ts",
     "import:sanity:staging": "tsx scripts/import-to-sanity.ts --dataset staging",
     "import:sanity:dry-run": "tsx scripts/import-to-sanity.ts --dry-run",
-    "import:full": "npm run import:parse && npm run enrich && npm run import:sanity"
+    "import:full": "npm run import:parse && npm run enrich && npm run import:sanity",
+    "verify:sanity": "tsx scripts/verify-sanity-speaker.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

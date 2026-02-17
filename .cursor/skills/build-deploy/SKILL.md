@@ -1,6 +1,6 @@
 ---
-name: build
-description: Builds and deploys the nicharalambous.com static site to S3/CloudFront. Covers local build, S3 sync with correct cache headers, CloudFront invalidation, and verification. Includes critical gotchas. Use when the user says /build, requests a build, deploy, or wants to push changes to production.
+name: build-deploy
+description: Builds and deploys the nicharalambous.com static site to S3/CloudFront, then commits and pushes so the repo matches production. Covers local build, S3 sync with correct cache headers, CloudFront invalidation, verification, and Step 7 (commit & push). Always run Step 7 after a successful deploy. Use when the user says /build-deploy, /build, requests a build, deploy, or wants to push changes to production.
 ---
 
 # Build & Deploy nicharalambous.com
@@ -10,7 +10,7 @@ description: Builds and deploys the nicharalambous.com static site to S3/CloudFr
 Static Next.js site (`output: "export"`) deployed to S3 + CloudFront. All content fetched from Sanity CMS at build time. No server runtime.
 
 ```
-npm run build → out/ → S3 sync → CloudFront invalidation → live
+npm run build → out/ → S3 sync → CloudFront invalidation → verify live → commit & push (when you have code changes; see Step 7)
 ```
 
 ## Prerequisites
@@ -81,8 +81,11 @@ $AWS s3 sync out/ s3://nicharalambous-com-site \
   --exclude "rss.xml" \
   --exclude "llms.txt"
 
-# Phase 2: HTML + dynamic files — short cache, revalidated on deploy
+# Phase 2: HTML + dynamic files — short cache, revalidated on deploy.
+# --delete removes from S3 any HTML/sitemap/robots/rss/llms no longer in out/
+# (e.g. deleted blog posts), so removed routes stop being served.
 $AWS s3 sync out/ s3://nicharalambous-com-site \
+  --delete \
   --size-only \
   --exclude "*" \
   --include "*.html" \
@@ -135,6 +138,21 @@ echo "Blog posts: $(echo "$HTML" | grep -oE '/blog/[a-z0-9][a-z0-9-]+' | grep -v
 ```
 
 If live content is still wrong after invalidation completes, a CI/CD run may have overwritten your deploy. See "CI/CD Stomping" below.
+
+### Step 7: Commit and push (always run after Steps 1–6)
+
+**Always run this step** after a successful local deploy (Steps 1–6 done, live site verified). Check `git status`; if there are uncommitted changes, commit and push so the repo matches production. If there are no changes (e.g. you only changed Sanity content and had no code changes), there is nothing to push — that’s the only case to skip.
+
+**Why:** After a local deploy, production has your changes but `main` may not. If you skip this step when you do have changes, the next CI run (e.g. from a Sanity webhook) will deploy from the old `main` and overwrite what you just deployed.
+
+```bash
+git status   # see what changed
+git add -A   # or add specific files
+git commit -m "Describe the deploy"
+git push origin main
+```
+
+**If push fails:** Retry until it succeeds. Do not leave production ahead of the repo — that is when CI stomping happens.
 
 ## Automated Deploy (CI/CD)
 
@@ -201,10 +219,10 @@ The CI pipeline also triggers on Sanity content updates via `repository_dispatch
 
 ```
 Full local build + deploy:
-  rm -rf .next out && npm run build && verify → S3 sync → CF invalidate → verify
+  rm -rf .next out && npm run build && verify → S3 sync → CF invalidate → verify live → Step 7: commit & push (always run Step 7; skip only when git status shows nothing to commit)
 
 Push to CI (preferred for routine changes):
-  git push origin main → CI handles build + deploy automatically
+  git add -A && git commit -m "..." && git push origin main → CI handles build + deploy automatically
 
 Production CloudFront URL:
   https://d18g1r3g4snekl.cloudfront.net

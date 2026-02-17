@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 /**
  * Next.js configuration for nicharalambous.com
@@ -10,6 +11,10 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   output: "export",
+
+  // Use project root so Next.js doesn't infer parent dir (multiple lockfiles warning / broken dev)
+  outputFileTracingRoot: path.resolve(process.cwd()),
+
 
   // Generate clean URLs without trailing slashes
   trailingSlash: false,

@@ -286,7 +286,30 @@ export const postsByTopicQuery = `*[_type == "post" && contentStatus == "publish
 
 /* ---------- Blog Listing ---------- */
 
-/** Featured / Most Read posts for the hero section on /blog */
+/** Curated Most Read posts from the mostReadSection singleton (top 5, in order) */
+export const mostReadPostsQuery = `*[_type == "mostReadSection"][0]{
+  "posts": posts[]->[contentStatus == "published"][0...5]{
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    estimatedReadTime,
+    featuredLabel,
+    videoEmbed,
+    "featuredImage": featuredImage{
+      asset->{url},
+      alt
+    },
+    "topics": topics[]->{
+      _id,
+      title,
+      "slug": slug.current
+    }
+  }
+}`;
+
+/** Featured / Most Read posts for the hero section on /blog (legacy: per-post flag) */
 export const featuredPostsQuery = `*[_type == "post" && contentStatus == "published" && featured == true] | order(publishedAt desc){
   _id,
   title,
@@ -652,6 +675,11 @@ export interface BlogPostListItem {
   featuredImage: { asset: { url: string }; alt: string } | null;
   topics: TopicReference[];
   seo: SeoData | null;
+}
+
+/** Shape returned by mostReadPostsQuery (singleton) */
+export interface MostReadSectionData {
+  posts: FeaturedPostItem[];
 }
 
 /** Shape returned by featuredPostsQuery */

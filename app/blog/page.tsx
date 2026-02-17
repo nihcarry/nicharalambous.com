@@ -15,10 +15,11 @@ import { client } from "@/lib/sanity/client";
 import {
   blogPostsListQuery,
   blogTopicFiltersQuery,
-  featuredPostsQuery,
+  mostReadPostsQuery,
   type BlogPostListItem,
   type TopicReference,
   type FeaturedPostItem,
+  type MostReadSectionData,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
@@ -47,13 +48,14 @@ async function getBlogTopics(): Promise<TopicReference[] | null> {
   }
 }
 
-async function getFeaturedPosts(): Promise<FeaturedPostItem[] | null> {
+async function getMostReadPosts(): Promise<FeaturedPostItem[]> {
   try {
     const data =
-      await client.fetch<FeaturedPostItem[]>(featuredPostsQuery);
-    return data && data.length > 0 ? data : null;
+      await client.fetch<MostReadSectionData | null>(mostReadPostsQuery);
+    const posts = data?.posts ?? [];
+    return Array.isArray(posts) ? posts.filter(Boolean) : [];
   } catch {
-    return null;
+    return [];
   }
 }
 
@@ -75,15 +77,14 @@ export const metadata: Metadata = {
 /* ---------- Page ---------- */
 
 export default async function BlogPage() {
-  const [cmsPosts, cmsTopics, cmsFeatured] = await Promise.all([
+  const [cmsPosts, cmsTopics, mostReadPosts] = await Promise.all([
     getBlogPosts(),
     getBlogTopics(),
-    getFeaturedPosts(),
+    getMostReadPosts(),
   ]);
 
   const posts = cmsPosts || [];
   const topics = cmsTopics || FALLBACK_TOPICS;
-  const featuredPosts = cmsFeatured || FALLBACK_FEATURED;
 
   return (
     <>
@@ -107,10 +108,10 @@ export default async function BlogPage() {
         </p>
       </Section>
 
-      {/* Most Read / Featured hero section */}
-      {featuredPosts.length > 0 && (
+      {/* Most Read — top 5 (curated in Sanity: Most Read (Blog)) */}
+      {mostReadPosts.length > 0 && (
         <Section width="wide">
-          <MostReadHero posts={featuredPosts} />
+          <MostReadHero posts={mostReadPosts} />
         </Section>
       )}
 
@@ -178,23 +179,4 @@ const FALLBACK_TOPICS: TopicReference[] = [
   { _id: "t5", title: "AI", slug: "ai" },
   { _id: "t6", title: "Agency", slug: "agency" },
   { _id: "t7", title: "Failure", slug: "failure" },
-];
-
-const FALLBACK_FEATURED: FeaturedPostItem[] = [
-  {
-    _id: "featured-advice-30",
-    title: "Advice from 30 Year Old Me to 20 Year Old Me",
-    slug: "advice-from-30-year-old-me-to-20-year-old-me",
-    excerpt:
-      "11 things that I wish I knew when I was 20. Travel, build things, read, fail, trust, and be patient — lessons from a decade of living.",
-    publishedAt: "2014-05-06T12:45:39.161Z",
-    estimatedReadTime: 5,
-    featuredLabel: "500K+ Reads on Medium",
-    videoEmbed: "https://youtu.be/iykmgFqsfK8",
-    featuredImage: null,
-    topics: [
-      { _id: "t1", title: "Curiosity", slug: "curiosity" },
-      { _id: "t7", title: "Failure", slug: "failure" },
-    ],
-  },
 ];
