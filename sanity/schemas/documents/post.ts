@@ -114,6 +114,29 @@ export const post = defineType({
       type: "number",
     }),
     defineField({
+      name: "videoEmbed",
+      title: "Video Embed URL",
+      type: "url",
+      description:
+        "YouTube or Vimeo embed URL for a read-along or companion video. Displayed prominently on the post page.",
+    }),
+    defineField({
+      name: "featured",
+      title: "Featured / Most Read",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Highlight this post in the 'Most Read' hero section on the blog listing page.",
+    }),
+    defineField({
+      name: "featuredLabel",
+      title: "Featured Label",
+      type: "string",
+      description:
+        'Custom label for the featured badge (e.g. "500K+ Reads on Medium"). Only shown when featured is true.',
+      hidden: ({ parent }) => !parent?.featured,
+    }),
+    defineField({
       name: "seo",
       title: "SEO",
       type: "seoFields",

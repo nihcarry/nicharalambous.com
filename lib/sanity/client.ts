@@ -36,9 +36,15 @@ export const client = {
       }
     }
 
-    const url = `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?${searchParams.toString()}`;
+    const isDev = process.env.NODE_ENV === "development";
+    const host = isDev
+      ? `${projectId}.api.sanity.io`
+      : `${projectId}.apicdn.sanity.io`;
+    const url = `https://${host}/v${apiVersion}/data/query/${dataset}?${searchParams.toString()}`;
 
-    const response = await fetch(url, { cache: "force-cache" });
+    const response = await fetch(url, {
+      cache: isDev ? "no-store" : "force-cache",
+    });
 
     if (!response.ok) {
       throw new Error(`Sanity fetch failed: ${response.status}`);

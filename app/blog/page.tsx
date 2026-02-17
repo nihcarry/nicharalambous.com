@@ -15,13 +15,16 @@ import { client } from "@/lib/sanity/client";
 import {
   blogPostsListQuery,
   blogTopicFiltersQuery,
+  featuredPostsQuery,
   type BlogPostListItem,
   type TopicReference,
+  type FeaturedPostItem,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { JsonLd } from "@/components/json-ld";
 import { BlogList } from "@/components/blog-list";
+import { MostReadHero } from "@/components/most-read-hero";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -38,6 +41,16 @@ async function getBlogPosts(): Promise<BlogPostListItem[] | null> {
 async function getBlogTopics(): Promise<TopicReference[] | null> {
   try {
     const data = await client.fetch<TopicReference[]>(blogTopicFiltersQuery);
+    return data && data.length > 0 ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getFeaturedPosts(): Promise<FeaturedPostItem[] | null> {
+  try {
+    const data =
+      await client.fetch<FeaturedPostItem[]>(featuredPostsQuery);
     return data && data.length > 0 ? data : null;
   } catch {
     return null;
@@ -62,13 +75,15 @@ export const metadata: Metadata = {
 /* ---------- Page ---------- */
 
 export default async function BlogPage() {
-  const [cmsPosts, cmsTopics] = await Promise.all([
+  const [cmsPosts, cmsTopics, cmsFeatured] = await Promise.all([
     getBlogPosts(),
     getBlogTopics(),
+    getFeaturedPosts(),
   ]);
 
   const posts = cmsPosts || [];
   const topics = cmsTopics || FALLBACK_TOPICS;
+  const featuredPosts = cmsFeatured || FALLBACK_FEATURED;
 
   return (
     <>
@@ -91,6 +106,13 @@ export default async function BlogPage() {
           failing, and learning. Explore by topic or start with the latest.
         </p>
       </Section>
+
+      {/* Most Read / Featured hero section */}
+      {featuredPosts.length > 0 && (
+        <Section width="wide">
+          <MostReadHero posts={featuredPosts} />
+        </Section>
+      )}
 
       <Section width="wide">
         {posts.length > 0 ? (
@@ -156,4 +178,23 @@ const FALLBACK_TOPICS: TopicReference[] = [
   { _id: "t5", title: "AI", slug: "ai" },
   { _id: "t6", title: "Agency", slug: "agency" },
   { _id: "t7", title: "Failure", slug: "failure" },
+];
+
+const FALLBACK_FEATURED: FeaturedPostItem[] = [
+  {
+    _id: "featured-advice-30",
+    title: "Advice from 30 Year Old Me to 20 Year Old Me",
+    slug: "advice-from-30-year-old-me-to-20-year-old-me",
+    excerpt:
+      "11 things that I wish I knew when I was 20. Travel, build things, read, fail, trust, and be patient — lessons from a decade of living.",
+    publishedAt: "2014-05-06T12:45:39.161Z",
+    estimatedReadTime: 5,
+    featuredLabel: "500K+ Reads on Medium",
+    videoEmbed: "https://youtu.be/iykmgFqsfK8",
+    featuredImage: null,
+    topics: [
+      { _id: "t1", title: "Curiosity", slug: "curiosity" },
+      { _id: "t7", title: "Failure", slug: "failure" },
+    ],
+  },
 ];

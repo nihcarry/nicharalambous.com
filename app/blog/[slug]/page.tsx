@@ -34,6 +34,7 @@ import { PortableText } from "@/components/portable-text";
 import { FaqSection } from "@/components/faq-section";
 import { RelatedPosts } from "@/components/related-posts";
 import { ContextualCta } from "@/components/contextual-cta";
+import { VideoReadAlong } from "@/components/video-read-along";
 import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -145,6 +146,7 @@ export default async function BlogPostPage({
     post.rawHtmlBody && post.rawHtmlBody.trim().length > 0;
   const hasFaq = post.faq && post.faq.length > 0;
   const hasTopics = post.topics && post.topics.length > 0;
+  const hasVideo = post.videoEmbed && post.videoEmbed.trim().length > 0;
 
   return (
     <>
@@ -235,6 +237,15 @@ export default async function BlogPostPage({
               {post.excerpt}
             </p>
           </aside>
+        )}
+
+        {/* Video Read-Along (when video is available) */}
+        {hasVideo && (
+          <VideoReadAlong
+            videoUrl={post.videoEmbed!}
+            title={post.title}
+            featuredLabel={post.featuredLabel}
+          />
         )}
 
         {/* Main content — Portable Text or raw HTML */}
@@ -372,7 +383,10 @@ interface FallbackBlogPost extends BlogPostData {
  * Ensures generateStaticParams always returns at least one entry
  * (required by Next.js static export).
  */
-const FALLBACK_SLUGS = [{ slug: "placeholder" }];
+const FALLBACK_SLUGS = [
+  { slug: "placeholder" },
+  { slug: "advice-from-30-year-old-me-to-20-year-old-me" },
+];
 
 const FALLBACK_POSTS: Record<string, FallbackBlogPost> = {
   placeholder: {
@@ -386,6 +400,9 @@ const FALLBACK_POSTS: Record<string, FallbackBlogPost> = {
     estimatedReadTime: 2,
     body: null,
     rawHtmlBody: null,
+    videoEmbed: null,
+    featured: null,
+    featuredLabel: null,
     featuredImage: null,
     faq: null,
     topics: [
@@ -398,5 +415,72 @@ const FALLBACK_POSTS: Record<string, FallbackBlogPost> = {
       "New articles are on the way. Nic writes about curiosity, innovation, AI, entrepreneurship, focus, agency, and failure — drawing from 20+ years of building businesses and 4 startup exits.",
       "In the meantime, explore the topic hubs or check out Nic's virtual keynotes for a deeper dive into these ideas.",
     ],
+  },
+  "advice-from-30-year-old-me-to-20-year-old-me": {
+    _id: "fp-advice-30",
+    title: "Advice from 30 Year Old Me to 20 Year Old Me",
+    slug: "advice-from-30-year-old-me-to-20-year-old-me",
+    excerpt:
+      "11 things that I wish I knew when I was 20. Travel, build things, read, fail, trust, and be patient — lessons from a decade of living.",
+    publishedAt: "2014-05-06T12:45:39.161Z",
+    updatedAt: null,
+    estimatedReadTime: 5,
+    body: null,
+    rawHtmlBody: `<p>I recently turned 30. For some very odd reason I've not warmed to the idea of it just yet. However as I began to evaluate my 20s I realised how many mistakes I've made and things I've learned in a decade of life.</p>
+<p>I took some time to write myself some advice.</p>
+<h3>1) Travel</h3>
+<p>You have very little responsibility so go and travel. When you get to 30, you're going to want to travel slightly differently, spend a little more, do slightly more expensive things, eat at slightly better restaurants. So work for a year and save enough money to experience the world on the cheap.</p>
+<blockquote>How do you know what you want to do if you don't know what's out there <strong>to do</strong>?</blockquote>
+<p>Don't just travel to the obvious places.</p>
+<p>Travel to the tough places.</p>
+<p>Travel to learn.</p>
+<p>Travel to discover.</p>
+<p><em>Travel to the places that will challenge who you think you want to be.</em></p>
+<h3>2) Build things</h3>
+<p>Don't spend too much time working on other people's visions or in other people's meetings. Spend time figuring out what your own world view is (<strong>see point 1</strong>) and where you want to take your own life.</p>
+<blockquote><strong>Meetings are where ideas go to die.</strong></blockquote>
+<p>If you find yourself in a corporate job that you wish you could leave then do it. Leave. If you don't have a corporate job yet <strong>see point 5</strong>.</p>
+<h3>3) Read</h3>
+<p>Read every day. Read everything you can. Don't just read about things you know about. Read about people. Read people.</p>
+<h3>4) Stop Watching Television</h3>
+<p>Right now. Stop it. It's not helping you get better at anything.</p>
+<h3>5) Career</h3>
+<p>Do not take that corporate job. Just don't do it (<strong>see point 2</strong>).</p>
+<h3>6) Trust</h3>
+<p>Even if it kills your relationships. Even if it destroys your ideas. Even if you lose your friends. Even if it means you end up getting hurt.</p>
+<blockquote><strong>Trust people until they give you a reason not to.</strong></blockquote>
+<p>But don't be na\u00efve. Some people are out to fuck you.</p>
+<h3>7) People</h3>
+<p>People are the best and worst thing that will happen to you. Some will help you go further, faster. Others will pull you down to their level and help you lose. Most are OK. Many are average. Some are excellent.</p>
+<blockquote><strong>A few people will change your life forever. Find them.</strong></blockquote>
+<p>You don't need a lot of friends or people around you. You need amazing people who do for you as you do for them.</p>
+<p>It's simple really, a lot of average friends will leave you feeling alone when you need to feel surrounded by people who care.</p>
+<h3>8) Value Time</h3>
+<p>Don't waste time on people who you don't trust. Don't waste time with lovers who cheat on you. Don't waste time with friends who don't treat you the way you treat them (<strong>see point 7</strong>).</p>
+<blockquote><strong>Do not be late.</strong></blockquote>
+<p>Value other people's time. That means that if you're late, you don't give a shit about them or their time and that you think you're worth more and therefore can keep them waiting.</p>
+<p>Some people will tell you that it's OK to be late. It's not. Some people will tell you that it's just the way they are. Then you need to reevaluate them (see point 7 above).</p>
+<h3>9) Fail</h3>
+<p>Fail a lot. Fail often. Fail at love. Fail at sex. Fail at socialising. Fail at making friends. Fail at work. Fail at business. Fail with family. Fail with existing friends.</p>
+<blockquote><strong>Fail. But do it quickly and learn a lesson.</strong></blockquote>
+<p>If you don't learn something every time you fail then all you've done is failed. If you learn something, then you've grown. Every time you grow and learn and fail, you get better at figuring out how the hell to succeed.</p>
+<h3>10) Success</h3>
+<p>There is no point at which you will have succeeded. Not in your twenties. Not ever.</p>
+<p>Get over that fact and start building things (<strong>see point 2 and combine with point 9</strong>).</p>
+<h3>11) Patience</h3>
+<p>Be patient. Nothing worth doing is worth doing quickly. Nothing worth building is worth building in a rush. Nothing of value is formed in a minute.</p>
+<blockquote><strong>Plan in decades. Think in years. Work in months. Live in days.</strong></blockquote>`,
+    videoEmbed: "https://youtu.be/iykmgFqsfK8",
+    featured: true,
+    featuredLabel: "500K+ Reads on Medium",
+    featuredImage: null,
+    faq: null,
+    topics: [
+      { _id: "t1", title: "Curiosity", slug: "curiosity" },
+      { _id: "t7", title: "Failure", slug: "failure" },
+    ],
+    relatedKeynote: null,
+    seo: null,
+    descriptionText: [],
   },
 };

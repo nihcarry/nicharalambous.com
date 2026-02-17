@@ -286,6 +286,27 @@ export const postsByTopicQuery = `*[_type == "post" && contentStatus == "publish
 
 /* ---------- Blog Listing ---------- */
 
+/** Featured / Most Read posts for the hero section on /blog */
+export const featuredPostsQuery = `*[_type == "post" && contentStatus == "published" && featured == true] | order(publishedAt desc){
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  publishedAt,
+  estimatedReadTime,
+  featuredLabel,
+  videoEmbed,
+  "featuredImage": featuredImage{
+    asset->{url},
+    alt
+  },
+  "topics": topics[]->{
+    _id,
+    title,
+    "slug": slug.current
+  }
+}`;
+
 /** All published blog posts for the /blog listing, newest first */
 export const blogPostsListQuery = `*[_type == "post" && contentStatus == "published"] | order(publishedAt desc){
   _id,
@@ -329,6 +350,9 @@ export const blogPostBySlugQuery = `*[_type == "post" && slug.current == $slug &
   estimatedReadTime,
   body,
   rawHtmlBody,
+  videoEmbed,
+  featured,
+  featuredLabel,
   "featuredImage": featuredImage{
     asset->{url},
     alt
@@ -630,6 +654,20 @@ export interface BlogPostListItem {
   seo: SeoData | null;
 }
 
+/** Shape returned by featuredPostsQuery */
+export interface FeaturedPostItem {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  publishedAt: string;
+  estimatedReadTime: number | null;
+  featuredLabel: string | null;
+  videoEmbed: string | null;
+  featuredImage: { asset: { url: string }; alt: string } | null;
+  topics: TopicReference[];
+}
+
 /** Shape returned by blogPostBySlugQuery */
 export interface BlogPostData {
   _id: string;
@@ -641,6 +679,9 @@ export interface BlogPostData {
   estimatedReadTime: number | null;
   body: PortableTextBlock[] | null;
   rawHtmlBody: string | null;
+  videoEmbed: string | null;
+  featured: boolean | null;
+  featuredLabel: string | null;
   featuredImage: { asset: { url: string }; alt: string } | null;
   faq: { question: string; answer: string }[] | null;
   topics: TopicReference[];
