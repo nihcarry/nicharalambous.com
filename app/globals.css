@@ -48,6 +48,7 @@
   --font-family-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-family-heading: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-family-mono: ui-monospace, "SF Mono", "Fira Code", monospace;
+  --font-family-bebas: var(--font-bebas-neue), "Impact", ui-sans-serif, system-ui;
 
   /* Container */
   --container-max-width-content: 48rem;
@@ -112,5 +113,73 @@
     max-width: var(--container-max-width-wide);
     margin-inline: auto;
     padding-inline: 1.5rem;
+  }
+
+  /* Responsive text stroke — 2px on mobile (avoids overflow on narrow viewports),
+     4px on md+ where headings are large enough to carry the heavier weight. */
+  .heading-stroke {
+    -webkit-text-stroke: 2px black;
+    paint-order: stroke fill;
+  }
+  @media (min-width: 768px) {
+    .heading-stroke {
+      -webkit-text-stroke: 4px black;
+    }
+  }
+
+  /* ─── Per-slide background patterns ───────────────────────────────────────
+     All are CSS-only inline SVG data URIs — zero image files, zero HTTP
+     requests. Each slide has its own independent class so any one can be
+     swapped without affecting the others. Icons connect to Nic's three
+     pillars: entrepreneur · keynote speaker · AI product builder.
+     ────────────────────────────────────────────────────────────────────── */
+
+  /* Slide 2 — Keynotes: handheld stage mic, tilted 25° */
+  .bg-mic-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Cg transform='rotate(25 24 24)'%3E%3Ccircle cx='24' cy='21.5' r='1.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='23.25' y='23' width='1.5' height='4' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 1 — Hero: rocket (entrepreneur launching ventures), tilted -15° */
+  .bg-rocket-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Cg transform='rotate(-15 24 24)'%3E%3Cellipse cx='24' cy='18' rx='2' ry='3' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='22' y='20' width='4' height='6' rx='1' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='20.5' y='23' width='2' height='3' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='25.5' y='23' width='2' height='3' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 3 — Blog: fountain pen / nib (writing, ideas), tilted -20° */
+  .bg-pen-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Cg transform='rotate(-20 24 24)'%3E%3Crect x='22.5' y='17' width='3' height='3' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='22.5' y='19.5' width='3' height='7' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='23.25' y='26' width='1.5' height='3' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 4 — Topics: lightbulb (innovation, curiosity, AI) */
+  .bg-lightbulb-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Ccircle cx='24' cy='21' r='3.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='22' y='24' width='4' height='1' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='22.5' y='25.5' width='3' height='1' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='23' y='27' width='2' height='1' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 5 — Testimonials: speech bubble (audience voice), tilted -5° */
+  .bg-speech-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Cg transform='rotate(-5 24 24)'%3E%3Crect x='18' y='19' width='12' height='8' rx='2.5' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='19' y='26.5' width='2.5' height='2' rx='0.5' fill='%23000' fill-opacity='0.09'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 6 — As Seen At: broadcast tower (media, stage, global reach) */
+  .bg-broadcast-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Crect x='23.25' y='21' width='1.5' height='8' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3Cpath d='M21 25 C20 22.5 20 20.5 22 19' fill='none' stroke='%23000' stroke-opacity='0.09' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M27 25 C28 22.5 28 20.5 26 19' fill='none' stroke='%23000' stroke-opacity='0.09' stroke-width='1.5' stroke-linecap='round'/%3E%3Crect x='21.5' y='28.5' width='5' height='1.5' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Slide 7 — Final CTA: calendar (booking, events, engagements) */
+  .bg-calendar-pattern {
+    background-color: #f7f7f5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Crect x='19' y='20' width='10' height='9' rx='1' fill='none' stroke='%23000' stroke-opacity='0.09' stroke-width='1.5'/%3E%3Crect x='19' y='20' width='10' height='3' rx='1' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='21' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3Crect x='25.5' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.09'/%3E%3C/svg%3E");
+    background-size: 72px 72px;
   }
 }

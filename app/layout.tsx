@@ -6,7 +6,7 @@
  * Font loading uses next/font for optimal performance.
  */
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Bebas_Neue } from "next/font/google";
 import { Header } from "@/components/header";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -19,6 +19,13 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bebas-neue",
 });
 
 export const metadata: Metadata = {
@@ -55,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <body className="flex min-h-screen flex-col">
         <ThemeProvider>
           <GoogleAnalytics />

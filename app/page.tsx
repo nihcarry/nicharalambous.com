@@ -32,7 +32,6 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
-import { SlideImage } from "@/components/slide-image";
 import { SlideDeck } from "@/components/slide-deck";
 import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
@@ -86,6 +85,7 @@ export default async function HomePage() {
       <Slide
         variant="hero"
         id="hero"
+        background="bg-rocket-pattern"
         className="md:pb-24"
         image={
           <SlideParallaxImage>
@@ -102,8 +102,10 @@ export default async function HomePage() {
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
-          {/* Headline — full width, punchy, the dominant element */}
-          <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+          {/* Headline — Bebas Neue display font with 4px black stroke */}
+          <h1
+            className="heading-stroke font-bebas text-4xl uppercase leading-[0.95] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+          >
             <span className="text-accent-600">Keynote speaker,</span>
             <br />
             entrepreneur,
@@ -116,13 +118,16 @@ export default async function HomePage() {
           {/* Body + CTAs — below the headline, left-aligned, away from the image */}
           <div className="mt-6 flex flex-col items-start md:mt-8 md:max-w-[45%]">
             <p className="max-w-xl text-base leading-relaxed text-brand-600 md:text-lg">
-              With 4 startup exits, 3 books, and 20+ years building technology
-              businesses, Nic Haralambous helps modern teams unlock curiosity,
-              build with AI, and turn innovation into profit.
+              With 4 startup exits, 2 best-selling business books, and over 20
+              years building technology businesses, Nic Haralambous helps teams
+              ship breakthrough products, use curiosity to build with AI, and
+              turn innovation into profit.
             </p>
             <div className="mt-6 flex flex-col gap-4 sm:flex-row md:mt-8">
-              <CTAButton href="/speaker">Book a Virtual Keynote</CTAButton>
-              <CTAButton href="/keynotes" variant="secondary">
+              <CTAButton href="/speaker" className="!rounded-none font-bebas text-xl uppercase">
+                Book a Virtual Keynote
+              </CTAButton>
+              <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
                 Explore Keynotes
               </CTAButton>
             </div>
@@ -133,26 +138,35 @@ export default async function HomePage() {
       {/* Slide 2: Featured keynote topics — CMS-driven */}
       <Slide
         variant="grid-3"
-        background="bg-brand-50"
+        background="bg-mic-pattern"
         id="keynotes"
         constrainHeight
-        image={<SlideParallaxImage><SlideImage src="/slides/ideas-light.jpg" position="top-right" /></SlideParallaxImage>}
+        image={
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src="/slides/nic-16bit.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-0 left-0 z-[1] h-[58.5vh] w-auto select-none object-contain object-bottom"
+          />
+        }
       >
         <SlideContent>
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-accent-600 sm:text-7xl md:text-8xl lg:text-9xl">
             What Nic Speaks About
           </h2>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {displayKeynotes.map((keynote) => (
+          <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            {displayKeynotes.map((keynote, i) => (
               <Link
                 key={keynote.slug}
                 href={`/keynotes/${keynote.slug}`}
-                className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                style={{ transform: `rotate(${[-1.5, 1, -0.75][i % 3]}deg)` }}
               >
-                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                   {keynote.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-600">
+                <p className="mt-2 text-sm leading-relaxed text-brand-700">
                   {keynote.tagline}
                 </p>
                 {keynote.topics && keynote.topics.length > 0 && (
@@ -160,7 +174,7 @@ export default async function HomePage() {
                     {keynote.topics.map((topic) => (
                       <span
                         key={topic._id}
-                        className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
+                        className="border border-accent-600/50 px-3 py-1 text-xs font-medium text-accent-600"
                       >
                         {topic.title}
                       </span>
@@ -171,7 +185,7 @@ export default async function HomePage() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <CTAButton href="/keynotes" variant="secondary">
+            <CTAButton href="/keynotes" className="!rounded-none font-bebas text-xl uppercase">
               View All Keynotes
             </CTAButton>
           </div>
@@ -180,25 +194,40 @@ export default async function HomePage() {
 
       {/* Slide 3: Recent blog posts — CMS-driven, conditional */}
       {posts && posts.length > 0 && (
-        <Slide variant="grid-3" id="thinking" constrainHeight>
+        <Slide
+          variant="grid-3"
+          id="thinking"
+          background="bg-pen-pattern"
+          constrainHeight
+          image={
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src="/slides/Nic_soap_16bit.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 right-0 z-50 h-[calc(100vh-503px)] w-auto select-none object-contain object-bottom"
+            />
+          }
+        >
           <SlideContent>
-            <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+            <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
               Latest Thinking
             </h2>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
+            <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post, i) => (
                 <Link
                   key={post._id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                  className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                  style={{ transform: `rotate(${[1, -0.75, 1.5][i % 3]}deg)` }}
                 >
-                  <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                  <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                     {post.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-700">
                     {post.excerpt}
                   </p>
-                  <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
+                  <div className="mt-4 flex items-center gap-3 text-xs text-brand-500">
                     {post.publishedAt && (
                       <time dateTime={post.publishedAt}>
                         {new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -216,7 +245,7 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="mt-8 text-center">
-              <CTAButton href="/blog" variant="secondary">
+              <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
                 Read the Blog
               </CTAButton>
             </div>
@@ -227,32 +256,65 @@ export default async function HomePage() {
       {/* Slide 4: Topics preview */}
       <Slide
         variant="grid-6"
-        background={posts ? "bg-brand-50" : ""}
+        background="bg-lightbulb-pattern"
         id="topics"
         constrainHeight
       >
-        <SlideContent>
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+        <SlideContent className="md:pt-36">
+          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
             Explore Topics
           </h2>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TOPIC_PREVIEWS.map((topic) => (
-              <Link
-                key={topic.href}
-                href={topic.href}
-                className="group rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
-              >
-                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
-                  {topic.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                  {topic.description}
-                </p>
-              </Link>
+          <div className="relative mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/Nic_Hunting_Pickaxe.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute left-0 z-50 hidden h-36 w-auto select-none object-contain object-bottom md:block"
+              style={{ top: "-120px" }}
+            />
+            {TOPIC_PREVIEWS.map((topic, i) => (
+              i === 5 ? (
+                <div key={topic.href} className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/slides/Nic_archeo_16bit.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute bottom-full right-4 z-50 h-24 w-auto select-none object-contain object-bottom"
+                  />
+                  <Link
+                    href={topic.href}
+                    className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                    style={{ transform: `rotate(${[-1.5, 1, -0.75, 1.5, -1, 0.75][i % 6]}deg)` }}
+                  >
+                    <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                      {topic.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                      {topic.description}
+                    </p>
+                  </Link>
+                </div>
+              ) : (
+                <Link
+                  key={topic.href}
+                  href={topic.href}
+                  className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                  style={{ transform: `rotate(${[-1.5, 1, -0.75, 1.5, -1, 0.75][i % 6]}deg)` }}
+                >
+                  <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                    {topic.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                    {topic.description}
+                  </p>
+                </Link>
+              )
             ))}
           </div>
           <div className="mt-8 text-center">
-            <CTAButton href="/topics" variant="secondary">
+            <CTAButton href="/topics" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
               All Topics
             </CTAButton>
           </div>
@@ -263,23 +325,24 @@ export default async function HomePage() {
       <Slide
         variant="grid-3"
         id="testimonials"
-        image={<SlideParallaxImage><SlideImage src="/slides/stage-glow.jpg" position="background" /></SlideParallaxImage>}
+        background="bg-speech-pattern"
       >
         <SlideContent>
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
             What Clients Say
           </h2>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {displayTestimonials.map((testimonial, i) => (
               <blockquote
                 key={testimonial._id || `fallback-${i}`}
-                className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
+                className="flex flex-col border-[20px] border-accent-600 bg-white p-6"
+                style={{ transform: `rotate(${[-1, 1.5, -0.75][i % 3]}deg)` }}
               >
                 <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
                   &ldquo;{testimonial.quote}&rdquo;
                 </p>
-                <footer className="mt-4 border-t border-brand-100 pt-4">
-                  <p className="text-sm font-semibold text-brand-900">
+                <footer className="mt-4 pt-4">
+                  <p className="font-bebas text-lg uppercase text-accent-600">
                     {testimonial.authorName}
                   </p>
                   <p className="text-xs text-brand-500">
@@ -294,16 +357,16 @@ export default async function HomePage() {
       </Slide>
 
       {/* Slide 6: "As seen at" logos */}
-      <Slide variant="logos" background="bg-brand-50" id="logos">
+      <Slide variant="logos" background="bg-broadcast-pattern" id="logos">
         <SlideContent>
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
             As Seen At
           </h2>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
             {AS_SEEN_AT.map((name) => (
               <span
                 key={name}
-                className="text-lg font-semibold tracking-wide"
+                className="font-bebas text-2xl uppercase text-accent-600 sm:text-3xl"
               >
                 {name}
               </span>
@@ -315,30 +378,29 @@ export default async function HomePage() {
       {/* Slide 7: Final CTA */}
       <Slide
         variant="cta"
-        background="bg-accent-600"
-        className="text-center text-white"
+        background="bg-calendar-pattern"
+        className="text-center"
         id="cta"
-        image={<SlideParallaxImage><SlideImage src="/slides/stage-glow.jpg" position="background" /></SlideParallaxImage>}
       >
         <SlideContent>
-          <h2 className="text-2xl font-bold sm:text-3xl">
+          <h2 className="heading-stroke font-bebas text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl">
             Want Nic at Your Next Event?
           </h2>
-          <p className="mt-4 text-lg text-accent-100">
+          <p className="mt-4 text-lg text-brand-700">
             Virtual keynotes for conferences, corporate events, team offsites, and
             webinars. Worldwide delivery.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <CTAButton
               href="/contact"
-              className="bg-white !text-accent-600 hover:bg-accent-100"
+              className="!rounded-none font-bebas text-xl uppercase"
             >
               Book Nic for Your Event
             </CTAButton>
             <CTAButton
               href="/speaker"
-              className="border-white !text-white hover:bg-white/10"
               variant="secondary"
+              className="!rounded-none font-bebas text-xl uppercase"
             >
               About Nic as a Speaker
             </CTAButton>
