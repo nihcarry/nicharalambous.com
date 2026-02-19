@@ -44,8 +44,8 @@ export function SlideDeck({ children }: SlideDeckProps) {
       <div
         ref={containerRef}
         className={[
-          /* Pull up so first slide extends behind fixed header (no white band) */
-          "-mt-[var(--header-height-mobile)] md:-mt-[var(--header-height-desktop)]",
+          /* Pull up so first slide extends behind fixed header (no white band). Mobile: no top header, only small branding. */
+          "md:-mt-[var(--header-height-desktop)]",
           /* Mobile: standard block flow */
           "flex flex-col",
           /* Desktop: full-height scroll container with snap (header is fixed, so full 100vh) */

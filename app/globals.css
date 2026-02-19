@@ -65,6 +65,12 @@
   --header-height-mobile: 5rem;
   --header-height-desktop: 8rem;
 
+  /* Mobile bottom nav — Zoom-style bar; content uses pb to avoid overlap */
+  --bottom-nav-height-mobile: 5rem;
+
+  /* Top branding pill ("Nic Haralambous") on mobile — used for hero top padding */
+  --top-branding-height-mobile: 2.75rem;
+
   /* Slide content max height — keeps heading + content + CTA above the fold when constrained */
   --slide-content-max-height: 90vh;
 }

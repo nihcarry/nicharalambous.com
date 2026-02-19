@@ -1,9 +1,12 @@
 /**
  * Site header with navigation.
  *
- * Zoom-style sticky bar: dark pill-shaped container, two rows (main nav with
- * icon+label, status/CTA row with theme switcher). Mobile: hamburger opens
- * drawer with same layout.
+ * Desktop: Zoom-style sticky bar at top — dark pill-shaped container, two rows
+ * (main nav with icon+label, status/CTA row with theme switcher).
+ *
+ * Mobile: Zoom-style bottom nav bar with Home, Speaker, Keynotes, More. Top-left
+ * "Nic Haralambous" pill. More opens bottom sheet with secondary links and
+ * status bar content.
  */
 "use client";
 
@@ -91,6 +94,12 @@ function NavIcon({ name }: { name: string }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
         </svg>
       );
+    case "more":
+      return (
+        <svg className={iconClass} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+      );
     default:
       return null;
   }
@@ -142,6 +151,21 @@ function isNavLinkActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
+/** Routes that live inside the More overflow menu. Used to highlight More when active. */
+const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about"];
+
+function isMoreMenuActive(pathname: string): boolean {
+  return moreMenuRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
+}
+
+/** Mobile bottom nav — 4 items: Home, Speaker, Keynotes, More. Zoom-style: icon above label. */
+const mobileNavLinks = [
+  { href: "/", label: "Home", icon: "home" },
+  { href: "/speaker", label: "Speaker", icon: "mic" },
+  { href: "/keynotes", label: "Keynotes", icon: "play" },
+  { href: "more", label: "More", icon: "more", isButton: true },
+];
+
 /** Main nav row only — icon+label links with chevrons. */
 function MainNav({ onNavClick }: { onNavClick?: () => void }) {
   const pathname = usePathname();
@@ -164,10 +188,47 @@ function MainNav({ onNavClick }: { onNavClick?: () => void }) {
 }
 
 /** Bottom status/CTA row — green left section, theme switcher right section. */
-function NavStatusBar({ onNavClick }: { onNavClick?: () => void }) {
+function NavStatusBar({
+  onNavClick,
+  variant = "default",
+}: {
+  onNavClick?: () => void;
+  /** "compact" for vertical stack in More sheet on mobile */
+  variant?: "default" | "compact";
+}) {
   const pathname = usePathname();
   const isContactActive = isNavLinkActive(pathname, "/contact");
   const isAboutActive = isNavLinkActive(pathname, "/about");
+
+  if (variant === "compact") {
+    return (
+      <div className="flex flex-col gap-2">
+        <Link
+          href="/contact"
+          prefetch={false}
+          onClick={onNavClick}
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-nav-text transition-colors hover:bg-white/10"
+          style={{ backgroundColor: "var(--color-nav-blue)" }}
+        >
+          <span className="text-xs font-semibold text-white">Book Nic</span>
+          {isContactActive && <ChevronDown className="h-3 w-3 shrink-0 text-white" />}
+        </Link>
+        <Link
+          href="/about"
+          prefetch={false}
+          onClick={onNavClick}
+          className="flex items-center gap-2 rounded-lg border border-white/15 bg-nav-bg/80 px-3 py-2 text-nav-text transition-colors hover:bg-white/10"
+        >
+          <NavIcon name="person" />
+          <span className="text-xs font-medium">About Nic</span>
+          {isAboutActive && <ChevronDown className="h-3 w-3 shrink-0 text-nav-text" />}
+        </Link>
+        <div className="rounded-lg border border-white/15 px-3 py-2">
+          <ThemeSwitcher />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-fit flex-nowrap items-stretch overflow-clip rounded-b-lg">
@@ -233,77 +294,151 @@ function NavBarContent({ onNavClick }: { onNavClick?: () => void }) {
   );
 }
 
-export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+/** Links shown in the More overflow menu (Building, Topics, Blog, Books). */
+const moreMenuLinks = [
+  { href: "/businesses", label: "Building", icon: "rocket" },
+  { href: "/topics", label: "Topics", icon: "tag" },
+  { href: "/blog", label: "Blog", icon: "document" },
+  { href: "/books", label: "Books", icon: "book" },
+];
+
+/** More overflow sheet — secondary nav links + status bar (Book Nic, About Nic, theme). */
+function MoreSheet({ onClose }: { onClose: () => void }) {
+  const pathname = usePathname();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex flex-col items-center px-3 pt-3 pointer-events-none bg-transparent">
-      {/* Dark bar: width fits content only */}
+    <>
+      {/* Backdrop */}
       <div
-        className="pointer-events-auto w-fit min-w-[480px] overflow-clip rounded-2xl bg-nav-bg"
-        style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
+        className="fixed inset-0 z-40 bg-black/50 md:hidden"
+        aria-hidden
+        onClick={onClose}
+      />
+      {/* Sheet panel */}
+      <div
+        className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 max-h-[70vh] overflow-y-auto rounded-t-2xl bg-nav-bg pb-[env(safe-area-inset-bottom)] md:hidden"
+        style={{ boxShadow: "0 -4px 12px rgba(0,0,0,0.4)" }}
+        role="dialog"
+        aria-label="More menu"
+        aria-modal="true"
       >
-        {/* Desktop: main nav only */}
-        <nav className="hidden md:block" aria-label="Main navigation">
-          <MainNav />
-        </nav>
+        <div className="px-4 py-4">
+          {/* Secondary nav links */}
+          <ul className="flex flex-col gap-1" role="list">
+            {moreMenuLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  prefetch={false}
+                  onClick={onClose}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-3 text-nav-text transition-colors hover:bg-white/10 ${
+                    isNavLinkActive(pathname, link.href) ? "bg-white/10 font-medium" : ""
+                  }`}
+                >
+                  <NavIcon name={link.icon} />
+                  <span>{link.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* Status bar content (Book Nic, About Nic, theme) — compact vertical layout */}
+          <div className="mt-4 border-t border-white/15 pt-4">
+            <NavStatusBar onNavClick={onClose} variant="compact" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
 
-        {/* Mobile: logo + hamburger row only */}
-        <div className="flex items-center justify-between px-3 py-2 md:hidden">
-          <Link
-            href="/"
-            className="text-base font-bold tracking-tight text-nav-text transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg rounded-lg"
-          >
-            Nic Haralambous
-          </Link>
-          <button
-            type="button"
-            className="rounded-lg p-2 text-nav-text transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              )}
-            </svg>
-          </button>
+export function Header() {
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <header className="pointer-events-none fixed inset-0 z-50 flex flex-col bg-transparent">
+      {/* Desktop: top bar + status row (unchanged) */}
+      <div className="pointer-events-auto flex flex-col items-center px-3 pt-3 md:flex">
+        <div
+          className="hidden w-fit min-w-[480px] overflow-clip rounded-2xl bg-nav-bg md:block"
+          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
+        >
+          <nav aria-label="Main navigation">
+            <MainNav />
+          </nav>
+        </div>
+        <div className="hidden md:block">
+          <NavStatusBar />
         </div>
       </div>
 
-      {/* Status bar row: below dark bar, desktop only */}
-      <div className="pointer-events-auto hidden md:block">
-        <NavStatusBar />
-      </div>
-
-      {/* Mobile drawer — Zoom-style layout */}
-      {mobileMenuOpen && (
-        <div
-          className="pointer-events-auto fixed inset-0 z-40 bg-black/50 md:hidden"
-          aria-hidden
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-      <div
-        className={`pointer-events-auto fixed inset-x-3 top-16 z-50 max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl bg-nav-bg transition-opacity md:hidden ${
-          mobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+      {/* Mobile: top-left branding pill (Zoom-style) */}
+      <Link
+        href="/"
+        prefetch={false}
+        className="pointer-events-auto absolute left-3 top-3 z-50 rounded-xl bg-nav-bg px-3 py-1.5 text-sm font-bold tracking-tight text-nav-text transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:hidden"
         style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
-        role="dialog"
-        aria-label="Navigation menu"
-        aria-modal="true"
       >
-        {mobileMenuOpen && (
-          <nav aria-label="Mobile navigation">
-            <NavBarContent
-              onNavClick={() => setMobileMenuOpen(false)}
-            />
-          </nav>
-        )}
-      </div>
+        Nic Haralambous
+      </Link>
+
+      {/* Mobile: bottom nav bar (Zoom-style, 4 items) */}
+      <nav
+        className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 flex items-center justify-around border-t border-white/10 bg-nav-bg md:hidden"
+        style={{
+          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingTop: "0.75rem",
+          minHeight: "var(--bottom-nav-height-mobile)",
+        }}
+        aria-label="Mobile navigation"
+      >
+        {mobileNavLinks.map((item) => {
+          if (item.isButton) {
+            const isActive = isMoreMenuActive(pathname);
+            return (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => setMoreMenuOpen(true)}
+                className={`flex flex-col items-center gap-0.5 rounded px-2 py-1 text-nav-text transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg ${
+                  isActive ? "text-white" : ""
+                }`}
+                aria-label="Open more menu"
+                aria-expanded={moreMenuOpen}
+              >
+                <NavIcon name={item.icon} />
+                <span className="text-xs font-medium">{item.label}</span>
+              </button>
+            );
+          }
+          const isActive = isNavLinkActive(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              prefetch={false}
+              className={`flex flex-col items-center gap-0.5 rounded px-2 py-1 text-nav-text transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg ${
+                isActive ? "text-white" : ""
+              }`}
+            >
+              {isActive ? (
+                <span
+                  className="flex items-center justify-center rounded p-0.5 [&_svg]:text-white"
+                  style={{ backgroundColor: "var(--color-nav-green)" }}
+                >
+                  <NavIcon name={item.icon} />
+                </span>
+              ) : (
+                <NavIcon name={item.icon} />
+              )}
+              <span className="text-xs font-medium">{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* More overflow sheet */}
+      {moreMenuOpen && <MoreSheet onClose={() => setMoreMenuOpen(false)} />}
     </header>
   );
 }

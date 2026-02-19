@@ -25,10 +25,8 @@ import { client } from "@/lib/sanity/client";
 import {
   homepageFeaturedKeynotesQuery,
   homepageRecentPostsQuery,
-  homepageTestimonialsQuery,
   type HomepageKeynote,
   type HomepagePost,
-  type HomepageTestimonial,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
@@ -36,6 +34,7 @@ import { SlideDeck } from "@/components/slide-deck";
 import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { TestimonialToEmbed } from "@/components/testimonial-to-embed";
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -67,26 +66,15 @@ async function getRecentPosts(): Promise<HomepagePost[] | null> {
   }
 }
 
-async function getTestimonials(): Promise<HomepageTestimonial[] | null> {
-  try {
-    const data = await client.fetch<HomepageTestimonial[]>(homepageTestimonialsQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  const [keynotes, posts, testimonials] = await Promise.all([
+  const [keynotes, posts] = await Promise.all([
     getFeaturedKeynotes(),
     getRecentPosts(),
-    getTestimonials(),
   ]);
 
   const displayKeynotes = keynotes || FALLBACK_KEYNOTES;
-  const displayTestimonials = testimonials || FALLBACK_TESTIMONIALS;
 
   return (
     <SlideDeck>
@@ -111,7 +99,7 @@ export default async function HomePage() {
         }
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
-        <div className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
+        <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
           <h1
             className="heading-stroke font-bebas text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl"
           >
@@ -345,37 +333,47 @@ export default async function HomePage() {
         </SlideContent>
       </Slide>
 
-      {/* Slide 5: Social proof — testimonials */}
+      {/* Slide 5: Social proof — Testimonial.to embed */}
       <Slide
-        variant="grid-3"
+        variant="full"
         id="testimonials"
         background="bg-speech-pattern"
       >
-        <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+        <SlideContent className="relative">
+          {/* Headline */}
+          <h2 className="heading-stroke font-bebas pt-2 text-left text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Clients Say
           </h2>
-          <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
-            {displayTestimonials.map((testimonial, i) => (
-              <blockquote
-                key={testimonial._id || `fallback-${i}`}
-                className="flex flex-col border-[20px] border-accent-600 bg-white p-6"
-                style={{ transform: `rotate(${tilt(i, 4)}deg)` }}
-              >
-                <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <footer className="mt-4 pt-4">
-                  <p className="font-bebas text-lg uppercase text-accent-600">
-                    {testimonial.authorName}
-                  </p>
-                  <p className="text-xs text-brand-500">
-                    {testimonial.authorTitle}
-                    {testimonial.company && `, ${testimonial.company}`}
-                  </p>
-                </footer>
-              </blockquote>
-            ))}
+          {/* Testimonial box — in normal flow; leaves room for 16bit on right (md+) */}
+          <div className="mt-6 overflow-hidden border-[20px] border-accent-600 bg-white px-2 md:max-w-[calc(100%-440px)]">
+            <TestimonialToEmbed />
+          </div>
+          {/* 16bit desktop — absolute, out of flow, no empty space */}
+          <div
+            className="absolute right-4 top-1/2 hidden -translate-y-1/2 overflow-hidden rounded-full md:block"
+            style={{
+              width: "clamp(280px, 36vw, 400px)",
+              height: "clamp(400px, 76vh, 640px)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/Nic_Ancient_greece_16bit.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none h-full w-full select-none object-contain object-bottom"
+            />
+          </div>
+          {/* 16bit mobile — below box */}
+          <div
+            className="mx-auto mt-6 flex max-w-[200px] justify-center overflow-hidden rounded-full md:hidden"
+          >
+            <img
+              src="/slides/Nic_Ancient_greece_16bit.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none h-auto w-full select-none object-contain"
+            />
           </div>
         </SlideContent>
       </Slide>
@@ -473,30 +471,6 @@ const FALLBACK_KEYNOTES: HomepageKeynote[] = [
       { _id: "t5", title: "Curiosity", slug: "curiosity" },
       { _id: "t6", title: "Innovation", slug: "innovation" },
     ],
-  },
-];
-
-const FALLBACK_TESTIMONIALS: HomepageTestimonial[] = [
-  {
-    _id: "ft-1",
-    quote: "Nic's keynote on curiosity was the highlight of our conference. Our team is still referencing his frameworks months later.",
-    authorName: "Placeholder Name",
-    authorTitle: "Head of Innovation",
-    company: "Company Name",
-  },
-  {
-    _id: "ft-2",
-    quote: "The virtual delivery was flawless. Nic kept 500+ remote attendees fully engaged for the entire session.",
-    authorName: "Placeholder Name",
-    authorTitle: "Events Director",
-    company: "Company Name",
-  },
-  {
-    _id: "ft-3",
-    quote: "Real stories from real experience. No fluff, no generic advice — just frameworks we could use immediately.",
-    authorName: "Placeholder Name",
-    authorTitle: "CEO",
-    company: "Company Name",
   },
 ];
 

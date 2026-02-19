@@ -5,7 +5,7 @@
  * Includes sitewide JSON-LD (Person + WebSite) on every page.
  * Font loading uses next/font for optimal performance.
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Bebas_Neue } from "next/font/google";
 import { Header } from "@/components/header";
 import { ConditionalFooter } from "@/components/conditional-footer";
@@ -56,6 +56,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -71,7 +75,7 @@ export default function RootLayout({
           <JsonLd data={websiteJsonLd()} />
 
           <Header />
-          <main className="flex-1 pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">{children}</main>
+          <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] pt-[var(--top-branding-height-mobile)] md:pb-0 md:pt-[var(--header-height-desktop)]">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>
       </body>

@@ -15,7 +15,7 @@
 interface SlideProps {
   children: React.ReactNode;
   /** Controls inner container width. Defaults to "wide" (72rem). */
-  variant?: "hero" | "centered" | "grid-3" | "grid-6" | "logos" | "cta" | "footer";
+  variant?: "hero" | "centered" | "grid-3" | "grid-6" | "logos" | "cta" | "footer" | "full";
   /** Optional background class (e.g. "bg-brand-50", "bg-accent-600"). */
   background?: string;
   /** Additional classes applied to the outer slide wrapper. */
@@ -45,6 +45,7 @@ const variantWidth: Record<NonNullable<SlideProps["variant"]>, string> = {
   logos: "container-wide",
   cta: "container-content",
   footer: "container-wide",
+  full: "w-full max-w-none px-4 md:px-6",
 };
 
 export function Slide({
