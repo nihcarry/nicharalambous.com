@@ -37,6 +37,16 @@ import { SlideParallaxImage, SlideContent } from "@/components/slide-animations"
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 
+/**
+ * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
+ * Uses a simple hash so each (slide, card) pair gets a unique but
+ * stable rotation that doesn't repeat in an obvious pattern.
+ */
+function tilt(index: number, seed: number, maxDeg = 1.8): number {
+  const hash = Math.sin(index * 127.1 + seed * 311.7) * 43758.5453;
+  return +((hash - Math.floor(hash)) * maxDeg * 2 - maxDeg).toFixed(2);
+}
+
 /* ---------- Data fetching ---------- */
 
 async function getFeaturedKeynotes(): Promise<HomepageKeynote[] | null> {
@@ -86,7 +96,7 @@ export default async function HomePage() {
         variant="hero"
         id="hero"
         background="bg-rocket-pattern"
-        className="md:pb-24"
+        className=""
         image={
           <SlideParallaxImage>
             {/* Portrait — positioned right, behind content (z-0) */}
@@ -102,9 +112,8 @@ export default async function HomePage() {
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
-          {/* Headline — Bebas Neue display font with 4px black stroke */}
           <h1
-            className="heading-stroke font-bebas text-4xl uppercase leading-[0.95] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+            className="heading-stroke font-bebas text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl"
           >
             <span className="text-accent-600">Keynote speaker,</span>
             <br />
@@ -140,7 +149,6 @@ export default async function HomePage() {
         variant="grid-3"
         background="bg-mic-pattern"
         id="keynotes"
-        constrainHeight
         image={
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -152,16 +160,16 @@ export default async function HomePage() {
         }
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-accent-600 sm:text-7xl md:text-8xl lg:text-9xl">
+          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Nic Speaks About
           </h2>
-          <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {displayKeynotes.map((keynote, i) => (
               <Link
                 key={keynote.slug}
                 href={`/keynotes/${keynote.slug}`}
                 className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
-                style={{ transform: `rotate(${[-1.5, 1, -0.75][i % 3]}deg)` }}
+                style={{ transform: `rotate(${tilt(i, 1)}deg)` }}
               >
                 <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                   {keynote.title}
@@ -184,7 +192,7 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center">
             <CTAButton href="/keynotes" className="!rounded-none font-bebas text-xl uppercase">
               View All Keynotes
             </CTAButton>
@@ -198,7 +206,6 @@ export default async function HomePage() {
           variant="grid-3"
           id="thinking"
           background="bg-pen-pattern"
-          constrainHeight
           image={
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -210,16 +217,16 @@ export default async function HomePage() {
           }
         >
           <SlideContent>
-            <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
+            <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
               Latest Thinking
             </h2>
-            <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post, i) => (
                 <Link
                   key={post._id}
                   href={`/blog/${post.slug}`}
                   className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
-                  style={{ transform: `rotate(${[1, -0.75, 1.5][i % 3]}deg)` }}
+                  style={{ transform: `rotate(${tilt(i, 2)}deg)` }}
                 >
                   <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                     {post.title}
@@ -244,7 +251,7 @@ export default async function HomePage() {
                 </Link>
               ))}
             </div>
-            <div className="mt-8 text-center">
+            <div className="mt-6 text-center">
               <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
                 Read the Blog
               </CTAButton>
@@ -253,40 +260,57 @@ export default async function HomePage() {
         </Slide>
       )}
 
-      {/* Slide 4: Topics preview */}
+      {/* Slide 4: Topics preview — heading occupies top-left 2 cells of the 3-col grid */}
       <Slide
         variant="grid-6"
         background="bg-lightbulb-pattern"
         id="topics"
-        constrainHeight
       >
-        <SlideContent className="md:pt-36">
-          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
-            Explore Topics
-          </h2>
-          <div className="relative mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/slides/Nic_Hunting_Pickaxe.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute left-0 z-50 hidden h-36 w-auto select-none object-contain object-bottom md:block"
-              style={{ top: "-120px" }}
-            />
-            {TOPIC_PREVIEWS.map((topic, i) => (
-              i === 5 ? (
+        <SlideContent>
+          <div className="grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Heading in place of first two cards */}
+            <div className="flex items-center sm:col-span-2">
+              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+                Explore Topics
+              </h2>
+            </div>
+            {/* Top-right card */}
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/slides/Nic_archeo_16bit.png"
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-full right-4 z-50 h-24 w-auto select-none object-contain object-bottom"
+              />
+              <Link
+                href={TOPIC_PREVIEWS[0].href}
+                className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                style={{ transform: `rotate(${tilt(0, 3)}deg)` }}
+              >
+                <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                  {TOPIC_PREVIEWS[0].title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                  {TOPIC_PREVIEWS[0].description}
+                </p>
+              </Link>
+            </div>
+            {/* Bottom row — 3 cards */}
+            {TOPIC_PREVIEWS.slice(1).map((topic, i) => (
+              i === 0 ? (
                 <div key={topic.href} className="relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/slides/Nic_archeo_16bit.png"
+                    src="/slides/Nic_Hunting_Pickaxe.png"
                     alt=""
                     aria-hidden="true"
-                    className="pointer-events-none absolute bottom-full right-4 z-50 h-24 w-auto select-none object-contain object-bottom"
+                    className="pointer-events-none absolute bottom-full left-4 z-50 hidden h-36 w-auto select-none object-contain object-bottom md:block"
                   />
                   <Link
                     href={topic.href}
                     className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
-                    style={{ transform: `rotate(${[-1.5, 1, -0.75, 1.5, -1, 0.75][i % 6]}deg)` }}
+                    style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                   >
                     <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                       {topic.title}
@@ -301,7 +325,7 @@ export default async function HomePage() {
                   key={topic.href}
                   href={topic.href}
                   className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
-                  style={{ transform: `rotate(${[-1.5, 1, -0.75, 1.5, -1, 0.75][i % 6]}deg)` }}
+                  style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                 >
                   <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                     {topic.title}
@@ -313,7 +337,7 @@ export default async function HomePage() {
               )
             ))}
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-right">
             <CTAButton href="/topics" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
               All Topics
             </CTAButton>
@@ -328,15 +352,15 @@ export default async function HomePage() {
         background="bg-speech-pattern"
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
+          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Clients Say
           </h2>
-          <div className="mt-8 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {displayTestimonials.map((testimonial, i) => (
               <blockquote
                 key={testimonial._id || `fallback-${i}`}
                 className="flex flex-col border-[20px] border-accent-600 bg-white p-6"
-                style={{ transform: `rotate(${[-1, 1.5, -0.75][i % 3]}deg)` }}
+                style={{ transform: `rotate(${tilt(i, 4)}deg)` }}
               >
                 <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
                   &ldquo;{testimonial.quote}&rdquo;
@@ -359,7 +383,7 @@ export default async function HomePage() {
       {/* Slide 6: "As seen at" logos */}
       <Slide variant="logos" background="bg-broadcast-pattern" id="logos">
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl lg:text-9xl">
+          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             As Seen At
           </h2>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
@@ -383,7 +407,7 @@ export default async function HomePage() {
         id="cta"
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-5xl uppercase text-brand-900 sm:text-7xl md:text-8xl">
+          <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             Want Nic at Your Next Event?
           </h2>
           <p className="mt-4 text-lg text-brand-700">
@@ -492,14 +516,9 @@ const TOPIC_PREVIEWS = [
     href: "/topics/curiosity",
   },
   {
-    title: "AI & Product Building",
-    description: "How to use AI as a tool without losing your mind — or your team's creative edge.",
-    href: "/topics/ai",
-  },
-  {
-    title: "Entrepreneurship & Resilience",
-    description: "4 startup exits, countless failures. Real stories of building, breaking, and rebuilding.",
-    href: "/topics/entrepreneurship",
+    title: "Building Breakthrough Products",
+    description: "High agency, selective curiosity, and the innovation flywheel.",
+    href: "/topics/innovation",
   },
   {
     title: "Focus & Agency",
@@ -507,13 +526,8 @@ const TOPIC_PREVIEWS = [
     href: "/topics/focus",
   },
   {
-    title: "Failure as Data",
-    description: "Why blameless postmortems and post-traumatic growth build stronger teams.",
-    href: "/topics/failure",
-  },
-  {
-    title: "Building Breakthrough Teams",
-    description: "High agency, selective curiosity, and the innovation flywheel.",
-    href: "/topics/innovation",
+    title: "AI & Product Building",
+    description: "How to use AI as a tool without losing your mind — or your team's creative edge.",
+    href: "/topics/ai",
   },
 ];

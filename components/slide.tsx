@@ -76,7 +76,7 @@ export function Slide({
         /* Flex column to vertically center content on desktop */
         "md:flex md:flex-col md:items-center md:justify-center",
         /* Standard section padding on mobile; tighter on desktop slides */
-        "py-[var(--spacing-section-sm)] md:py-12",
+        "py-[var(--spacing-section-sm)] md:py-8",
         /* Background and extra classes */
         background,
         className,
