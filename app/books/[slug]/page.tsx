@@ -31,6 +31,14 @@ import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { bookJsonLd } from "@/lib/metadata";
 
+/* ---------- Static cover images (used when CMS has no coverImage) ---------- */
+
+const STATIC_COVERS: Record<string, string> = {
+  "do-fail-learn-repeat": "/slides/Do_Fail_Learn_repeate.jpg",
+  "how-to-start-a-side-hustle": "/slides/How_to_start_a_side_Hustle.jpg",
+  "the-business-builders-toolkit": "/slides/Business_Builders_Toolkit.jpg",
+};
+
 /* ---------- Data fetching ---------- */
 
 async function getBook(slug: string): Promise<BookData | null> {
@@ -107,7 +115,7 @@ export default async function BookPage({
 
   const coverUrl = book.coverImage?.asset
     ? urlFor(book.coverImage).width(600).auto("format").url()
-    : undefined;
+    : STATIC_COVERS[slug];
 
   return (
     <div className="page-bg bg-bookmark-pattern">
@@ -124,7 +132,7 @@ export default async function BookPage({
       />
 
       {/* Hero */}
-      <Section width="content">
+      <Section width="content" className="!pb-8 md:!pb-10">
         <div className="flex flex-col gap-8 md:flex-row md:items-start">
           {/* Cover image */}
           {coverUrl && (
@@ -158,15 +166,14 @@ export default async function BookPage({
             {book.buyLinks && book.buyLinks.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-3">
                 {book.buyLinks.map((link) => (
-                  <a
+                  <CTAButton
                     key={link.url}
                     href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center border-2 border-accent-600 px-4 py-2 font-bebas text-sm uppercase text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
+                    external
+                    className="!rounded-none font-bebas text-xl uppercase"
                   >
-                    {link.label}
-                  </a>
+                    Buy Now
+                  </CTAButton>
                 ))}
               </div>
             )}
@@ -175,7 +182,7 @@ export default async function BookPage({
       </Section>
 
       {/* Description — Portable Text from CMS or fallback */}
-      <Section width="content">
+      <Section width="content" className="!pt-0 !pb-8 md:!pb-10">
         <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">About This Book</h2>
         {hasCmsDescription ? (
           <PortableText value={cmsBook!.description} className="mt-6" />
@@ -193,7 +200,7 @@ export default async function BookPage({
 
       {/* Related topics */}
       {book.relatedTopics && book.relatedTopics.length > 0 && (
-        <Section width="content">
+        <Section width="content" className="!pt-0 !pb-8 md:!pb-10">
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Topics</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             {book.relatedTopics.map((topic) => (
@@ -231,6 +238,7 @@ interface FallbackBook extends BookData {
 const FALLBACK_SLUGS = [
   { slug: "do-fail-learn-repeat" },
   { slug: "how-to-start-a-side-hustle" },
+  { slug: "the-business-builders-toolkit" },
 ];
 
 const FALLBACK_BOOKS: Record<string, FallbackBook> = {
@@ -248,7 +256,9 @@ const FALLBACK_BOOKS: Record<string, FallbackBook> = {
     ],
     publishedYear: 2020,
     isbn: null,
-    buyLinks: null,
+    buyLinks: [
+      { label: "Amazon", url: "https://www.amazon.com/dp/B084DHQM3L" },
+    ],
     relatedTopics: [
       { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
       { _id: "t2", title: "Failure", slug: "failure" },
@@ -260,7 +270,7 @@ const FALLBACK_BOOKS: Record<string, FallbackBook> = {
     _id: "fb-2",
     title: "How to Start a Side Hustle",
     slug: "how-to-start-a-side-hustle",
-    subtitle: "The Business Builder's Toolkit",
+    subtitle: "Build a Business Without Quitting Your Day Job",
     coverImage: null,
     description: null,
     descriptionText: [
@@ -270,7 +280,31 @@ const FALLBACK_BOOKS: Record<string, FallbackBook> = {
     ],
     publishedYear: 2019,
     isbn: null,
-    buyLinks: null,
+    buyLinks: [
+      { label: "Amazon", url: "https://www.amazon.com/dp/1776093380" },
+    ],
+    relatedTopics: [
+      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
+    ],
+    seo: null,
+  },
+  "the-business-builders-toolkit": {
+    _id: "fb-3",
+    title: "The Business Builder's Toolkit",
+    slug: "the-business-builders-toolkit",
+    subtitle: "Frameworks for Modern Entrepreneurs",
+    coverImage: null,
+    description: null,
+    descriptionText: [
+      "The Business Builder's Toolkit distils Nic Haralambous's 20+ years of entrepreneurial experience into practical frameworks you can use immediately.",
+      "From validating ideas and building teams to navigating failure and scaling sustainably — this book is the toolkit Nic wishes he'd had when he started.",
+      "If you're serious about building something that lasts, this is your operating manual.",
+    ],
+    publishedYear: 2021,
+    isbn: null,
+    buyLinks: [
+      { label: "Amazon", url: "https://www.amazon.com/dp/B09EXAMPLE" },
+    ],
     relatedTopics: [
       { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
     ],

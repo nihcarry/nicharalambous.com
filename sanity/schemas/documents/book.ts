@@ -36,6 +36,14 @@ export const book = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "shortSummary",
+      title: "Short Summary",
+      type: "text",
+      rows: 3,
+      description:
+        "One-paragraph teaser shown on the books listing page. Keep it under 200 characters.",
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "portableTextBody",

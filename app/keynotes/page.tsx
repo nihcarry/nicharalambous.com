@@ -92,18 +92,9 @@ export default function KeynotesPage() {
         }
       >
         <SlideContent>
-          <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/slides/16Bit_Nic_Keynotes.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-full left-1/2 z-10 hidden h-[min(200px,25vh)] w-auto -translate-x-1/2 select-none object-contain object-bottom md:block"
-            />
-            <h1 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-              Keynote Topics
-            </h1>
-          </div>
+          <h1 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+            Keynote Topics
+          </h1>
           <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
             Each keynote is grounded in 20+ years of real entrepreneurial
             experience and tailored to your audience.{" "}
@@ -111,6 +102,13 @@ export default function KeynotesPage() {
               Learn more about booking Nic &rarr;
             </Link>
           </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/slides/16Bit_Nic_Keynotes.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none mx-auto mt-6 mb-[10px] hidden h-[min(200px,25vh)] w-auto select-none object-contain md:block"
+          />
         </SlideContent>
       </Slide>
 
@@ -122,12 +120,13 @@ export default function KeynotesPage() {
           background="bg-spotlight-pattern"
           id={keynote.slug}
         >
-          <Link
-            href={`/keynotes/${keynote.slug}`}
-            className="group flex w-full flex-col"
-          >
-            {/* Header: number + title + tagline */}
-            <div className="mb-10 md:mb-14">
+          <SlideContent>
+            <Link
+              href={`/keynotes/${keynote.slug}`}
+              className="group flex w-full flex-col"
+            >
+              {/* Header: number + title + tagline */}
+              <div className="mb-10 md:mb-14">
               <span className="font-bebas text-sm tracking-[0.3em] text-brand-400 md:text-base">
                 {String(i + 1).padStart(2, "0")} / {String(keynotes.length).padStart(2, "0")}
               </span>
@@ -191,6 +190,7 @@ export default function KeynotesPage() {
               </span>
             </div>
           </Link>
+          </SlideContent>
         </Slide>
       ))}
 

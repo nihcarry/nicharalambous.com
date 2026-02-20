@@ -450,7 +450,7 @@ export default async function SpeakerPage() {
           description="Book Nic for your next conference, corporate event, team offsite, or webinar. Virtual delivery worldwide."
           primaryHref="/contact"
           primaryLabel="Book Nic for Your Event"
-          headingClassName="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+          headingClassName="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
         />
       </Slide>
 

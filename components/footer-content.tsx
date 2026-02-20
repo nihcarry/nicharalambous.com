@@ -15,9 +15,9 @@ const footerLinks = {
     { href: "/contact", label: "Book Nic" },
   ],
   explore: [
-    { href: "/businesses", label: "Building" },
-    { href: "/blog", label: "Blog" },
     { href: "/topics", label: "Topics" },
+    { href: "/blog", label: "Blog" },
+    { href: "/businesses", label: "Building" },
     { href: "/books", label: "Books" },
     { href: "/media", label: "Media" },
   ],

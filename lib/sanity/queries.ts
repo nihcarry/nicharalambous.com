@@ -179,8 +179,10 @@ export const booksListQuery = `*[_type == "book"] | order(publishedYear desc){
   title,
   "slug": slug.current,
   subtitle,
+  shortSummary,
   coverImage,
   publishedYear,
+  buyLinks,
   "relatedTopics": relatedTopics[]->{
     _id,
     title,
@@ -591,8 +593,10 @@ export interface BookListItem {
   title: string;
   slug: string;
   subtitle: string | null;
+  shortSummary: string | null;
   coverImage: SanityImage | null;
   publishedYear: number | null;
+  buyLinks: { label: string; url: string }[] | null;
   relatedTopics: TopicReference[];
   seo: SeoData | null;
 }

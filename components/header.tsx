@@ -19,8 +19,8 @@ const navLinks = [
   { href: "/", label: "Home", icon: "home", showChevron: false },
   { href: "/speaker", label: "Speaker", icon: "mic", showChevron: true },
   { href: "/keynotes", label: "Keynotes", icon: "play", showChevron: true },
-  { href: "/businesses", label: "Building", icon: "rocket", showChevron: true },
   { href: "/topics", label: "Topics", icon: "tag", showChevron: true },
+  { href: "/businesses", label: "Building", icon: "rocket", showChevron: true },
   { href: "/blog", label: "Blog", icon: "document", showChevron: true },
   { href: "/books", label: "Books", icon: "book", showChevron: true },
 ];
@@ -296,8 +296,8 @@ function NavBarContent({ onNavClick }: { onNavClick?: () => void }) {
 
 /** Links shown in the More overflow menu (Building, Topics, Blog, Books). */
 const moreMenuLinks = [
-  { href: "/businesses", label: "Building", icon: "rocket" },
   { href: "/topics", label: "Topics", icon: "tag" },
+  { href: "/businesses", label: "Building", icon: "rocket" },
   { href: "/blog", label: "Blog", icon: "document" },
   { href: "/books", label: "Books", icon: "book" },
 ];

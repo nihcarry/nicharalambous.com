@@ -1,26 +1,24 @@
 /**
  * About Page — /about
  *
- * Consolidated bio, key facts, business highlights, and media logos.
- * Full businesses history lives at /businesses.
+ * Personal bio page merging the warm first-person tone from the old
+ * Squarespace site with LinkedIn-verified career data. Career is
+ * organized around identity pillars (Entrepreneur, Speaker & Coach,
+ * Product Builder, Writer) rather than a chronological timeline.
  *
  * Sections:
- * 1. Hero with bio
- * 2. Key facts / numbers
- * 3. Business highlights (top entries + link to /businesses)
- * 4. Media logos
+ * 1. Hero — identity-first heading, photo, bio, inline stats
+ * 2. Story — personal narrative + famous quote pullquote
+ * 3. Career pillars — 4 thematic blocks with LinkedIn-verified positions
+ * 4. Media logos — "As Featured In"
  * 5. Books teaser
- * 6. CTA → /speaker
+ * 6. Final CTA with quote
  *
  * JSON-LD: AboutPage + Person (sitewide)
  */
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { client } from "@/lib/sanity/client";
-import {
-  businessesQuery,
-  type BusinessData,
-} from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
@@ -28,167 +26,179 @@ import { JsonLd } from "@/components/json-ld";
 import { aboutPageJsonLd } from "@/lib/metadata";
 import { tilt } from "@/lib/tilt";
 
-/* ---------- Data fetching ---------- */
-
-async function getBusinesses(): Promise<BusinessData[] | null> {
-  try {
-    const data = await client.fetch<BusinessData[]>(businessesQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
 /* ---------- Metadata ---------- */
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+    "Nic Haralambous is an entrepreneur, product builder, keynote speaker, and author with 3 business exits, 3 books, and 20+ years building technology businesses.",
   alternates: { canonical: "https://nicharalambous.com/about" },
   openGraph: {
     title: "About Nic Haralambous",
     description:
-      "Entrepreneur, AI product builder, and virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses.",
+      "Entrepreneur, product builder, keynote speaker, and author. 3 business exits, 3 books, 20+ years building tech businesses.",
     url: "https://nicharalambous.com/about",
   },
 };
 
 /* ---------- Page ---------- */
 
-export default async function AboutPage() {
-  const businesses = await getBusinesses();
-  const displayBusinesses = businesses || FALLBACK_BUSINESSES;
-
+export default function AboutPage() {
   return (
     <div className="page-bg bg-person-pattern">
-      {/* Structured data */}
       <JsonLd data={aboutPageJsonLd()} />
 
-      {/* Hero / Bio */}
-      <Section width="content">
-        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
-          About Nic Haralambous
-        </h1>
-        <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
-          <p>
-            Nic Haralambous is an entrepreneur, AI product builder, and{" "}
-            <Link href="/speaker" className="text-accent-600 hover:underline">
-              virtual keynote speaker
-            </Link>
-            . With 4 startup exits, 3 published books, and more than 20 years building
-            technology businesses, he helps modern teams unlock curiosity, build with
-            AI, and turn innovation into profit.
-          </p>
-          <p>
-            Nic started his first business at 21 — a music tech startup that became one
-            of South Africa&rsquo;s first commercial blogs. Since then, he&rsquo;s co-founded and
-            exited four companies, written three books, and spoken at events worldwide
-            including SXSW, Standard Bank, and Vodacom.
-          </p>
-          <p>
-            Today, Nic focuses on two things: building AI-powered products and delivering{" "}
-            <Link href="/keynotes" className="text-accent-600 hover:underline">
-              virtual keynotes
-            </Link>{" "}
-            that help teams think differently about curiosity, innovation, focus, and
-            failure.
-          </p>
-        </div>
-      </Section>
-
-      {/* Key facts */}
+      {/* Hero — identity-first heading with photo */}
       <Section width="wide">
-        <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
-          {KEY_FACTS.map((fact, i) => (
-            <div
-              key={fact.label}
-              className="card-brutalist p-6"
-              style={{ transform: `rotate(${tilt(i, 30)}deg)` }}
-            >
-              <p className="heading-display text-5xl text-accent-600">{fact.value}</p>
-              <p className="mt-2 text-sm font-medium text-brand-600">{fact.label}</p>
+        <div className="grid items-center gap-12 md:grid-cols-2">
+          <div>
+            <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl md:text-7xl">
+              I Am Nic Haralambous
+            </h1>
+            <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
+              <p>
+                I am an obsessive entrepreneur,{" "}
+                <Link href="/speaker" className="text-accent-600 hover:underline">
+                  keynote speaker
+                </Link>
+                , product builder, and published author. I&rsquo;ve been building
+                businesses since I was 16, sold three of them, and spent more than
+                20 years learning tough lessons through failure and success.
+              </p>
+              <p>
+                Today I build products at{" "}
+                <a
+                  href="https://www.yoco.com"
+                  className="text-accent-600 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Yoco
+                </a>{" "}
+                and deliver{" "}
+                <Link href="/keynotes" className="text-accent-600 hover:underline">
+                  virtual keynotes
+                </Link>{" "}
+                that help teams think differently about curiosity, innovation,
+                and failure.
+              </p>
             </div>
-          ))}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {KEY_STATS.map((stat) => (
+                <span
+                  key={stat.label}
+                  className="border-2 border-accent-600 px-3 py-1.5"
+                >
+                  <span className="heading-display text-lg text-accent-600">
+                    {stat.value}
+                  </span>
+                  <span className="ml-1.5 text-xs font-medium text-brand-600">
+                    {stat.label}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <div className="relative">
+              {/* Top, left, right borders — behind the image */}
+              <div className="absolute bottom-0 left-1/2 h-1/3 w-[110%] -translate-x-1/2 border-[12px] border-accent-600 border-b-0 bg-transparent md:border-[20px] md:border-b-0" />
+              <Image
+                src="/slides/Nic_about_new.png"
+                alt="Nic Haralambous"
+                width={480}
+                height={800}
+                className="relative z-10 h-auto w-full max-w-sm md:max-w-md"
+                priority
+              />
+              {/* Bottom border — in front of the image */}
+              <div className="absolute bottom-0 left-1/2 z-20 h-[12px] w-[110%] -translate-x-1/2 bg-accent-600 md:h-[20px]" />
+            </div>
+          </div>
         </div>
       </Section>
 
-      {/* Business highlights — full list at /businesses */}
+      {/* Personal story + famous quote */}
       <Section width="content">
-        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-          Businesses &amp; Exits
+        <div className="space-y-4 text-base leading-relaxed text-brand-700">
+          <p>
+            I built my first website when I was 11 years old, my first business
+            at 16, and a band that didn&rsquo;t go as far as I wanted.
+          </p>
+          <p>
+            My career has taken me from student journalism to mobile product
+            management at Vodacom, to co-founding and selling Motribe to Mxit,
+            launching a sock brand with R5,000 that grew into five retail stores,
+            and eventually to keynote stages around the world — SXSW, Standard
+            Bank, Vodacom, Old Mutual, and Nedbank.
+          </p>
+          <p>
+            Through it all, I&rsquo;ve learned that above all else, culture
+            creates change. My work today focuses on helping businesses build
+            more curious, entrepreneurial cultures — whether through{" "}
+            <Link href="/keynotes" className="text-accent-600 hover:underline">
+              keynotes
+            </Link>
+            , coaching, or building products.
+          </p>
+        </div>
+
+        <blockquote className="my-16 border-l-[6px] border-accent-600 py-4 pl-8">
+          <p className="heading-display-stroke-sm text-2xl leading-snug text-brand-900 sm:text-3xl md:text-4xl">
+            &ldquo;Plan in decades. Think in years. Work in months. Live in
+            days.&rdquo;
+          </p>
+          <cite className="mt-4 block text-sm font-medium not-italic text-brand-500">
+            &mdash; Nic Haralambous
+          </cite>
+        </blockquote>
+      </Section>
+
+      {/* Career pillars — LinkedIn-verified positions grouped by identity */}
+      <Section width="wide">
+        <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
+          Career
         </h2>
-        <p className="mt-2 text-base text-brand-500">
-          20+ ventures across two decades.{" "}
-          <Link href="/businesses" className="text-accent-600 hover:underline">
-            View the full list &rarr;
-          </Link>
-        </p>
-        <div className="mt-10 space-y-0">
-          {displayBusinesses.slice(0, 5).map((biz, i) => (
+        <div className="mt-12 grid gap-8 md:grid-cols-2">
+          {CAREER_PILLARS.map((pillar, i) => (
             <div
-              key={biz._id || `biz-${i}`}
-              className="relative border-l-2 border-brand-200 py-6 pl-8 last:pb-0"
+              key={pillar.title}
+              className="card-brutalist p-6 md:p-8"
+              style={{ transform: `rotate(${tilt(i, 50)}deg)` }}
             >
-              {/* Timeline dot */}
-              <div className="absolute -left-[9px] top-7 h-4 w-4 border-2 border-accent-500 bg-surface" />
-
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="heading-display text-lg text-brand-900">
-                  {biz.url ? (
-                    <a
-                      href={biz.url}
-                      className="hover:text-accent-600"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {biz.name}
-                    </a>
-                  ) : (
-                    biz.name
-                  )}
-                </h3>
-                {biz.role && (
-                  <span className="text-sm text-brand-500">{biz.role}</span>
-                )}
+              <h3 className="heading-display text-2xl text-accent-600">
+                {pillar.title}
+              </h3>
+              <div className="mt-6 space-y-4">
+                {pillar.items.map((item) => (
+                  <div
+                    key={`${item.company}-${item.role}`}
+                    className="border-b border-brand-100 pb-3 last:border-0 last:pb-0"
+                  >
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="font-semibold text-brand-900">
+                        {item.company}
+                      </span>
+                      {item.outcome && (
+                        <span className="shrink-0 bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                          {item.outcome}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 text-sm">
+                      <span className="text-brand-600">{item.role}</span>
+                      <span className="text-brand-400">&middot;</span>
+                      <span className="text-brand-400">{item.dates}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              <div className="mt-1 flex items-center gap-3 text-xs text-brand-400">
-                {biz.startYear && (
-                  <span>
-                    {biz.startYear}
-                    {biz.endYear ? `–${biz.endYear}` : "–present"}
-                  </span>
-                )}
-                {biz.outcome && (
-                  <span className={`px-2 py-0.5 text-xs font-medium ${
-                    biz.outcome.startsWith("exit")
-                      ? "bg-green-100 text-green-700"
-                      : biz.outcome === "active"
-                        ? "bg-accent-100 text-accent-600"
-                        : "bg-brand-100 text-brand-600"
-                  }`}>
-                    {formatOutcome(biz.outcome)}
-                  </span>
-                )}
-              </div>
-
-              {biz.description && (
-                <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                  {biz.description}
-                </p>
-              )}
             </div>
           ))}
         </div>
-        <div className="mt-8 text-center">
-          <CTAButton href="/businesses" variant="secondary">
-            View All Businesses
-          </CTAButton>
-        </div>
       </Section>
 
-      {/* Media logos / "As featured in" */}
+      {/* Media logos / "As Featured In" */}
       <Section width="wide">
         <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
           As Featured In
@@ -232,8 +242,10 @@ export default async function AboutPage() {
         </div>
       </Section>
 
-      {/* Final CTA */}
+      {/* Final CTA with famous quote */}
       <FinalCta
+        quote="Plan in decades. Think in years. Work in months. Live in days."
+        quoteAttribution="Nic Haralambous"
         heading="Want Nic at Your Next Event?"
         description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
         primaryHref="/speaker"
@@ -245,30 +257,13 @@ export default async function AboutPage() {
   );
 }
 
-/* ---------- Utilities ---------- */
+/* ---------- Static data ---------- */
 
-function formatOutcome(outcome: string): string {
-  switch (outcome) {
-    case "exit-acquired":
-      return "Acquired";
-    case "exit-sold":
-      return "Sold";
-    case "active":
-      return "Active";
-    case "closed":
-      return "Closed";
-    default:
-      return outcome;
-  }
-}
-
-/* ---------- Fallback data ---------- */
-
-const KEY_FACTS = [
-  { value: "4", label: "Startup Exits" },
+const KEY_STATS = [
+  { value: "3", label: "Business Exits" },
   { value: "3", label: "Books Published" },
-  { value: "20+", label: "Years in Tech" },
-  { value: "100+", label: "Keynotes Delivered" },
+  { value: "20+", label: "Years Building" },
+  { value: "16+", label: "Years Speaking" },
 ];
 
 const MEDIA_LOGOS = [
@@ -293,53 +288,55 @@ const BOOK_TEASERS = [
   },
 ];
 
-const FALLBACK_BUSINESSES: BusinessData[] = [
+interface CareerItem {
+  company: string;
+  role: string;
+  dates: string;
+  outcome?: string;
+}
+
+interface CareerPillar {
+  title: string;
+  items: CareerItem[];
+}
+
+const CAREER_PILLARS: CareerPillar[] = [
   {
-    _id: "fb-1",
-    name: "Nic Haralambous — Keynote Speaking",
-    role: "Founder",
-    description: "Virtual keynote speaker helping teams unlock curiosity, build with AI, and turn innovation into profit.",
-    startYear: 2020,
-    endYear: null,
-    outcome: "active",
-    url: null,
-    logo: null,
-    order: 1,
+    title: "The Entrepreneur",
+    items: [
+      { company: "Nic Harry", role: "CEO & Founder", dates: "Nov 2012 – Nov 2019", outcome: "Sold" },
+      { company: "Resolve Mobile", role: "Director & Co-Founder", dates: "2013 – 2014", outcome: "Sold" },
+      { company: "Motribe", role: "CEO & Co-Founder", dates: "Aug 2010 – Sep 2012", outcome: "Acquired" },
+      { company: "The Slow Fund", role: "Founder", dates: "Jan 2021 – Dec 2022" },
+      { company: "Slow Hustle", role: "Founder", dates: "2020 – 2022" },
+      { company: "Coindirect", role: "COO", dates: "May 2018 – Apr 2020" },
+      { company: "Studentwire", role: "Founder", dates: "Aug 2005 – Jan 2008" },
+    ],
   },
   {
-    _id: "fb-2",
-    name: "Niceboard",
-    role: "Co-founder & CEO",
-    description: "Job board software platform. Built, scaled, and successfully exited.",
-    startYear: 2016,
-    endYear: 2020,
-    outcome: "exit-sold",
-    url: null,
-    logo: null,
-    order: 2,
+    title: "The Speaker & Coach",
+    items: [
+      { company: "Professional Speaker", role: "Keynote Speaker", dates: "Jan 2010 – Present" },
+      { company: "Business Coach & Consultant", role: "Coach", dates: "Mar 2019 – Dec 2022" },
+      { company: "Missing Link", role: "Speaker Coach", dates: "Nov 2020 – Dec 2022" },
+    ],
   },
   {
-    _id: "fb-3",
-    name: "Nic Harry",
-    role: "Founder & CEO",
-    description: "South Africa's leading online sock brand. Built from scratch to national retail distribution.",
-    startYear: 2013,
-    endYear: 2019,
-    outcome: "exit-sold",
-    url: null,
-    logo: null,
-    order: 3,
+    title: "The Product Builder",
+    items: [
+      { company: "Yoco", role: "Senior Product Manager", dates: "Jan 2023 – Present" },
+      { company: "Vodacom", role: "Product Manager: Social Networking", dates: "Jun 2009 – Jul 2010" },
+    ],
   },
   {
-    _id: "fb-4",
-    name: "Motribe",
-    role: "Co-founder",
-    description: "Mobile social networking platform. Acquired by Mxit, South Africa's largest mobile messaging app.",
-    startYear: 2009,
-    endYear: 2012,
-    outcome: "exit-acquired",
-    url: null,
-    logo: null,
-    order: 4,
+    title: "The Writer",
+    items: [
+      { company: "Daily Maverick", role: "Columnist", dates: "Dec 2019 – Jan 2024" },
+      { company: "Courier", role: "Columnist", dates: "Jun 2021 – May 2023" },
+      { company: "Entrepreneur Magazine SA", role: "Columnist", dates: "2012 – 2015" },
+      { company: "Mail & Guardian Online", role: "Mobile Manager", dates: "Apr 2008 – Aug 2008" },
+      { company: "Financial Mail", role: "Campus Editor", dates: "Jun 2007 – May 2008" },
+      { company: "702 Talk Radio", role: "Junior Journalist/Intern", dates: "May 2003 – Jul 2003" },
+    ],
   },
 ];

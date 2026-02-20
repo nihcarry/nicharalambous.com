@@ -53,7 +53,7 @@ const BUDGET_RANGES = [
 /* ---------- Shared input styles ---------- */
 
 const inputStyles =
-  "mt-1 block w-full border border-brand-300 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
+  "mt-1 block w-full border border-brand-300 bg-white px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
 
 /* ---------- Component ---------- */
 
