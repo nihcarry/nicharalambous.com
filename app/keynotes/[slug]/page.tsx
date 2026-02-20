@@ -46,7 +46,10 @@ async function getKeynote(slug: string): Promise<KeynoteData | null> {
 async function getKeynotesSlugs(): Promise<{ slug: string }[]> {
   try {
     const data = await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
-    return data && data.length > 0 ? data : FALLBACK_SLUGS;
+    const cmsSlugs = data && data.length > 0 ? data : [];
+    const seen = new Set(cmsSlugs.map((s) => s.slug));
+    const merged = [...cmsSlugs, ...FALLBACK_SLUGS.filter((s) => !seen.has(s.slug))];
+    return merged;
   } catch {
     return FALLBACK_SLUGS;
   }
@@ -113,7 +116,7 @@ export default async function KeynotePage({
       {/* Structured data */}
       <JsonLd
         data={serviceJsonLd({
-          name: `${keynote.title} — Virtual Keynote`,
+          name: `${keynote.title}: Virtual Keynote`,
           description: keynote.tagline,
           url: `https://nicharalambous.com/keynotes/${slug}`,
         })}
@@ -311,12 +314,111 @@ interface FallbackKeynote extends KeynoteData {
 }
 
 const FALLBACK_SLUGS = [
+  { slug: "connected-not-consumed" },
+  { slug: "innovation-starts-at-home" },
+  { slug: "creating-a-curious-company" },
   { slug: "reclaiming-focus" },
   { slug: "breakthrough-product-teams" },
   { slug: "curiosity-catalyst" },
 ];
 
 const FALLBACK_KEYNOTES: Record<string, FallbackKeynote> = {
+  "connected-not-consumed": {
+    _id: "fallback-cnc",
+    title: "Connected, Not Consumed",
+    slug: "connected-not-consumed",
+    tagline: "Balancing Digital Life and Mental Health at Work",
+    description: null,
+    descriptionParagraphs: [
+      "Modern work rewards constant availability, fast replies, and full calendars while quietly destroying focus, decision quality, and health.",
+      "Most teams aren't failing from lack of effort. They're drowning in reaction.",
+      "This talk helps leaders and teams regain control of their attention without disconnecting from their work or the internet.",
+    ],
+    deliveryFormat: "virtual",
+    duration: "45-60 minutes",
+    outcomes: [
+      "A clear way to decide what actually matters each day",
+      "A practical system to protect focus inside noisy organisations",
+      "A shared language for agency, ownership, and meaningful work",
+      "The DIAL framework: Decide, Intend, Act, Loop back",
+    ],
+    audiences: [
+      "Corporate teams",
+      "Leadership groups",
+      "Remote/hybrid teams",
+    ],
+    videoEmbed: null,
+    topics: [
+      { _id: "t-focus", title: "Focus", slug: "focus" },
+      { _id: "t-agency", title: "Agency", slug: "agency" },
+    ],
+    testimonials: null,
+    seo: null,
+  },
+  "innovation-starts-at-home": {
+    _id: "fallback-ish",
+    title: "Innovation Starts at Home",
+    slug: "innovation-starts-at-home",
+    tagline: "How to build teams that produce breakthroughs",
+    description: null,
+    descriptionParagraphs: [
+      "Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure.",
+      "This talk shows leaders how to build entrepreneurial teams that learn fast, act with agency, and turn failure into progress especially in the AI era.",
+    ],
+    deliveryFormat: "virtual",
+    duration: "45-60 minutes",
+    outcomes: [
+      "Reduce 'progress tax': meetings, process, work-around-work",
+      "Build agency and initiative without chaos",
+      "Create psychological safety with high standards",
+      "The innovation flywheel: Curiosity, Action, Information, Loop",
+    ],
+    audiences: [
+      "Product teams",
+      "Engineering leaders",
+      "Innovation departments",
+    ],
+    videoEmbed: null,
+    topics: [
+      { _id: "t-innovation", title: "Innovation", slug: "innovation" },
+      { _id: "t-curiosity", title: "Curiosity", slug: "curiosity" },
+    ],
+    testimonials: null,
+    seo: null,
+  },
+  "creating-a-curious-company": {
+    _id: "fallback-cacc",
+    title: "Creating a Curious Company",
+    slug: "creating-a-curious-company",
+    tagline: "Why innovation stalls and how curiosity restarts it",
+    description: null,
+    descriptionParagraphs: [
+      "Most organisations don't have an innovation problem.",
+      "They have a curiosity problem.",
+      "In this keynote, Nic challenges the myths of \"innovation theatre\" and reactive change, and shows why real progress doesn't come from hackathons, buzzwords, or panic-driven ideas but from deliberately designing curiosity into how teams think, work, and experiment.",
+      "Through powerful stories, research-backed insights, and live audience interaction, this talk helps leaders and teams break out of stagnation by replacing fear, efficiency obsession, and short-term thinking with curiosity, experimentation, and long-term perspective.",
+    ],
+    deliveryFormat: "virtual",
+    duration: "45-60 minutes",
+    outcomes: [
+      "A clear understanding of why innovation stalls inside successful companies",
+      "Practical ways to turn curiosity into a daily leadership and team practice",
+      "Tools to move beyond \"innovation theatre\" into real, meaningful progress",
+      "A simple framework to help teams experiment, learn, and adapt without fear",
+    ],
+    audiences: [
+      "Conferences",
+      "C-suite retreats",
+      "Innovation teams",
+    ],
+    videoEmbed: null,
+    topics: [
+      { _id: "t-curiosity2", title: "Curiosity", slug: "curiosity" },
+      { _id: "t-innovation2", title: "Innovation", slug: "innovation" },
+    ],
+    testimonials: null,
+    seo: null,
+  },
   "reclaiming-focus": {
     _id: "fallback-1",
     title: "Reclaiming Focus in a World That Profits From Your Distraction",
@@ -325,8 +427,8 @@ const FALLBACK_KEYNOTES: Record<string, FallbackKeynote> = {
       "The DIAL framework for attention management, defeating digital addiction, and reclaiming deep work.",
     description: null,
     descriptionParagraphs: [
-      "We live in an attention economy where every app, notification, and platform is engineered to steal your focus. The average person checks their phone 96 times per day. Your team's most valuable resource isn't time — it's attention.",
-      "In this keynote, Nic introduces the DIAL framework (Decide, Intend, Act, Loop) — a practical system for reclaiming focus and building deep work habits. Drawing from his experience building 4 companies and the latest research on digital addiction, he shows how high-agency individuals and teams take control of their attention.",
+      "We live in an attention economy where every app, notification, and platform is engineered to steal your focus. The average person checks their phone 96 times per day. Your team's most valuable resource isn't time. It's attention.",
+      "In this keynote, Nic introduces the DIAL framework (Decide, Intend, Act, Loop): a practical system for reclaiming focus and building deep work habits. Drawing from his experience building 4 companies and the latest research on digital addiction, he shows how high-agency individuals and teams take control of their attention.",
       "This isn't about going offline. It's about being intentional. Your team will leave with a concrete framework they can apply Monday morning to do their most important work.",
     ],
     deliveryFormat: "virtual",
@@ -360,8 +462,8 @@ const FALLBACK_KEYNOTES: Record<string, FallbackKeynote> = {
       "The Innovation Flywheel: curiosity, experimentation, and high agency.",
     description: null,
     descriptionParagraphs: [
-      "Most teams aren't stuck because they lack talent. They're stuck because they've optimised for compliance over curiosity. The Innovation Flywheel — curiosity → experimentation → learning → agency — is how the best product teams consistently ship work that matters.",
-      "Nic draws from his experience building 4 companies and working with teams at every scale. He introduces the concept of T-shaped people, selective agency, and why 'action produces information' — a principle that separates breakthrough teams from stagnant ones.",
+      "Most teams aren't stuck because they lack talent. They're stuck because they've optimised for compliance over curiosity. The Innovation Flywheel (curiosity, experimentation, learning, agency) is how the best product teams consistently ship work that matters.",
+      "Nic draws from his experience building 4 companies and working with teams at every scale. He introduces the concept of T-shaped people, selective agency, and why 'action produces information': a principle that separates breakthrough teams from stagnant ones.",
       "This keynote includes real stories from Nic's entrepreneurial journey, including how AI is reshaping how teams build products, why the Socratic method beats brainstorming, and what a $1.7M-per-person team (Gamma) can teach us about lean innovation.",
     ],
     deliveryFormat: "virtual",
@@ -393,12 +495,12 @@ const FALLBACK_KEYNOTES: Record<string, FallbackKeynote> = {
     title: "The Curiosity Catalyst",
     slug: "curiosity-catalyst",
     tagline:
-      "Why curiosity is the god particle of innovation — and how to diagnose and cure stagnation.",
+      "Why curiosity is the god particle of innovation, and how to diagnose and cure stagnation.",
     description: null,
     descriptionParagraphs: [
-      "Every organisation says they want innovation. Almost none of them invest in what actually drives it: curiosity. Nic's Stagnation Hypothesis is simple — when teams stop being curious, they start dying. Slowly at first, then all at once.",
+      "Every organisation says they want innovation. Almost none of them invest in what actually drives it: curiosity. Nic's Stagnation Hypothesis is simple. When teams stop being curious, they start dying. Slowly at first, then all at once.",
       "In this keynote, Nic unpacks the three types of curiosity (epistemic, diversive, and empathetic), explains why most 'innovation programs' are actually wackovation (chaotic activity disguised as progress), and shows how companies like Onfido hired specifically for curiosity to build breakthrough teams.",
-      "This is Nic's signature keynote — the one that makes teams uncomfortable in the best possible way. If your organisation is stuck on the OK Plateau, this is the catalyst that gets you moving again.",
+      "This is Nic's signature keynote. The one that makes teams uncomfortable in the best possible way. If your organisation is stuck on the OK Plateau, this is the catalyst that gets you moving again.",
     ],
     deliveryFormat: "virtual",
     duration: "45-60 minutes",

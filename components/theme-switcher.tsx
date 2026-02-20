@@ -1,39 +1,38 @@
 /**
- * ThemeSwitcher — 4-color palette that swaps the site's accent theme.
+ * ThemeSwitcher — "Theme" label + shuffle button for 25 random accent palettes.
  *
- * Renders as a compact row of swatches designed to sit in the nav status bar
- * where the Share button used to be. Clicking a swatch instantly switches
- * the entire site's accent color via CSS custom properties.
+ * Renders in the nav status bar. One tap picks a random complementary color
+ * (persisted in localStorage). Styled like a dark pill with light grey icon.
  */
 "use client";
 
-import { useTheme, THEMES, type ThemeName } from "@/components/theme-provider";
+import { useTheme, pickRandomTheme } from "@/components/theme-provider";
+
+function ShuffleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+    </svg>
+  );
+}
 
 export function ThemeSwitcher() {
-  const { theme, setTheme, themes } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs font-semibold leading-tight text-white">
-        Themes
+        Theme
       </span>
-      <div className="flex items-center gap-1.5">
-        {themes.map((name: ThemeName) => (
-          <button
-            key={name}
-            type="button"
-            onClick={() => setTheme(name)}
-            className={[
-              "h-4 w-4 rounded-full transition-transform hover:scale-125",
-              "focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-1 focus-visible:ring-offset-nav-bg",
-              theme === name ? "ring-2 ring-white scale-110" : "",
-            ].join(" ")}
-            style={{ backgroundColor: THEMES[name].swatch }}
-            aria-label={`Switch to ${name} theme`}
-            aria-pressed={theme === name}
-          />
-        ))}
-      </div>
+      <button
+        type="button"
+        onClick={() => setTheme(pickRandomTheme())}
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-105 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-nav-red)]"
+        aria-label="Pick a random theme"
+        title="Random theme"
+      >
+        <ShuffleIcon className="h-4 w-4 text-neutral-300" />
+      </button>
     </div>
   );
 }

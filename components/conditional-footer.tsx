@@ -12,8 +12,8 @@ import { Footer } from "@/components/footer";
 export function ConditionalFooter() {
   const pathname = usePathname();
 
-  /* Homepage and speaker page render footer as last slide in SlideDeck; skip global footer */
-  if (pathname === "/" || pathname === "/speaker") return null;
+  /* Homepage, speaker, and keynotes render footer as last slide in SlideDeck; skip global footer */
+  if (pathname === "/" || pathname === "/speaker" || pathname === "/keynotes") return null;
 
   return <Footer />;
 }

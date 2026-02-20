@@ -1,33 +1,33 @@
 /**
  * Keynotes Listing Page — /keynotes
  *
- * Lists all available keynote topics. Each links to /keynotes/{slug}.
- * Every keynote card links back to /speaker per internal linking strategy.
+ * Slide deck layout matching homepage/speaker. Each keynote topic is a
+ * full-viewport slide; hero matches the "Virtual Keynote Topics" style.
  *
- * Content is fetched from Sanity at build time. Falls back to hardcoded
- * defaults if Sanity data is not yet published.
+ * Keynote slides use curated copy for maximum impact.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { client } from "@/lib/sanity/client";
-import {
-  keynotesListQuery,
-  type KeynoteListItem,
-} from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
-import { tilt } from "@/lib/tilt";
+import { Slide } from "@/components/slide";
+import { SlideDeck } from "@/components/slide-deck";
+import { SlideContent } from "@/components/slide-animations";
+import { FooterContent } from "@/components/footer-content";
+import { NextSlideIndicator } from "@/components/next-slide-indicator";
 
-/* ---------- Data fetching ---------- */
+/* ---------- Types ---------- */
 
-async function getKeynotes(): Promise<KeynoteListItem[] | null> {
-  try {
-    const data = await client.fetch<KeynoteListItem[]>(keynotesListQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
+interface KeynoteSlide {
+  slug: string;
+  title: string;
+  tagline: string;
+  description: string | string[];
+  keyTakeaways: string[];
+  keyTakeawaysLabel?: string; // default "Key Takeaways"
+  closingLine?: string;
+  deliveryFormat: "virtual" | "hybrid" | "in-person";
+  duration: string;
+  audiences: string[];
 }
 
 /* ---------- Metadata ---------- */
@@ -39,127 +39,232 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://nicharalambous.com/keynotes" },
 };
 
+/* ---------- Helpers ---------- */
+
+function formatLabel(keynote: KeynoteSlide): string {
+  if (keynote.deliveryFormat === "virtual") return "Virtual";
+  if (keynote.deliveryFormat === "hybrid") return "Hybrid";
+  if (keynote.deliveryFormat === "in-person") return "In-Person";
+  return "Virtual";
+}
+
 /* ---------- Page ---------- */
 
-export default async function KeynotesPage() {
-  const cmsKeynotes = await getKeynotes();
-  const keynotes = cmsKeynotes || FALLBACK_KEYNOTES;
+export default function KeynotesPage() {
+  const keynotes = KEYNOTE_SLIDES;
 
   return (
-    <div className="page-bg bg-spotlight-pattern">
-      <Section width="content" className="text-center">
-        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
-          Virtual Keynote Topics
-        </h1>
-        <p className="mt-4 text-lg text-brand-600">
-          Each keynote is grounded in 20+ years of real entrepreneurial
-          experience and tailored to your audience.{" "}
-          <Link href="/speaker" className="text-accent-600 hover:underline">
-            Learn more about booking Nic &rarr;
-          </Link>
-        </p>
-      </Section>
+    <SlideDeck>
+      <NextSlideIndicator />
 
-      <Section width="wide">
-        <div className="grid gap-8 lg:grid-cols-1">
-          {keynotes.map((keynote, i) => (
-            <Link
-              key={keynote.slug}
-              href={`/keynotes/${keynote.slug}`}
-              className="group flex flex-col gap-6 card-brutalist p-8 transition-colors hover:bg-accent-50"
-              style={{ transform: `rotate(${tilt(i, 60)}deg)` }}
-            >
-              <div>
-                <h2 className="heading-display text-2xl text-accent-600">
-                  {keynote.title}
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-brand-600">
-                  {keynote.tagline}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {keynote.topics?.map((topic) => {
-                    const label =
-                      typeof topic === "string" ? topic : topic.title;
-                    const key =
-                      typeof topic === "string" ? topic : topic._id;
-                    return (
-                      <span
-                        key={key}
-                        className="bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
-                      >
-                        {label}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="space-y-2 border-t-2 border-brand-200 pt-6 text-sm text-brand-500">
-                <p>
-                  <span className="font-medium text-brand-700">Format:</span>{" "}
-                  {keynote.deliveryFormat === "virtual"
-                    ? "Virtual"
-                    : keynote.deliveryFormat === "hybrid"
-                      ? "Hybrid"
-                      : keynote.deliveryFormat === "in-person"
-                        ? "In-Person"
-                        : "Virtual"}
-                </p>
-                <p>
-                  <span className="font-medium text-brand-700">Duration:</span>{" "}
-                  {keynote.duration || "45-60 minutes"}
-                </p>
-                <p>
-                  <span className="font-medium text-brand-700">Best for:</span>{" "}
-                  {keynote.audiences?.join(", ") || "All audiences"}
-                </p>
-              </div>
+      {/* Slide 1: Hero — Keynote Topics, audience image at bottom behind next-slide button */}
+      <Slide
+        variant="grid-3"
+        background="bg-spotlight-pattern"
+        id="hero"
+        image={
+          <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] overflow-hidden md:block">
+            {/* Audience — centered at bottom */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/16bit_Audience.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom"
+            />
+            {/* Left pillar — absolutely positioned, overlaps audience edge */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/16Bit_Pillar_Keynote.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 left-[8%] z-[2] h-full w-auto select-none object-contain object-bottom md:left-[12%]"
+            />
+            {/* Right pillar — absolutely positioned, overlaps audience edge */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/16Bit_Pillar_Keynote.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 right-[8%] z-[2] h-full w-auto select-none object-contain object-bottom md:right-[12%]"
+            />
+          </div>
+        }
+      >
+        <SlideContent>
+          <div className="relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/16Bit_Nic_Keynotes.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-full left-1/2 z-10 hidden h-[min(200px,25vh)] w-auto -translate-x-1/2 select-none object-contain object-bottom md:block"
+            />
+            <h1 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+              Keynote Topics
+            </h1>
+          </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
+            Each keynote is grounded in 20+ years of real entrepreneurial
+            experience and tailored to your audience.{" "}
+            <Link href="/speaker" className="text-accent-600 hover:underline">
+              Learn more about booking Nic &rarr;
             </Link>
-          ))}
-        </div>
-      </Section>
+          </p>
+        </SlideContent>
+      </Slide>
 
-      {/* CTA to speaker page — reinforces internal linking to /speaker */}
-      <FinalCta
-        heading="Want Nic at Your Event?"
-        description="Every keynote is customized for your audience. Virtual delivery worldwide."
-        primaryHref="/contact"
-        primaryLabel="Book a Keynote"
-        secondaryHref="/speaker"
-        secondaryLabel="About Nic as a Speaker"
-      />
-    </div>
+      {/* Slides 2..N: One slide per keynote */}
+      {keynotes.map((keynote, i) => (
+        <Slide
+          key={keynote.slug}
+          variant="grid-3"
+          background="bg-spotlight-pattern"
+          id={keynote.slug}
+        >
+          <Link
+            href={`/keynotes/${keynote.slug}`}
+            className="group flex w-full flex-col"
+          >
+            {/* Header: number + title + tagline */}
+            <div className="mb-10 md:mb-14">
+              <span className="font-bebas text-sm tracking-[0.3em] text-brand-400 md:text-base">
+                {String(i + 1).padStart(2, "0")} / {String(keynotes.length).padStart(2, "0")}
+              </span>
+              <h2 className="heading-stroke font-bebas mt-2 text-5xl uppercase leading-[0.9] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+                {keynote.title}
+              </h2>
+              <div className="mt-4 h-1 w-20 bg-accent-600" />
+              <p className="mt-4 max-w-2xl text-xl font-semibold leading-snug text-accent-600 md:text-2xl lg:text-3xl">
+                {keynote.tagline}
+              </p>
+            </div>
+
+            {/* Body: description + takeaways side by side */}
+            <div className="grid gap-8 md:grid-cols-5 md:gap-12 lg:gap-16">
+              <div className="space-y-4 text-base leading-relaxed text-brand-600 md:col-span-3 md:text-lg">
+                {Array.isArray(keynote.description)
+                  ? keynote.description.map((para, j) => (
+                      <p key={j}>{para}</p>
+                    ))
+                  : <p>{keynote.description}</p>}
+              </div>
+              <div className="md:col-span-2">
+                <h3 className="font-bebas text-lg uppercase tracking-wider text-brand-900 md:text-xl">
+                  {keynote.keyTakeawaysLabel ?? "Key Takeaways"}
+                </h3>
+                <ul className="mt-4 space-y-3 text-sm text-brand-700 md:text-base">
+                  {keynote.keyTakeaways.map((item, j) => (
+                    <li key={j} className="flex gap-3">
+                      <span className="mt-[7px] block h-2 w-2 shrink-0 bg-accent-600" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                {keynote.closingLine && (
+                  <p className="mt-6 border-l-2 border-accent-600 pl-4 text-sm italic text-brand-600 md:text-base">
+                    {keynote.closingLine}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Footer: metadata strip + CTA */}
+            <div className="mt-10 flex flex-col gap-4 border-t border-brand-200 pt-6 sm:flex-row sm:items-center sm:justify-between md:mt-14">
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-brand-500">
+                <span>
+                  <span className="font-medium text-brand-700">Format:</span>{" "}
+                  {formatLabel(keynote)}
+                </span>
+                <span>
+                  <span className="font-medium text-brand-700">Duration:</span>{" "}
+                  {keynote.duration}
+                </span>
+                <span>
+                  <span className="font-medium text-brand-700">Best for:</span>{" "}
+                  {keynote.audiences.join(", ")}
+                </span>
+              </div>
+              <span className="inline-flex items-center gap-2 font-semibold text-accent-600 transition-transform group-hover:translate-x-1 group-hover:text-accent-500">
+                View keynote details
+                <span aria-hidden className="text-lg">→</span>
+              </span>
+            </div>
+          </Link>
+        </Slide>
+      ))}
+
+      {/* Final CTA slide */}
+      <Slide
+        variant="cta"
+        background="bg-cta-pattern"
+        className="text-center"
+        id="cta"
+      >
+        <SlideContent>
+          <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+            Want Nic at Your Event?
+          </h2>
+          <p className="mt-4 text-lg text-brand-700">
+            Every keynote is customized for your audience. Virtual delivery worldwide.
+          </p>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <CTAButton
+              href="/contact"
+              className="!rounded-none font-bebas text-xl uppercase"
+            >
+              Book a Keynote
+            </CTAButton>
+            <CTAButton
+              href="/speaker"
+              variant="secondary"
+              className="!rounded-none font-bebas text-xl uppercase"
+            >
+              About Nic as a Speaker
+            </CTAButton>
+          </div>
+        </SlideContent>
+      </Slide>
+
+      {/* Footer */}
+      <Slide variant="footer" background="bg-foot-pattern" id="footer">
+        <FooterContent />
+      </Slide>
+    </SlideDeck>
   );
 }
 
-/* ---------- Fallback data (used when Sanity has no content) ---------- */
+/* ---------- Keynote slides content ---------- */
 
-const FALLBACK_KEYNOTES: KeynoteListItem[] = [
+const KEYNOTE_SLIDES: KeynoteSlide[] = [
   {
-    _id: "fallback-1",
-    title: "Reclaiming Focus in a World That Profits From Your Distraction",
-    slug: "reclaiming-focus",
-    tagline:
-      "Learn the DIAL framework for attention management, defeat digital addiction, and reclaim your team's deep work capacity.",
+    slug: "connected-not-consumed",
+    title: "Connected, Not Consumed",
+    tagline: "Balancing Digital Life and Mental Health at Work",
+    description:
+      "Modern work rewards constant availability, fast replies, and full calendars while quietly destroying focus, decision quality, and health. Most teams aren't failing from lack of effort. They're drowning in reaction. This talk helps leaders and teams regain control of their attention without disconnecting from their work or the internet.",
+    keyTakeaways: [
+      "A clear way to decide what actually matters each day",
+      "A practical system to protect focus inside noisy organisations",
+      "A shared language for agency, ownership, and meaningful work",
+      "The DIAL framework: Decide, Intend, Act, Loop back",
+    ],
     deliveryFormat: "virtual",
     duration: "45-60 minutes",
-    audiences: [
-      "Corporate teams",
-      "Leadership groups",
-      "Remote/hybrid teams",
-    ],
-    topics: [
-      { _id: "t1", title: "Focus", slug: "focus" },
-      { _id: "t2", title: "Agency", slug: "agency" },
-    ],
-    order: 1,
-    seo: null,
+    audiences: ["Corporate teams", "Leadership groups", "Remote/hybrid teams"],
   },
   {
-    _id: "fallback-2",
-    title: "How to Build Breakthrough Product Teams",
-    slug: "breakthrough-product-teams",
-    tagline:
-      "The Innovation Flywheel: combining curiosity, experimentation, and high agency to build teams that ship what matters.",
+    slug: "innovation-starts-at-home",
+    title: "Innovation Starts at Home",
+    tagline: "How to build teams that produce breakthroughs",
+    description:
+      "Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure. This talk shows leaders how to build entrepreneurial teams that learn fast, act with agency, and turn failure into progress especially in the AI era.",
+    keyTakeaways: [
+      "Reduce 'progress tax': meetings, process, work-around-work",
+      "Build agency and initiative without chaos",
+      "Create psychological safety with high standards",
+      "The innovation flywheel: Curiosity, Action, Information, Loop",
+    ],
     deliveryFormat: "virtual",
     duration: "45-60 minutes",
     audiences: [
@@ -167,20 +272,26 @@ const FALLBACK_KEYNOTES: KeynoteListItem[] = [
       "Engineering leaders",
       "Innovation departments",
     ],
-    topics: [
-      { _id: "t3", title: "Innovation", slug: "innovation" },
-      { _id: "t4", title: "AI", slug: "ai" },
-      { _id: "t5", title: "Curiosity", slug: "curiosity" },
-    ],
-    order: 2,
-    seo: null,
   },
   {
-    _id: "fallback-3",
-    title: "The Curiosity Catalyst",
-    slug: "curiosity-catalyst",
-    tagline:
-      "Why curiosity is the god particle of innovation — and how to diagnose and cure stagnation in your organisation.",
+    slug: "creating-a-curious-company",
+    title: "Creating a Curious Company",
+    tagline: "Why innovation stalls and how curiosity restarts it",
+    description: [
+      "Most organisations don't have an innovation problem.",
+      "They have a curiosity problem.",
+      "In this keynote, Nic challenges the myths of \"innovation theatre\" and reactive change, and shows why real progress doesn't come from hackathons, buzzwords, or panic-driven ideas but from deliberately designing curiosity into how teams think, work, and experiment.",
+      "Through powerful stories, research-backed insights, and live audience interaction, this talk helps leaders and teams break out of stagnation by replacing fear, efficiency obsession, and short-term thinking with curiosity, experimentation, and long-term perspective.",
+    ],
+    keyTakeaways: [
+      "A clear understanding of why innovation stalls inside successful companies",
+      "Practical ways to turn curiosity into a daily leadership and team practice",
+      "Tools to move beyond \"innovation theatre\" into real, meaningful progress",
+      "A simple framework to help teams experiment, learn, and adapt without fear",
+    ],
+    keyTakeawaysLabel: "Audiences leave with:",
+    closingLine:
+      "Designed for remote teams. Highly interactive. Built to spark action, not just ideas.",
     deliveryFormat: "virtual",
     duration: "45-60 minutes",
     audiences: [
@@ -188,11 +299,5 @@ const FALLBACK_KEYNOTES: KeynoteListItem[] = [
       "C-suite retreats",
       "Innovation teams",
     ],
-    topics: [
-      { _id: "t5", title: "Curiosity", slug: "curiosity" },
-      { _id: "t3", title: "Innovation", slug: "innovation" },
-    ],
-    order: 3,
-    seo: null,
   },
 ];

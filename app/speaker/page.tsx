@@ -312,10 +312,7 @@ export default async function SpeakerPage() {
       >
         <Section width="wide">
         <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-          What I speak about{" "}
-          <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl 2xl:text-4xl [-webkit-text-stroke:1px_black] [paint-order:stroke_fill]">
-            (and why it works online)
-          </span>
+          What I speak about
         </h2>
         <p className="mx-auto mt-6 max-w-3xl text-center text-[22px] font-semibold leading-relaxed text-brand-700">
           My keynotes focus on the challenges modern teams are actually facing, and give them practical ways forward.

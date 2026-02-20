@@ -23,10 +23,8 @@
 import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
-  homepageFeaturedKeynotesQuery,
   homepageRecentPostsQuery,
   speakerPageQuery,
-  type HomepageKeynote,
   type HomepagePost,
   type SpeakerPageData,
 } from "@/lib/sanity/queries";
@@ -51,15 +49,6 @@ function tilt(index: number, seed: number, maxDeg = 1.8): number {
 
 /* ---------- Data fetching ---------- */
 
-async function getFeaturedKeynotes(): Promise<HomepageKeynote[] | null> {
-  try {
-    const data = await client.fetch<HomepageKeynote[]>(homepageFeaturedKeynotesQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
 async function getRecentPosts(): Promise<HomepagePost[] | null> {
   try {
     const data = await client.fetch<HomepagePost[]>(homepageRecentPostsQuery);
@@ -81,13 +70,11 @@ async function getAsSeenAt(): Promise<string[] | null> {
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  const [keynotes, posts, cmsAsSeenAt] = await Promise.all([
-    getFeaturedKeynotes(),
+  const [posts, cmsAsSeenAt] = await Promise.all([
     getRecentPosts(),
     getAsSeenAt(),
   ]);
 
-  const displayKeynotes = keynotes || FALLBACK_KEYNOTES;
   const displayAsSeenAt = cmsAsSeenAt || FALLBACK_AS_SEEN_AT;
 
   return (
@@ -146,7 +133,7 @@ export default async function HomePage() {
         </div>
       </Slide>
 
-      {/* Slide 2: Featured keynote topics — CMS-driven */}
+      {/* Slide 2: What Nic speaks about — three topic pillars */}
       <Slide
         variant="grid-3"
         background="bg-mic-pattern"
@@ -166,33 +153,39 @@ export default async function HomePage() {
             What Nic Speaks About
           </h2>
           <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
-            {displayKeynotes.map((keynote, i) => (
-              <Link
-                key={keynote.slug}
-                href={`/keynotes/${keynote.slug}`}
-                className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
-                style={{ transform: `rotate(${tilt(i, 1)}deg)` }}
-              >
-                <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
-                  {keynote.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-700">
-                  {keynote.tagline}
-                </p>
-                {keynote.topics && keynote.topics.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {keynote.topics.map((topic) => (
-                      <span
-                        key={topic._id}
-                        className="border border-accent-600/50 px-3 py-1 text-xs font-medium text-accent-600"
-                      >
-                        {topic.title}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </Link>
-            ))}
+            <div
+              className="border-[20px] border-accent-600 bg-white p-6"
+              style={{ transform: `rotate(${tilt(0, 1)}deg)` }}
+            >
+              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+                Activating human agency at work
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.
+              </p>
+            </div>
+            <div
+              className="border-[20px] border-accent-600 bg-white p-6"
+              style={{ transform: `rotate(${tilt(1, 1)}deg)` }}
+            >
+              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+                Staying connected without becoming consumed
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.
+              </p>
+            </div>
+            <div
+              className="border-[20px] border-accent-600 bg-white p-6"
+              style={{ transform: `rotate(${tilt(2, 1)}deg)` }}
+            >
+              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+                Curiosity, Action and Failure
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                I help organisations build entrepreneurial teams that learn fast, act with agency, and turn failure into progress, especially in the AI era.
+              </p>
+            </div>
           </div>
           <div className="mt-6 text-center">
             <CTAButton href="/keynotes" className="!rounded-none font-bebas text-xl uppercase">
@@ -219,7 +212,7 @@ export default async function HomePage() {
           }
         >
           <SlideContent>
-            <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+            <h2 className="heading-stroke font-bebas pt-[22px] pb-[22px] text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
               Latest Thinking
             </h2>
             <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -272,7 +265,7 @@ export default async function HomePage() {
           <div className="grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {/* Heading in place of first two cards */}
             <div className="flex items-center sm:col-span-2">
-              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl">
+              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-[85px]">
                 Explore Topics
               </h2>
             </div>
@@ -408,39 +401,6 @@ export default async function HomePage() {
 }
 
 /* ---------- Fallback data ---------- */
-
-const FALLBACK_KEYNOTES: HomepageKeynote[] = [
-  {
-    _id: "fk-1",
-    title: "Reclaiming Focus in a World That Profits From Your Distraction",
-    slug: "reclaiming-focus",
-    tagline: "The DIAL framework for attention management and deep work",
-    topics: [
-      { _id: "t1", title: "Focus", slug: "focus" },
-      { _id: "t2", title: "Agency", slug: "agency" },
-    ],
-  },
-  {
-    _id: "fk-2",
-    title: "How to Build Breakthrough Product Teams",
-    slug: "breakthrough-product-teams",
-    tagline: "The Innovation Flywheel: curiosity, experimentation, and high agency",
-    topics: [
-      { _id: "t3", title: "Innovation", slug: "innovation" },
-      { _id: "t4", title: "AI", slug: "ai" },
-    ],
-  },
-  {
-    _id: "fk-3",
-    title: "The Curiosity Catalyst",
-    slug: "curiosity-catalyst",
-    tagline: "Why curiosity is the god particle of innovation",
-    topics: [
-      { _id: "t5", title: "Curiosity", slug: "curiosity" },
-      { _id: "t6", title: "Innovation", slug: "innovation" },
-    ],
-  },
-];
 
 const FALLBACK_AS_SEEN_AT = [
   "SXSW",
