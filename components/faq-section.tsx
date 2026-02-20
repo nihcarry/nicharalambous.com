@@ -20,12 +20,18 @@ interface FaqSectionProps {
   faqs: FaqItem[];
   /** Optional heading override — defaults to "Frequently Asked Questions" */
   heading?: string;
+  /** Optional heading class — for custom styling (e.g. speaker page heading-stroke) */
+  headingClassName?: string;
+  /** Optional heading alignment */
+  headingAlign?: "left" | "center";
   className?: string;
 }
 
 export function FaqSection({
   faqs,
   heading = "Frequently Asked Questions",
+  headingClassName,
+  headingAlign = "left",
   className = "",
 }: FaqSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -36,9 +42,16 @@ export function FaqSection({
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const headingClasses = [
+    headingClassName ?? "heading-display text-3xl text-brand-900 sm:text-4xl",
+    headingAlign === "center" && "text-center",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className={className}>
-      <h2 className="text-2xl font-bold text-brand-900">{heading}</h2>
+      <h2 className={headingClasses}>{heading}</h2>
       <dl className="mt-6 divide-y divide-brand-200">
         {faqs.map((faq, index) => (
           <div key={index} className="py-4">

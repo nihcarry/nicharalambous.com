@@ -24,9 +24,11 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { serviceJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -119,10 +121,10 @@ export default async function KeynotePage({
 
       {/* Hero */}
       <Section width="content">
-        <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+        <p className="heading-display text-accent-600">
           Virtual Keynote
         </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+        <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
           {keynote.title}
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-brand-600">
@@ -164,13 +166,13 @@ export default async function KeynotePage({
       {/* What Attendees Leave With */}
       {keynote.outcomes && keynote.outcomes.length > 0 && (
         <Section width="content">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             What Your Team Will Leave With
           </h2>
           <ul className="mt-6 space-y-3">
             {keynote.outcomes.map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
-                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-100 text-xs font-bold text-accent-600">
+                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center bg-accent-100 text-xs font-bold text-accent-600">
                   {i + 1}
                 </span>
                 <span className="text-brand-700">{outcome}</span>
@@ -183,7 +185,7 @@ export default async function KeynotePage({
       {/* Who Is This For */}
       {keynote.audiences && keynote.audiences.length > 0 && (
         <Section width="content" className="bg-brand-50">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Who Is This Keynote For?
           </h2>
           <ul className="mt-6 space-y-2">
@@ -202,14 +204,15 @@ export default async function KeynotePage({
       {/* Testimonials — only shown if CMS has testimonial data */}
       {cmsKeynote?.testimonials && cmsKeynote.testimonials.length > 0 && (
         <Section width="wide">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             What People Say
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {cmsKeynote.testimonials.map((t) => (
+            {cmsKeynote.testimonials.map((t, i) => (
               <blockquote
                 key={t._id}
-                className="flex flex-col rounded-xl border border-brand-200 p-6"
+                className="flex flex-col card-brutalist p-6"
+                style={{ transform: `rotate(${tilt(i, 70)}deg)` }}
               >
                 <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
                   &ldquo;{t.quote}&rdquo;
@@ -232,7 +235,7 @@ export default async function KeynotePage({
       {/* Related Topics — links to topic hubs per internal linking strategy */}
       {keynote.topics && keynote.topics.length > 0 && (
         <Section width="content">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Related Topics
           </h2>
           <div className="mt-4 flex flex-wrap gap-3">
@@ -240,7 +243,7 @@ export default async function KeynotePage({
               <a
                 key={topic.slug}
                 href={`/topics/${topic.slug}`}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
                   i === 0
                     ? "bg-accent-100 text-accent-600 hover:bg-accent-600 hover:text-white"
                     : "bg-brand-100 text-brand-700 hover:bg-brand-700 hover:text-white"
@@ -256,10 +259,10 @@ export default async function KeynotePage({
       {/* Video embed if available */}
       {keynote.videoEmbed && (
         <Section width="content">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Watch a Preview
           </h2>
-          <div className="mt-6 aspect-video overflow-hidden rounded-lg">
+          <div className="mt-6 aspect-video overflow-hidden">
             <iframe
               src={
                 getVideoEmbedUrl(keynote.videoEmbed) || keynote.videoEmbed
@@ -274,30 +277,14 @@ export default async function KeynotePage({
       )}
 
       {/* CTA — links to /contact and /speaker */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">Book This Keynote</h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual delivery worldwide. Customized for your audience.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/contact"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            Enquire Now
-          </CTAButton>
-          <CTAButton
-            href="/speaker"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-        </div>
-      </Section>
+      <FinalCta
+        heading="Book This Keynote"
+        description="Virtual delivery worldwide. Customized for your audience."
+        primaryHref="/contact"
+        primaryLabel="Enquire Now"
+        secondaryHref="/speaker"
+        secondaryLabel="About Nic as a Speaker"
+      />
     </>
   );
 }

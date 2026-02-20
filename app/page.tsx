@@ -13,7 +13,7 @@
  * 3. Recent blog posts (CMS-driven, conditional)
  * 4. Explore Topics
  * 5. What Clients Say (testimonials)
- * 6. As Seen At (logos)
+ * 6. Incredible Clients (logos)
  * 7. Final CTA → /speaker
  * 8. Footer
  *
@@ -25,8 +25,10 @@ import { client } from "@/lib/sanity/client";
 import {
   homepageFeaturedKeynotesQuery,
   homepageRecentPostsQuery,
+  speakerPageQuery,
   type HomepageKeynote,
   type HomepagePost,
+  type SpeakerPageData,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
@@ -34,7 +36,8 @@ import { SlideDeck } from "@/components/slide-deck";
 import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
-import { TestimonialToEmbed } from "@/components/testimonial-to-embed";
+import { WhatClientsSay } from "@/components/what-clients-say";
+import { IncredibleClients } from "@/components/incredible-clients";
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -66,15 +69,26 @@ async function getRecentPosts(): Promise<HomepagePost[] | null> {
   }
 }
 
+async function getAsSeenAt(): Promise<string[] | null> {
+  try {
+    const data = await client.fetch<SpeakerPageData | null>(speakerPageQuery);
+    return data?.asSeenAt && data.asSeenAt.length > 0 ? data.asSeenAt : null;
+  } catch {
+    return null;
+  }
+}
+
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  const [keynotes, posts] = await Promise.all([
+  const [keynotes, posts, cmsAsSeenAt] = await Promise.all([
     getFeaturedKeynotes(),
     getRecentPosts(),
+    getAsSeenAt(),
   ]);
 
   const displayKeynotes = keynotes || FALLBACK_KEYNOTES;
+  const displayAsSeenAt = cmsAsSeenAt || FALLBACK_AS_SEEN_AT;
 
   return (
     <SlideDeck>
@@ -258,7 +272,7 @@ export default async function HomePage() {
           <div className="grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {/* Heading in place of first two cards */}
             <div className="flex items-center sm:col-span-2">
-              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl">
                 Explore Topics
               </h2>
             </div>
@@ -340,60 +354,14 @@ export default async function HomePage() {
         background="bg-speech-pattern"
       >
         <SlideContent className="relative">
-          {/* Headline */}
-          <h2 className="heading-stroke font-bebas pt-2 text-left text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-            What Clients Say
-          </h2>
-          {/* Testimonial box — in normal flow; leaves room for 16bit on right (md+) */}
-          <div className="mt-6 overflow-hidden border-[20px] border-accent-600 bg-white px-2 md:max-w-[calc(100%-440px)]">
-            <TestimonialToEmbed />
-          </div>
-          {/* 16bit desktop — absolute, out of flow, no empty space */}
-          <div
-            className="absolute right-4 top-1/2 hidden -translate-y-1/2 overflow-hidden rounded-full md:block"
-            style={{
-              width: "clamp(280px, 36vw, 400px)",
-              height: "clamp(400px, 76vh, 640px)",
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/slides/Nic_Ancient_greece_16bit.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none h-full w-full select-none object-contain object-bottom"
-            />
-          </div>
-          {/* 16bit mobile — below box */}
-          <div
-            className="mx-auto mt-6 flex max-w-[200px] justify-center overflow-hidden rounded-full md:hidden"
-          >
-            <img
-              src="/slides/Nic_Ancient_greece_16bit.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none h-auto w-full select-none object-contain"
-            />
-          </div>
+          <WhatClientsSay headingAlign="left" />
         </SlideContent>
       </Slide>
 
-      {/* Slide 6: "As seen at" logos */}
+      {/* Slide 6: Incredible Clients logos */}
       <Slide variant="logos" background="bg-broadcast-pattern" id="logos">
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-            As Seen At
-          </h2>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
-            {AS_SEEN_AT.map((name) => (
-              <span
-                key={name}
-                className="font-bebas text-2xl uppercase text-accent-600 sm:text-3xl"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
+          <IncredibleClients names={displayAsSeenAt} />
         </SlideContent>
       </Slide>
 
@@ -431,7 +399,7 @@ export default async function HomePage() {
       </Slide>
 
       {/* Slide 8: Footer */}
-      <Slide variant="footer" background="bg-brand-50" id="footer">
+      <Slide variant="footer" background="bg-foot-pattern" id="footer">
         <FooterContent />
       </Slide>
       <NextSlideIndicator />
@@ -474,7 +442,7 @@ const FALLBACK_KEYNOTES: HomepageKeynote[] = [
   },
 ];
 
-const AS_SEEN_AT = [
+const FALLBACK_AS_SEEN_AT = [
   "SXSW",
   "Standard Bank",
   "Vodacom",

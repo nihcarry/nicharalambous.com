@@ -26,6 +26,7 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { bookJsonLd } from "@/lib/metadata";
@@ -109,7 +110,7 @@ export default async function BookPage({
     : undefined;
 
   return (
-    <>
+    <div className="page-bg bg-bookmark-pattern">
       {/* Structured data */}
       <JsonLd
         data={bookJsonLd({
@@ -127,7 +128,7 @@ export default async function BookPage({
         <div className="flex flex-col gap-8 md:flex-row md:items-start">
           {/* Cover image */}
           {coverUrl && (
-            <div className="shrink-0 overflow-hidden rounded-lg md:w-56">
+            <div className="shrink-0 overflow-hidden md:w-56">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={coverUrl}
@@ -138,10 +139,10 @@ export default async function BookPage({
           )}
 
           <div className="flex-1">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+            <p className="heading-display text-accent-600">
               Book
             </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+            <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
               {book.title}
             </h1>
             {book.subtitle && (
@@ -162,7 +163,7 @@ export default async function BookPage({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center rounded-lg border-2 border-accent-600 px-4 py-2 text-sm font-semibold text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
+                    className="inline-flex items-center border-2 border-accent-600 px-4 py-2 font-bebas text-sm uppercase text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -174,8 +175,8 @@ export default async function BookPage({
       </Section>
 
       {/* Description — Portable Text from CMS or fallback */}
-      <Section width="content" className="bg-brand-50">
-        <h2 className="text-2xl font-bold text-brand-900">About This Book</h2>
+      <Section width="content">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">About This Book</h2>
         {hasCmsDescription ? (
           <PortableText value={cmsBook!.description} className="mt-6" />
         ) : (
@@ -193,13 +194,13 @@ export default async function BookPage({
       {/* Related topics */}
       {book.relatedTopics && book.relatedTopics.length > 0 && (
         <Section width="content">
-          <h2 className="text-2xl font-bold text-brand-900">Related Topics</h2>
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Topics</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             {book.relatedTopics.map((topic) => (
               <Link
                 key={topic.slug}
                 href={`/topics/${topic.slug}`}
-                className="rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
               >
                 {topic.title}
               </Link>
@@ -209,34 +210,15 @@ export default async function BookPage({
       )}
 
       {/* CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Want the Keynote Version?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          The ideas in this book come alive in Nic&rsquo;s virtual keynotes.
-          Real stories, actionable frameworks, tailored to your team.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/speaker"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-          <CTAButton
-            href="/books"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            View All Books
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        heading="Want the Keynote Version?"
+        description="The ideas in this book come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/books"
+        secondaryLabel="View All Books"
+      />
+    </div>
   );
 }
 

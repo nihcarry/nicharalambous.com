@@ -58,7 +58,7 @@ export function VideoReadAlong({
       {/* Badge for featured content */}
       {featuredLabel && (
         <div className="mb-4 flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+          <span className="inline-flex items-center gap-1.5 bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
             <svg
               className="h-3 w-3"
               fill="currentColor"
@@ -77,7 +77,7 @@ export function VideoReadAlong({
       )}
 
       {/* Video container */}
-      <div className="overflow-hidden rounded-2xl border border-brand-200 bg-brand-900 shadow-lg">
+      <div className="overflow-hidden border border-brand-200 bg-brand-900 shadow-lg">
         {/* Mode switcher */}
         <div className="flex border-b border-brand-700 bg-brand-800/50">
           {modes.map(({ id, label, icon: Icon }) => (

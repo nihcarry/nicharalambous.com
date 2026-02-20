@@ -20,6 +20,7 @@ import {
   type ArchivePostData,
 } from "@/lib/sanity/queries";
 import { Section } from "@/components/section";
+import { CTAButton } from "@/components/cta-button";
 
 /* ---------- Data fetching ---------- */
 
@@ -94,7 +95,7 @@ export default async function ArchivePostPage({
     <>
       {/* Archive banner */}
       <Section width="content">
-        <div className="rounded-xl border border-brand-300 bg-brand-50 p-6 text-center">
+        <div className="border-2 border-brand-300 bg-brand-50 p-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-brand-500">
             From the Archive
           </p>
@@ -115,7 +116,7 @@ export default async function ArchivePostPage({
       {/* Article header */}
       <Section width="content" as="article">
         <header>
-          <h1 className="text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl">
+          <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
             {post.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-brand-500">
@@ -139,7 +140,7 @@ export default async function ArchivePostPage({
                 <Link
                   key={topic._id}
                   href={`/topics/${topic.slug}`}
-                  className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-200"
+                  className="bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-200"
                 >
                   {topic.title}
                 </Link>
@@ -180,7 +181,7 @@ export default async function ArchivePostPage({
 
       {/* CTA to blog */}
       <Section width="content" className="text-center">
-        <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
           Read the Latest
         </h2>
         <p className="mt-4 text-lg text-brand-600">
@@ -188,18 +189,10 @@ export default async function ArchivePostPage({
           building businesses, visit the blog.
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Link
-            href="/blog"
-            className="inline-flex items-center justify-center rounded-lg bg-accent-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-accent-500"
-          >
-            Visit the Blog
-          </Link>
-          <Link
-            href="/speaker"
-            className="inline-flex items-center justify-center rounded-lg border-2 border-brand-800 px-6 py-3 text-base font-semibold text-brand-800 transition-colors hover:bg-brand-800 hover:text-white"
-          >
+          <CTAButton href="/blog">Visit the Blog</CTAButton>
+          <CTAButton href="/speaker" variant="secondary">
             About Nic as a Speaker
-          </Link>
+          </CTAButton>
         </div>
       </Section>
     </>

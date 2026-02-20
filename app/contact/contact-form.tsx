@@ -53,7 +53,7 @@ const BUDGET_RANGES = [
 /* ---------- Shared input styles ---------- */
 
 const inputStyles =
-  "mt-1 block w-full rounded-lg border border-brand-300 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
+  "mt-1 block w-full border border-brand-300 px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
 
 /* ---------- Component ---------- */
 
@@ -92,7 +92,7 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="mt-12 rounded-xl border border-green-200 bg-green-50 p-8 text-center">
+      <div className="mt-12 border-2 border-green-200 bg-green-50 p-8 text-center">
         <h2 className="text-2xl font-bold text-green-800">
           Thank you for your inquiry!
         </h2>
@@ -258,7 +258,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex w-full items-center justify-center rounded-lg bg-accent-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:opacity-50 sm:w-auto"
+        className="inline-flex w-full items-center justify-center bg-accent-600 px-6 py-3 font-bebas text-xl uppercase tracking-wide text-white transition-colors hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:opacity-50 sm:w-auto"
       >
         {submitting ? "Sending..." : "Send Inquiry"}
       </button>

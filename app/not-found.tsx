@@ -11,10 +11,10 @@ import { Section } from "@/components/section";
 export default function NotFound() {
   return (
     <Section width="content" className="flex flex-col items-center text-center">
-      <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+      <p className="heading-display text-8xl text-accent-600 sm:text-9xl">
         404
       </p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+      <h1 className="heading-display-stroke-sm mt-2 text-4xl text-brand-900 sm:text-5xl">
         Page not found
       </h1>
       <p className="mt-4 text-lg text-brand-600">

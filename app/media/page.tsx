@@ -17,7 +17,9 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
+import { tilt } from "@/lib/tilt";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -68,7 +70,7 @@ export default async function MediaPage() {
       />
 
       <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           Media &amp; Press
         </h1>
         <p className="mt-4 text-lg text-brand-600">
@@ -82,7 +84,7 @@ export default async function MediaPage() {
           {MEDIA_OUTLETS.map((name) => (
             <span
               key={name}
-              className="text-lg font-semibold tracking-wide"
+              className="heading-display text-2xl text-accent-600"
             >
               {name}
             </span>
@@ -97,18 +99,19 @@ export default async function MediaPage() {
 
         return (
           <Section key={key} width="wide">
-            <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
+            <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
               {label}
             </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((item) => (
+              {items.map((item, i) => (
                 <article
                   key={item._id}
-                  className="flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                  className="card-brutalist flex flex-col p-6 transition-colors hover:bg-accent-50"
+                  style={{ transform: `rotate(${tilt(i, 130)}deg)` }}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-brand-900">
+                      <h3 className="heading-display text-lg text-brand-900">
                         {item.url ? (
                           <a
                             href={item.url}
@@ -128,7 +131,7 @@ export default async function MediaPage() {
                         </p>
                       )}
                     </div>
-                    <span className="shrink-0 rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600">
+                    <span className="shrink-0 bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600">
                       {formatType(item.type)}
                     </span>
                   </div>
@@ -170,33 +173,14 @@ export default async function MediaPage() {
       })}
 
       {/* CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Book Nic for Your Event
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual keynotes for conferences, corporate events, and webinars.
-          Worldwide delivery.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/contact"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            Enquire Now
-          </CTAButton>
-          <CTAButton
-            href="/speaker"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-        </div>
-      </Section>
+      <FinalCta
+        heading="Book Nic for Your Event"
+        description="Virtual keynotes for conferences, corporate events, and webinars. Worldwide delivery."
+        primaryHref="/contact"
+        primaryLabel="Enquire Now"
+        secondaryHref="/speaker"
+        secondaryLabel="About Nic as a Speaker"
+      />
     </>
   );
 }

@@ -4,6 +4,9 @@
  * All post data is embedded at build time (static export). The component
  * handles pagination and filtering entirely client-side. Shows 12 posts
  * per page with numbered pagination and topic filter chips.
+ *
+ * Uses the lightest card treatment (border-2) per design system spec —
+ * appropriate for high-density listing. Sharp corners throughout.
  */
 "use client";
 
@@ -67,7 +70,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
           <button
             type="button"
             onClick={() => handleTopicFilter(null)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
               activeTopic === null
                 ? "bg-accent-600 text-white"
                 : "bg-brand-100 text-brand-700 hover:bg-brand-200"
@@ -80,7 +83,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
               key={topic._id}
               type="button"
               onClick={() => handleTopicFilter(topic.slug)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-4 py-2 text-sm font-medium transition-colors ${
                 activeTopic === topic.slug
                   ? "bg-accent-600 text-white"
                   : "bg-brand-100 text-brand-700 hover:bg-brand-200"
@@ -99,11 +102,11 @@ export function BlogList({ posts, topics }: BlogListProps) {
             <Link
               key={post._id}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+              className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
             >
               {/* Featured image */}
               {post.featuredImage?.asset?.url && (
-                <div className="mb-4 overflow-hidden rounded-lg">
+                <div className="mb-4 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post.featuredImage.asset.url}
@@ -114,7 +117,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
                 </div>
               )}
 
-              <h2 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+              <h2 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
                 {post.title}
               </h2>
               {post.excerpt && (
@@ -144,7 +147,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
                   {post.topics.map((topic) => (
                     <span
                       key={topic._id}
-                      className="rounded-full bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600"
+                      className="bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600"
                     >
                       {topic.title}
                     </span>
@@ -170,7 +173,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
             type="button"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="rounded-lg border border-brand-200 px-3 py-2 text-sm font-medium text-brand-600 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="border border-brand-200 px-3 py-2 text-sm font-medium text-brand-600 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Previous
           </button>
@@ -179,7 +182,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
               key={page}
               type="button"
               onClick={() => setCurrentPage(page)}
-              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              className={`px-3 py-2 text-sm font-medium transition-colors ${
                 page === currentPage
                   ? "bg-accent-600 text-white"
                   : "border border-brand-200 text-brand-600 hover:bg-brand-50"
@@ -192,7 +195,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
             type="button"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="rounded-lg border border-brand-200 px-3 py-2 text-sm font-medium text-brand-600 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="border border-brand-200 px-3 py-2 text-sm font-medium text-brand-600 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Next
           </button>

@@ -29,6 +29,7 @@ import {
   type RelatedPostItem,
 } from "@/lib/sanity/queries";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { FaqSection } from "@/components/faq-section";
@@ -175,7 +176,7 @@ export default async function BlogPostPage({
                 <Link
                   key={topic._id}
                   href={`/topics/${topic.slug}`}
-                  className="rounded-full bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
+                  className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
                 >
                   {topic.title}
                 </Link>
@@ -183,7 +184,7 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+          <h1 className="mt-4 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
             {post.title}
           </h1>
 
@@ -222,14 +223,14 @@ export default async function BlogPostPage({
             <img
               src={post.featuredImage.asset.url}
               alt={post.featuredImage.alt || post.title}
-              className="w-full rounded-lg"
+              className="w-full"
             />
           </figure>
         )}
 
         {/* TL;DR / Excerpt block */}
         {post.excerpt && (
-          <aside className="mt-8 rounded-xl border-l-4 border-accent-400 bg-brand-50 p-6">
+          <aside className="mt-8 border-l-[8px] border-accent-600 bg-brand-50 p-6">
             <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
               TL;DR
             </p>
@@ -320,7 +321,7 @@ export default async function BlogPostPage({
               <Link
                 key={topic._id}
                 href={`/topics/${topic.slug}`}
-                className="rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
               >
                 {topic.title}
               </Link>
@@ -342,32 +343,14 @@ export default async function BlogPostPage({
       </Section>
 
       {/* Final soft CTA → /speaker (always present per SEO strategy) */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Want Nic at Your Next Event?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual keynotes for conferences, corporate events, team offsites,
-          and webinars. Worldwide delivery.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-base font-semibold text-accent-600 transition-colors hover:bg-accent-100"
-          >
-            Book Nic for Your Event
-          </Link>
-          <Link
-            href="/speaker"
-            className="inline-flex items-center justify-center rounded-lg border-2 border-white px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
-          >
-            About Nic as a Speaker
-          </Link>
-        </div>
-      </Section>
+      <FinalCta
+        heading="Want Nic at Your Next Event?"
+        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
+        primaryHref="/contact"
+        primaryLabel="Book Nic for Your Event"
+        secondaryHref="/speaker"
+        secondaryLabel="About Nic as a Speaker"
+      />
     </>
   );
 }

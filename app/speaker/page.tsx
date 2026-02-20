@@ -30,8 +30,17 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { Slide } from "@/components/slide";
+import { SlideDeck } from "@/components/slide-deck";
+import { FooterContent } from "@/components/footer-content";
+import { SlideContent } from "@/components/slide-animations";
+import { WhatClientsSay } from "@/components/what-clients-say";
+import { IncredibleClients } from "@/components/incredible-clients";
+import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
+import { FaqSection } from "@/components/faq-section";
 import {
   serviceJsonLd,
   faqJsonLd,
@@ -40,9 +49,9 @@ import {
 
 /* ---------- Default / fallback data ---------- */
 
-const DEFAULT_HEADLINE = "Virtual keynote speaker for curious, modern teams";
+const DEFAULT_HEADLINE = "Unforgettable Keynote Speaker";
 const DEFAULT_SUBHEADLINE =
-  "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses. He helps distributed teams build cultures of experimentation and growth.";
+  "High‑energy, impactful keynotes designed for remote teams, not repurposed for them.";
 
 const DEFAULT_FAQS = [
   {
@@ -141,30 +150,6 @@ const DEFAULT_VIRTUAL_STEPS = [
   },
 ];
 
-const DEFAULT_TESTIMONIALS = [
-  {
-    quote:
-      "Nic's keynote on curiosity was the highlight of our conference. Our team is still referencing his frameworks months later.",
-    name: "Placeholder Name",
-    title: "Head of Innovation",
-    company: "Company Name",
-  },
-  {
-    quote:
-      "The virtual delivery was flawless. Nic kept 500+ remote attendees fully engaged for the entire session.",
-    name: "Placeholder Name",
-    title: "Events Director",
-    company: "Company Name",
-  },
-  {
-    quote:
-      "Real stories from real experience. No fluff, no generic advice — just frameworks we could use immediately.",
-    name: "Placeholder Name",
-    title: "CEO",
-    company: "Company Name",
-  },
-];
-
 /* ---------- Data fetching ---------- */
 
 async function getSpeakerData() {
@@ -208,17 +193,17 @@ export default async function SpeakerPage() {
     getKeynotes(),
   ]);
 
-  const headline = speakerData?.headline || DEFAULT_HEADLINE;
-  const subheadline = speakerData?.subheadline || DEFAULT_SUBHEADLINE;
+  /* Hero copy: always use this copy; do not override from CMS */
+  const headline = DEFAULT_HEADLINE;
+  const subheadline = DEFAULT_SUBHEADLINE;
   const faqs = speakerData?.faq?.length ? speakerData.faq : DEFAULT_FAQS;
   const asSeenAt = speakerData?.asSeenAt?.length
     ? speakerData.asSeenAt
     : DEFAULT_AS_SEEN_AT;
   const ctaText = speakerData?.ctaText || "Book Nic for Your Next Virtual Event";
-  const cmsTestimonials = speakerData?.testimonials;
 
   return (
-    <>
+    <SlideDeck>
       {/* Structured data */}
       <JsonLd data={personJsonLd()} />
       <JsonLd
@@ -231,95 +216,164 @@ export default async function SpeakerPage() {
       />
       <JsonLd data={faqJsonLd(faqs)} />
 
-      {/* Hero — H1 must include "virtual keynote speaker" per SEO strategy */}
-      <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl md:text-6xl">
-          {headline}
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-brand-600">
-          {subheadline}
+      <NextSlideIndicator />
+
+      {/* Slide 1: Hero — H1 must include "virtual keynote speaker" per SEO strategy. Full-width slide so headline can use wide container and wrap to 2 lines only. */}
+      <Slide
+        id="hero"
+        variant="full"
+        background="bg-speaker-pattern"
+        className="text-center"
+      >
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
+          <h1 className="heading-stroke font-bebas mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+            {(() => {
+              const words = headline.split(" ");
+              if (words.length >= 2) {
+                return (
+                  <>
+                    <span className="block text-accent-600">
+                      {words.slice(0, 1).join(" ")}
+                    </span>
+                    <span className="block">{words.slice(1).join(" ")}</span>
+                  </>
+                );
+              }
+              return headline;
+            })()}
+          </h1>
+          <p className="mt-6 text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
+            {subheadline}
+          </p>
+          <div className="mt-8 aspect-video w-full max-w-2xl mx-auto">
+            <iframe
+              src="https://www.youtube.com/embed/yxg_qMH-s-Y"
+              title="Virtual keynote speaker video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="h-full w-full rounded border-0"
+            />
+          </div>
+          <div className="mt-8">
+            <CTAButton href="/contact">{ctaText}</CTAButton>
+          </div>
+        </div>
+      </Slide>
+
+      {/* Slide 2: Why Book Nic — video floats right, copy wraps around it */}
+      <Slide
+        id="why-book"
+        variant="grid-3"
+        background="bg-speaker-pattern"
+      >
+        <Section width="wide">
+        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          Why My Virtual Audiences Stay Engaged
+        </h2>
+        <p className="mt-4 text-center text-lg font-medium leading-relaxed text-brand-700">
+          Remote teams can be distracted, over&#x2011;scheduled, and exhausted by back&#x2011;to&#x2011;back calls. Attention is fragile. Energy leaks fast and keynotes are often not a team priority. So I design talks that earn attention, not assume it.
         </p>
         <div className="mt-8">
-          <CTAButton href="/contact">{ctaText}</CTAButton>
-        </div>
-      </Section>
-
-      {/* Why Book Nic */}
-      <Section width="wide" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          Why Book Nic
-        </h2>
-        {speakerData?.whyBookNic ? (
-          <PortableText
-            value={speakerData.whyBookNic}
-            className="mt-8 prose-lg"
-          />
-        ) : (
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {DEFAULT_WHY_BOOK.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-brand-200 bg-surface p-6"
-              >
-                <h3 className="text-lg font-semibold text-brand-900">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+          <div className="float-right ml-8 mb-6 flex min-h-[50vh] w-full max-w-md shrink-0 items-start md:min-h-[55vh] md:max-w-lg">
+            <div className="aspect-video w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
+              <iframe
+                src="https://www.youtube.com/embed/XBFqWl2Rv1I"
+                title="Why book Nic — virtual keynote speaker"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full border-0"
+              />
+            </div>
           </div>
-        )}
-      </Section>
+          <div className="space-y-4 text-lg leading-relaxed text-brand-700">
+            <p className="font-semibold text-brand-900">
+              What makes these keynotes different:
+            </p>
+            <ul className="list-disc space-y-2 pl-5">
+              <li><strong>Built for the medium</strong> — every talk is designed for live delivery on Zoom, Teams, or Meet</li>
+              <li><strong>Audience participation</strong> — not just a Q&amp;A at the end</li>
+              <li><strong>Fast&#x2011;paced, visual, and interactive</strong> — people don&apos;t just watch, they take part</li>
+              <li><strong>Designed for distributed teams</strong> — remote, hybrid, and global by default</li>
+            </ul>
+            <p>
+              The result? People stay present. Ideas land. And teams are still talking about it long after the call ends.
+            </p>
+          </div>
+          <div className="clear-both" />
+        </div>
+        </Section>
+      </Slide>
 
-      {/* Keynote Topics — CMS-driven if available */}
-      <Section width="wide">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          Keynote Topics
+      {/* Slide 3: Keynote Topics — CMS-driven if available */}
+      <Slide
+        id="keynotes"
+        variant="grid-3"
+        background="bg-speaker-pattern"
+      >
+        <Section width="wide">
+        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          What I speak about{" "}
+          <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl 2xl:text-4xl [-webkit-text-stroke:1px_black] [paint-order:stroke_fill]">
+            (and why it works online)
+          </span>
         </h2>
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {(keynotes || FALLBACK_KEYNOTES).map((keynote) => (
-            <Link
-              key={keynote.slug}
-              href={`/keynotes/${keynote.slug}`}
-              className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
-            >
-              <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
-                {keynote.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
-                {keynote.tagline}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {"topics" in keynote &&
-                  Array.isArray(keynote.topics) &&
-                  keynote.topics.map((topic) => {
-                    const label =
-                      typeof topic === "string" ? topic : topic.title;
-                    return (
-                      <span
-                        key={label}
-                        className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
-                      >
-                        {label}
-                      </span>
-                    );
-                  })}
-              </div>
-            </Link>
-          ))}
+        <p className="mx-auto mt-6 max-w-3xl text-center text-[22px] font-semibold leading-relaxed text-brand-700">
+          My keynotes focus on the challenges modern teams are actually facing, and give them practical ways forward.
+        </p>
+        <div className="mt-8 grid gap-8 text-left text-lg leading-relaxed text-brand-700 md:grid-cols-3">
+          <div>
+            <h3 className="mb-2 font-semibold text-brand-900">Activating human agency at work</h3>
+            <p>
+              AI tools are only as good as the human using them (for now). I help people and teams move from passive compliance to ownership, initiative, and meaningful contribution, even inside large, complex organisations. The future belongs to teams who take action and don&apos;t wait for permission.
+            </p>
+          </div>
+          <div>
+            <h3 className="mb-2 font-semibold text-brand-900">Staying connected without becoming consumed</h3>
+            <p className="mb-4">
+              After experiencing my own corporate burnout, I deeply understand how leaders quietly burn out while nobody notices. I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.
+            </p>
+            <p>
+              These aren&apos;t abstract ideas. They&apos;re delivered through stories, research, case studies, and shared moments that translate powerfully in virtual rooms.
+            </p>
+          </div>
+          <div>
+            <h3 className="mb-2 font-semibold text-brand-900">Curiosity, Action and Failure</h3>
+            <p className="mb-4">
+              Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure.
+            </p>
+            <p className="mb-4">
+              In that environment, even talented people become passive.
+            </p>
+            <p>
+              I help organisations learn how to build entrepreneurial teams: teams that learn fast, act with agency, and turn failure into progress, especially in the AI era.
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 aspect-video mx-auto w-full max-w-2xl">
+          <iframe
+            src="https://www.youtube.com/embed/Yv1k_db7uwc"
+            title="Keynote topics — virtual keynote speaker"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="h-full w-full rounded border-0"
+          />
         </div>
         <div className="mt-8 text-center">
           <CTAButton href="/keynotes" variant="secondary">
             View All Keynotes
           </CTAButton>
         </div>
-      </Section>
+        </Section>
+      </Slide>
 
-      {/* How Virtual Delivery Works */}
-      <Section width="content" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+      {/* Slide 4: How Virtual Delivery Works */}
+      <Slide
+        id="how-virtual"
+        variant="centered"
+        background="bg-speaker-pattern"
+      >
+        <Section width="content">
+        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
           How Virtual Delivery Works
         </h2>
         {speakerData?.howVirtualWorks ? (
@@ -331,11 +385,11 @@ export default async function SpeakerPage() {
           <div className="mt-12 grid gap-8 sm:grid-cols-2">
             {DEFAULT_VIRTUAL_STEPS.map((item) => (
               <div key={item.step} className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-600 text-sm font-bold text-white">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-accent-600 font-bebas text-lg text-white">
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-900">
+                  <h3 className="heading-display text-brand-900">
                     {item.title}
                   </h3>
                   <p className="mt-1 text-sm leading-relaxed text-brand-600">
@@ -346,113 +400,68 @@ export default async function SpeakerPage() {
             ))}
           </div>
         )}
-      </Section>
+        </Section>
+      </Slide>
 
-      {/* As Seen At / Social Proof */}
-      <Section width="wide">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          As Seen At
-        </h2>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
-          {asSeenAt.map((name) => (
-            <span
-              key={name}
-              className="text-lg font-semibold tracking-wide"
-            >
-              {name}
-            </span>
-          ))}
-        </div>
-      </Section>
-
-      {/* Testimonials — CMS-driven if available */}
-      <Section width="wide" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          What Clients Say
-        </h2>
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {cmsTestimonials && cmsTestimonials.length > 0
-            ? cmsTestimonials.map((t) => (
-                <blockquote
-                  key={t._id}
-                  className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
-                >
-                  <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <footer className="mt-4 border-t border-brand-100 pt-4">
-                    <p className="text-sm font-semibold text-brand-900">
-                      {t.authorName}
-                    </p>
-                    <p className="text-xs text-brand-500">
-                      {t.authorTitle}
-                      {t.company && `, ${t.company}`}
-                    </p>
-                  </footer>
-                </blockquote>
-              ))
-            : DEFAULT_TESTIMONIALS.map((testimonial, i) => (
-                <blockquote
-                  key={i}
-                  className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
-                >
-                  <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </p>
-                  <footer className="mt-4 border-t border-brand-100 pt-4">
-                    <p className="text-sm font-semibold text-brand-900">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-xs text-brand-500">
-                      {testimonial.title}, {testimonial.company}
-                    </p>
-                  </footer>
-                </blockquote>
-              ))}
-        </div>
-      </Section>
-
-      {/* FAQ */}
-      <Section width="content">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
-          Frequently Asked Questions
-        </h2>
-        <div className="mt-12 space-y-6">
-          {faqs.map((faq, i) => (
-            <div key={i} className="border-b border-brand-200 pb-6">
-              <h3 className="text-lg font-semibold text-brand-900">
-                {faq.question}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                {faq.answer}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Final CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
+      {/* Slide 5: Incredible Clients — same component as homepage */}
+      <Slide
+        id="incredible-clients"
+        variant="logos"
+        background="bg-speaker-pattern"
       >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Ready to Inspire Your Team?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Book Nic for your next conference, corporate event, team offsite, or
-          webinar. Virtual delivery worldwide.
-        </p>
-        <div className="mt-8">
-          <CTAButton
-            href="/contact"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            Book Nic for Your Event
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+        <SlideContent>
+          <IncredibleClients names={asSeenAt} />
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 6: Testimonials — same component as homepage */}
+      <Slide
+        id="testimonials"
+        variant="full"
+        background="bg-speaker-pattern"
+      >
+        <SlideContent className="relative">
+          <WhatClientsSay headingAlign="center" />
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 7: FAQ — accordion style */}
+      <Slide
+        id="faq"
+        variant="centered"
+        background="bg-speaker-pattern"
+      >
+        <Section width="content">
+        <FaqSection
+          faqs={faqs}
+          heading="Frequently Asked Questions"
+          headingClassName="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+          headingAlign="center"
+          className="[&_dl]:mt-12"
+        />
+        </Section>
+      </Slide>
+
+      {/* Slide 8: Final CTA */}
+      <Slide
+        id="cta"
+        variant="cta"
+        background="bg-cta-pattern"
+      >
+        <FinalCta
+          heading="Ready to Inspire Your Team?"
+          description="Book Nic for your next conference, corporate event, team offsite, or webinar. Virtual delivery worldwide."
+          primaryHref="/contact"
+          primaryLabel="Book Nic for Your Event"
+          headingClassName="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+        />
+      </Slide>
+
+      {/* Slide 9: Footer — inside SlideDeck so it scrolls with content */}
+      <Slide variant="footer" background="bg-foot-pattern" id="footer">
+        <FooterContent />
+      </Slide>
+    </SlideDeck>
   );
 }
 

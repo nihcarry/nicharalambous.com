@@ -27,12 +27,12 @@ export function ContextualCta({
   if (relatedKeynote) {
     return (
       <div
-        className={`rounded-xl bg-accent-50 p-8 text-center ${className}`}
+        className={`bg-accent-50 p-8 text-center ${className}`}
       >
         <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
           Explore This as a Keynote
         </p>
-        <h3 className="mt-2 text-xl font-bold text-brand-900">
+        <h3 className="mt-2 heading-display text-2xl text-brand-900">
           {relatedKeynote.title}
         </h3>
         <p className="mt-2 text-base text-brand-600">
@@ -53,12 +53,12 @@ export function ContextualCta({
   /* Fallback: generic speaker CTA */
   return (
     <div
-      className={`rounded-xl bg-accent-50 p-8 text-center ${className}`}
+      className={`bg-accent-50 p-8 text-center ${className}`}
     >
       <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
         Want the Keynote Version?
       </p>
-      <h3 className="mt-2 text-xl font-bold text-brand-900">
+      <h3 className="mt-2 heading-display text-2xl text-brand-900">
         These ideas come alive in Nic&rsquo;s virtual keynotes
       </h3>
       <p className="mt-2 text-base text-brand-600">

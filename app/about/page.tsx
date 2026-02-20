@@ -23,8 +23,10 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { aboutPageJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -59,13 +61,13 @@ export default async function AboutPage() {
   const displayBusinesses = businesses || FALLBACK_BUSINESSES;
 
   return (
-    <>
+    <div className="page-bg bg-person-pattern">
       {/* Structured data */}
       <JsonLd data={aboutPageJsonLd()} />
 
       {/* Hero / Bio */}
       <Section width="content">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           About Nic Haralambous
         </h1>
         <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
@@ -96,11 +98,15 @@ export default async function AboutPage() {
       </Section>
 
       {/* Key facts */}
-      <Section width="wide" className="bg-brand-50">
+      <Section width="wide">
         <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
-          {KEY_FACTS.map((fact) => (
-            <div key={fact.label}>
-              <p className="text-4xl font-bold text-accent-600">{fact.value}</p>
+          {KEY_FACTS.map((fact, i) => (
+            <div
+              key={fact.label}
+              className="card-brutalist p-6"
+              style={{ transform: `rotate(${tilt(i, 30)}deg)` }}
+            >
+              <p className="heading-display text-5xl text-accent-600">{fact.value}</p>
               <p className="mt-2 text-sm font-medium text-brand-600">{fact.label}</p>
             </div>
           ))}
@@ -109,7 +115,7 @@ export default async function AboutPage() {
 
       {/* Business highlights — full list at /businesses */}
       <Section width="content">
-        <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
           Businesses &amp; Exits
         </h2>
         <p className="mt-2 text-base text-brand-500">
@@ -125,10 +131,10 @@ export default async function AboutPage() {
               className="relative border-l-2 border-brand-200 py-6 pl-8 last:pb-0"
             >
               {/* Timeline dot */}
-              <div className="absolute -left-[9px] top-7 h-4 w-4 rounded-full border-2 border-accent-500 bg-surface" />
+              <div className="absolute -left-[9px] top-7 h-4 w-4 border-2 border-accent-500 bg-surface" />
 
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="text-lg font-semibold text-brand-900">
+                <h3 className="heading-display text-lg text-brand-900">
                   {biz.url ? (
                     <a
                       href={biz.url}
@@ -155,7 +161,7 @@ export default async function AboutPage() {
                   </span>
                 )}
                 {biz.outcome && (
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                  <span className={`px-2 py-0.5 text-xs font-medium ${
                     biz.outcome.startsWith("exit")
                       ? "bg-green-100 text-green-700"
                       : biz.outcome === "active"
@@ -183,15 +189,15 @@ export default async function AboutPage() {
       </Section>
 
       {/* Media logos / "As featured in" */}
-      <Section width="wide" className="bg-brand-50">
-        <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+      <Section width="wide">
+        <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
           As Featured In
         </h2>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
           {MEDIA_LOGOS.map((name) => (
             <span
               key={name}
-              className="text-lg font-semibold tracking-wide"
+              className="heading-display text-2xl text-accent-600"
             >
               {name}
             </span>
@@ -201,17 +207,18 @@ export default async function AboutPage() {
 
       {/* Books teaser */}
       <Section width="content">
-        <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
           Books
         </h2>
         <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {BOOK_TEASERS.map((book) => (
+          {BOOK_TEASERS.map((book, i) => (
             <Link
               key={book.slug}
               href={`/books/${book.slug}`}
-              className="group rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+              className="card-brutalist group p-6 transition-colors hover:bg-accent-50"
+              style={{ transform: `rotate(${tilt(i, 40)}deg)` }}
             >
-              <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+              <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
                 {book.title}
               </h3>
               <p className="mt-1 text-sm text-brand-500">{book.subtitle}</p>
@@ -226,34 +233,15 @@ export default async function AboutPage() {
       </Section>
 
       {/* Final CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Want Nic at Your Next Event?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual keynotes for conferences, corporate events, team offsites, and
-          webinars. Worldwide delivery.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/speaker"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-          <CTAButton
-            href="/contact"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            Book Nic
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        heading="Want Nic at Your Next Event?"
+        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic"
+      />
+    </div>
   );
 }
 

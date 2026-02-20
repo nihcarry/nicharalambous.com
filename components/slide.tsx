@@ -72,8 +72,8 @@ export function Slide({
       className={[
         /* Relative positioning for absolute SlideImage children */
         "relative overflow-hidden",
-        /* Full viewport on desktop; standard block on mobile */
-        "md:min-h-screen md:snap-start",
+        /* Full viewport on desktop; standard block on mobile. shrink-0 prevents flex parent from squashing slides. */
+        "shrink-0 md:min-h-screen md:snap-start",
         /* Flex column to vertically center content on desktop */
         "md:flex md:flex-col md:items-center md:justify-center",
         /* Standard section padding on mobile; tighter on desktop slides */

@@ -19,8 +19,10 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -94,7 +96,7 @@ export default async function BusinessesPage() {
   const { active, exits, deadpool } = partitionBusinesses(all);
 
   return (
-    <>
+    <div className="page-bg bg-gear-pattern">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -107,7 +109,7 @@ export default async function BusinessesPage() {
 
       {/* Hero */}
       <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           Building
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-600">
@@ -122,17 +124,18 @@ export default async function BusinessesPage() {
       {/* What I'm Building Now */}
       {active.length > 0 && (
         <Section width="wide">
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
             What I&rsquo;m Building Now
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {active.map((biz, i) => (
               <div
                 key={biz._id || `active-${i}`}
-                className="group flex flex-col rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                className="group card-brutalist flex flex-col p-6 transition-colors hover:bg-accent-50"
+                style={{ transform: `rotate(${tilt(i, 110)}deg)` }}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold text-brand-900">
+                  <h3 className="heading-display text-lg text-brand-900">
                     {biz.url ? (
                       <a
                         href={biz.url}
@@ -147,7 +150,7 @@ export default async function BusinessesPage() {
                       biz.name
                     )}
                   </h3>
-                  <span className="shrink-0 rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600">
+                  <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600">
                     Active
                   </span>
                 </div>
@@ -172,8 +175,8 @@ export default async function BusinessesPage() {
 
       {/* Past Startups (Exits) */}
       {exits.length > 0 && (
-        <Section width="wide" className="bg-brand-50">
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+        <Section width="wide">
+          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
             Past Startups
           </h2>
           <p className="mt-2 text-center text-base text-brand-500">
@@ -183,10 +186,11 @@ export default async function BusinessesPage() {
             {exits.map((biz, i) => (
               <div
                 key={biz._id || `exit-${i}`}
-                className="flex flex-col rounded-xl border border-brand-200 bg-surface p-6"
+                className="card-brutalist flex flex-col p-6"
+                style={{ transform: `rotate(${tilt(i, 120)}deg)` }}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold text-brand-900">
+                  <h3 className="heading-display text-lg text-brand-900">
                     {biz.url ? (
                       <a
                         href={biz.url}
@@ -200,7 +204,7 @@ export default async function BusinessesPage() {
                       biz.name
                     )}
                   </h3>
-                  <span className="shrink-0 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                  <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
                     {formatOutcome(biz.outcome || "exit-sold")}
                   </span>
                 </div>
@@ -227,7 +231,7 @@ export default async function BusinessesPage() {
       {/* Deadpool */}
       {deadpool.length > 0 && (
         <Section width="wide">
-          <h2 className="text-center text-2xl font-bold text-brand-900 sm:text-3xl">
+          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
             Deadpool
           </h2>
           <p className="mt-2 text-center text-base text-brand-500">
@@ -237,9 +241,9 @@ export default async function BusinessesPage() {
             {deadpool.map((biz, i) => (
               <div
                 key={biz._id || `dead-${i}`}
-                className="rounded-xl border border-brand-200 bg-surface p-5"
+                className="border-4 border-brand-400 p-5"
               >
-                <h3 className="text-base font-semibold text-brand-900">
+                <h3 className="heading-display text-base text-brand-900">
                   {biz.name}
                 </h3>
                 {biz.description && (
@@ -260,32 +264,17 @@ export default async function BusinessesPage() {
       )}
 
       {/* Closing quote + CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <blockquote className="text-xl font-medium italic leading-relaxed sm:text-2xl">
-          &ldquo;Plan in decades. Think in years. Work in months. Live in
-          days.&rdquo;
-        </blockquote>
-        <p className="mt-4 text-accent-100">&mdash; Nic Haralambous</p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/speaker"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-          <CTAButton
-            href="/contact"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            Book Nic
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        quote="Plan in decades. Think in years. Work in months. Live in days."
+        quoteAttribution="Nic Haralambous"
+        heading="Want Nic at Your Next Event?"
+        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic"
+      />
+    </div>
   );
 }
 

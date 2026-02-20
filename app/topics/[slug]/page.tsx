@@ -25,9 +25,11 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -136,10 +138,10 @@ export default async function TopicHubPage({
 
       {/* Hero */}
       <Section width="content">
-        <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+        <p className="heading-display text-accent-600">
           Topic Hub
         </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-brand-900 sm:text-4xl md:text-5xl">
+        <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
           {topic.title}
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-brand-600">
@@ -149,7 +151,7 @@ export default async function TopicHubPage({
 
       {/* Definition / What it is */}
       <Section width="content" className="bg-brand-50">
-        <h2 className="text-2xl font-bold text-brand-900">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
           What Is {topic.title}?
         </h2>
         {hasCmsDefinition ? (
@@ -168,7 +170,7 @@ export default async function TopicHubPage({
 
       {/* Why it matters */}
       <Section width="content">
-        <h2 className="text-2xl font-bold text-brand-900">
+        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
           Why {topic.title} Matters
         </h2>
         {hasCmsWhyItMatters ? (
@@ -188,17 +190,18 @@ export default async function TopicHubPage({
       {/* Related keynotes — links to keynote pages */}
       {topic.relatedKeynotes && topic.relatedKeynotes.length > 0 && (
         <Section width="wide" className="bg-brand-50">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Explore This Topic as a Virtual Keynote
           </h2>
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            {topic.relatedKeynotes.map((keynote) => (
+            {topic.relatedKeynotes.map((keynote, i) => (
               <Link
                 key={keynote._id}
                 href={`/keynotes/${keynote.slug}`}
-                className="group flex flex-col rounded-xl border border-brand-200 bg-surface p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                className="group flex flex-col card-brutalist p-6 transition-colors hover:bg-accent-50"
+                style={{ transform: `rotate(${tilt(i, 90)}deg)` }}
               >
-                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
                   {keynote.title}
                 </h3>
                 {"tagline" in keynote && keynote.tagline && (
@@ -220,7 +223,7 @@ export default async function TopicHubPage({
       {/* Featured posts — only shown if CMS has data */}
       {cmsTopic?.featuredPosts && cmsTopic.featuredPosts.length > 0 && (
         <Section width="wide">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Featured Articles on {topic.title}
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -228,9 +231,9 @@ export default async function TopicHubPage({
               <Link
                 key={post._id}
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
               >
-                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
                   {post.title}
                 </h3>
                 {post.excerpt && (
@@ -266,7 +269,7 @@ export default async function TopicHubPage({
       {/* Recent posts in this topic (dynamic, from topic references) */}
       {recentPosts.length > 0 && (
         <Section width="wide">
-          <h2 className="text-2xl font-bold text-brand-900">
+          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Recent Articles on {topic.title}
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -274,9 +277,9 @@ export default async function TopicHubPage({
               <Link
                 key={post._id}
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+                className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
               >
-                <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+                <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
                   {post.title}
                 </h3>
                 {post.excerpt && (
@@ -319,7 +322,7 @@ export default async function TopicHubPage({
             <Link
               key={t.slug}
               href={`/topics/${t.slug}`}
-              className="rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+              className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
             >
               {t.title}
             </Link>
@@ -328,32 +331,14 @@ export default async function TopicHubPage({
       </Section>
 
       {/* CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Book a Keynote on {topic.title}
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          Virtual delivery worldwide. Customized for your audience.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/contact"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            Enquire Now
-          </CTAButton>
-          <CTAButton
-            href="/keynotes"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            View All Keynotes
-          </CTAButton>
-        </div>
-      </Section>
+      <FinalCta
+        heading={`Book a Keynote on ${topic.title}`}
+        description="Virtual delivery worldwide. Customized for your audience."
+        primaryHref="/contact"
+        primaryLabel="Enquire Now"
+        secondaryHref="/keynotes"
+        secondaryLabel="View All Keynotes"
+      />
     </>
   );
 }

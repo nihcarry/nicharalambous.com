@@ -16,8 +16,10 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -52,7 +54,7 @@ export default async function BooksPage() {
   const books = cmsBooks || FALLBACK_BOOKS;
 
   return (
-    <>
+    <div className="page-bg bg-openbook-pattern">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -64,7 +66,7 @@ export default async function BooksPage() {
       />
 
       <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           Books
         </h1>
         <p className="mt-4 text-lg text-brand-600">
@@ -74,15 +76,16 @@ export default async function BooksPage() {
 
       <Section width="wide">
         <div className="grid gap-10 lg:grid-cols-1">
-          {books.map((book) => (
+          {books.map((book, i) => (
             <Link
               key={book.slug}
               href={`/books/${book.slug}`}
-              className="group flex flex-col gap-6 rounded-xl border border-brand-200 p-8 transition-all hover:border-accent-400 hover:shadow-md md:flex-row md:items-start"
+              className="group flex flex-col gap-6 card-brutalist p-8 transition-colors hover:bg-accent-50 md:flex-row md:items-start"
+              style={{ transform: `rotate(${tilt(i, 100)}deg)` }}
             >
               {/* Cover image */}
               {book.coverImage?.asset && (
-                <div className="shrink-0 overflow-hidden rounded-lg md:w-48">
+                <div className="shrink-0 overflow-hidden md:w-48">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={urlFor(book.coverImage).width(384).auto("format").url()}
@@ -94,7 +97,7 @@ export default async function BooksPage() {
               )}
 
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-brand-900 group-hover:text-accent-600">
+                <h2 className="heading-display text-2xl text-accent-600">
                   {book.title}
                 </h2>
                 {book.subtitle && (
@@ -112,7 +115,7 @@ export default async function BooksPage() {
                     {book.relatedTopics.map((topic) => (
                       <span
                         key={topic._id}
-                        className="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
+                        className="bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700"
                       >
                         {topic.title}
                       </span>
@@ -126,22 +129,15 @@ export default async function BooksPage() {
       </Section>
 
       {/* CTA */}
-      <Section width="content" className="text-center">
-        <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
-          Want the Keynote Version?
-        </h2>
-        <p className="mt-4 text-lg text-brand-600">
-          The ideas in these books come alive in Nic&rsquo;s virtual keynotes.
-          Real stories, actionable frameworks, tailored to your team.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton href="/speaker">About Nic as a Speaker</CTAButton>
-          <CTAButton href="/keynotes" variant="secondary">
-            Explore Keynotes
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        heading="Want the Keynote Version?"
+        description="The ideas in these books come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/keynotes"
+        secondaryLabel="Explore Keynotes"
+      />
+    </div>
   );
 }
 

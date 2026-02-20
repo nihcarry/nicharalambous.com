@@ -2,8 +2,9 @@
  * Most Read — top 5 articles for the /blog page.
  *
  * Displays a curated list of up to 5 posts in a consistent card layout
- * with rank, title, excerpt, topics, and CTA. Same visual language as
- * before (amber accent, borders, star icon).
+ * with rank, title, excerpt, topics, and CTA. Uses the lighter brutalist
+ * card treatment (border-4) per the design system spec — not the full
+ * card-brutalist (border-20px) used on hero listing pages.
  */
 import Link from "next/link";
 
@@ -45,10 +46,10 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
     <div className={className}>
       {/* Section heading */}
       <div className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-100">
+        <div className="flex h-8 w-8 items-center justify-center bg-amber-100">
           <StarIcon />
         </div>
-        <h2 className="text-sm font-bold uppercase tracking-wider text-brand-500">
+        <h2 className="heading-display text-sm text-brand-500">
           Most Read
         </h2>
       </div>
@@ -59,17 +60,17 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
           <li key={post._id}>
             <Link
               href={`/blog/${post.slug}`}
-              className="group flex items-start gap-4 overflow-hidden rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-6 shadow-sm transition-shadow hover:border-amber-300 hover:shadow-lg sm:gap-6"
+              className="group flex items-start gap-4 overflow-hidden border-4 border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50 sm:gap-6"
             >
               {/* Rank */}
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-sm font-bold text-amber-700">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-amber-100 text-sm font-bold text-amber-700">
                 {index + 1}
               </div>
 
               {/* Content */}
               <div className="min-w-0 flex-1">
                 {post.featuredLabel && (
-                  <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+                  <span className="inline-flex w-fit items-center gap-1.5 bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
                     <svg
                       className="h-3 w-3 text-amber-600"
                       fill="currentColor"
@@ -87,7 +88,7 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
                       <Link
                         key={topic._id}
                         href={`/topics/${topic.slug}`}
-                        className="rounded-full bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
+                        className="bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {topic.title}
@@ -95,7 +96,7 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
                     ))}
                   </div>
                 )}
-                <h3 className="mt-2 text-lg font-bold tracking-tight text-brand-900 group-hover:text-amber-700 sm:text-xl">
+                <h3 className="heading-display mt-2 text-lg text-brand-900 group-hover:text-amber-700 sm:text-xl">
                   {post.title}
                 </h3>
                 {post.excerpt && (
@@ -156,7 +157,7 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
 
               {/* Thumbnail (optional, on larger screens) */}
               {post.featuredImage?.asset?.url && (
-                <div className="relative hidden h-24 w-32 shrink-0 overflow-hidden rounded-lg sm:block lg:h-28 lg:w-36">
+                <div className="relative hidden h-24 w-32 shrink-0 overflow-hidden sm:block lg:h-28 lg:w-36">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post.featuredImage.asset.url}

@@ -39,7 +39,7 @@ export function TestimonialToEmbed() {
         width="100%"
         title="Client testimonials"
         className="block w-full"
-        style={{ height: "clamp(200px, 38vh, 320px)" }}
+        style={{ height: "clamp(240px, 46vh, 384px)" }}
       />
     </motion.div>
   );

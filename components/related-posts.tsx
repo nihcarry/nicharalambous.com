@@ -26,15 +26,15 @@ export function RelatedPosts({ posts, className = "" }: RelatedPostsProps) {
 
   return (
     <div className={className}>
-      <h2 className="text-2xl font-bold text-brand-900">Related Articles</h2>
+      <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Articles</h2>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <Link
             key={post._id}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+            className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
           >
-            <h3 className="text-lg font-semibold text-brand-900 group-hover:text-accent-600">
+            <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
               {post.title}
             </h3>
             {post.excerpt && (

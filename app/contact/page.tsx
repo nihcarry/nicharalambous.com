@@ -32,13 +32,13 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="page-bg bg-envelope-pattern">
       {/* Structured data */}
       <JsonLd data={contactPageJsonLd()} />
 
       <Section width="content">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+          <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
             Book Nic for Your Event
           </h1>
           <p className="mt-4 text-lg text-brand-600">
@@ -50,6 +50,6 @@ export default function ContactPage() {
 
         <ContactForm />
       </Section>
-    </>
+    </div>
   );
 }

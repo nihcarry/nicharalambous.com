@@ -18,8 +18,10 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { tilt } from "@/lib/tilt";
 
 /* ---------- Data fetching ---------- */
 
@@ -54,7 +56,7 @@ export default async function TopicsPage() {
   const topics = cmsTopics || FALLBACK_TOPICS;
 
   return (
-    <>
+    <div className="page-bg bg-compass-pattern">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -66,7 +68,7 @@ export default async function TopicsPage() {
       />
 
       <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           Topics
         </h1>
         <p className="mt-4 text-lg text-brand-600">
@@ -78,20 +80,21 @@ export default async function TopicsPage() {
 
       <Section width="wide">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {topics.map((topic) => (
+          {topics.map((topic, i) => (
             <Link
               key={topic.slug}
               href={`/topics/${topic.slug}`}
-              className="group flex flex-col rounded-xl border border-brand-200 p-6 transition-all hover:border-accent-400 hover:shadow-md"
+              className="group flex flex-col card-brutalist p-6 transition-colors hover:bg-accent-50"
+              style={{ transform: `rotate(${tilt(i, 80)}deg)` }}
             >
-              <h2 className="text-xl font-bold text-brand-900 group-hover:text-accent-600">
+              <h2 className="heading-display text-2xl text-accent-600">
                 {topic.title}
               </h2>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
                 {topic.oneSentenceSummary}
               </p>
               {topic.relatedKeynotes && topic.relatedKeynotes.length > 0 && (
-                <div className="mt-4 border-t border-brand-100 pt-4">
+                <div className="mt-4 border-t-2 border-brand-200 pt-4">
                   <p className="text-xs font-medium text-brand-400">
                     Related keynotes:
                   </p>
@@ -99,7 +102,7 @@ export default async function TopicsPage() {
                     {topic.relatedKeynotes.map((keynote) => (
                       <span
                         key={keynote._id}
-                        className="rounded-full bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600"
+                        className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600"
                       >
                         {keynote.title}
                       </span>
@@ -113,22 +116,15 @@ export default async function TopicsPage() {
       </Section>
 
       {/* CTA */}
-      <Section width="content" className="text-center">
-        <h2 className="text-2xl font-bold text-brand-900 sm:text-3xl">
-          Explore These Topics as a Keynote
-        </h2>
-        <p className="mt-4 text-lg text-brand-600">
-          Every topic above comes alive in Nic&rsquo;s virtual keynotes. Real
-          stories, actionable frameworks, tailored to your team.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton href="/speaker">About Nic as a Speaker</CTAButton>
-          <CTAButton href="/keynotes" variant="secondary">
-            View All Keynotes
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        heading="Explore These Topics as a Keynote"
+        description="Every topic above comes alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/keynotes"
+        secondaryLabel="View All Keynotes"
+      />
+    </div>
   );
 }
 

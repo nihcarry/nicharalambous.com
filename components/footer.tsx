@@ -9,7 +9,7 @@ import { FooterContent } from "@/components/footer-content";
 
 export function Footer() {
   return (
-    <footer className="border-t border-brand-200 bg-brand-50">
+    <footer className="border-t border-brand-200 bg-foot-pattern">
       <div className="container-wide py-16">
         <FooterContent />
       </div>

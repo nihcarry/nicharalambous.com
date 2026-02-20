@@ -23,6 +23,7 @@ import {
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { BlogList } from "@/components/blog-list";
 import { MostReadHero } from "@/components/most-read-hero";
@@ -87,7 +88,7 @@ export default async function BlogPage() {
   const topics = cmsTopics || FALLBACK_TOPICS;
 
   return (
-    <>
+    <div className="page-bg bg-quill-pattern">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -99,7 +100,7 @@ export default async function BlogPage() {
       />
 
       <Section width="content" className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-brand-900 sm:text-5xl">
+        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
           Blog
         </h1>
         <p className="mt-4 text-lg text-brand-600">
@@ -138,34 +139,15 @@ export default async function BlogPage() {
       </Section>
 
       {/* CTA */}
-      <Section
-        width="content"
-        className="bg-accent-600 text-center text-white rounded-none"
-      >
-        <h2 className="text-2xl font-bold sm:text-3xl">
-          Want These Ideas as a Keynote?
-        </h2>
-        <p className="mt-4 text-lg text-accent-100">
-          The ideas on this blog come alive in Nic&rsquo;s virtual keynotes.
-          Real stories, actionable frameworks, tailored to your team.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton
-            href="/speaker"
-            className="bg-white !text-accent-600 hover:bg-accent-100"
-          >
-            About Nic as a Speaker
-          </CTAButton>
-          <CTAButton
-            href="/topics"
-            className="border-white !text-white hover:bg-white/10"
-            variant="secondary"
-          >
-            Explore Topics
-          </CTAButton>
-        </div>
-      </Section>
-    </>
+      <FinalCta
+        heading="Want These Ideas as a Keynote?"
+        description="The ideas on this blog come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/topics"
+        secondaryLabel="Explore Topics"
+      />
+    </div>
   );
 }
 
