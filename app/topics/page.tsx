@@ -122,7 +122,7 @@ export default async function TopicsPage() {
         variant="grid-3"
         background="bg-compass-pattern"
         id="hero"
-        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+        className="md:justify-start"
         image={
           <div className="pointer-events-none absolute bottom-0 left-0 z-0 hidden md:block">
             <Image

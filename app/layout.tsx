@@ -72,7 +72,7 @@ export default function RootLayout({
           <HomePageVideoBackground />
 
           <Header />
-          <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] pt-[var(--top-branding-height-mobile)] md:pb-0 md:pt-[var(--header-height-desktop)]">{children}</main>
+          <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] md:pb-0 md:pt-[var(--header-clearance)]">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>
       </body>

@@ -121,7 +121,7 @@ export default async function BooksPage() {
         variant="hero"
         id="hero"
         background="bg-openbook-pattern"
-        className="text-center md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+        className="text-center md:justify-start"
         image={
           <>
             {HERO_PLACEHOLDERS.map((ph) => (
@@ -137,7 +137,7 @@ export default async function BooksPage() {
           </>
         }
       >
-        <div className="pt-[var(--top-branding-height-mobile)] md:pt-0">
+        <div>
           <h1 className="heading-stroke font-extrabold tracking-tight text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
             <span className="text-accent-600">My </span>Books
           </h1>
@@ -164,7 +164,7 @@ export default async function BooksPage() {
             id={book.slug}
             variant="centered"
             background="bg-openbook-pattern"
-            className="md:justify-start md:pt-[calc(var(--header-height-desktop)+0.75rem)]"
+            className="md:justify-start"
             image={
               placeholders.length > 0 ? (
                 <>

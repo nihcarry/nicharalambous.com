@@ -64,7 +64,7 @@ export function Slide({
   const contentClasses = [
     "relative z-10",
     variantWidth[variant],
-    variant !== "footer" && "md:pb-24",
+    variant !== "footer" && variant !== "hero" && "md:pb-24",
     constrainHeight && "md:max-h-[var(--slide-content-max-height)] md:overflow-y-auto md:overflow-x-hidden md:[scrollbar-width:thin]",
   ]
     .filter(Boolean)
@@ -80,8 +80,8 @@ export function Slide({
         "shrink-0 md:min-h-screen md:snap-start",
         /* Flex column to vertically center content on desktop */
         "md:flex md:flex-col md:items-center md:justify-center",
-        /* Standard section padding on mobile; tighter on desktop slides */
-        "py-[var(--spacing-section-sm)] md:py-8",
+        /* Standard section padding on mobile; desktop top pad clears the fixed nav */
+        "py-[var(--spacing-section-sm)] md:pt-[var(--header-clearance)] md:pb-8",
         /* Background and extra classes */
         background,
         className,

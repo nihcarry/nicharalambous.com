@@ -12,7 +12,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const navLinks = [
@@ -361,11 +361,28 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
 export function Header() {
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const pathname = usePathname();
+  const desktopNavRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = desktopNavRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height = (entry.target as HTMLElement).offsetHeight;
+        document.documentElement.style.setProperty(
+          "--header-clearance",
+          `${height + 12}px`,
+        );
+      }
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <header className="pointer-events-none fixed inset-0 z-50 flex flex-col bg-transparent">
-      {/* Desktop: top bar + status row (unchanged) */}
-      <div className="pointer-events-auto flex flex-col items-center px-3 pt-3 md:flex">
+      {/* Desktop: top bar + status row */}
+      <div ref={desktopNavRef} className="pointer-events-auto flex flex-col items-center px-3 pt-3 md:flex">
         <div
           className="hidden w-fit min-w-[480px] overflow-clip rounded-2xl bg-nav-bg md:block"
           style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
@@ -378,16 +395,6 @@ export function Header() {
           <NavStatusBar />
         </div>
       </div>
-
-      {/* Mobile: top-left branding pill (Zoom-style) */}
-      <Link
-        href="/"
-        prefetch={false}
-        className="pointer-events-auto absolute left-3 top-3 z-50 rounded-xl bg-nav-bg px-3 py-1.5 text-sm font-bold tracking-tight text-nav-text transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:hidden"
-        style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.4)" }}
-      >
-        Nic Haralambous
-      </Link>
 
       {/* Mobile: bottom nav bar (Zoom-style, 4 items) */}
       <nav

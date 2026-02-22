@@ -224,7 +224,7 @@ export default async function SpeakerPage() {
         id="hero"
         variant="full"
         background="bg-speaker-pattern"
-        className="text-center md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+        className="text-center md:justify-start"
       >
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
           <h1 className="heading-stroke font-extrabold tracking-tight mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">

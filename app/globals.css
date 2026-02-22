@@ -65,11 +65,12 @@
   --header-height-mobile: 5rem;
   --header-height-desktop: 8rem;
 
+  /* Measured header clearance — set at runtime by ResizeObserver in Header;
+     falls back to --header-height-desktop for SSR / before JS hydrates. */
+  --header-clearance: 8rem;
+
   /* Mobile bottom nav — Zoom-style bar; content uses pb to avoid overlap */
   --bottom-nav-height-mobile: 5rem;
-
-  /* Top branding pill ("Nic Haralambous") on mobile — used for hero top padding */
-  --top-branding-height-mobile: 2.75rem;
 
   /* Slide content max height — keeps heading + content + CTA above the fold when constrained */
   --slide-content-max-height: 90vh;
@@ -297,15 +298,13 @@
   /* Page-level background wrapper — pulls the pattern into <main>'s top/bottom
      padding so the pattern covers the full viewport with no white gaps. */
   .page-bg {
-    margin-top: calc(-1 * var(--top-branding-height-mobile));
-    padding-top: var(--top-branding-height-mobile);
     margin-bottom: calc(-1 * var(--bottom-nav-height-mobile));
     padding-bottom: var(--bottom-nav-height-mobile);
   }
   @media (min-width: 768px) {
     .page-bg {
-      margin-top: calc(-1 * var(--header-height-desktop));
-      padding-top: var(--header-height-desktop);
+      margin-top: calc(-1 * var(--header-clearance));
+      padding-top: var(--header-clearance);
       margin-bottom: 0;
       padding-bottom: 0;
     }

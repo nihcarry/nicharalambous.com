@@ -160,7 +160,7 @@ export default async function BusinessesPage() {
         variant="grid-3"
         background="bg-gear-pattern"
         id="hero"
-        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+        className="md:justify-start"
         image={
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -196,8 +196,8 @@ export default async function BusinessesPage() {
           id={slideIndex === 0 ? "active" : `active-${slideIndex + 1}`}
           className={
             slideIndex === 0
-              ? "md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
-              : "md:justify-start md:pt-[calc(var(--header-height-desktop)+0.5rem)]"
+              ? "md:justify-start"
+              : "md:justify-start"
           }
         >
           <SlideContent>
@@ -298,7 +298,7 @@ export default async function BusinessesPage() {
           variant="grid-3"
           background="bg-gear-pattern"
           id="deadpool"
-          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+          className="md:justify-start"
         >
           <SlideContent>
             <div className="mb-8 text-center">
@@ -329,7 +329,7 @@ export default async function BusinessesPage() {
           variant="grid-3"
           background="bg-gear-pattern"
           id="deadpool-2"
-          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+0.75rem)]"
+          className="md:justify-start"
         >
           <SlideContent>
             <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">

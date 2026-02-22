@@ -62,7 +62,7 @@ export default function KeynotesPage() {
         variant="grid-3"
         background="bg-spotlight-pattern"
         id="hero"
-        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+        className="md:justify-start"
         image={
           <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] overflow-hidden md:block">
             {/* Audience — centered at bottom */}
@@ -120,7 +120,7 @@ export default function KeynotesPage() {
           variant="grid-3"
           background="bg-spotlight-pattern"
           id={keynote.slug}
-          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+          className="md:justify-start"
         >
           <SlideContent>
             <Link

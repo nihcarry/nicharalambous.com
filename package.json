@@ -28,7 +28,7 @@
     "@sanity/vision": "^3.72.0",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.575.0",
-    "next": "^15.1.0",
+    "next": "15.4.11",
     "next-sanity": "^9.8.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

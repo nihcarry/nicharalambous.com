@@ -89,9 +89,9 @@ export default async function HomePage() {
         className=""
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
-        <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
+        <div>
           <h1
-            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] text-accent-600"
+            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,6.8vw,6.5rem)] uppercase leading-[0.95] text-accent-600"
           >
             Keynote Speaker
           </h1>
@@ -102,7 +102,7 @@ export default async function HomePage() {
             </span>
           </h2>
           {/* Body + CTAs — below the headline, left-aligned, away from the image */}
-          <div className="mt-6 flex flex-col items-start md:mt-8 md:max-w-[45%]">
+          <div className="mt-4 flex flex-col items-start md:mt-6 md:max-w-[45%]">
             <p className="max-w-xl text-base leading-relaxed text-brand-800 md:text-brand-50 md:text-lg">
               I help teams rediscover their agency.
               <br /><br />
@@ -110,7 +110,7 @@ export default async function HomePage() {
               20+ years in tech), I show organisations how to think differently,
               experiment boldly with AI, and ship products that actually matter.
             </p>
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row md:mt-8">
+            <div className="mt-4 flex flex-col gap-4 sm:flex-row md:mt-6">
               <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Book a Virtual Keynote
               </CTAButton>
