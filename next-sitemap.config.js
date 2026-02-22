@@ -12,8 +12,8 @@ module.exports = {
     policies: [
       {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/studio", "/studio/"],
+        allow: ["/", "/llms.txt"],
+        disallow: ["/studio", "/studio/", "/*.txt"],
       },
     ],
     additionalSitemaps: [],
