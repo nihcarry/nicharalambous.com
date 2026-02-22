@@ -130,7 +130,7 @@ export default async function HomePage() {
         image={
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
-            src="/slides/nic-16bit.png"
+            src="/slides/Nic_16_bit_slide_2_Landing.png"
             alt=""
             aria-hidden="true"
             className="pointer-events-none absolute bottom-0 left-0 z-[1] h-[58.5vh] w-auto select-none object-contain object-bottom"
@@ -138,7 +138,7 @@ export default async function HomePage() {
         }
       >
         <SlideContent>
-          <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-4xl uppercase leading-[0.95] text-brand-900 whitespace-nowrap sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Nic Speaks About
           </h2>
           <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">

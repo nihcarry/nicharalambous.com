@@ -100,7 +100,7 @@ export default async function BlogPage() {
       />
 
       <Section width="content" className="text-center">
-        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
+        <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
           Blog
         </h1>
         <p className="mt-4 text-lg text-brand-600">

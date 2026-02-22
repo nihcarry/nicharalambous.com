@@ -23,24 +23,26 @@ export function NextSlideIndicator() {
     if (slides.length === 0) return;
 
     const scrollTop = container.scrollTop;
-    const containerHeight = container.clientHeight;
-    const midpoint = scrollTop + containerHeight / 2;
-
-    /* Find the current slide (the one whose midpoint is closest to the container's midpoint) */
+    const viewportMid = scrollTop + container.clientHeight / 2;
+    /* Determine current slide by viewport midpoint, then advance exactly one. */
     let currentIndex = 0;
-    let closestDistance = Infinity;
     for (let i = 0; i < slides.length; i++) {
-      const slideMid = slides[i].offsetTop + slides[i].offsetHeight / 2;
-      const distance = Math.abs(slideMid - midpoint);
-      if (distance < closestDistance) {
-        closestDistance = distance;
+      const top = slides[i].offsetTop;
+      const bottom = top + slides[i].offsetHeight;
+      if (viewportMid >= top && viewportMid < bottom) {
         currentIndex = i;
+        break;
+      }
+      if (top <= viewportMid) {
+        currentIndex = i;
+      } else {
+        break;
       }
     }
+    const targetIndex = Math.min(currentIndex + 1, slides.length - 1);
 
-    const nextIndex = Math.min(currentIndex + 1, slides.length - 1);
     container.scrollTo({
-      top: slides[nextIndex].offsetTop,
+      top: slides[targetIndex].offsetTop,
       behavior: "smooth",
     });
   }, [containerRef]);

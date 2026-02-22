@@ -4,8 +4,6 @@
  * Used on both homepage and speaker page for consistent social proof.
  */
 
-import { TestimonialToEmbed } from "@/components/testimonial-to-embed";
-
 interface WhatClientsSayProps {
   /** Heading alignment. Default "left" matches homepage. */
   headingAlign?: "left" | "center";
@@ -22,8 +20,15 @@ export function WhatClientsSay({ headingAlign = "left" }: WhatClientsSayProps) {
         What Clients Say
       </h2>
       {/* Testimonial box — in normal flow; leaves room for 16bit on right (md+) */}
-      <div className="mt-6 overflow-hidden border-[20px] border-accent-600 bg-white px-2 md:max-w-[calc(100%-440px)]">
-        <TestimonialToEmbed />
+      <div className="mt-6 overflow-hidden px-2 md:max-w-[calc(100%-440px)]">
+        <iframe
+          id="testimonialto-5b8610ee-6b4a-4779-9503-cddbd8c5ac26"
+          src="https://embed-v2.testimonial.to/w/nic-haralambous---speaker?id=5b8610ee-6b4a-4779-9503-cddbd8c5ac26"
+          frameBorder="0"
+          scrolling="no"
+          width="100%"
+          height="800px"
+        />
       </div>
       {/* 16bit desktop — absolute, out of flow, no empty space */}
       <div

@@ -65,6 +65,14 @@ export const business = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "screenshot",
+      title: "Product Screenshot",
+      type: "image",
+      description:
+        "Primary card visual for /businesses slide cards. Prefer real product or homepage screenshots.",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "order",
       title: "Display Order",
       type: "number",

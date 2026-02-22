@@ -49,7 +49,7 @@ import {
 
 /* ---------- Default / fallback data ---------- */
 
-const DEFAULT_HEADLINE = "Unforgettable Keynote Speaker";
+const DEFAULT_HEADLINE = "Keynote Speaker";
 const DEFAULT_SUBHEADLINE =
   "High‑energy, impactful keynotes designed for remote teams, not repurposed for them.";
 
@@ -226,21 +226,8 @@ export default async function SpeakerPage() {
         className="text-center"
       >
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-          <h1 className="heading-stroke font-extrabold tracking-tight mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
-            {(() => {
-              const words = headline.split(" ");
-              if (words.length >= 2) {
-                return (
-                  <>
-                    <span className="block text-accent-600 2xl:text-[100px]">
-                      {words.slice(0, 1).join(" ")}
-                    </span>
-                    <span className="block">{words.slice(1).join(" ")}</span>
-                  </>
-                );
-              }
-              return headline;
-            })()}
+          <h1 className="heading-stroke font-extrabold tracking-tight mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+            {headline}
           </h1>
           <p className="mt-6 text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
             {subheadline}

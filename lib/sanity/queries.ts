@@ -158,6 +158,7 @@ export const businessesQuery = `*[_type == "business"] | order(startYear desc){
   outcome,
   url,
   logo,
+  screenshot,
   order
 }`;
 
@@ -565,6 +566,7 @@ export interface BusinessData {
   outcome: string | null;
   url: string | null;
   logo: SanityImage | null;
+  screenshot: SanityImage | null;
   order: number | null;
 }
 

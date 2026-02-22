@@ -13,7 +13,16 @@ export function ConditionalFooter() {
   const pathname = usePathname();
 
   /* Pages with SlideDeck render footer as last slide; skip global footer */
-  if (pathname === "/" || pathname === "/speaker" || pathname === "/keynotes" || pathname === "/books") return null;
+  if (
+    pathname === "/" ||
+    pathname === "/speaker" ||
+    pathname === "/keynotes" ||
+    pathname === "/books" ||
+    pathname === "/topics" ||
+    pathname === "/businesses"
+  ) {
+    return null;
+  }
 
   return <Footer />;
 }

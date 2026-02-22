@@ -1,25 +1,29 @@
 /**
  * Businesses Page — /businesses
  *
- * Full entrepreneurial history organised into three sections:
- * 1. "What I'm Building Now" — active projects and roles
- * 2. "Past Startups" — exited companies
- * 3. "Deadpool" — ventures that didn't make it
+ * Slide-based entrepreneurial history organised into:
+ * 1. Hero narrative
+ * 2. What I'm Building Now (active)
+ * 3. Past Startups (exits)
+ * 4. Deadpool (non-clickable archive)
  *
- * Content is fetched from Sanity at build time. Falls back to hardcoded
- * defaults if Sanity data is not yet published.
+ * Content is fetched from Sanity at build time and falls back to hardcoded
+ * records when CMS content is unavailable.
  *
- * JSON-LD: CollectionPage + Person (sitewide)
+ * JSON-LD: CollectionPage
  */
 import type { Metadata } from "next";
 import { client } from "@/lib/sanity/client";
+import { urlFor } from "@/lib/sanity/image";
 import {
   businessesQuery,
   type BusinessData,
 } from "@/lib/sanity/queries";
-import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
+import { Slide } from "@/components/slide";
+import { SlideDeck } from "@/components/slide-deck";
+import { SlideContent } from "@/components/slide-animations";
+import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { FooterContent } from "@/components/footer-content";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
 import { tilt } from "@/lib/tilt";
@@ -58,6 +62,33 @@ function partitionBusinesses(businesses: BusinessData[]) {
   return { active, exits, deadpool };
 }
 
+function chunkBusinesses<T>(items: T[], chunkSize: number): T[][] {
+  if (items.length === 0) return [];
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += chunkSize) {
+    chunks.push(items.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
+function isExternalUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url);
+}
+
+function getHostname(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./i, "");
+  } catch {
+    return url;
+  }
+}
+
+function formatYears(startYear: number | null, endYear: number | null, active: boolean): string | null {
+  if (!startYear) return null;
+  if (active) return `${startYear}\u2013present`;
+  return endYear ? `${startYear}\u2013${endYear}` : `${startYear}`;
+}
+
 function formatOutcome(outcome: string): string {
   switch (outcome) {
     case "exit-acquired":
@@ -71,6 +102,16 @@ function formatOutcome(outcome: string): string {
     default:
       return outcome;
   }
+}
+
+function getBusinessVisualUrl(business: BusinessData): string | null {
+  if (business.screenshot?.asset) {
+    return urlFor(business.screenshot).width(1200).height(700).fit("crop").auto("format").url();
+  }
+  if (business.logo?.asset) {
+    return urlFor(business.logo).width(900).height(700).fit("max").auto("format").url();
+  }
+  return null;
 }
 
 /* ---------- Metadata ---------- */
@@ -93,10 +134,16 @@ export const metadata: Metadata = {
 export default async function BusinessesPage() {
   const cmsBusinesses = await getBusinesses();
   const all = cmsBusinesses || FALLBACK_BUSINESSES;
-  const { active, exits, deadpool } = partitionBusinesses(all);
+  const { exits, deadpool } = partitionBusinesses(all);
+  const currentBuildSlides = chunkBusinesses(CURRENT_BUILDS, 2);
+  const exitSlides = chunkBusinesses(exits, 6);
+  const deadpoolFirstSlide = deadpool.slice(0, 6);
+  const deadpoolRemainingSlides = chunkBusinesses(deadpool.slice(6), 3);
 
   return (
-    <div className="page-bg bg-gear-pattern">
+    <SlideDeck>
+      <NextSlideIndicator />
+
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -107,174 +154,346 @@ export default async function BusinessesPage() {
         })}
       />
 
-      {/* Hero */}
-      <Section width="content" className="text-center">
-        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
-          Building
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-600">
-          I started my first business at school at the age of 16. Since then I
-          haven&rsquo;t gone a year in my life without a business being built.
-          Below you&rsquo;ll find my current projects, past exits, and a list of
-          dead startups that I tried to get off the ground but didn&rsquo;t work
-          for one reason or another.
-        </p>
-      </Section>
-
-      {/* What I'm Building Now */}
-      {active.length > 0 && (
-        <Section width="wide">
-          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
-            What I&rsquo;m Building Now
-          </h2>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {active.map((biz, i) => (
-              <div
-                key={biz._id || `active-${i}`}
-                className="group card-brutalist flex flex-col p-6 transition-colors hover:bg-accent-50"
-                style={{ transform: `rotate(${tilt(i, 110)}deg)` }}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="heading-display text-lg text-brand-900">
-                    {biz.url ? (
-                      <a
-                        href={biz.url}
-                        className="hover:text-accent-600"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {biz.name}
-                        <span className="ml-1 text-brand-400">&rarr;</span>
-                      </a>
-                    ) : (
-                      biz.name
-                    )}
-                  </h3>
-                  <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600">
-                    Active
-                  </span>
-                </div>
-                {biz.role && (
-                  <p className="mt-1 text-sm text-brand-500">{biz.role}</p>
-                )}
-                {biz.description && (
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
-                    {biz.description}
-                  </p>
-                )}
-                {biz.startYear && (
-                  <p className="mt-4 text-xs text-brand-400">
-                    {biz.startYear}&ndash;present
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* Past Startups (Exits) */}
-      {exits.length > 0 && (
-        <Section width="wide">
-          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
-            Past Startups
-          </h2>
-          <p className="mt-2 text-center text-base text-brand-500">
-            Businesses I co-founded and have exited.
+      <Slide
+        variant="grid-3"
+        background="bg-gear-pattern"
+        id="hero"
+        image={
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src="/slides/Nic_Building_1.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 bottom-0 z-[1] hidden h-[40vh] w-auto select-none object-contain object-bottom md:block"
+          />
+        }
+      >
+        <SlideContent>
+          <h1 className="heading-stroke text-center font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+            Building
+          </h1>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
+            I started my first business at school at the age of 16. Since then
+            I haven&apos;t gone a year in my life without a business being
+            built.
           </p>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {exits.map((biz, i) => (
-              <div
-                key={biz._id || `exit-${i}`}
-                className="card-brutalist flex flex-col p-6"
-                style={{ transform: `rotate(${tilt(i, 120)}deg)` }}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="heading-display text-lg text-brand-900">
-                    {biz.url ? (
-                      <a
-                        href={biz.url}
-                        className="hover:text-accent-600"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {biz.name}
-                      </a>
-                    ) : (
-                      biz.name
-                    )}
-                  </h3>
-                  <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                    {formatOutcome(biz.outcome || "exit-sold")}
-                  </span>
-                </div>
-                {biz.role && (
-                  <p className="mt-1 text-sm text-brand-500">{biz.role}</p>
-                )}
-                {biz.description && (
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
-                    {biz.description}
-                  </p>
-                )}
-                {biz.startYear && (
-                  <p className="mt-4 text-xs text-brand-400">
-                    {biz.startYear}
-                    {biz.endYear ? `–${biz.endYear}` : ""}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* Deadpool */}
-      {deadpool.length > 0 && (
-        <Section width="wide">
-          <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
-            Deadpool
-          </h2>
-          <p className="mt-2 text-center text-base text-brand-500">
-            Businesses that didn&rsquo;t make it.
+          <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
+            Below you&apos;ll find my current projects, past exits, and a list
+            of dead startups that I tried to get off the ground but didn&apos;t
+            work for one reason or another.
           </p>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {deadpool.map((biz, i) => (
-              <div
-                key={biz._id || `dead-${i}`}
-                className="border-4 border-brand-400 p-5"
-              >
-                <h3 className="heading-display text-base text-brand-900">
-                  {biz.name}
-                </h3>
-                {biz.description && (
-                  <p className="mt-2 text-sm leading-relaxed text-brand-600">
-                    {biz.description}
-                  </p>
-                )}
-                {biz.startYear && (
-                  <p className="mt-3 text-xs text-brand-400">
-                    {biz.startYear}
-                    {biz.endYear ? `–${biz.endYear}` : ""}
-                  </p>
-                )}
+        </SlideContent>
+      </Slide>
+
+      {currentBuildSlides.map((slideBuilds, slideIndex) => (
+        <Slide
+          key={`active-slide-${slideIndex}`}
+          variant="grid-3"
+          background="bg-gear-pattern"
+          id={slideIndex === 0 ? "active" : `active-${slideIndex + 1}`}
+        >
+          <SlideContent>
+            {slideIndex === 0 ? (
+              <div className="mb-8 md:mb-10">
+                <p className="text-center font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                  SLIDE 01
+                </p>
+                <h2 className="heading-stroke mt-2 text-center text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+                  What I&apos;m Building Now
+                </h2>
+                <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
+                  Live products I&apos;m actively shipping right now.
+                </p>
               </div>
-            ))}
-          </div>
-        </Section>
+            ) : (
+              <div className="mb-6 text-center">
+                <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                  SLIDE 01-B
+                </p>
+              </div>
+            )}
+            <div className="grid gap-6 md:grid-cols-2">
+              {slideBuilds.map((build, cardIndex) => (
+                <a
+                  key={build.url}
+                  href={build.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group card-brutalist flex h-full flex-col overflow-hidden bg-white transition-colors hover:bg-accent-50"
+                  style={{ transform: `rotate(${tilt(cardIndex, 180 + slideIndex)}deg)` }}
+                >
+                  <div className="relative aspect-[16/10] border-b-4 border-brand-200 bg-brand-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={build.screenshotSrc}
+                      alt={`${build.name} screenshot`}
+                      className="h-full w-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-lg font-extrabold tracking-tight uppercase text-brand-900">
+                        {build.name}
+                      </h3>
+                      <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
+                        Live
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-brand-500">
+                      {getHostname(build.url)}
+                    </p>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
+                      {build.summary}
+                    </p>
+                    <p className="mt-4 text-sm font-semibold text-accent-600">
+                      Open project <span aria-hidden>&rarr;</span>
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </SlideContent>
+        </Slide>
+      ))}
+
+      {exitSlides.map((slideBusinesses, slideIndex) => (
+        <Slide
+          key={`exits-slide-${slideIndex}`}
+          variant="grid-3"
+          background="bg-gear-pattern"
+          id={slideIndex === 0 ? "past-startups" : `past-startups-${slideIndex + 1}`}
+        >
+          <SlideContent>
+            <div className="mb-8 text-center">
+              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                {slideIndex === 0 ? "SLIDE 02" : `SLIDE 02-${slideIndex + 1}`}
+              </p>
+              <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+                Past Startups
+              </h2>
+              <p className="mt-2 text-base text-brand-500">
+                Businesses I co-founded and have exited.
+              </p>
+              {slideIndex > 0 && (
+                <p className="text-sm text-brand-500">
+                  Continuation
+                </p>
+              )}
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {slideBusinesses.map((business, cardIndex) => (
+                <BusinessCard
+                  key={business._id || `exit-${slideIndex}-${cardIndex}`}
+                  business={business}
+                  cardIndex={cardIndex}
+                  seed={120 + slideIndex}
+                  variant="exit"
+                />
+              ))}
+            </div>
+          </SlideContent>
+        </Slide>
+      ))}
+
+      {deadpoolFirstSlide.length > 0 && (
+        <Slide
+          variant="grid-3"
+          background="bg-gear-pattern"
+          id="deadpool"
+        >
+          <SlideContent>
+            <div className="mb-8 text-center">
+              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                SLIDE 03
+              </p>
+              <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+                Deadpool
+              </h2>
+              <p className="mt-2 text-base text-brand-500">
+                Businesses that didn&apos;t make it.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {deadpoolFirstSlide.slice(0, 4).map((business, cardIndex) => (
+                <BusinessCard
+                  key={business._id || `dead-top-${cardIndex}`}
+                  business={business}
+                  cardIndex={cardIndex}
+                  seed={130}
+                  variant="deadpool"
+                />
+              ))}
+            </div>
+            {deadpoolFirstSlide.length > 4 && (
+              <div className="mx-auto mt-4 grid max-w-4xl gap-4 sm:grid-cols-2">
+                {deadpoolFirstSlide.slice(4, 6).map((business, cardIndex) => (
+                  <BusinessCard
+                    key={business._id || `dead-bottom-${cardIndex}`}
+                    business={business}
+                    cardIndex={cardIndex + 4}
+                    seed={131}
+                    variant="deadpool"
+                  />
+                ))}
+              </div>
+            )}
+          </SlideContent>
+        </Slide>
       )}
 
-      {/* Closing quote + CTA */}
-      <FinalCta
-        quote="Plan in decades. Think in years. Work in months. Live in days."
-        quoteAttribution="Nic Haralambous"
-        heading="Want Nic at Your Next Event?"
-        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/contact"
-        secondaryLabel="Book Nic"
-      />
-    </div>
+      {deadpoolRemainingSlides.map((slideBusinesses, slideIndex) => (
+        <Slide
+          key={`deadpool-remaining-slide-${slideIndex}`}
+          variant="grid-3"
+          background="bg-gear-pattern"
+          id={`deadpool-${slideIndex + 2}`}
+        >
+          <SlideContent>
+            <div className="mb-6 text-center">
+              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                SLIDE 03-{slideIndex + 2}
+              </p>
+            </div>
+            <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
+              {slideBusinesses.map((business, cardIndex) => (
+                <BusinessCard
+                  key={business._id || `dead-remaining-${slideIndex}-${cardIndex}`}
+                  business={business}
+                  cardIndex={cardIndex}
+                  seed={140 + slideIndex}
+                  variant="deadpool"
+                />
+              ))}
+            </div>
+          </SlideContent>
+        </Slide>
+      ))}
+
+      <Slide variant="footer" background="bg-foot-pattern" id="footer">
+        <FooterContent />
+      </Slide>
+    </SlideDeck>
+  );
+}
+
+interface BusinessCardProps {
+  business: BusinessData;
+  cardIndex: number;
+  seed: number;
+  variant: "active" | "exit" | "deadpool";
+}
+
+interface CurrentBuild {
+  name: string;
+  url: string;
+  summary: string;
+  screenshotSrc: string;
+}
+
+function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps) {
+  const visualUrl = getBusinessVisualUrl(business);
+  const active = variant === "active";
+  const deadpool = variant === "deadpool";
+  const exit = variant === "exit";
+  const canLink = !deadpool && Boolean(business.url);
+  const dateLabel = formatYears(business.startYear, business.endYear, active);
+  const titleClassName = deadpool
+    ? "text-base font-extrabold tracking-tight uppercase text-brand-700"
+    : "text-lg font-extrabold tracking-tight uppercase text-brand-900";
+  const cardClassName = deadpool
+    ? "border-4 border-brand-300 bg-brand-100/40 p-4 opacity-90"
+    : "card-brutalist flex h-full flex-col overflow-hidden bg-white";
+
+  const content = (
+    <>
+      {active && (
+        <div className="relative aspect-[16/9] border-b-4 border-brand-200 bg-brand-100">
+          {visualUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={visualUrl}
+              alt={business.name}
+              className="h-full w-full object-cover object-top"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center bg-brand-100 text-center">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
+                  Visual Coming Soon
+                </p>
+                <p className="mt-1 text-sm text-brand-500">
+                  Screenshot or logo placeholder
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className={deadpool ? "pt-4" : "flex flex-1 flex-col p-5"}>
+        <div className="flex items-start justify-between gap-3">
+          <h3 className={titleClassName}>
+            {business.name}
+            {canLink && <span className="ml-1 text-brand-400">&rarr;</span>}
+          </h3>
+          {active && (
+            <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-600">
+              Active
+            </span>
+          )}
+          {exit && (
+            <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+              {formatOutcome(business.outcome || "exit-sold")}
+            </span>
+          )}
+          {deadpool && (
+            <span className="shrink-0 bg-brand-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-brand-600">
+              Archived
+            </span>
+          )}
+        </div>
+
+        {business.role && (
+          <p className="mt-1 text-sm text-brand-500">{business.role}</p>
+        )}
+        {business.description && (
+          <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
+            {business.description}
+          </p>
+        )}
+        {dateLabel && (
+          <p className="mt-4 text-xs font-medium text-brand-400">{dateLabel}</p>
+        )}
+        {deadpool && (
+          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-brand-500">
+            No outbound link
+          </p>
+        )}
+      </div>
+    </>
+  );
+
+  if (!canLink) {
+    return (
+      <article
+        className={cardClassName}
+        style={{ transform: `rotate(${tilt(cardIndex, seed)}deg)` }}
+      >
+        {content}
+      </article>
+    );
+  }
+
+  return (
+    <a
+      href={business.url || "#"}
+      target={business.url && isExternalUrl(business.url) ? "_blank" : undefined}
+      rel={business.url && isExternalUrl(business.url) ? "noopener noreferrer" : undefined}
+      className={`${cardClassName} transition-colors hover:bg-accent-50`}
+      style={{ transform: `rotate(${tilt(cardIndex, seed)}deg)` }}
+    >
+      {content}
+    </a>
   );
 }
 
@@ -293,13 +512,14 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "active",
     url: "/speaker",
     logo: null,
+    screenshot: null,
     order: 1,
   },
 
   /* ===== EXITS ===== */
   {
     _id: "fb-exit-1",
-    name: "Nic Harry",
+    name: "Nic Harry Socks",
     role: "CEO & Founder",
     description:
       "With R5,000 and a 6-week deadline to launch, I started a sock brand that grew into a fashion business with five retail stores and an online presence shipping worldwide. Successfully sold in 2018.",
@@ -308,6 +528,7 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "exit-sold",
     url: null,
     logo: null,
+    screenshot: null,
     order: 10,
   },
   {
@@ -321,6 +542,7 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "exit-sold",
     url: null,
     logo: null,
+    screenshot: null,
     order: 11,
   },
   {
@@ -331,9 +553,10 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
       "A platform that allowed users, brands, and businesses to build, manage, and generate revenue from their own mobile social communities. Sold to Mxit in 2011.",
     startYear: 2010,
     endYear: 2012,
-    outcome: "exit-acquired",
+    outcome: "exit-sold",
     url: null,
     logo: null,
+    screenshot: null,
     order: 12,
   },
 
@@ -349,6 +572,7 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "closed",
     url: null,
     logo: null,
+    screenshot: null,
     order: 20,
   },
   {
@@ -362,7 +586,78 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "closed",
     url: null,
     logo: null,
+    screenshot: null,
     order: 21,
+  },
+  {
+    _id: "fb-closed-4",
+    name: "BookSum.co",
+    role: "Founder",
+    description:
+      "BookSum was a service helping authors promote their books on social media platforms.",
+    startYear: null,
+    endYear: null,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 22,
+  },
+  {
+    _id: "fb-closed-5",
+    name: "The Curious Cult Podcast",
+    role: "Host",
+    description:
+      "A COVID lockdown podcast with founders, authors, and leaders about curiosity, entrepreneurship, and how they choose to live and build.",
+    startYear: 2020,
+    endYear: 2021,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 23,
+  },
+  {
+    _id: "fb-closed-6",
+    name: "Remote Keynote",
+    role: "Founder",
+    description:
+      "A platform launched during lockdown to connect keynote speakers with remote teams for virtual speaking gigs.",
+    startYear: 2020,
+    endYear: 2021,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 24,
+  },
+  {
+    _id: "fb-closed-7",
+    name: "SA Rocks",
+    role: "Founder",
+    description:
+      "A South African blog that published content daily for six years to promote local stories and culture.",
+    startYear: null,
+    endYear: null,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 25,
+  },
+  {
+    _id: "fb-closed-8",
+    name: "Digspot",
+    role: "Founder",
+    description:
+      "A social network built for students living in digs around the world.",
+    startYear: 2006,
+    endYear: null,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 26,
   },
   {
     _id: "fb-closed-3",
@@ -375,6 +670,52 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     outcome: "closed",
     url: null,
     logo: null,
-    order: 22,
+    screenshot: null,
+    order: 27,
+  },
+  {
+    _id: "fb-closed-9",
+    name: "Thus Far",
+    role: "Co-Founder",
+    description:
+      "A pop-rock band founded in 2003 and wrapped in 2005 when members moved into their professional careers.",
+    startYear: 2003,
+    endYear: 2005,
+    outcome: "closed",
+    url: null,
+    logo: null,
+    screenshot: null,
+    order: 28,
+  },
+];
+
+const CURRENT_BUILDS: CurrentBuild[] = [
+  {
+    name: "No Bull Ship Academy",
+    url: "https://www.nobullship.co",
+    summary:
+      "An 8-week build sprint helping experienced professionals ship their first real product with ruthless scope, clarity, and weekly delivery.",
+    screenshotSrc: "/slides/business-cards/nobullship.png",
+  },
+  {
+    name: "BuyHomeHelper",
+    url: "https://buyhomehelper.com",
+    summary:
+      "A deadline-tracking assistant for Dutch home buyers to manage viewings, bids, and critical purchase milestones across multiple homes.",
+    screenshotSrc: "/slides/business-cards/buyhomehelper-no-www.png",
+  },
+  {
+    name: "Savistash",
+    url: "https://savistash.com",
+    summary:
+      "A save-for-later tool that resurfaces links through scheduled digests, so useful content returns when you can actually use it.",
+    screenshotSrc: "/slides/business-cards/savistash.png",
+  },
+  {
+    name: "GoodGoodWeeds",
+    url: "https://goodgoodweeds.com",
+    summary:
+      "A simple strain memory app that helps users track and remember cannabis experiences, effects, and favorites over time.",
+    screenshotSrc: "/slides/business-cards/goodgoodweeds-no-www.png",
   },
 ];

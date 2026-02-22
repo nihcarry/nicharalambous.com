@@ -136,7 +136,7 @@ export default async function BooksPage() {
           </>
         }
       >
-        <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
+        <div className="pt-[var(--top-branding-height-mobile)] md:pt-2 lg:pt-0 md:-translate-y-8 lg:-translate-y-12">
           <h1 className="heading-stroke font-extrabold tracking-tight text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
             <span className="text-accent-600">My </span>Books
           </h1>
