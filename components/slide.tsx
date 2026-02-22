@@ -24,6 +24,8 @@ interface SlideProps {
   id?: string;
   /** Optional decorative image element (SlideImage) rendered behind content. */
   image?: React.ReactNode;
+  /** Optional background media layer (e.g. fixed video) rendered behind slide content. */
+  backgroundMedia?: React.ReactNode;
   /** Optional foreground element rendered above content (e.g. hero portrait). */
   foreground?: React.ReactNode;
   /**
@@ -55,6 +57,7 @@ export function Slide({
   className = "",
   id,
   image,
+  backgroundMedia,
   foreground,
   constrainHeight = false,
 }: SlideProps) {
@@ -85,6 +88,8 @@ export function Slide({
         .filter(Boolean)
         .join(" ")}
     >
+      {/* Optional background media layer (e.g. video), behind image + content */}
+      {backgroundMedia}
       {/* Decorative image layer — behind content */}
       {image}
       {/* Content sits above the decorative image layer */}

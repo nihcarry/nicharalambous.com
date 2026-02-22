@@ -31,11 +31,12 @@ import {
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
 import { SlideDeck } from "@/components/slide-deck";
-import { SlideParallaxImage, SlideContent } from "@/components/slide-animations";
+import { SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
+import { HeroVideoPlayButton } from "@/components/hero-video-play-button";
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -84,38 +85,25 @@ export default async function HomePage() {
       <Slide
         variant="hero"
         id="hero"
-        background="bg-rocket-pattern"
+        background="bg-rocket-pattern-mobile-only"
         className=""
-        image={
-          <SlideParallaxImage>
-            {/* Portrait — positioned right, behind content (z-0) */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/slides/nic-hero-cropped.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 right-0 hidden h-[92vh] w-auto max-w-none select-none object-contain object-bottom drop-shadow-2xl md:block lg:right-[4%]"
-            />
-          </SlideParallaxImage>
-        }
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
           <h1
-            className="heading-stroke font-bebas text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl"
+            className="heading-stroke font-bebas text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] whitespace-nowrap text-accent-600"
           >
-            <span className="text-accent-600">Keynote speaker,</span>
-            <br />
-            entrepreneur,
-            <br />
-            AI product
-            <br />
-            builder.
+            Keynote Speaker
           </h1>
-
+          <h2 className="mt-2 font-bebas uppercase leading-[0.95] text-brand-900 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill] sm:mt-3">
+            <span className="block text-[clamp(1.9rem,9vw,5rem)]">Entrepreneur</span>
+            <span className="block text-[clamp(1.55rem,7.25vw,4rem)] whitespace-nowrap">
+              AI Product Builder
+            </span>
+          </h2>
           {/* Body + CTAs — below the headline, left-aligned, away from the image */}
           <div className="mt-6 flex flex-col items-start md:mt-8 md:max-w-[45%]">
-            <p className="max-w-xl text-base leading-relaxed text-brand-600 md:text-lg">
+            <p className="max-w-xl text-base leading-relaxed text-brand-800 md:text-brand-50 md:text-lg">
               With 4 startup exits, 2 best-selling business books, and over 20
               years building technology businesses, Nic Haralambous helps teams
               ship breakthrough products, use curiosity to build with AI, and
@@ -128,6 +116,7 @@ export default async function HomePage() {
               <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
                 Explore Keynotes
               </CTAButton>
+              <HeroVideoPlayButton />
             </div>
           </div>
         </div>
