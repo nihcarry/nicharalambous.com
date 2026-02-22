@@ -45,6 +45,7 @@ export const metadata: Metadata = {
     "Explore Nic Haralambous's core topics: curiosity, innovation, entrepreneurship, focus, AI, agency, and failure. Each topic bridges blog content to keynotes.",
   alternates: { canonical: "https://nicharalambous.com/topics" },
   openGraph: {
+    type: "website",
     title: "Topics | Nic Haralambous",
     description:
       "Explore core topics: curiosity, innovation, AI, entrepreneurship, focus, agency, and failure.",
@@ -123,14 +124,14 @@ export default async function TopicsPage() {
         id="hero"
         className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         image={
-          <div className="pointer-events-none absolute bottom-0 left-0 z-0">
+          <div className="pointer-events-none absolute bottom-0 left-0 z-0 hidden md:block">
             <Image
               src="/slides/%20Nic_Topics_2.png"
               alt=""
               aria-hidden="true"
               width={768}
               height={1024}
-              className="h-[30vh] w-auto md:h-[38vh] lg:h-[46vh]"
+              className="h-[38vh] w-auto lg:h-[46vh]"
               priority
             />
           </div>

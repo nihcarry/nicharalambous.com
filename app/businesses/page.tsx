@@ -122,6 +122,7 @@ export const metadata: Metadata = {
     "Every business Nic Haralambous has started, sold, or shut down, from his first venture at 16 to building products today. Two decades of entrepreneurship.",
   alternates: { canonical: "https://nicharalambous.com/businesses" },
   openGraph: {
+    type: "website",
     title: "Businesses | Nic Haralambous",
     description:
       "Every business Nic Haralambous has started, sold, or shut down. Two decades of building, selling, and learning.",

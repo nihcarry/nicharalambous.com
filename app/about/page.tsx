@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     "Nic Haralambous is an entrepreneur, product builder, keynote speaker, and author with 3 business exits, 3 books, and 20+ years building technology businesses.",
   alternates: { canonical: "https://nicharalambous.com/about" },
   openGraph: {
+    type: "website",
     title: "About Nic Haralambous",
     description:
       "Entrepreneur, product builder, keynote speaker, and author. 3 business exits, 3 books, 20+ years building tech businesses.",
@@ -52,7 +53,7 @@ export default function AboutPage() {
       <Section width="wide">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <h1 className="heading-stroke font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl">
+            <h1 className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,10vw,3.75rem)] uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl">
               I Am Nic Haralambous
             </h1>
             <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">

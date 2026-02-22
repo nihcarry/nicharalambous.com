@@ -83,6 +83,7 @@ export async function generateMetadata({
       canonical: `https://nicharalambous.com/keynotes/${slug}`,
     },
     openGraph: {
+      type: "website",
       title,
       description,
       url: `https://nicharalambous.com/keynotes/${slug}`,

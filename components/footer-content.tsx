@@ -19,26 +19,29 @@ const footerLinks = {
     { href: "/blog", label: "Blog" },
     { href: "/businesses", label: "Building" },
     { href: "/books", label: "Books" },
-    { href: "/media", label: "Media" },
+    { href: "/search", label: "Search" },
   ],
   connect: [
     { href: "/about", label: "About Nic" },
     { href: "/contact", label: "Contact" },
-    { href: "https://nichasgottago.substack.com/", label: "Newsletter" },
   ],
 };
 
 const socialLinks = [
   {
-    href: "https://www.linkedin.com/in/nicharalambous/",
-    label: "LinkedIn",
-  },
-  {
-    href: "https://twitter.com/nicharalambous",
+    href: "https://twitter.com/nicharry",
     label: "X (Twitter)",
   },
   {
-    href: "https://nichasgottago.substack.com/",
+    href: "https://www.linkedin.com/in/nic-haralambous",
+    label: "LinkedIn",
+  },
+  {
+    href: "https://www.youtube.com/@nharalambous",
+    label: "YouTube",
+  },
+  {
+    href: "https://substack.com/@nicharry",
     label: "Substack",
   },
 ];

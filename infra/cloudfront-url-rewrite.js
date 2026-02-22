@@ -3,10 +3,9 @@
 //
 // Handles:
 // 1. Exact-match redirects (old Squarespace URLs → new paths)
-// 2. Clean URL rewriting (append .html for extensionless paths)
-// 3. Index page rewriting (/blog/ → /blog.html)
+// 2. Squarespace blog URL pattern redirect (/blog/YYYY/MM/DD/slug → /blog/slug)
+// 3. Clean URL rewriting (append .html for extensionless paths)
 
-// Exact-match redirect map (old URL → new URL)
 var redirects = {
   '/meet-nic-haralambous': '/about',
   '/the-speaker': '/speaker',
@@ -21,7 +20,7 @@ function handler(event) {
   var request = event.request;
   var uri = request.uri;
 
-  // 1. Check exact-match redirects
+  // 1. Exact-match redirects
   if (redirects[uri]) {
     return {
       statusCode: 301,
@@ -33,13 +32,25 @@ function handler(event) {
     };
   }
 
-  // 2. Strip trailing slash (except root)
+  // 2. Squarespace dated blog URLs: /blog/YYYY/MM/DD/slug → /blog/slug
+  var datedBlogMatch = uri.match(/^\/blog\/\d{4}\/\d{1,2}\/\d{1,2}\/(.+)/);
+  if (datedBlogMatch) {
+    return {
+      statusCode: 301,
+      statusDescription: 'Moved Permanently',
+      headers: {
+        'location': { value: '/blog/' + datedBlogMatch[1] },
+        'cache-control': { value: 'public, max-age=86400' }
+      }
+    };
+  }
+
+  // 3. Strip trailing slash (except root)
   if (uri.length > 1 && uri.endsWith('/')) {
     uri = uri.slice(0, -1);
   }
 
-  // 3. If URI has no file extension, append .html
-  //    Skip root (/), paths with dots (already have extension), and _next assets
+  // 4. Append .html for extensionless paths (skip root, files with extensions, _next assets)
   if (uri !== '/' && !uri.includes('.') && !uri.startsWith('/_next')) {
     request.uri = uri + '.html';
   }

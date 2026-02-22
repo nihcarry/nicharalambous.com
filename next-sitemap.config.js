@@ -5,7 +5,7 @@ module.exports = {
   generateIndexSitemap: true,
 
   // Exclude studio and draft routes from sitemap
-  exclude: ["/studio", "/studio/*", "/archive/*"],
+  exclude: ["/studio", "/studio/*", "/archive/*", "/search", "/api", "/api/**"],
 
   // robots.txt configuration
   robotsTxtOptions: {

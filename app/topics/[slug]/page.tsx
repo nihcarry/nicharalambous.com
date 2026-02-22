@@ -92,6 +92,7 @@ export async function generateMetadata({
       canonical: `https://nicharalambous.com/topics/${slug}`,
     },
     openGraph: {
+      type: "website",
       title: `${topic.title} | Topics | Nic Haralambous`,
       description,
       url: `https://nicharalambous.com/topics/${slug}`,
@@ -336,8 +337,8 @@ export default async function TopicHubPage({
         description="Virtual delivery worldwide. Customized for your audience."
         primaryHref="/contact"
         primaryLabel="Enquire Now"
-        secondaryHref="/keynotes"
-        secondaryLabel="View All Keynotes"
+        secondaryHref="/speaker"
+        secondaryLabel="About Nic as a Speaker"
       />
     </>
   );

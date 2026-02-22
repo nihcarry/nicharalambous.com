@@ -68,6 +68,7 @@ export const metadata: Metadata = {
     "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure by Nic Haralambous. Real stories and actionable frameworks from 20+ years of building businesses.",
   alternates: { canonical: "https://nicharalambous.com/blog" },
   openGraph: {
+    type: "website",
     title: "Blog | Nic Haralambous",
     description:
       "Articles on curiosity, innovation, AI, entrepreneurship, and building businesses.",

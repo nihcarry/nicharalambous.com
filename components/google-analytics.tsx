@@ -36,6 +36,17 @@ export function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
+
+          document.addEventListener('click', function(e) {
+            var link = e.target.closest('a[href*="/contact"], a[href*="/speaker"]');
+            if (!link) return;
+            var href = link.getAttribute('href');
+            var text = link.textContent.trim().substring(0, 50);
+            gtag('event', 'cta_click', {
+              event_category: 'engagement',
+              event_label: text + ' \\u2192 ' + href
+            });
+          });
         `}
       </Script>
     </>

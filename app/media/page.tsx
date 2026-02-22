@@ -41,6 +41,7 @@ export const metadata: Metadata = {
     "Nic Haralambous in the media, including press features, podcast appearances, TV/radio broadcasts, and video interviews.",
   alternates: { canonical: "https://nicharalambous.com/media" },
   openGraph: {
+    type: "website",
     title: "Media | Nic Haralambous",
     description:
       "Press features, podcast appearances, and media coverage of Nic Haralambous.",

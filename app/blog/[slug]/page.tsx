@@ -346,10 +346,10 @@ export default async function BlogPostPage({
       <FinalCta
         heading="Want Nic at Your Next Event?"
         description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
-        primaryHref="/contact"
-        primaryLabel="Book Nic for Your Event"
-        secondaryHref="/speaker"
-        secondaryLabel="About Nic as a Speaker"
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic for Your Event"
       />
     </>
   );

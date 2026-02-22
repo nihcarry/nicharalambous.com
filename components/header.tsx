@@ -94,6 +94,12 @@ function NavIcon({ name }: { name: string }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
         </svg>
       );
+    case "search":
+      return (
+        <svg className={iconClass} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      );
     case "more":
       return (
         <svg className={iconClass} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
@@ -152,7 +158,7 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 }
 
 /** Routes that live inside the More overflow menu. Used to highlight More when active. */
-const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about"];
+const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about", "/search"];
 
 function isMoreMenuActive(pathname: string): boolean {
   return moreMenuRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
@@ -294,12 +300,13 @@ function NavBarContent({ onNavClick }: { onNavClick?: () => void }) {
   );
 }
 
-/** Links shown in the More overflow menu (Building, Topics, Blog, Books). */
+/** Links shown in the More overflow menu. */
 const moreMenuLinks = [
   { href: "/topics", label: "Topics", icon: "tag" },
   { href: "/businesses", label: "Building", icon: "rocket" },
   { href: "/blog", label: "Blog", icon: "document" },
   { href: "/books", label: "Books", icon: "book" },
+  { href: "/search", label: "Search", icon: "search" },
 ];
 
 /** More overflow sheet — secondary nav links + status bar (Book Nic, About Nic, theme). */

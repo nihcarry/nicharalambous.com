@@ -37,6 +37,32 @@ interface BlogListProps {
 
 const POSTS_PER_PAGE = 12;
 
+/**
+ * Returns a compact page range like [1, "ellipsis", 4, 5, 6, "ellipsis", 14]
+ * so pagination fits on mobile screens.
+ */
+function getPageRange(
+  current: number,
+  total: number
+): (number | "ellipsis")[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  const pages: (number | "ellipsis")[] = [];
+  const siblings = 1;
+  const rangeStart = Math.max(2, current - siblings);
+  const rangeEnd = Math.min(total - 1, current + siblings);
+
+  pages.push(1);
+  if (rangeStart > 2) pages.push("ellipsis");
+  for (let i = rangeStart; i <= rangeEnd; i++) pages.push(i);
+  if (rangeEnd < total - 1) pages.push("ellipsis");
+  pages.push(total);
+
+  return pages;
+}
+
 export function BlogList({ posts, topics }: BlogListProps) {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -166,7 +192,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
       {/* Pagination */}
       {totalPages > 1 && (
         <nav
-          className="mt-12 flex items-center justify-center gap-2"
+          className="mt-12 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2"
           aria-label="Blog pagination"
         >
           <button
@@ -175,22 +201,31 @@ export function BlogList({ posts, topics }: BlogListProps) {
             disabled={currentPage === 1}
             className="border border-brand-200 px-3 py-2 text-sm font-medium text-brand-600 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Previous
+            Prev
           </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              type="button"
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-2 text-sm font-medium transition-colors ${
-                page === currentPage
-                  ? "bg-accent-600 text-white"
-                  : "border border-brand-200 text-brand-600 hover:bg-brand-50"
-              }`}
-            >
-              {page}
-            </button>
-          ))}
+          {getPageRange(currentPage, totalPages).map((item, i) =>
+            item === "ellipsis" ? (
+              <span
+                key={`ellipsis-${i}`}
+                className="px-1.5 py-2 text-sm text-brand-400"
+              >
+                &hellip;
+              </span>
+            ) : (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setCurrentPage(item)}
+                className={`min-w-[2.25rem] px-2 py-2 text-sm font-medium transition-colors ${
+                  item === currentPage
+                    ? "bg-accent-600 text-white"
+                    : "border border-brand-200 text-brand-600 hover:bg-brand-50"
+                }`}
+              >
+                {item}
+              </button>
+            )
+          )}
           <button
             type="button"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}

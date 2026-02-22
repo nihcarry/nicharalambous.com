@@ -178,6 +178,7 @@ export const metadata: Metadata = {
     "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses. Keynotes on curiosity, innovation, AI, and entrepreneurship.",
   alternates: { canonical: "https://nicharalambous.com/speaker" },
   openGraph: {
+    type: "website",
     title: "Virtual Keynote Speaker | Nic Haralambous",
     description:
       "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses.",

@@ -19,6 +19,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackFormSubmission } from "@/lib/analytics";
 
 /* ---------- Formspree endpoint ---------- */
 
@@ -78,6 +79,7 @@ export function ContactForm() {
       });
 
       if (response.ok) {
+        trackFormSubmission("booking_inquiry");
         setSubmitted(true);
         form.reset();
       } else {

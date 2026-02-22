@@ -42,8 +42,8 @@ export function ContextualCta({
           <CTAButton href={`/keynotes/${relatedKeynote.slug}`}>
             Learn More About This Keynote
           </CTAButton>
-          <CTAButton href="/contact" variant="secondary">
-            Book This Keynote
+          <CTAButton href="/speaker" variant="secondary">
+            About Nic as a Speaker
           </CTAButton>
         </div>
       </div>

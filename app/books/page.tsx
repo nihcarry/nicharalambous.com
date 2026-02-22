@@ -88,6 +88,7 @@ export const metadata: Metadata = {
     "Books by Nic Haralambous on entrepreneurship, resilience, side hustles, and building businesses. 3 published books from 20+ years of real experience.",
   alternates: { canonical: "https://nicharalambous.com/books" },
   openGraph: {
+    type: "website",
     title: "Books by Nic Haralambous",
     description:
       "3 published books on entrepreneurship, resilience, and building businesses.",

@@ -91,23 +91,24 @@ export default async function HomePage() {
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
           <h1
-            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] whitespace-nowrap text-accent-600"
+            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] text-accent-600"
           >
             Keynote Speaker
           </h1>
           <h2 className="mt-2 font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill] sm:mt-3">
             <span className="block text-[clamp(1.9rem,9vw,5rem)]">Entrepreneur</span>
-            <span className="block text-[clamp(1.55rem,7.25vw,4rem)] whitespace-nowrap">
+            <span className="block text-[clamp(1.55rem,7.25vw,4rem)]">
               AI Product Builder
             </span>
           </h2>
           {/* Body + CTAs — below the headline, left-aligned, away from the image */}
           <div className="mt-6 flex flex-col items-start md:mt-8 md:max-w-[45%]">
             <p className="max-w-xl text-base leading-relaxed text-brand-800 md:text-brand-50 md:text-lg">
-              With 4 startup exits, 2 best-selling business books, and over 20
-              years building technology businesses, Nic Haralambous helps teams
-              ship breakthrough products, use curiosity to build with AI, and
-              turn innovation into profit.
+              I help teams rediscover their agency.
+              <br /><br />
+              Through hard-earned experience (3 exits, 2 best-selling books,
+              20+ years in tech), I show organisations how to think differently,
+              experiment boldly with AI, and ship products that actually matter.
             </p>
             <div className="mt-6 flex flex-col gap-4 sm:flex-row md:mt-8">
               <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
@@ -133,12 +134,12 @@ export default async function HomePage() {
             src="/slides/Nic_16_bit_slide_2_Landing.png"
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-0 z-[1] h-[58.5vh] w-auto select-none object-contain object-bottom"
+            className="pointer-events-none absolute bottom-0 left-0 z-[1] hidden h-[58.5vh] w-auto select-none object-contain object-bottom md:block"
           />
         }
       >
         <SlideContent>
-          <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-4xl uppercase leading-[0.95] text-brand-900 whitespace-nowrap sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-[clamp(1.75rem,8vw,2.25rem)] uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Nic Speaks About
           </h2>
           <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -196,7 +197,7 @@ export default async function HomePage() {
               src="/slides/Nic_soap_16bit.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 right-0 z-50 h-[calc(100vh-503px)] w-auto select-none object-contain object-bottom"
+              className="pointer-events-none absolute bottom-0 right-0 z-[1] hidden h-[calc(100vh-503px)] w-auto select-none object-contain object-bottom md:block"
             />
           }
         >
