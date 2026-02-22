@@ -10,7 +10,6 @@
  */
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -127,11 +126,13 @@ function NavItem({
   onClick?: () => void;
 }) {
   const iconEl = <NavIcon name={icon} />;
+  const className =
+    "flex min-h-[34px] min-w-[34px] flex-col items-center justify-center gap-0.5 rounded px-1.5 py-2 text-nav-text transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg";
   return (
-    <Link
+    <a
       href={href}
       onClick={onClick}
-      className="flex min-h-[34px] min-w-[34px] flex-col items-center justify-center gap-0.5 rounded px-1.5 py-2 text-nav-text transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
+      className={className}
     >
       <div className="flex items-center gap-0.5">
         {isActive ? (
@@ -147,7 +148,7 @@ function NavItem({
         {showChevron && (isActive ? <ChevronDown /> : <ChevronUp />)}
       </div>
       <span className="text-xs font-medium">{label}</span>
-    </Link>
+    </a>
   );
 }
 
@@ -209,26 +210,24 @@ function NavStatusBar({
   if (variant === "compact") {
     return (
       <div className="flex flex-col gap-2">
-        <Link
+        <a
           href="/contact"
-          prefetch={false}
           onClick={onNavClick}
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-nav-text transition-colors hover:bg-white/10"
           style={{ backgroundColor: "var(--color-nav-blue)" }}
         >
           <span className="text-xs font-semibold text-white">Book Nic</span>
           {isContactActive && <ChevronDown className="h-3 w-3 shrink-0 text-white" />}
-        </Link>
-        <Link
+        </a>
+        <a
           href="/about"
-          prefetch={false}
           onClick={onNavClick}
           className="flex items-center gap-2 rounded-lg border border-white/15 bg-nav-bg/80 px-3 py-2 text-nav-text transition-colors hover:bg-white/10"
         >
           <NavIcon name="person" />
           <span className="text-xs font-medium">About Nic</span>
           {isAboutActive && <ChevronDown className="h-3 w-3 shrink-0 text-nav-text" />}
-        </Link>
+        </a>
         <div className="rounded-lg border border-white/15 px-3 py-2">
           <ThemeSwitcher />
         </div>
@@ -250,7 +249,7 @@ function NavStatusBar({
           </svg>
         </span>
         {/* 2. Blue "Book Nic" — links to contact/booking page */}
-        <Link
+        <a
           href="/contact"
           onClick={onNavClick}
           className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
@@ -258,7 +257,7 @@ function NavStatusBar({
         >
           Book Nic
           {isContactActive ? <ChevronDown className="h-3 w-3 shrink-0" /> : <ChevronUp className="h-3 w-3 shrink-0" />}
-        </Link>
+        </a>
         {/* 3. Shield */}
         <span className="flex shrink-0 items-center justify-center text-[#374151]" aria-hidden>
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -266,7 +265,7 @@ function NavStatusBar({
           </svg>
         </span>
         {/* 4. Dark "About Nic" capsule — clickable */}
-        <Link
+        <a
           href="/about"
           onClick={onNavClick}
           className="flex items-center gap-1.5 rounded-lg border border-white/15 bg-nav-bg px-2.5 py-1 text-xs font-medium leading-tight text-nav-text shadow-sm transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
@@ -276,7 +275,7 @@ function NavStatusBar({
           </svg>
           <span>About Nic</span>
           {isAboutActive ? <ChevronDown className="h-3 w-3 shrink-0 text-nav-text" /> : <ChevronUp className="h-3 w-3 shrink-0 text-nav-text" />}
-        </Link>
+        </a>
       </div>
       {/* Red section: Theme switcher (replaced Share) */}
       <div
@@ -334,9 +333,8 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
           <ul className="flex flex-col gap-1" role="list">
             {moreMenuLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
-                  prefetch={false}
                   onClick={onClose}
                   className={`flex items-center gap-3 rounded-lg px-3 py-3 text-nav-text transition-colors hover:bg-white/10 ${
                     isNavLinkActive(pathname, link.href) ? "bg-white/10 font-medium" : ""
@@ -344,7 +342,7 @@ function MoreSheet({ onClose }: { onClose: () => void }) {
                 >
                   <NavIcon name={link.icon} />
                   <span>{link.label}</span>
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -427,10 +425,9 @@ export function Header() {
           }
           const isActive = isNavLinkActive(pathname, item.href);
           return (
-            <Link
+            <a
               key={item.href}
               href={item.href}
-              prefetch={false}
               className={`flex flex-col items-center gap-0.5 rounded px-2 py-1 text-nav-text transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg ${
                 isActive ? "text-white" : ""
               }`}
@@ -446,7 +443,7 @@ export function Header() {
                 <NavIcon name={item.icon} />
               )}
               <span className="text-xs font-medium">{item.label}</span>
-            </Link>
+            </a>
           );
         })}
       </nav>

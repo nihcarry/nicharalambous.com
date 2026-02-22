@@ -50,9 +50,13 @@ function handler(event) {
     uri = uri.slice(0, -1);
   }
 
-  // 4. Append .html for extensionless paths (skip root, files with extensions, _next assets)
+  // 4. Append correct extension for extensionless paths (skip root, files with extensions, _next assets)
+  // Next.js client-side nav fetches RSC payload with Accept: text/x-component — serve .txt
+  // Normal document requests (browser, crawlers) — serve .html
   if (uri !== '/' && !uri.includes('.') && !uri.startsWith('/_next')) {
-    request.uri = uri + '.html';
+    var accept = request.headers?.accept?.value || '';
+    var isRscRequest = accept.indexOf('text/x-component') !== -1;
+    request.uri = isRscRequest ? uri + '.txt' : uri + '.html';
   }
 
   return request;
