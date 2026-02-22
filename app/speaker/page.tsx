@@ -232,7 +232,7 @@ export default async function SpeakerPage() {
               if (words.length >= 2) {
                 return (
                   <>
-                    <span className="block text-accent-600">
+                    <span className="block text-accent-600 2xl:text-[100px]">
                       {words.slice(0, 1).join(" ")}
                     </span>
                     <span className="block">{words.slice(1).join(" ")}</span>

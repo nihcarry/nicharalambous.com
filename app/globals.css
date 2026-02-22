@@ -73,6 +73,9 @@
 
   /* Slide content max height — keeps heading + content + CTA above the fold when constrained */
   --slide-content-max-height: 90vh;
+
+  /* CTA shadow — solid offset (no blur) for sticker-like buttons */
+  --shadow-cta: 4px 4px 0 var(--color-brand-900);
 }
 
 /* ---------- Base Styles ---------- */

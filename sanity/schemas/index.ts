@@ -19,7 +19,6 @@ import { portableTextBody } from "./objects/portable-text-body";
 import { siteSettings } from "./singletons/site-settings";
 import { author } from "./singletons/author";
 import { speaker } from "./singletons/speaker";
-import { mostReadSection } from "./singletons/most-read-section";
 
 // Documents
 import { keynote } from "./documents/keynote";
@@ -40,7 +39,6 @@ export const schemaTypes = [
   siteSettings,
   author,
   speaker,
-  mostReadSection,
 
   // Documents
   keynote,

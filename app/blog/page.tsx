@@ -15,18 +15,17 @@ import { client } from "@/lib/sanity/client";
 import {
   blogPostsListQuery,
   blogTopicFiltersQuery,
-  mostReadPostsQuery,
+  mostPopularPostsQuery,
   type BlogPostListItem,
   type TopicReference,
   type FeaturedPostItem,
-  type MostReadSectionData,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { BlogList } from "@/components/blog-list";
-import { MostReadHero } from "@/components/most-read-hero";
+import { MostPopularHero } from "@/components/most-popular-hero";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -49,12 +48,13 @@ async function getBlogTopics(): Promise<TopicReference[] | null> {
   }
 }
 
-async function getMostReadPosts(): Promise<FeaturedPostItem[]> {
+/** Fetches curated Most Popular posts (tagged in Sanity, max 5). */
+async function getMostPopularPosts(): Promise<FeaturedPostItem[]> {
   try {
-    const data =
-      await client.fetch<MostReadSectionData | null>(mostReadPostsQuery);
-    const posts = data?.posts ?? [];
-    return Array.isArray(posts) ? posts.filter(Boolean) : [];
+    const data = await client.fetch<FeaturedPostItem[] | null>(
+      mostPopularPostsQuery
+    );
+    return Array.isArray(data) ? data.filter(Boolean) : [];
   } catch {
     return [];
   }
@@ -78,10 +78,10 @@ export const metadata: Metadata = {
 /* ---------- Page ---------- */
 
 export default async function BlogPage() {
-  const [cmsPosts, cmsTopics, mostReadPosts] = await Promise.all([
+  const [cmsPosts, cmsTopics, mostPopularPosts] = await Promise.all([
     getBlogPosts(),
     getBlogTopics(),
-    getMostReadPosts(),
+    getMostPopularPosts(),
   ]);
 
   const posts = cmsPosts || [];
@@ -109,10 +109,10 @@ export default async function BlogPage() {
         </p>
       </Section>
 
-      {/* Most Read — top 5 (curated in Sanity: Most Read (Blog)) */}
-      {mostReadPosts.length > 0 && (
+      {/* Most Popular — up to 5 (curated via post field "Most Popular" in Sanity) */}
+      {mostPopularPosts.length > 0 && (
         <Section width="wide">
-          <MostReadHero posts={mostReadPosts} />
+          <MostPopularHero posts={mostPopularPosts} />
         </Section>
       )}
 

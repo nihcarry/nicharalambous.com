@@ -288,26 +288,24 @@ export const postsByTopicQuery = `*[_type == "post" && contentStatus == "publish
 
 /* ---------- Blog Listing ---------- */
 
-/** Curated Most Read posts from the mostReadSection singleton (top 5, in order) */
-export const mostReadPostsQuery = `*[_type == "mostReadSection"][0]{
-  "posts": posts[]->[contentStatus == "published"][0...5]{
+/** Curated Most Popular posts: published posts with mostPopular == true (max 5, by publishedAt desc) */
+export const mostPopularPostsQuery = `*[_type == "post" && contentStatus == "published" && mostPopular == true] | order(publishedAt desc)[0...5]{
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  publishedAt,
+  estimatedReadTime,
+  featuredLabel,
+  videoEmbed,
+  "featuredImage": featuredImage{
+    asset->{url},
+    alt
+  },
+  "topics": topics[]->{
     _id,
     title,
-    "slug": slug.current,
-    excerpt,
-    publishedAt,
-    estimatedReadTime,
-    featuredLabel,
-    videoEmbed,
-    "featuredImage": featuredImage{
-      asset->{url},
-      alt
-    },
-    "topics": topics[]->{
-      _id,
-      title,
-      "slug": slug.current
-    }
+    "slug": slug.current
   }
 }`;
 
@@ -681,12 +679,7 @@ export interface BlogPostListItem {
   seo: SeoData | null;
 }
 
-/** Shape returned by mostReadPostsQuery (singleton) */
-export interface MostReadSectionData {
-  posts: FeaturedPostItem[];
-}
-
-/** Shape returned by featuredPostsQuery */
+/** Shape returned by featuredPostsQuery and mostPopularPostsQuery */
 export interface FeaturedPostItem {
   _id: string;
   title: string;

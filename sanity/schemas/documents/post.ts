@@ -129,12 +129,20 @@ export const post = defineType({
         "Highlight this post in the 'Most Read' hero section on the blog listing page.",
     }),
     defineField({
+      name: "mostPopular",
+      title: "Most Popular",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Curated tag: include this post in the 'Most Popular' block on the blog listing. Based on your selection (e.g. historical reads across platforms), not live analytics.",
+    }),
+    defineField({
       name: "featuredLabel",
       title: "Featured Label",
       type: "string",
       description:
-        'Custom label for the featured badge (e.g. "500K+ Reads on Medium"). Only shown when featured is true.',
-      hidden: ({ parent }) => !parent?.featured,
+        'Optional badge label (e.g. "500K+ Reads on Medium"). Shown on the blog listing when Most Popular is checked.',
+      hidden: ({ parent }) => !parent?.mostPopular,
     }),
     defineField({
       name: "seo",

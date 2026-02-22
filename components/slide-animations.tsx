@@ -89,12 +89,13 @@ export function SlideForeground({ children, className = "" }: SlideForegroundPro
     return <div ref={ref} className={className}>{children}</div>;
   }
 
+  /* Keep opacity at 1 so foreground is visible even if viewport observer is delayed. */
   return (
     <motion.div
       ref={ref}
       className={className}
       style={{ y }}
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 1, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3, root: containerRef }}
       transition={{ duration: 0.7, ease: "easeOut" }}
@@ -125,10 +126,12 @@ export function SlideContent({ children, className = "" }: SlideContentProps) {
     return <div className={className}>{children}</div>;
   }
 
+  /* Animate only y (slide-up). Keep opacity at 1 so content is always visible if
+   * the viewport observer (root: containerRef) doesn't fire (e.g. ref not ready). */
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 1, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2, root: containerRef }}
       transition={{ duration: 0.5, ease: "easeOut" }}

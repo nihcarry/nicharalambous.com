@@ -46,13 +46,6 @@ export default defineConfig({
               .child(
                 S.document().schemaType("author").documentId("mainAuthor")
               ),
-            S.listItem()
-              .title("Most Read (Blog)")
-              .child(
-                S.document()
-                  .schemaType("mostReadSection")
-                  .documentId("mostReadSection")
-              ),
 
             S.divider(),
 

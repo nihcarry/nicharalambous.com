@@ -1,10 +1,9 @@
 /**
- * Most Read — top 5 articles for the /blog page.
+ * Most Popular — curated top articles for the /blog page.
  *
- * Displays a curated list of up to 5 posts in a consistent card layout
- * with rank, title, excerpt, topics, and CTA. Uses the lighter brutalist
- * card treatment (border-4) per the design system spec — not the full
- * card-brutalist (border-20px) used on hero listing pages.
+ * Displays up to 5 posts tagged "Most Popular" in Sanity in a consistent card
+ * layout with rank, title, excerpt, topics, and CTA. Uses the lighter brutalist
+ * card treatment (border-4) per the design system spec.
  */
 import Link from "next/link";
 
@@ -21,7 +20,7 @@ interface FeaturedPost {
   topics: { _id: string; title: string; slug: string }[];
 }
 
-interface MostReadHeroProps {
+interface MostPopularHeroProps {
   posts: FeaturedPost[];
   className?: string;
 }
@@ -37,7 +36,7 @@ const StarIcon = () => (
   </svg>
 );
 
-export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
+export function MostPopularHero({ posts, className = "" }: MostPopularHeroProps) {
   if (!posts || posts.length === 0) return null;
 
   const displayPosts = posts.slice(0, 5);
@@ -50,7 +49,7 @@ export function MostReadHero({ posts, className = "" }: MostReadHeroProps) {
           <StarIcon />
         </div>
         <h2 className="heading-display text-sm text-brand-500">
-          Most Read
+          Most Popular
         </h2>
       </div>
 

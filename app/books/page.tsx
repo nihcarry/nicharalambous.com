@@ -35,29 +35,26 @@ const HERO_PLACEHOLDERS = [
 ];
 
 const BOOK_PLACEHOLDERS: Record<number, { src: string; className: string }[]> = {
-  0: [
-    {
-      src: "/slides/Nic_book_1.png",
-      className:
-        "pointer-events-none absolute bottom-0 left-0 z-[1] hidden h-[50vh] w-auto select-none object-contain object-bottom md:block",
-    },
-  ],
+  0: [],
   1: [],
   2: [],
 };
 
 /* ---------- Inline 16-bit images rendered above the book title ---------- */
 
-const BOOK_INLINE_IMAGES: Record<number, { src: string; className: string }> = {
-  1: {
-    src: "/slides/Nic_book_4.png",
-    className: "absolute bottom-full left-0 h-36 w-auto md:h-40",
-  },
-};
+const BOOK_INLINE_IMAGES: Record<number, { src: string; className: string }> = {};
 
 /* ---------- Inline 16-bit images rendered below the CTAs ---------- */
 
 const BOOK_BELOW_CTA_IMAGES: Record<number, { src: string; className: string }> = {
+  0: {
+    src: "/slides/Nic_book_1.png",
+    className: "mx-auto mt-6 h-[23.75rem] w-auto md:h-[30rem]",
+  },
+  1: {
+    src: "/slides/Nic_book_4.png",
+    className: "mx-auto mt-6 h-[19rem] w-auto md:h-96",
+  },
   2: {
     src: "/slides/Nic_book_3.png",
     className: "mx-auto mt-6 h-[19rem] w-auto md:h-96",

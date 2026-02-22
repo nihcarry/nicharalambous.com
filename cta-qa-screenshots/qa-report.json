@@ -1,0 +1,209 @@
+{
+  "results": [
+    {
+      "route": "/",
+      "name": "home",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 7,
+      "screenshotPath": "cta-qa-screenshots/home-desktop.png"
+    },
+    {
+      "route": "/speaker",
+      "name": "speaker",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 3,
+      "screenshotPath": "cta-qa-screenshots/speaker-desktop.png"
+    },
+    {
+      "route": "/keynotes",
+      "name": "keynotes",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/keynotes-desktop.png"
+    },
+    {
+      "route": "/books",
+      "name": "books",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 6,
+      "screenshotPath": "cta-qa-screenshots/books-desktop.png"
+    },
+    {
+      "route": "/blog",
+      "name": "blog",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/blog-desktop.png"
+    },
+    {
+      "route": "/topics",
+      "name": "topics",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/topics-desktop.png"
+    },
+    {
+      "route": "/about",
+      "name": "about",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 3,
+      "screenshotPath": "cta-qa-screenshots/about-desktop.png"
+    },
+    {
+      "route": "/businesses",
+      "name": "businesses",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/businesses-desktop.png"
+    },
+    {
+      "route": "/media",
+      "name": "media",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/media-desktop.png"
+    },
+    {
+      "route": "/not-a-real-page",
+      "name": "not-found",
+      "viewport": "desktop",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/not-found-desktop.png"
+    },
+    {
+      "route": "/",
+      "name": "home",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 7,
+      "screenshotPath": "cta-qa-screenshots/home-mobile.png"
+    },
+    {
+      "route": "/speaker",
+      "name": "speaker",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 3,
+      "screenshotPath": "cta-qa-screenshots/speaker-mobile.png"
+    },
+    {
+      "route": "/keynotes",
+      "name": "keynotes",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/keynotes-mobile.png"
+    },
+    {
+      "route": "/books",
+      "name": "books",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 6,
+      "screenshotPath": "cta-qa-screenshots/books-mobile.png"
+    },
+    {
+      "route": "/blog",
+      "name": "blog",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/blog-mobile.png"
+    },
+    {
+      "route": "/topics",
+      "name": "topics",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/topics-mobile.png"
+    },
+    {
+      "route": "/about",
+      "name": "about",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 3,
+      "screenshotPath": "cta-qa-screenshots/about-mobile.png"
+    },
+    {
+      "route": "/businesses",
+      "name": "businesses",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/businesses-mobile.png"
+    },
+    {
+      "route": "/media",
+      "name": "media",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/media-mobile.png"
+    },
+    {
+      "route": "/not-a-real-page",
+      "name": "not-found",
+      "viewport": "mobile",
+      "pass": true,
+      "errors": [],
+      "warnings": [],
+      "ctaCount": 2,
+      "screenshotPath": "cta-qa-screenshots/not-found-mobile.png"
+    }
+  ],
+  "summary": {
+    "totalTests": 20,
+    "passedTests": 20,
+    "failedTests": 0
+  }
+}
