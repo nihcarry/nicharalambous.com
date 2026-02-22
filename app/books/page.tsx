@@ -49,15 +49,15 @@ const BOOK_INLINE_IMAGES: Record<number, { src: string; className: string }> = {
 const BOOK_BELOW_CTA_IMAGES: Record<number, { src: string; className: string }> = {
   0: {
     src: "/slides/Nic_book_1.png",
-    className: "mx-auto mt-6 h-[23.75rem] w-auto md:h-[30rem]",
+    className: "mx-auto mt-6 h-64 w-auto md:h-72",
   },
   1: {
     src: "/slides/Nic_book_4.png",
-    className: "mx-auto mt-6 h-[19rem] w-auto md:h-96",
+    className: "mx-auto mt-6 h-56 w-auto md:h-64",
   },
   2: {
     src: "/slides/Nic_book_3.png",
-    className: "mx-auto mt-6 h-[19rem] w-auto md:h-96",
+    className: "mx-auto mt-6 h-56 w-auto md:h-64",
   },
 };
 
@@ -120,7 +120,7 @@ export default async function BooksPage() {
         variant="hero"
         id="hero"
         background="bg-openbook-pattern"
-        className="text-center"
+        className="text-center md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         image={
           <>
             {HERO_PLACEHOLDERS.map((ph) => (
@@ -136,7 +136,7 @@ export default async function BooksPage() {
           </>
         }
       >
-        <div className="pt-[var(--top-branding-height-mobile)] md:pt-2 lg:pt-0 md:-translate-y-8 lg:-translate-y-12">
+        <div className="pt-[var(--top-branding-height-mobile)] md:pt-0">
           <h1 className="heading-stroke font-extrabold tracking-tight text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
             <span className="text-accent-600">My </span>Books
           </h1>
@@ -163,6 +163,7 @@ export default async function BooksPage() {
             id={book.slug}
             variant="centered"
             background="bg-openbook-pattern"
+            className="md:justify-start md:pt-[calc(var(--header-height-desktop)+0.75rem)]"
             image={
               placeholders.length > 0 ? (
                 <>
@@ -295,7 +296,7 @@ const FALLBACK_BOOKS: BookListItem[] = [
     slug: "do-fail-learn-repeat",
     subtitle: "The Entrepreneurship Memoir",
     shortSummary:
-      "Nic's personal memoir of entrepreneurship — the real version, not the highlight reel. Failures, impostor syndrome, near-death startup experiences, and the resilience required to keep going.",
+      "Nic's personal memoir of entrepreneurship: the real version, not the highlight reel. Failures, impostor syndrome, near-death startup experiences, and the resilience required to keep going.",
     coverImage: null,
     publishedYear: 2020,
     buyLinks: [

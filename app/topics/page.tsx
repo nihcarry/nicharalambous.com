@@ -121,6 +121,7 @@ export default async function TopicsPage() {
         variant="grid-3"
         background="bg-compass-pattern"
         id="hero"
+        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         image={
           <div className="pointer-events-none absolute bottom-0 left-0 z-0">
             <Image
@@ -168,9 +169,6 @@ export default async function TopicsPage() {
             {slideIndex === 0 && (
               <div className="grid gap-8 md:grid-cols-5 md:gap-14">
                 <div className="md:col-span-2">
-                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                    SLIDE 01
-                  </p>
                   <h2
                     className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] whitespace-pre-line text-brand-900 sm:text-5xl md:text-6xl"
                     data-no-orphan-opt-out="true"
@@ -227,9 +225,6 @@ export default async function TopicsPage() {
                   ))}
                 </div>
                 <div className="order-1 md:order-2 md:col-span-2 md:text-right">
-                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                    SLIDE 02
-                  </p>
                   <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
                     {slide.heading}
                   </h2>
@@ -243,9 +238,6 @@ export default async function TopicsPage() {
             {slideIndex === 2 && (
               <div>
                 <div className="mx-auto max-w-4xl text-center">
-                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                    SLIDE 03
-                  </p>
                   <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
                     {slide.heading}
                   </h2>

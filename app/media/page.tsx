@@ -38,7 +38,7 @@ async function getMediaAppearances(): Promise<MediaAppearanceData[] | null> {
 export const metadata: Metadata = {
   title: "Media",
   description:
-    "Nic Haralambous in the media — press features, podcast appearances, TV/radio broadcasts, and video interviews.",
+    "Nic Haralambous in the media, including press features, podcast appearances, TV/radio broadcasts, and video interviews.",
   alternates: { canonical: "https://nicharalambous.com/media" },
   openGraph: {
     title: "Media | Nic Haralambous",
@@ -62,7 +62,7 @@ export default async function MediaPage() {
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
-          name: "Media Appearances — Nic Haralambous",
+          name: "Media Appearances | Nic Haralambous",
           description:
             "Press features, podcast appearances, TV/radio broadcasts, and video interviews.",
           url: "https://nicharalambous.com/media",

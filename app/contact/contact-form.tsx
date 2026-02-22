@@ -36,7 +36,7 @@ const EVENT_TYPES = [
 ];
 
 const KEYNOTE_TOPICS = [
-  "Reclaiming Focus — The DIAL Framework",
+  "Reclaiming Focus: The DIAL Framework",
   "How to Build Breakthrough Product Teams",
   "The Curiosity Catalyst",
   "Custom / Not Sure Yet",

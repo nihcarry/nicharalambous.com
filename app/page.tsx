@@ -143,7 +143,7 @@ export default async function HomePage() {
           </h2>
           <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             <div
-              className="border-[20px] border-accent-600 bg-white p-6"
+              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
               style={{ transform: `rotate(${tilt(0, 1)}deg)` }}
             >
               <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
@@ -154,7 +154,7 @@ export default async function HomePage() {
               </p>
             </div>
             <div
-              className="border-[20px] border-accent-600 bg-white p-6"
+              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
               style={{ transform: `rotate(${tilt(1, 1)}deg)` }}
             >
               <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
@@ -165,7 +165,7 @@ export default async function HomePage() {
               </p>
             </div>
             <div
-              className="border-[20px] border-accent-600 bg-white p-6"
+              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
               style={{ transform: `rotate(${tilt(2, 1)}deg)` }}
             >
               <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
@@ -209,7 +209,7 @@ export default async function HomePage() {
                 <Link
                   key={post._id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                  className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                   style={{ transform: `rotate(${tilt(i, 2)}deg)` }}
                 >
                   <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
@@ -269,7 +269,7 @@ export default async function HomePage() {
               />
               <Link
                 href={TOPIC_PREVIEWS[0].href}
-                className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                 style={{ transform: `rotate(${tilt(0, 3)}deg)` }}
               >
                 <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
@@ -293,7 +293,7 @@ export default async function HomePage() {
                   />
                   <Link
                     href={topic.href}
-                    className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                    className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                     style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                   >
                     <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
@@ -308,7 +308,7 @@ export default async function HomePage() {
                 <Link
                   key={topic.href}
                   href={topic.href}
-                  className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
+                  className="group border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                   style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                 >
                   <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
@@ -403,7 +403,7 @@ const FALLBACK_AS_SEEN_AT = [
 const TOPIC_PREVIEWS = [
   {
     title: "Curiosity & Innovation",
-    description: "Why curiosity is the god particle of innovation — and how to build teams that never stop experimenting.",
+    description: "Why curiosity is the god particle of innovation, and how to build teams that never stop experimenting.",
     href: "/topics/curiosity",
   },
   {
@@ -418,7 +418,7 @@ const TOPIC_PREVIEWS = [
   },
   {
     title: "AI & Product Building",
-    description: "How to use AI as a tool without losing your mind — or your team's creative edge.",
+    description: "How to use AI as a tool without losing your mind, or your team's creative edge.",
     href: "/topics/ai",
   },
 ];

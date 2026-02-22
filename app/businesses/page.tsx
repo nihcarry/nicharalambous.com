@@ -119,7 +119,7 @@ function getBusinessVisualUrl(business: BusinessData): string | null {
 export const metadata: Metadata = {
   title: "Businesses",
   description:
-    "Every business Nic Haralambous has started, sold, or shut down — from his first venture at 16 to building products today. Two decades of entrepreneurship.",
+    "Every business Nic Haralambous has started, sold, or shut down, from his first venture at 16 to building products today. Two decades of entrepreneurship.",
   alternates: { canonical: "https://nicharalambous.com/businesses" },
   openGraph: {
     title: "Businesses | Nic Haralambous",
@@ -137,8 +137,9 @@ export default async function BusinessesPage() {
   const { exits, deadpool } = partitionBusinesses(all);
   const currentBuildSlides = chunkBusinesses(CURRENT_BUILDS, 2);
   const exitSlides = chunkBusinesses(exits, 6);
-  const deadpoolFirstSlide = deadpool.slice(0, 6);
-  const deadpoolRemainingSlides = chunkBusinesses(deadpool.slice(6), 3);
+  const deadpoolFirstSlide = deadpool.slice(0, 4);
+  const deadpoolSecondSlide = deadpool.slice(4, 9);
+  const deadpoolRemainingSlides = chunkBusinesses(deadpool.slice(9), 3);
 
   return (
     <SlideDeck>
@@ -149,7 +150,7 @@ export default async function BusinessesPage() {
         data={collectionPageJsonLd({
           name: "Businesses by Nic Haralambous",
           description:
-            "Every business Nic Haralambous has started, sold, or shut down — 20+ ventures across two decades.",
+            "Every business Nic Haralambous has started, sold, or shut down: 20+ ventures across two decades.",
           url: "https://nicharalambous.com/businesses",
         })}
       />
@@ -158,6 +159,7 @@ export default async function BusinessesPage() {
         variant="grid-3"
         background="bg-gear-pattern"
         id="hero"
+        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         image={
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -191,13 +193,15 @@ export default async function BusinessesPage() {
           variant="grid-3"
           background="bg-gear-pattern"
           id={slideIndex === 0 ? "active" : `active-${slideIndex + 1}`}
+          className={
+            slideIndex === 0
+              ? "md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
+              : "md:justify-start md:pt-[calc(var(--header-height-desktop)+0.5rem)]"
+          }
         >
           <SlideContent>
             {slideIndex === 0 ? (
               <div className="mb-8 md:mb-10">
-                <p className="text-center font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                  SLIDE 01
-                </p>
                 <h2 className="heading-stroke mt-2 text-center text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
                   What I&apos;m Building Now
                 </h2>
@@ -206,13 +210,9 @@ export default async function BusinessesPage() {
                 </p>
               </div>
             ) : (
-              <div className="mb-6 text-center">
-                <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                  SLIDE 01-B
-                </p>
-              </div>
+              <div className="mb-6 text-center" />
             )}
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2 md:gap-4">
               {slideBuilds.map((build, cardIndex) => (
                 <a
                   key={build.url}
@@ -222,7 +222,7 @@ export default async function BusinessesPage() {
                   className="group card-brutalist flex h-full flex-col overflow-hidden bg-white transition-colors hover:bg-accent-50"
                   style={{ transform: `rotate(${tilt(cardIndex, 180 + slideIndex)}deg)` }}
                 >
-                  <div className="relative aspect-[16/10] border-b-4 border-brand-200 bg-brand-100">
+                  <div className="relative aspect-[16/8] border-b-4 border-brand-200 bg-brand-100 md:aspect-[16/6]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={build.screenshotSrc}
@@ -230,22 +230,22 @@ export default async function BusinessesPage() {
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-5">
+                  <div className="flex flex-1 flex-col p-4">
                     <div className="flex items-center justify-between gap-3">
-                      <h3 className="text-lg font-extrabold tracking-tight uppercase text-brand-900">
+                      <h3 className="text-base font-extrabold tracking-tight uppercase text-brand-900 md:text-lg">
                         {build.name}
                       </h3>
                       <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
                         Live
                       </span>
                     </div>
-                    <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-brand-500">
+                    <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-500">
                       {getHostname(build.url)}
                     </p>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
+                    <p className="mt-2 flex-1 text-xs leading-snug text-brand-600">
                       {build.summary}
                     </p>
-                    <p className="mt-4 text-sm font-semibold text-accent-600">
+                    <p className="mt-3 text-sm font-semibold text-accent-600">
                       Open project <span aria-hidden>&rarr;</span>
                     </p>
                   </div>
@@ -265,9 +265,6 @@ export default async function BusinessesPage() {
         >
           <SlideContent>
             <div className="mb-8 text-center">
-              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                {slideIndex === 0 ? "SLIDE 02" : `SLIDE 02-${slideIndex + 1}`}
-              </p>
               <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
                 Past Startups
               </h2>
@@ -300,12 +297,10 @@ export default async function BusinessesPage() {
           variant="grid-3"
           background="bg-gear-pattern"
           id="deadpool"
+          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         >
           <SlideContent>
             <div className="mb-8 text-center">
-              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                SLIDE 03
-              </p>
               <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
                 Deadpool
               </h2>
@@ -313,8 +308,8 @@ export default async function BusinessesPage() {
                 Businesses that didn&apos;t make it.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {deadpoolFirstSlide.slice(0, 4).map((business, cardIndex) => (
+            <div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-2">
+              {deadpoolFirstSlide.map((business, cardIndex) => (
                 <BusinessCard
                   key={business._id || `dead-top-${cardIndex}`}
                   business={business}
@@ -324,14 +319,37 @@ export default async function BusinessesPage() {
                 />
               ))}
             </div>
-            {deadpoolFirstSlide.length > 4 && (
-              <div className="mx-auto mt-4 grid max-w-4xl gap-4 sm:grid-cols-2">
-                {deadpoolFirstSlide.slice(4, 6).map((business, cardIndex) => (
+          </SlideContent>
+        </Slide>
+      )}
+
+      {deadpoolSecondSlide.length > 0 && (
+        <Slide
+          variant="grid-3"
+          background="bg-gear-pattern"
+          id="deadpool-2"
+          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+0.75rem)]"
+        >
+          <SlideContent>
+            <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
+              {deadpoolSecondSlide.slice(0, 3).map((business, cardIndex) => (
+                <BusinessCard
+                  key={business._id || `dead-second-top-${cardIndex}`}
+                  business={business}
+                  cardIndex={cardIndex}
+                  seed={132}
+                  variant="deadpool"
+                />
+              ))}
+            </div>
+            {deadpoolSecondSlide.length > 3 && (
+              <div className="mx-auto mt-4 grid max-w-4xl gap-4 md:grid-cols-2">
+                {deadpoolSecondSlide.slice(3, 5).map((business, cardIndex) => (
                   <BusinessCard
-                    key={business._id || `dead-bottom-${cardIndex}`}
+                    key={business._id || `dead-second-bottom-${cardIndex}`}
                     business={business}
-                    cardIndex={cardIndex + 4}
-                    seed={131}
+                    cardIndex={cardIndex + 3}
+                    seed={133}
                     variant="deadpool"
                   />
                 ))}
@@ -346,14 +364,9 @@ export default async function BusinessesPage() {
           key={`deadpool-remaining-slide-${slideIndex}`}
           variant="grid-3"
           background="bg-gear-pattern"
-          id={`deadpool-${slideIndex + 2}`}
+          id={`deadpool-${slideIndex + 3}`}
         >
           <SlideContent>
-            <div className="mb-6 text-center">
-              <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
-                SLIDE 03-{slideIndex + 2}
-              </p>
-            </div>
             <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
               {slideBusinesses.map((business, cardIndex) => (
                 <BusinessCard
@@ -401,7 +414,7 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
     ? "text-base font-extrabold tracking-tight uppercase text-brand-700"
     : "text-lg font-extrabold tracking-tight uppercase text-brand-900";
   const cardClassName = deadpool
-    ? "border-4 border-brand-300 bg-brand-100/40 p-4 opacity-90"
+    ? "border-[12px] border-black bg-brand-100/40 p-4 opacity-90 md:border-[20px]"
     : "card-brutalist flex h-full flex-col overflow-hidden bg-white";
 
   const content = (
@@ -463,11 +476,6 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
         )}
         {dateLabel && (
           <p className="mt-4 text-xs font-medium text-brand-400">{dateLabel}</p>
-        )}
-        {deadpool && (
-          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-brand-500">
-            No outbound link
-          </p>
         )}
       </div>
     </>

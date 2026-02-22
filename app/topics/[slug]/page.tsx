@@ -82,7 +82,7 @@ export async function generateMetadata({
   const topic = (await getTopicHub(slug)) || FALLBACK_TOPICS[slug];
   if (!topic) return { title: "Topic Not Found" };
 
-  const title = `${topic.title} — Topic Hub`;
+  const title = `${topic.title} Topic Hub`;
   const description = topic.oneSentenceSummary;
 
   return {
@@ -130,7 +130,7 @@ export default async function TopicHubPage({
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
-          name: `${topic.title} — Nic Haralambous`,
+          name: `${topic.title} | Nic Haralambous`,
           description: topic.oneSentenceSummary,
           url: `https://nicharalambous.com/topics/${slug}`,
         })}
@@ -376,10 +376,10 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
     title: "Curiosity",
     slug: "curiosity",
     oneSentenceSummary:
-      "Curiosity is the god particle of innovation — the fundamental force that drives experimentation, learning, and breakthrough thinking.",
+      "Curiosity is the god particle of innovation: the fundamental force that drives experimentation, learning, and breakthrough thinking.",
     definition: null,
     definitionText: [
-      "Curiosity isn't a personality trait — it's a practice. In Nic's framework, there are three types: epistemic (the drive to know), diversive (the drive to explore), and empathetic (the drive to understand others). The most innovative teams cultivate all three.",
+      "Curiosity isn't a personality trait; it's a practice. In Nic's framework, there are three types: epistemic (the drive to know), diversive (the drive to explore), and empathetic (the drive to understand others). The most innovative teams cultivate all three.",
       "Nic's work on curiosity draws from his keynote 'The Curiosity Catalyst' and decades of building businesses where curiosity was the differentiator between stagnation and growth.",
     ],
     whyItMatters: null,
@@ -402,12 +402,12 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
       "Innovation is an outcome, not an action. It requires curiosity, experimentation, and the courage to act on incomplete information.",
     definition: null,
     definitionText: [
-      "Innovation isn't brainstorming sessions and sticky notes. Nic draws a sharp line between real innovation and what he calls 'wackovation' — chaotic activity disguised as progress.",
+      "Innovation isn't brainstorming sessions and sticky notes. Nic draws a sharp line between real innovation and what he calls 'wackovation': chaotic activity disguised as progress.",
       "The Innovation Flywheel framework shows how curiosity feeds experimentation, experimentation produces learning, and learning builds the agency to take the next leap. Innovation is what emerges when this cycle runs continuously.",
     ],
     whyItMatters: null,
     whyItMattersText: [
-      "Teams that confuse activity with innovation get stuck on the OK Plateau — competent but stagnant. Understanding that innovation is a system, not an event, changes how you hire, how you structure teams, and how you measure success.",
+      "Teams that confuse activity with innovation get stuck on the OK Plateau: competent but stagnant. Understanding that innovation is a system, not an event, changes how you hire, how you structure teams, and how you measure success.",
     ],
     relatedKeynotes: [
       { _id: "k2", title: "How to Build Breakthrough Product Teams", slug: "breakthrough-product-teams", tagline: "The Innovation Flywheel: curiosity, experimentation, and high agency" },
@@ -421,15 +421,15 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
     title: "Entrepreneurship",
     slug: "entrepreneurship",
     oneSentenceSummary:
-      "Building businesses from scratch — the Do/Fail/Learn/Repeat cycle, resilience, and why 'just avoid dying' is sometimes the best strategy.",
+      "Building businesses from scratch: the Do/Fail/Learn/Repeat cycle, resilience, and why 'just avoid dying' is sometimes the best strategy.",
     definition: null,
     definitionText: [
       "Entrepreneurship, in Nic's experience, is not about vision boards and overnight success. It's about the grind: building, failing, extracting data from failure, and iterating. The Do/Fail/Learn/Repeat cycle is the real framework.",
-      "With 4 startup exits across music tech, mobile social, e-commerce, and SaaS, Nic has lived the full spectrum — from near-bankruptcy to successful acquisitions.",
+      "With 4 startup exits across music tech, mobile social, e-commerce, and SaaS, Nic has lived the full spectrum, from near-bankruptcy to successful acquisitions.",
     ],
     whyItMatters: null,
     whyItMattersText: [
-      "The entrepreneur's mindset — resilience, resourcefulness, bias toward action — is increasingly valued inside large organisations too. Understanding how entrepreneurs think helps teams at every scale move faster and break free from institutional inertia.",
+      "The entrepreneur's mindset (resilience, resourcefulness, bias toward action) is increasingly valued inside large organisations too. Understanding how entrepreneurs think helps teams at every scale move faster and break free from institutional inertia.",
     ],
     relatedKeynotes: [],
     featuredPosts: [],
@@ -443,13 +443,13 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
       "In an attention economy, focus is your most valuable resource. The DIAL framework helps teams reclaim deep work.",
     definition: null,
     definitionText: [
-      "We live in a world engineered to steal your attention. The average person checks their phone 96 times a day. Your team's most valuable resource isn't time — it's attention.",
-      "Nic's DIAL framework (Decide, Intend, Act, Loop) provides a practical system for reclaiming focus. It's not about going offline — it's about being intentional with where attention goes.",
+      "We live in a world engineered to steal your attention. The average person checks their phone 96 times a day. Your team's most valuable resource isn't time; it's attention.",
+      "Nic's DIAL framework (Decide, Intend, Act, Loop) provides a practical system for reclaiming focus. It's not about going offline; it's about being intentional with where attention goes.",
     ],
     whyItMatters: null,
     whyItMattersText: [
-      "Teams that can't focus can't do deep work. And teams that can't do deep work can't innovate. Focus is the prerequisite for everything else — creativity, quality, and meaningful output.",
-      "The sacrifice fallacy — the belief that saying no to distractions means missing out — is what keeps most teams stuck in shallow work. Breaking that fallacy is the first step.",
+      "Teams that can't focus can't do deep work. And teams that can't do deep work can't innovate. Focus is the prerequisite for everything else: creativity, quality, and meaningful output.",
+      "The sacrifice fallacy (the belief that saying no to distractions means missing out) is what keeps most teams stuck in shallow work. Breaking that fallacy is the first step.",
     ],
     relatedKeynotes: [
       { _id: "k3", title: "Reclaiming Focus in a World That Profits From Your Distraction", slug: "reclaiming-focus", tagline: "The DIAL framework for attention management and deep work" },
@@ -483,15 +483,15 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
     title: "Agency",
     slug: "agency",
     oneSentenceSummary:
-      "High agency — the belief that you can influence outcomes — separates breakthrough teams from stagnant ones.",
+      "High agency, the belief that you can influence outcomes, separates breakthrough teams from stagnant ones.",
     definition: null,
     definitionText: [
       "Agency is the belief that your actions can change your circumstances. Nic places it on a spectrum: from low agency ('things happen to me') to high agency ('I make things happen'). Breakthrough teams operate at the high end.",
-      "Selective agency — knowing when to push and when to conserve energy — is the nuanced version. It's not about relentless hustle. It's about applying force where it matters most.",
+      "Selective agency (knowing when to push and when to conserve energy) is the nuanced version. It's not about relentless hustle. It's about applying force where it matters most.",
     ],
     whyItMatters: null,
     whyItMattersText: [
-      "'Action produces information' is the principle that separates stagnant teams from dynamic ones. High-agency teams don't wait for perfect data — they act, learn from the result, and iterate. This bias toward action is what makes companies like startups move faster than enterprises.",
+      "'Action produces information' is the principle that separates stagnant teams from dynamic ones. High-agency teams don't wait for perfect data; they act, learn from the result, and iterate. This bias toward action is what makes companies like startups move faster than enterprises.",
     ],
     relatedKeynotes: [
       { _id: "k3", title: "Reclaiming Focus in a World That Profits From Your Distraction", slug: "reclaiming-focus", tagline: "The DIAL framework for attention management and deep work" },
@@ -508,13 +508,13 @@ const FALLBACK_TOPICS: Record<string, FallbackTopicHub> = {
       "Failure is data, not destiny. Blameless postmortems and post-traumatic growth build stronger, more resilient teams.",
     definition: null,
     definitionText: [
-      "Failure isn't the opposite of success — it's a through-point. Nic reframes failure as data: every failed experiment, product launch, or business gives you information you didn't have before.",
-      "The blameless postmortem — borrowed from engineering culture — is the practice of examining failure without assigning fault. It creates psychological safety and turns every setback into a learning opportunity.",
+      "Failure isn't the opposite of success; it's a through-point. Nic reframes failure as data: every failed experiment, product launch, or business gives you information you didn't have before.",
+      "The blameless postmortem, borrowed from engineering culture, is the practice of examining failure without assigning fault. It creates psychological safety and turns every setback into a learning opportunity.",
     ],
     whyItMatters: null,
     whyItMattersText: [
-      "Teams that fear failure don't innovate. Period. Post-traumatic growth — the phenomenon where people emerge from adversity stronger than before — only happens when organisations create space for honest examination of what went wrong.",
-      "Dyson built 5,127 prototypes before getting it right. That's not persistence for its own sake — that's systematic failure as a design methodology.",
+      "Teams that fear failure don't innovate. Period. Post-traumatic growth, the phenomenon where people emerge from adversity stronger than before, only happens when organisations create space for honest examination of what went wrong.",
+      "Dyson built 5,127 prototypes before getting it right. That's not persistence for its own sake; that's systematic failure as a design methodology.",
     ],
     relatedKeynotes: [],
     featuredPosts: [],

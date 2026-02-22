@@ -64,6 +64,7 @@ export function Slide({
   const contentClasses = [
     "relative z-10",
     variantWidth[variant],
+    variant !== "footer" && "md:pb-24",
     constrainHeight && "md:max-h-[var(--slide-content-max-height)] md:overflow-y-auto md:overflow-x-hidden md:[scrollbar-width:thin]",
   ]
     .filter(Boolean)

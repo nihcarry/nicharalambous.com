@@ -52,7 +52,7 @@ export default function AboutPage() {
       <Section width="wide">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl md:text-7xl">
+            <h1 className="heading-stroke font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl">
               I Am Nic Haralambous
             </h1>
             <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
@@ -101,18 +101,14 @@ export default function AboutPage() {
           </div>
           <div className="flex justify-center">
             <div className="relative">
-              {/* Top, left, right borders — behind the image */}
-              <div className="absolute bottom-0 left-1/2 h-1/3 w-[110%] -translate-x-1/2 border-[12px] border-accent-600 border-b-0 bg-transparent md:border-[20px] md:border-b-0" />
               <Image
-                src="/slides/Nic_about_new.png"
+                src="/slides/Nic_About_new_16bit.png"
                 alt="Nic Haralambous"
                 width={480}
                 height={800}
-                className="relative z-10 h-auto w-full max-w-sm md:max-w-md"
+                className="relative z-10 h-auto w-full max-w-[16rem] md:max-w-[18.75rem]"
                 priority
               />
-              {/* Bottom border — in front of the image */}
-              <div className="absolute bottom-0 left-1/2 z-20 h-[12px] w-[110%] -translate-x-1/2 bg-accent-600 md:h-[20px]" />
             </div>
           </div>
         </div>
@@ -129,13 +125,13 @@ export default function AboutPage() {
             My career has taken me from student journalism to mobile product
             management at Vodacom, to co-founding and selling Motribe to Mxit,
             launching a sock brand with R5,000 that grew into five retail stores,
-            and eventually to keynote stages around the world — SXSW, Standard
+            and eventually to keynote stages around the world, including SXSW, Standard
             Bank, Vodacom, Old Mutual, and Nedbank.
           </p>
           <p>
             Through it all, I&rsquo;ve learned that above all else, culture
             creates change. My work today focuses on helping businesses build
-            more curious, entrepreneurial cultures — whether through{" "}
+            more curious, entrepreneurial cultures, whether through{" "}
             <Link href="/keynotes" className="text-accent-600 hover:underline">
               keynotes
             </Link>
@@ -149,14 +145,14 @@ export default function AboutPage() {
             days.&rdquo;
           </p>
           <cite className="mt-4 block text-sm font-medium not-italic text-brand-500">
-            &mdash; Nic Haralambous
+            - Nic Haralambous
           </cite>
         </blockquote>
       </Section>
 
       {/* Career pillars — LinkedIn-verified positions grouped by identity */}
       <Section width="wide">
-        <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
+        <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
           Career
         </h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
@@ -187,8 +183,6 @@ export default function AboutPage() {
                     </div>
                     <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 text-sm">
                       <span className="text-brand-600">{item.role}</span>
-                      <span className="text-brand-400">&middot;</span>
-                      <span className="text-brand-400">{item.dates}</span>
                     </div>
                   </div>
                 ))}
@@ -198,41 +192,55 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* Media logos / "As Featured In" */}
+      {/* Businesses preview */}
       <Section width="wide">
-        <h2 className="heading-display text-center text-3xl text-brand-900 sm:text-4xl">
-          As Featured In
+        <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
+          Businesses
         </h2>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-8 text-brand-400">
-          {MEDIA_LOGOS.map((name) => (
-            <span
-              key={name}
-              className="heading-display text-2xl text-accent-600"
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
+          What I&apos;m building now.
+        </p>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          {CURRENT_BUILDS_PREVIEW.map((business) => (
+            <a
+              key={business.name}
+              href={business.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card-brutalist block p-5 transition-colors hover:bg-accent-50"
             >
-              {name}
-            </span>
+              <p className="text-lg font-extrabold uppercase tracking-tight text-brand-900">
+                {business.name}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-brand-600">
+                {business.summary}
+              </p>
+            </a>
           ))}
+        </div>
+        <div className="mt-6 text-center">
+          <CTAButton href="/businesses" variant="secondary">
+            View All Businesses
+          </CTAButton>
         </div>
       </Section>
 
       {/* Books teaser */}
       <Section width="content">
-        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
+        <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
           Books
         </h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {BOOK_TEASERS.map((book, i) => (
-            <Link
-              key={book.slug}
-              href={`/books/${book.slug}`}
-              className="card-brutalist group p-6 transition-colors hover:bg-accent-50"
-              style={{ transform: `rotate(${tilt(i, 40)}deg)` }}
-            >
-              <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
-                {book.title}
-              </h3>
-              <p className="mt-1 text-sm text-brand-500">{book.subtitle}</p>
-            </Link>
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {BOOK_COVER_IMAGES.map((book) => (
+            <div key={book.src} className="mx-auto w-full max-w-[13rem]">
+              <Image
+                src={book.src}
+                alt={book.alt}
+                width={320}
+                height={480}
+                className="h-auto w-full object-contain"
+              />
+            </div>
           ))}
         </div>
         <div className="mt-6 text-center">
@@ -244,8 +252,6 @@ export default function AboutPage() {
 
       {/* Final CTA with famous quote */}
       <FinalCta
-        quote="Plan in decades. Think in years. Work in months. Live in days."
-        quoteAttribution="Nic Haralambous"
         heading="Want Nic at Your Next Event?"
         description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
         primaryHref="/speaker"
@@ -266,25 +272,45 @@ const KEY_STATS = [
   { value: "16+", label: "Years Speaking" },
 ];
 
-const MEDIA_LOGOS = [
-  "BBC",
-  "Fast Company",
-  "CNBC Africa",
-  "SXSW",
-  "Forbes",
-  "TechCrunch",
-];
-
-const BOOK_TEASERS = [
+const BOOK_COVER_IMAGES = [
   {
-    title: "Do. Fail. Learn. Repeat.",
-    subtitle: "The entrepreneurship memoir",
-    slug: "do-fail-learn-repeat",
+    src: "/slides/Do_Fail_Learn_repeate.jpg",
+    alt: "Do. Fail. Learn. Repeat. book cover",
   },
   {
-    title: "How to Start a Side Hustle",
-    subtitle: "The practical business-building guide",
-    slug: "how-to-start-a-side-hustle",
+    src: "/slides/How_to_start_a_side_Hustle.jpg",
+    alt: "How to Start a Side Hustle book cover",
+  },
+  {
+    src: "/slides/Business_Builders_Toolkit.jpg",
+    alt: "The Business Builder's Toolkit book cover",
+  },
+];
+
+const CURRENT_BUILDS_PREVIEW = [
+  {
+    name: "No Bull Ship Academy",
+    url: "https://www.nobullship.co",
+    summary:
+      "An 8-week build sprint helping experienced professionals ship their first real product with ruthless scope, clarity, and weekly delivery.",
+  },
+  {
+    name: "BuyHomeHelper",
+    url: "https://buyhomehelper.com",
+    summary:
+      "A deadline-tracking assistant for Dutch home buyers to manage viewings, bids, and critical purchase milestones.",
+  },
+  {
+    name: "Savistash",
+    url: "https://savistash.com",
+    summary:
+      "A save-for-later tool that resurfaces links through scheduled digests, so useful content returns when you can use it.",
+  },
+  {
+    name: "GoodGoodWeeds",
+    url: "https://goodgoodweeds.com",
+    summary:
+      "A simple strain memory app that helps users track and remember cannabis experiences, effects, and favorites over time.",
   },
 ];
 
@@ -306,7 +332,7 @@ const CAREER_PILLARS: CareerPillar[] = [
     items: [
       { company: "Nic Harry", role: "CEO & Founder", dates: "Nov 2012 – Nov 2019", outcome: "Sold" },
       { company: "Resolve Mobile", role: "Director & Co-Founder", dates: "2013 – 2014", outcome: "Sold" },
-      { company: "Motribe", role: "CEO & Co-Founder", dates: "Aug 2010 – Sep 2012", outcome: "Acquired" },
+      { company: "Motribe", role: "CEO & Co-Founder", dates: "Aug 2010 – Sep 2012", outcome: "Sold" },
       { company: "The Slow Fund", role: "Founder", dates: "Jan 2021 – Dec 2022" },
       { company: "Slow Hustle", role: "Founder", dates: "2020 – 2022" },
       { company: "Coindirect", role: "COO", dates: "May 2018 – Apr 2020" },
@@ -318,7 +344,7 @@ const CAREER_PILLARS: CareerPillar[] = [
     items: [
       { company: "Professional Speaker", role: "Keynote Speaker", dates: "Jan 2010 – Present" },
       { company: "Business Coach & Consultant", role: "Coach", dates: "Mar 2019 – Dec 2022" },
-      { company: "Missing Link", role: "Speaker Coach", dates: "Nov 2020 – Dec 2022" },
+      { company: "Story to Stage", role: "Speaker Coach", dates: "Nov 2020 – Dec 2022" },
     ],
   },
   {

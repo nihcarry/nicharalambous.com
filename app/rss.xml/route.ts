@@ -14,7 +14,7 @@ import { rssFeedPostsQuery, type RssFeedPost } from "@/lib/sanity/queries";
 export const dynamic = "force-static";
 
 const SITE_URL = "https://nicharalambous.com";
-const FEED_TITLE = "Nic Haralambous — Blog";
+const FEED_TITLE = "Nic Haralambous | Blog";
 const FEED_DESCRIPTION =
   "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure by Nic Haralambous.";
 

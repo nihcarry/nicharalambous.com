@@ -395,7 +395,7 @@ const FALLBACK_POSTS: Record<string, FallbackBlogPost> = {
     relatedKeynote: null,
     seo: null,
     descriptionText: [
-      "New articles are on the way. Nic writes about curiosity, innovation, AI, entrepreneurship, focus, agency, and failure — drawing from 20+ years of building businesses and 4 startup exits.",
+      "New articles are on the way. Nic writes about curiosity, innovation, AI, entrepreneurship, focus, agency, and failure, drawing from 20+ years of building businesses and 4 startup exits.",
       "In the meantime, explore the topic hubs or check out Nic's virtual keynotes for a deeper dive into these ideas.",
     ],
   },
@@ -404,7 +404,7 @@ const FALLBACK_POSTS: Record<string, FallbackBlogPost> = {
     title: "Advice from 30 Year Old Me to 20 Year Old Me",
     slug: "advice-from-30-year-old-me-to-20-year-old-me",
     excerpt:
-      "11 things that I wish I knew when I was 20. Travel, build things, read, fail, trust, and be patient — lessons from a decade of living.",
+      "11 things that I wish I knew when I was 20. Travel, build things, read, fail, trust, and be patient: lessons from a decade of living.",
     publishedAt: "2014-05-06T12:45:39.161Z",
     updatedAt: null,
     estimatedReadTime: 5,

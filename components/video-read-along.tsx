@@ -115,7 +115,7 @@ export function VideoReadAlong({
             <iframe
               ref={videoRef}
               src={embedUrl}
-              title={`${title} — Video Read-Along`}
+              title={`${title}: Video Read-Along`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="absolute inset-0 h-full w-full"
@@ -163,7 +163,7 @@ export function VideoReadAlong({
               />
             </svg>
             <p className="mt-2 text-sm text-brand-400">
-              The article is below — read at your own pace
+              The article is below; read at your own pace
             </p>
           </div>
         )}

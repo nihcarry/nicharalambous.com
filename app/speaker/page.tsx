@@ -67,7 +67,7 @@ const DEFAULT_FAQS = [
   {
     question: "What makes Nic different from other keynote speakers?",
     answer:
-      "Nic doesn't just theorize — he builds. With 4 startup exits, 3 published books, and active AI product work, his keynotes are grounded in real experience. He brings proprietary frameworks like the DIAL method for focus, the Innovation Flywheel, and the Do/Fail/Learn/Repeat cycle.",
+      "Nic doesn't just theorize; he builds. With 4 startup exits, 3 published books, and active AI product work, his keynotes are grounded in real experience. He brings proprietary frameworks like the DIAL method for focus, the Innovation Flywheel, and the Do/Fail/Learn/Repeat cycle.",
   },
   {
     question: "Can keynotes be customized for our team or event?",
@@ -99,7 +99,7 @@ const DEFAULT_WHY_BOOK = [
   {
     title: "Proprietary Frameworks",
     description:
-      "The DIAL method for focus, the Innovation Flywheel, the Do/Fail/Learn/Repeat cycle — actionable tools your team can use Monday morning.",
+      "The DIAL method for focus, the Innovation Flywheel, the Do/Fail/Learn/Repeat cycle: actionable tools your team can use Monday morning.",
   },
   {
     title: "Virtual-Native Delivery",
@@ -109,7 +109,7 @@ const DEFAULT_WHY_BOOK = [
   {
     title: "20+ Years of Stories",
     description:
-      "From launching South Africa's first commercial blog to AI product building — real stories that resonate.",
+      "From launching South Africa's first commercial blog to AI product building, with real stories that resonate.",
   },
   {
     title: "Tailored to Your Audience",
@@ -223,16 +223,16 @@ export default async function SpeakerPage() {
         id="hero"
         variant="full"
         background="bg-speaker-pattern"
-        className="text-center"
+        className="text-center md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
       >
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
           <h1 className="heading-stroke font-extrabold tracking-tight mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
             {headline}
           </h1>
-          <p className="mt-6 text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
+          <p className="mt-4 text-lg font-semibold leading-relaxed text-brand-700 sm:text-xl">
             {subheadline}
           </p>
-          <div className="mt-8 aspect-video w-full max-w-2xl mx-auto">
+          <div className="mt-4 aspect-video w-full max-w-xl mx-auto md:max-w-lg">
             <iframe
               src="https://www.youtube.com/embed/yxg_qMH-s-Y"
               title="Virtual keynote speaker video"
@@ -241,7 +241,7 @@ export default async function SpeakerPage() {
               className="h-full w-full rounded border-0"
             />
           </div>
-          <div className="mt-8">
+          <div className="mt-4">
             <CTAButton href="/contact">{ctaText}</CTAButton>
           </div>
         </div>
@@ -265,7 +265,7 @@ export default async function SpeakerPage() {
             <div className="aspect-video w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
               <iframe
                 src="https://www.youtube.com/embed/XBFqWl2Rv1I"
-                title="Why book Nic — virtual keynote speaker"
+                title="Why book Nic: virtual keynote speaker"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="h-full w-full border-0"
@@ -277,10 +277,10 @@ export default async function SpeakerPage() {
               What makes these keynotes different:
             </p>
             <ul className="list-disc space-y-2 pl-5">
-              <li><strong>Built for the medium</strong> — every talk is designed for live delivery on Zoom, Teams, or Meet</li>
-              <li><strong>Audience participation</strong> — not just a Q&amp;A at the end</li>
-              <li><strong>Fast&#x2011;paced, visual, and interactive</strong> — people don&apos;t just watch, they take part</li>
-              <li><strong>Designed for distributed teams</strong> — remote, hybrid, and global by default</li>
+              <li><strong>Built for the medium</strong>: every talk is designed for live delivery on Zoom, Teams, or Meet</li>
+              <li><strong>Audience participation</strong>: not just a Q&amp;A at the end</li>
+              <li><strong>Fast&#x2011;paced, visual, and interactive</strong>: people don&apos;t just watch, they take part</li>
+              <li><strong>Designed for distributed teams</strong>: remote, hybrid, and global by default</li>
             </ul>
             <p>
               The result? People stay present. Ideas land. And teams are still talking about it long after the call ends.
@@ -336,7 +336,7 @@ export default async function SpeakerPage() {
         <div className="mt-8 aspect-video mx-auto w-full max-w-2xl">
           <iframe
             src="https://www.youtube.com/embed/Yv1k_db7uwc"
-            title="Keynote topics — virtual keynote speaker"
+            title="Keynote topics: virtual keynote speaker"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="h-full w-full rounded border-0"

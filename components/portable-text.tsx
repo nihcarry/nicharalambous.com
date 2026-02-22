@@ -147,7 +147,7 @@ const components: PortableTextComponents = {
           </p>
           {value.attribution && (
             <p className="mt-2 text-sm text-accent-600">
-              — {value.attribution}
+              - {value.attribution}
             </p>
           )}
         </aside>

@@ -92,7 +92,7 @@ export default async function BlogPage() {
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
-          name: "Blog — Nic Haralambous",
+          name: "Blog | Nic Haralambous",
           description:
             "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure.",
           url: "https://nicharalambous.com/blog",

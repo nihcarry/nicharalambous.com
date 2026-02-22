@@ -30,7 +30,7 @@ export const speaker = defineType({
       name: "whyBookNic",
       title: "Why Book Nic",
       type: "portableTextBody",
-      description: "Differentiators — why Nic, not someone else.",
+      description: "Differentiators: why Nic, not someone else.",
     }),
     defineField({
       name: "howVirtualWorks",
@@ -58,7 +58,7 @@ export const speaker = defineType({
       title: "As Seen At",
       type: "array",
       of: [{ type: "string" }],
-      description: "List of events/companies — SXSW, Standard Bank, Vodacom, etc.",
+      description: "List of events/companies, including SXSW, Standard Bank, Vodacom, etc.",
     }),
     defineField({
       name: "testimonials",

@@ -212,6 +212,7 @@
     border-color: var(--color-accent-600);
     background-color: white;
     border-radius: 0;
+    box-shadow: 0 0 0 2px #000;
   }
   @media (min-width: 768px) {
     .card-brutalist {

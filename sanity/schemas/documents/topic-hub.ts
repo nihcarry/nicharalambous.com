@@ -37,7 +37,7 @@ export const topicHub = defineType({
       name: "definition",
       title: "Definition",
       type: "portableTextBody",
-      description: "What this topic means — in Nic's words.",
+      description: "What this topic means, in Nic's words.",
     }),
     defineField({
       name: "whyItMatters",

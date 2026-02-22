@@ -45,7 +45,7 @@ export function FinalCta({
               &ldquo;{quote}&rdquo;
             </blockquote>
             {quoteAttribution && (
-              <p className="mt-4 text-brand-500">&mdash; {quoteAttribution}</p>
+              <p className="mt-4 text-brand-500">- {quoteAttribution}</p>
             )}
             <div className="mt-8" />
           </>

@@ -33,9 +33,9 @@ interface KeynoteSlide {
 /* ---------- Metadata ---------- */
 
 export const metadata: Metadata = {
-  title: "Keynote Topics",
+  title: "Flagship Keynotes",
   description:
-    "Explore Nic Haralambous's virtual keynote topics: curiosity, innovation, AI, entrepreneurship, focus, and building breakthrough teams.",
+    "Nic Haralambous's flagship virtual keynotes on curiosity, innovation, AI, entrepreneurship, focus, and building breakthrough teams. Designed for remote teams.",
   alternates: { canonical: "https://nicharalambous.com/keynotes" },
 };
 
@@ -62,6 +62,7 @@ export default function KeynotesPage() {
         variant="grid-3"
         background="bg-spotlight-pattern"
         id="hero"
+        className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         image={
           <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] overflow-hidden md:block">
             {/* Audience — centered at bottom */}
@@ -93,7 +94,7 @@ export default function KeynotesPage() {
       >
         <SlideContent>
           <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
-            Keynote Topics
+            Flagship Keynotes
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
             Each keynote is grounded in 20+ years of real entrepreneurial
@@ -113,24 +114,28 @@ export default function KeynotesPage() {
       </Slide>
 
       {/* Slides 2..N: One slide per keynote */}
-      {keynotes.map((keynote, i) => (
+      {keynotes.map((keynote) => (
         <Slide
           key={keynote.slug}
           variant="grid-3"
           background="bg-spotlight-pattern"
           id={keynote.slug}
+          className="md:justify-start md:pt-[calc(var(--header-height-desktop)+1rem)]"
         >
           <SlideContent>
             <Link
               href={`/keynotes/${keynote.slug}`}
               className="group flex w-full flex-col"
             >
-              {/* Header: number + title + tagline */}
+              {/* Header: title + tagline */}
               <div className="mb-10 md:mb-14">
-              <span className="font-extrabold text-sm tracking-[0.3em] text-brand-400 md:text-base">
-                {String(i + 1).padStart(2, "0")} / {String(keynotes.length).padStart(2, "0")}
-              </span>
-              <h2 className="heading-stroke font-extrabold tracking-tight mt-2 text-5xl uppercase leading-[0.9] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+              <h2
+                className={`heading-stroke font-extrabold tracking-tight mt-2 uppercase leading-[0.9] text-brand-900 ${
+                  keynote.slug === "creating-a-curious-company"
+                    ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl"
+                    : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+                }`}
+              >
                 {keynote.title}
               </h2>
               <div className="mt-4 h-1 w-20 bg-accent-600" />

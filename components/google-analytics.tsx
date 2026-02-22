@@ -22,6 +22,13 @@ export function GoogleAnalytics() {
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
+        onError={(e) => {
+          // Script load failures (e.g. ad blocker) pass an Event; swallowing here
+          // prevents "[object Event]" from bubbling to Next.js error overlay.
+          if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+            console.warn("Google Analytics script failed to load (may be blocked)", e instanceof Error ? e.message : "script load error");
+          }
+        }}
       />
       <Script id="google-analytics" strategy="afterInteractive">
         {`
