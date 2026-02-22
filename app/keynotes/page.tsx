@@ -92,7 +92,7 @@ export default function KeynotesPage() {
         }
       >
         <SlideContent>
-          <h1 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h1 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             Keynote Topics
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
@@ -127,10 +127,10 @@ export default function KeynotesPage() {
             >
               {/* Header: number + title + tagline */}
               <div className="mb-10 md:mb-14">
-              <span className="font-bebas text-sm tracking-[0.3em] text-brand-400 md:text-base">
+              <span className="font-extrabold text-sm tracking-[0.3em] text-brand-400 md:text-base">
                 {String(i + 1).padStart(2, "0")} / {String(keynotes.length).padStart(2, "0")}
               </span>
-              <h2 className="heading-stroke font-bebas mt-2 text-5xl uppercase leading-[0.9] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+              <h2 className="heading-stroke font-extrabold tracking-tight mt-2 text-5xl uppercase leading-[0.9] text-brand-900 sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl">
                 {keynote.title}
               </h2>
               <div className="mt-4 h-1 w-20 bg-accent-600" />
@@ -149,7 +149,7 @@ export default function KeynotesPage() {
                   : <p>{keynote.description}</p>}
               </div>
               <div className="md:col-span-2">
-                <h3 className="font-bebas text-lg uppercase tracking-wider text-brand-900 md:text-xl">
+                <h3 className="font-extrabold text-lg uppercase tracking-wider text-brand-900 md:text-xl">
                   {keynote.keyTakeawaysLabel ?? "Key Takeaways"}
                 </h3>
                 <ul className="mt-4 space-y-3 text-sm text-brand-700 md:text-base">
@@ -202,7 +202,7 @@ export default function KeynotesPage() {
         id="cta"
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             Want Nic at Your Event?
           </h2>
           <p className="mt-4 text-lg text-brand-700">
@@ -211,14 +211,14 @@ export default function KeynotesPage() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <CTAButton
               href="/contact"
-              className="!rounded-none font-bebas text-xl uppercase"
+              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
             >
               Book a Keynote
             </CTAButton>
             <CTAButton
               href="/speaker"
               variant="secondary"
-              className="!rounded-none font-bebas text-xl uppercase"
+              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
             >
               About Nic as a Speaker
             </CTAButton>

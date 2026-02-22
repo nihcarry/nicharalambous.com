@@ -258,7 +258,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex w-full items-center justify-center bg-accent-600 px-6 py-3 font-bebas text-xl uppercase tracking-wide text-white transition-colors hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:opacity-50 sm:w-auto"
+        className="inline-flex w-full items-center justify-center bg-accent-600 px-6 py-3 font-bold text-xl uppercase tracking-[0.02em] text-white transition-colors hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:opacity-50 sm:w-auto"
       >
         {submitting ? "Sending..." : "Send Inquiry"}
       </button>

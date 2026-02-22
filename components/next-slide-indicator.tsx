@@ -89,24 +89,15 @@ export function NextSlideIndicator() {
     <button
       type="button"
       onClick={scrollToNextSlide}
-      className="fixed bottom-6 left-1/2 z-[100] hidden -translate-x-1/2 md:flex flex-col items-center gap-1 rounded-lg bg-transparent text-brand-600 transition-colors hover:text-brand-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 px-4 py-2"
+      className="fixed bottom-6 left-1/2 z-[100] hidden -translate-x-1/2 md:flex flex-col items-center rounded-full border border-white/30 bg-black/20 px-4 py-2 text-brand-50 backdrop-blur-[2px] transition-colors hover:bg-black/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2"
       aria-label="Go to next slide"
     >
-      <span className="text-xs font-medium uppercase tracking-wider">Next slide</span>
       <span
-        className={prefersReducedMotion ? "" : "animate-bounce"}
-        style={{ animationDuration: "2s" }}
+        className={`text-xs font-medium uppercase tracking-wider ${
+          prefersReducedMotion ? "" : "animate-next-slide-glow"
+        }`}
       >
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          aria-hidden
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-        </svg>
+        Next slide
       </span>
     </button>
   );

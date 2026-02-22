@@ -137,7 +137,7 @@ export default async function BooksPage() {
         }
       >
         <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
-          <h1 className="heading-stroke font-bebas text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
+          <h1 className="heading-stroke font-extrabold tracking-tight text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
             <span className="text-accent-600">My </span>Books
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
@@ -226,7 +226,7 @@ export default async function BooksPage() {
                         className={inlineImage.className}
                       />
                     )}
-                    <h2 className="heading-stroke font-bebas text-3xl uppercase text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
+                    <h2 className="heading-stroke font-extrabold tracking-tight text-3xl uppercase text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
                       {book.title}
                     </h2>
                   </Link>
@@ -247,7 +247,7 @@ export default async function BooksPage() {
                       <CTAButton
                         href={buyUrl}
                         external
-                        className="!rounded-none font-bebas text-xl uppercase"
+                        className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
                       >
                         Buy Now
                       </CTAButton>
@@ -255,7 +255,7 @@ export default async function BooksPage() {
                     <CTAButton
                       href={`/books/${book.slug}`}
                       variant="secondary"
-                      className="!rounded-none font-bebas text-xl uppercase"
+                      className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
                     >
                       Learn More
                     </CTAButton>

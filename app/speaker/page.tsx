@@ -226,7 +226,7 @@ export default async function SpeakerPage() {
         className="text-center"
       >
         <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
-          <h1 className="heading-stroke font-bebas mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
+          <h1 className="heading-stroke font-extrabold tracking-tight mx-auto max-w-6xl text-center text-5xl uppercase leading-[0.95] text-brand-900 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
             {(() => {
               const words = headline.split(" ");
               if (words.length >= 2) {
@@ -267,7 +267,7 @@ export default async function SpeakerPage() {
         background="bg-speaker-pattern"
       >
         <Section width="wide">
-        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+        <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
           Why My Virtual Audiences Stay Engaged
         </h2>
         <p className="mt-4 text-center text-lg font-medium leading-relaxed text-brand-700">
@@ -311,7 +311,7 @@ export default async function SpeakerPage() {
         background="bg-speaker-pattern"
       >
         <Section width="wide">
-        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+        <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
           What I speak about
         </h2>
         <p className="mx-auto mt-6 max-w-3xl text-center text-[22px] font-semibold leading-relaxed text-brand-700">
@@ -370,7 +370,7 @@ export default async function SpeakerPage() {
         background="bg-speaker-pattern"
       >
         <Section width="content">
-        <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+        <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
           How Virtual Delivery Works
         </h2>
         {speakerData?.howVirtualWorks ? (
@@ -382,7 +382,7 @@ export default async function SpeakerPage() {
           <div className="mt-12 grid gap-8 sm:grid-cols-2">
             {DEFAULT_VIRTUAL_STEPS.map((item) => (
               <div key={item.step} className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-accent-600 font-bebas text-lg text-white">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-accent-600 font-extrabold text-lg text-white">
                   {item.step}
                 </div>
                 <div>
@@ -432,7 +432,7 @@ export default async function SpeakerPage() {
         <FaqSection
           faqs={faqs}
           heading="Frequently Asked Questions"
-          headingClassName="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+          headingClassName="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
           headingAlign="center"
           className="[&_dl]:mt-12"
         />
@@ -450,7 +450,7 @@ export default async function SpeakerPage() {
           description="Book Nic for your next conference, corporate event, team offsite, or webinar. Virtual delivery worldwide."
           primaryHref="/contact"
           primaryLabel="Book Nic for Your Event"
-          headingClassName="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
+          headingClassName="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"
         />
       </Slide>
 

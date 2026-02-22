@@ -170,7 +170,7 @@ export default async function BookPage({
                     key={link.url}
                     href={link.url}
                     external
-                    className="!rounded-none font-bebas text-xl uppercase"
+                    className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
                   >
                     Buy Now
                   </CTAButton>

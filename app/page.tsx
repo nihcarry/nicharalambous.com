@@ -91,11 +91,11 @@ export default async function HomePage() {
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="pt-[var(--top-branding-height-mobile)] md:pt-[var(--header-height-desktop)]">
           <h1
-            className="heading-stroke font-bebas text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] whitespace-nowrap text-accent-600"
+            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,11vw,7.5rem)] uppercase leading-[0.95] whitespace-nowrap text-accent-600"
           >
             Keynote Speaker
           </h1>
-          <h2 className="mt-2 font-bebas uppercase leading-[0.95] text-brand-900 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill] sm:mt-3">
+          <h2 className="mt-2 font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill] sm:mt-3">
             <span className="block text-[clamp(1.9rem,9vw,5rem)]">Entrepreneur</span>
             <span className="block text-[clamp(1.55rem,7.25vw,4rem)] whitespace-nowrap">
               AI Product Builder
@@ -110,10 +110,10 @@ export default async function HomePage() {
               turn innovation into profit.
             </p>
             <div className="mt-6 flex flex-col gap-4 sm:flex-row md:mt-8">
-              <CTAButton href="/speaker" className="!rounded-none font-bebas text-xl uppercase">
+              <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Book a Virtual Keynote
               </CTAButton>
-              <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
+              <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Explore Keynotes
               </CTAButton>
               <HeroVideoPlayButton />
@@ -138,7 +138,7 @@ export default async function HomePage() {
         }
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Nic Speaks About
           </h2>
           <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -146,7 +146,7 @@ export default async function HomePage() {
               className="border-[20px] border-accent-600 bg-white p-6"
               style={{ transform: `rotate(${tilt(0, 1)}deg)` }}
             >
-              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
                 Activating human agency at work
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -157,7 +157,7 @@ export default async function HomePage() {
               className="border-[20px] border-accent-600 bg-white p-6"
               style={{ transform: `rotate(${tilt(1, 1)}deg)` }}
             >
-              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
                 Staying connected without becoming consumed
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -168,7 +168,7 @@ export default async function HomePage() {
               className="border-[20px] border-accent-600 bg-white p-6"
               style={{ transform: `rotate(${tilt(2, 1)}deg)` }}
             >
-              <h3 className="font-bebas text-2xl uppercase text-accent-600 md:text-3xl">
+              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
                 Curiosity, Action and Failure
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -177,7 +177,7 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="mt-6 text-center">
-            <CTAButton href="/keynotes" className="!rounded-none font-bebas text-xl uppercase">
+            <CTAButton href="/keynotes" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
               View All Keynotes
             </CTAButton>
           </div>
@@ -201,7 +201,7 @@ export default async function HomePage() {
           }
         >
           <SlideContent>
-            <h2 className="heading-stroke font-bebas pt-[22px] pb-[22px] text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+            <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
               Latest Thinking
             </h2>
             <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -212,7 +212,7 @@ export default async function HomePage() {
                   className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
                   style={{ transform: `rotate(${tilt(i, 2)}deg)` }}
                 >
-                  <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                  <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                     {post.title}
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-700">
@@ -236,7 +236,7 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="mt-6 text-center">
-              <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
+              <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Read the Blog
               </CTAButton>
             </div>
@@ -254,7 +254,7 @@ export default async function HomePage() {
           <div className="grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
             {/* Heading in place of first two cards */}
             <div className="flex items-center sm:col-span-2">
-              <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-[85px]">
+              <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-[85px]">
                 Explore Topics
               </h2>
             </div>
@@ -272,7 +272,7 @@ export default async function HomePage() {
                 className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
                 style={{ transform: `rotate(${tilt(0, 3)}deg)` }}
               >
-                <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                   {TOPIC_PREVIEWS[0].title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -296,7 +296,7 @@ export default async function HomePage() {
                     className="group block border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
                     style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                   >
-                    <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                    <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                       {topic.title}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -311,7 +311,7 @@ export default async function HomePage() {
                   className="group border-[20px] border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50"
                   style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
                 >
-                  <h3 className="font-bebas text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                  <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
                     {topic.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-brand-700">
@@ -322,7 +322,7 @@ export default async function HomePage() {
             ))}
           </div>
           <div className="mt-6 text-right">
-            <CTAButton href="/topics" variant="secondary" className="!rounded-none font-bebas text-xl uppercase">
+            <CTAButton href="/topics" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
               All Topics
             </CTAButton>
           </div>
@@ -355,7 +355,7 @@ export default async function HomePage() {
         id="cta"
       >
         <SlideContent>
-          <h2 className="heading-stroke font-bebas text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+          <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             Want Nic at Your Next Event?
           </h2>
           <p className="mt-4 text-lg text-brand-700">
@@ -365,14 +365,14 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <CTAButton
               href="/contact"
-              className="!rounded-none font-bebas text-xl uppercase"
+              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
             >
               Book Nic for Your Event
             </CTAButton>
             <CTAButton
               href="/speaker"
               variant="secondary"
-              className="!rounded-none font-bebas text-xl uppercase"
+              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
             >
               About Nic as a Speaker
             </CTAButton>

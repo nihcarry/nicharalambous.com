@@ -15,7 +15,7 @@ export function WhatClientsSay({ headingAlign = "left" }: WhatClientsSayProps) {
   return (
     <div className="relative">
       <h2
-        className={`heading-stroke font-bebas pt-2 text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl ${
+        className={`heading-stroke font-extrabold tracking-tight pt-2 text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl ${
           headingAlign === "center" ? "text-center" : "text-left"
         }`}
       >

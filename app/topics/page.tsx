@@ -1,9 +1,8 @@
 /**
  * Topics Listing Page — /topics
  *
- * Index of all 7 topic hubs. Each links to /topics/{slug}.
- * Topic hubs bridge blog content to keynotes — they're the
- * core of the internal linking strategy.
+ * Slide-based index of topic hubs with a curated narrative flow.
+ * Topic hubs bridge blog content to keynotes and link to /topics/{slug}.
  *
  * Content is fetched from Sanity at build time with hardcoded fallbacks.
  *
@@ -11,14 +10,18 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { client } from "@/lib/sanity/client";
 import {
   topicHubsListQuery,
   type TopicHubListItem,
 } from "@/lib/sanity/queries";
 import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
+import { Slide } from "@/components/slide";
+import { SlideDeck } from "@/components/slide-deck";
+import { SlideContent } from "@/components/slide-animations";
+import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { FooterContent } from "@/components/footer-content";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
 import { tilt } from "@/lib/tilt";
@@ -49,14 +52,61 @@ export const metadata: Metadata = {
   },
 };
 
+const TOPIC_SLUGS_TO_SHOW = new Set([
+  "agency",
+  "ai",
+  "curiosity",
+  "entrepreneurship",
+  "failure",
+  "innovation",
+]);
+
+const STORYBOARD_SLIDES = [
+  {
+    id: "mindset-and-ownership",
+    heading: "Mindset and\nOwnership",
+    description:
+      "Curiosity opens possibility. Agency turns that possibility into action.",
+    slugs: ["curiosity", "agency"] as const,
+    background: "bg-compass-pattern",
+  },
+  {
+    id: "systems-and-leverage",
+    heading: "Systems and Leverage",
+    description:
+      "Innovation creates momentum. AI multiplies what focused teams can ship.",
+    slugs: ["innovation", "ai"] as const,
+    background: "bg-lightbulb-pattern",
+  },
+  {
+    id: "execution-and-resilience",
+    heading: "Execution and Resilience",
+    description:
+      "Entrepreneurship rewards builders who can learn quickly from failure.",
+    slugs: ["entrepreneurship", "failure"] as const,
+    background: "bg-spotlight-pattern",
+  },
+];
+
 /* ---------- Page ---------- */
 
 export default async function TopicsPage() {
   const cmsTopics = await getTopicHubs();
-  const topics = cmsTopics || FALLBACK_TOPICS;
+  const topics = (cmsTopics || FALLBACK_TOPICS).filter((topic) =>
+    TOPIC_SLUGS_TO_SHOW.has(topic.slug),
+  );
+  const topicBySlug = new Map(topics.map((topic) => [topic.slug, topic]));
+  const slides = STORYBOARD_SLIDES.map((slide) => ({
+    ...slide,
+    topics: slide.slugs
+      .map((slug) => topicBySlug.get(slug))
+      .filter((topic): topic is TopicHubListItem => Boolean(topic)),
+  })).filter((slide) => slide.topics.length > 0);
 
   return (
-    <div className="page-bg bg-compass-pattern">
+    <SlideDeck>
+      <NextSlideIndicator />
+
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -67,64 +117,172 @@ export default async function TopicsPage() {
         })}
       />
 
-      <Section width="content" className="text-center">
-        <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
-          Topics
-        </h1>
-        <p className="mt-4 text-lg text-brand-600">
-          The themes that run through Nic&rsquo;s keynotes, books, and 20+ years
-          of building businesses. Dive into any topic to explore related
-          articles and keynotes.
-        </p>
-      </Section>
+      <Slide
+        variant="grid-3"
+        background="bg-compass-pattern"
+        id="hero"
+        image={
+          <div className="pointer-events-none absolute bottom-0 left-0 z-0">
+            <Image
+              src="/slides/%20Nic_Topics_2.png"
+              alt=""
+              aria-hidden="true"
+              width={768}
+              height={1024}
+              className="h-[30vh] w-auto md:h-[38vh] lg:h-[46vh]"
+              priority
+            />
+          </div>
+        }
+      >
+        <SlideContent>
+          <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+            Topics
+          </h1>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
+            The themes that run through Nic&apos;s keynotes, books, and 20+ years
+            of building businesses.
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
+            Explore each topic hub for related articles and keynote pathways.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
+              About Nic as a Speaker
+            </CTAButton>
+            <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
+              View All Keynotes
+            </CTAButton>
+          </div>
+        </SlideContent>
+      </Slide>
 
-      <Section width="wide">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {topics.map((topic, i) => (
-            <Link
-              key={topic.slug}
-              href={`/topics/${topic.slug}`}
-              className="group flex flex-col card-brutalist p-6 transition-colors hover:bg-accent-50"
-              style={{ transform: `rotate(${tilt(i, 80)}deg)` }}
-            >
-              <h2 className="heading-display text-2xl text-accent-600">
-                {topic.title}
-              </h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
-                {topic.oneSentenceSummary}
-              </p>
-              {topic.relatedKeynotes && topic.relatedKeynotes.length > 0 && (
-                <div className="mt-4 border-t-2 border-brand-200 pt-4">
-                  <p className="text-xs font-medium text-brand-400">
-                    Related keynotes:
+      {slides.map((slide, slideIndex) => (
+        <Slide
+          key={slide.id}
+          id={slide.id}
+          variant="grid-3"
+          background={slide.background}
+        >
+          <SlideContent>
+            {slideIndex === 0 && (
+              <div className="grid gap-8 md:grid-cols-5 md:gap-14">
+                <div className="md:col-span-2">
+                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                    SLIDE 01
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {topic.relatedKeynotes.map((keynote) => (
-                      <span
-                        key={keynote._id}
-                        className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600"
-                      >
-                        {keynote.title}
-                      </span>
-                    ))}
-                  </div>
+                  <h2
+                    className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] whitespace-pre-line text-brand-900 sm:text-5xl md:text-6xl"
+                    data-no-orphan-opt-out="true"
+                  >
+                    {slide.heading}
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-brand-700 md:text-lg">
+                    {slide.description}
+                  </p>
                 </div>
-              )}
-            </Link>
-          ))}
-        </div>
-      </Section>
+                <div className="mt-3 space-y-6 md:col-span-3 md:mt-8 md:pl-16">
+                  {slide.topics.map((topic, i) => (
+                    <Link
+                      key={topic.slug}
+                      href={`/topics/${topic.slug}`}
+                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
+                      style={{ transform: `rotate(${tilt(i, 4)}deg)` }}
+                    >
+                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                        {topic.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                        {topic.oneSentenceSummary}
+                      </p>
+                      <p className="mt-4 font-semibold text-accent-600">
+                        Explore topic hub →
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
-      {/* CTA */}
-      <FinalCta
-        heading="Explore These Topics as a Keynote"
-        description="Every topic above comes alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/keynotes"
-        secondaryLabel="View All Keynotes"
-      />
-    </div>
+            {slideIndex === 1 && (
+              <div className="grid gap-8 md:grid-cols-5 md:gap-10">
+                <div className="order-2 space-y-6 md:order-1 md:col-span-3 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
+                  {slide.topics.map((topic, i) => (
+                    <Link
+                      key={topic.slug}
+                      href={`/topics/${topic.slug}`}
+                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
+                      style={{ transform: `rotate(${tilt(i + 2, 4)}deg)` }}
+                    >
+                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                        {topic.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                        {topic.oneSentenceSummary}
+                      </p>
+                      <p className="mt-4 font-semibold text-accent-600">
+                        Explore topic hub →
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+                <div className="order-1 md:order-2 md:col-span-2 md:text-right">
+                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                    SLIDE 02
+                  </p>
+                  <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+                    {slide.heading}
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-brand-700 md:text-lg">
+                    {slide.description}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {slideIndex === 2 && (
+              <div>
+                <div className="mx-auto max-w-4xl text-center">
+                  <p className="font-extrabold text-sm tracking-[0.3em] text-brand-400">
+                    SLIDE 03
+                  </p>
+                  <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+                    {slide.heading}
+                  </h2>
+                  <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-brand-700 md:text-lg">
+                    {slide.description}
+                  </p>
+                </div>
+                <div className="mt-8 grid gap-6 md:grid-cols-2">
+                  {slide.topics.map((topic, i) => (
+                    <Link
+                      key={topic.slug}
+                      href={`/topics/${topic.slug}`}
+                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
+                      style={{ transform: `rotate(${tilt(i + 4, 4)}deg)` }}
+                    >
+                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                        {topic.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                        {topic.oneSentenceSummary}
+                      </p>
+                      <p className="mt-4 font-semibold text-accent-600">
+                        Explore topic hub →
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </SlideContent>
+        </Slide>
+      ))}
+
+      <Slide variant="footer" background="bg-foot-pattern" id="footer">
+        <FooterContent />
+      </Slide>
+    </SlideDeck>
   );
 }
 

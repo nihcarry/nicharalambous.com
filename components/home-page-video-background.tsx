@@ -88,7 +88,7 @@ export function HomePageVideoBackground() {
           playsInline
           preload="metadata"
         >
-          <source src="/slides/Nic_Landing_Video.mp4" type="video/mp4" />
+          <source src="/slides/Nic_Video_2.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" />
       </div>
@@ -118,7 +118,7 @@ export function HomePageVideoBackground() {
               playsInline
               preload="metadata"
             >
-              <source src="/slides/Nic_Landing_Video.mp4" type="video/mp4" />
+              <source src="/slides/Nic_Video_2.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
