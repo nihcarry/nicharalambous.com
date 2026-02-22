@@ -24,7 +24,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nicharalambous.com"),
+  metadataBase: new URL("https://www.nicharalambous.com"),
   title: {
     default: "Nic Haralambous | Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
     template: "%s | Nic Haralambous",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      "application/rss+xml": "https://nicharalambous.com/rss.xml",
+      "application/rss+xml": "https://www.nicharalambous.com/rss.xml",
     },
   },
 };

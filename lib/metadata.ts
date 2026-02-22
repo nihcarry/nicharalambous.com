@@ -6,7 +6,7 @@
  */
 import type { Metadata } from "next";
 
-const SITE_URL = "https://nicharalambous.com";
+const SITE_URL = "https://www.nicharalambous.com";
 const SITE_NAME = "Nic Haralambous";
 const DEFAULT_DESCRIPTION =
   "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.";

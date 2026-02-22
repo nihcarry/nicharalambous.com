@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap && npx pagefind --site out --glob \"**/*.html\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\"",
+    "postbuild": "next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"**/*.html\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\"",
     "parse:medium": "tsx scripts/parse-medium.ts",
     "parse:substack": "tsx scripts/parse-substack.ts",
     "parse:all": "tsx scripts/parse-medium.ts && tsx scripts/parse-substack.ts",
