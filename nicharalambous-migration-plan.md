@@ -99,7 +99,6 @@ AWS was specified. S3 + CloudFront gives full control, no vendor lock-in, and ch
 - `/meet-nic-haralambous` → 301 to `/about`
 - `/the-speaker` → 301 to `/speaker`
 - `/contact-me` → 301 to `/contact`
-- `/businesses` → 301 to `/about`
 - `/its-not-over` → 301 to `/media`
 - `/side-hustle-course` → 301 to `/books/how-to-start-a-side-hustle`
 
@@ -374,7 +373,6 @@ Most blog redirects follow a pattern: `/blog/YYYY/MM/DD/slug` → `/blog/slug` o
   "/the-speaker": "/speaker",
   "/virtual-keynote-speaker": "/speaker",
   "/contact-me": "/contact",
-  "/businesses": "/about",
   "/its-not-over": "/media",
   "/side-hustle-course": "/books/how-to-start-a-side-hustle"
 }

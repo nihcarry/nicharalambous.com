@@ -21,4 +21,7 @@ aws cloudfront get-function --name <function-name> --query 'ETag'
 # Update: AWS Console is simplest — edit the function code and Publish
 ```
 
-The function is associated with the **viewer-request** event. After editing `cloudfront-url-rewrite.js`, copy the contents into the CloudFront console and publish.
+The function is associated with the **viewer-request** event. After editing `cloudfront-url-rewrite.js`:
+
+1. Run `npm run validate:redirects` — fails if any redirect source is a live app route
+2. Copy the contents into the CloudFront console and publish

@@ -368,10 +368,10 @@ Every old Squarespace URL must resolve to a valid destination. Even though curre
 /the-speaker → /speaker
 /virtual-keynote-speaker → /speaker
 /contact-me → /contact
-/businesses → /about
 /its-not-over → /media
 /side-hustle-course → /books/how-to-start-a-side-hustle
 ```
+Note: /businesses is a live route — do NOT add a redirect from it.
 
 **Default for dropped content:** 301 to nearest relevant page. NOT 410 unless content is genuinely toxic.
 

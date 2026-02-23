@@ -4,6 +4,8 @@
 // Handles:
 // 0. Apex → www redirect (nicharalambous.com → www.nicharalambous.com)
 // 1. Exact-match redirects (old Squarespace URLs → new paths)
+//    RULE: Redirect sources must be LEGACY URLs only. Never redirect a path that
+//    has app/*/page.tsx. Run `npm run validate:redirects` before deploying.
 // 2. Squarespace blog URL pattern redirect (/blog/YYYY/MM/DD/slug → /blog/slug)
 // 3. Clean URL rewriting (append .html for extensionless paths)
 
@@ -12,7 +14,6 @@ var redirects = {
   '/the-speaker': '/speaker',
   '/virtual-keynote-speaker': '/speaker',
   '/contact-me': '/contact',
-  '/businesses': '/about',
   '/its-not-over': '/media',
   '/side-hustle-course': '/books/how-to-start-a-side-hustle'
 };
