@@ -78,7 +78,7 @@ function handler(event) {
   // Next.js client-side nav fetches RSC payload with Accept: text/x-component — serve .txt
   // Normal document requests (browser, crawlers) — serve .html
   if (uri !== '/' && !uri.includes('.') && !uri.startsWith('/_next')) {
-    var accept = request.headers?.accept?.value || '';
+    var accept = (request.headers && request.headers.accept ? request.headers.accept.value : '') || '';
     var isRscRequest = accept.indexOf('text/x-component') !== -1;
     request.uri = isRscRequest ? uri + '.txt' : uri + '.html';
   }
