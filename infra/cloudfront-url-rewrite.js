@@ -2,6 +2,7 @@
 // Associated with viewer-request event on CloudFront distribution E1ACQY3898IZF9
 //
 // Handles:
+// 0. Apex → www redirect (nicharalambous.com → www.nicharalambous.com)
 // 1. Exact-match redirects (old Squarespace URLs → new paths)
 // 2. Squarespace blog URL pattern redirect (/blog/YYYY/MM/DD/slug → /blog/slug)
 // 3. Clean URL rewriting (append .html for extensionless paths)
@@ -19,6 +20,28 @@ var redirects = {
 function handler(event) {
   var request = event.request;
   var uri = request.uri;
+
+  // 0. Apex → www redirect (ensures nicharalambous.com reaches www for sitemap, etc.)
+  var host = request.headers && request.headers.host ? request.headers.host.value : '';
+  if (host === 'nicharalambous.com') {
+    var qs = request.querystring || {};
+    var parts = [];
+    for (var k in qs) {
+      if (Object.prototype.hasOwnProperty.call(qs, k) && qs[k].value) {
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(qs[k].value));
+      }
+    }
+    var queryPart = parts.length ? '?' + parts.join('&') : '';
+    var redirectPath = uri === '/' ? '' : uri;
+    return {
+      statusCode: 301,
+      statusDescription: 'Moved Permanently',
+      headers: {
+        'location': { value: 'https://www.nicharalambous.com' + redirectPath + queryPart },
+        'cache-control': { value: 'public, max-age=86400' }
+      }
+    };
+  }
 
   // 1. Exact-match redirects
   if (redirects[uri]) {

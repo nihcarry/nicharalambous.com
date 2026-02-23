@@ -10,7 +10,7 @@
 
 ### Block 8: Launch Features (complete)
 
-- **Redirects:** CloudFront Function updated at `infra/cloudfront-url-rewrite.js` — exact-match redirects for 7 old Squarespace URLs + pattern rule for dated blog URLs (`/blog/YYYY/MM/DD/slug` → `/blog/slug`). The function needs to be deployed to CloudFront (distribution `E1ACQY3898IZF9`) — it's code-only, not yet pushed to AWS.
+- **Redirects:** CloudFront Function updated at `infra/cloudfront-url-rewrite.js` — apex → www redirect (fixes sitemap for Search Console) + exact-match redirects for 7 old Squarespace URLs + pattern rule for dated blog URLs (`/blog/YYYY/MM/DD/slug` → `/blog/slug`). The function needs to be deployed to CloudFront (distribution `E1ACQY3898IZF9`) — it's code-only, not yet pushed to AWS.
 - **`llms.txt`:** Deployed at `public/llms.txt` per GEO strategy (see `nicharalambous-seo-strategy.md` Part 6).
 - **`robots.txt`:** Deployed at `public/robots.txt`. Blocks `/studio` only. Sitemap directive points to `https://nicharalambous.com/sitemap.xml`.
 - **Pagefind search:** Installed, runs post-build (`npx pagefind --site out`), indexes 205 pages. Search page at `/search`. Linked from mobile More menu and footer.
@@ -54,8 +54,27 @@ The redirect function at `infra/cloudfront-url-rewrite.js` has been updated but 
 ### 3. Switch DNS
 
 In Namecheap, update DNS records for `nicharalambous.com`:
-- Point the domain to CloudFront distribution `d18g1r3g4snekl.cloudfront.net`
+- **www:** CNAME record pointing to `d18g1r3g4snekl.cloudfront.net`
+- **apex (root):** See "Apex domain setup" below — required for sitemap/Google Search Console
 - The ACM certificate (`a8305c1c-803e-4dd7-8bbf-57bbfdebd3ae`) is already issued and attached
+
+#### Apex domain setup (fixes "General HTTP error" for sitemap)
+
+The apex domain (`nicharalambous.com`) must redirect to `www` so Google can access the sitemap. The CloudFront Function includes this redirect — but the apex must reach CloudFront first.
+
+**Option A — Namecheap URL Redirect (simplest):**
+1. In Namecheap: Domain List → nicharalambous.com → Manage → Redirect Domain
+2. Enable "URL Redirect" for `@` (root) → `https://www.nicharalambous.com` (301 permanent)
+3. Saves DNS changes; apex redirects at the registrar level
+
+**Option B — Route 53 + CloudFront (apex reaches CloudFront, function does redirect):**
+1. **CloudFront:** Add `nicharalambous.com` to Alternate Domain Names (if not present)
+2. **ACM:** Ensure cert covers `nicharalambous.com` (wildcard `*.nicharalambous.com` does NOT include apex; add apex to cert or use a cert with both)
+3. **Route 53:** Create hosted zone for `nicharalambous.com`, then create ALIAS record: `nicharalambous.com` (A) → CloudFront distribution
+4. **Namecheap:** Delegate domain to Route 53 nameservers (or use Namecheap's Premium DNS if it supports ALIAS/ANAME for apex)
+5. Deploy the CloudFront Function (Step 2) so apex requests are redirected to www
+
+**Verify:** After setup, `curl -sI https://nicharalambous.com/sitemap.xml` should return `301` with `Location: https://www.nicharalambous.com/sitemap.xml`.
 
 ### 4. Post-DNS Tasks
 
