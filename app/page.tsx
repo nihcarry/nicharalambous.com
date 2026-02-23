@@ -20,7 +20,6 @@
  * Content is fetched from Sanity at build time. Falls back to hardcoded
  * defaults if Sanity data is not yet published.
  */
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
   homepageRecentPostsQuery,
@@ -207,7 +206,7 @@ export default async function HomePage() {
             </h2>
             <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post, i) => (
-                <Link
+                <a
                   key={post._id}
                   href={`/blog/${post.slug}`}
                   className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
@@ -233,7 +232,7 @@ export default async function HomePage() {
                       <span>{post.estimatedReadTime} min read</span>
                     )}
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
             <div className="mt-6 text-center">
@@ -268,7 +267,7 @@ export default async function HomePage() {
                 aria-hidden="true"
                 className="pointer-events-none absolute bottom-full right-4 z-50 h-24 w-auto select-none object-contain object-bottom"
               />
-              <Link
+              <a
                 href={TOPIC_PREVIEWS[0].href}
                 className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                 style={{ transform: `rotate(${tilt(0, 3)}deg)` }}
@@ -279,7 +278,7 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm leading-relaxed text-brand-700">
                   {TOPIC_PREVIEWS[0].description}
                 </p>
-              </Link>
+              </a>
             </div>
             {/* Bottom row — 3 cards */}
             {TOPIC_PREVIEWS.slice(1).map((topic, i) => (
@@ -292,7 +291,7 @@ export default async function HomePage() {
                     aria-hidden="true"
                     className="pointer-events-none absolute bottom-full left-4 z-50 hidden h-36 w-auto select-none object-contain object-bottom md:block"
                   />
-                  <Link
+                  <a
                     href={topic.href}
                     className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
                     style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
@@ -303,10 +302,10 @@ export default async function HomePage() {
                     <p className="mt-2 text-sm leading-relaxed text-brand-700">
                       {topic.description}
                     </p>
-                  </Link>
+                  </a>
                 </div>
               ) : (
-                <Link
+                <a
                   key={topic.href}
                   href={topic.href}
                   className="group border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
@@ -318,7 +317,7 @@ export default async function HomePage() {
                   <p className="mt-2 text-sm leading-relaxed text-brand-700">
                     {topic.description}
                   </p>
-                </Link>
+                </a>
               )
             ))}
           </div>

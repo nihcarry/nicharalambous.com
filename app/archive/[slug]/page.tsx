@@ -12,7 +12,6 @@
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
   archivePostBySlugQuery,
@@ -102,12 +101,12 @@ export default async function ArchivePostPage({
           <p className="mt-2 text-base text-brand-600">
             This post is from the archive and may not reflect Nic&rsquo;s
             current thinking. For the latest articles and insights, visit the{" "}
-            <Link
+            <a
               href="/blog"
               className="font-semibold text-accent-600 underline hover:text-accent-500"
             >
               blog
-            </Link>
+            </a>
             .
           </p>
         </div>
@@ -137,13 +136,13 @@ export default async function ArchivePostPage({
           {post.topics && post.topics.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {post.topics.map((topic) => (
-                <Link
+                <a
                   key={topic._id}
                   href={`/topics/${topic.slug}`}
                   className="bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-200"
                 >
                   {topic.title}
-                </Link>
+                </a>
               ))}
             </div>
           )}

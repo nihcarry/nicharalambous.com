@@ -19,7 +19,6 @@
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
   blogPostBySlugQuery,
@@ -173,13 +172,13 @@ export default async function BlogPostPage({
           {hasTopics && (
             <div className="flex flex-wrap gap-2">
               {post.topics.map((topic) => (
-                <Link
+                <a
                   key={topic._id}
                   href={`/topics/${topic.slug}`}
                   className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
                 >
                   {topic.title}
-                </Link>
+                </a>
               ))}
             </div>
           )}
@@ -318,13 +317,13 @@ export default async function BlogPostPage({
               Filed under:
             </span>
             {post.topics.map((topic) => (
-              <Link
+              <a
                 key={topic._id}
                 href={`/topics/${topic.slug}`}
                 className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
               >
                 {topic.title}
-              </Link>
+              </a>
             ))}
           </div>
         </Section>

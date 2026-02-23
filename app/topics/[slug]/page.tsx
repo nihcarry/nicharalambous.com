@@ -14,7 +14,6 @@
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
   topicHubBySlugQuery,
@@ -196,7 +195,7 @@ export default async function TopicHubPage({
           </h2>
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             {topic.relatedKeynotes.map((keynote, i) => (
-              <Link
+              <a
                 key={keynote._id}
                 href={`/keynotes/${keynote.slug}`}
                 className="group flex flex-col card-brutalist p-6 transition-colors hover:bg-accent-50"
@@ -210,7 +209,7 @@ export default async function TopicHubPage({
                     {keynote.tagline}
                   </p>
                 )}
-              </Link>
+              </a>
             ))}
           </div>
           <div className="mt-6 text-center">
@@ -229,7 +228,7 @@ export default async function TopicHubPage({
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cmsTopic.featuredPosts.map((post) => (
-              <Link
+              <a
                 key={post._id}
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
@@ -256,7 +255,7 @@ export default async function TopicHubPage({
                     <span>{post.estimatedReadTime} min read</span>
                   )}
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
           <div className="mt-6 text-center">
@@ -275,7 +274,7 @@ export default async function TopicHubPage({
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recentPosts.map((post) => (
-              <Link
+              <a
                 key={post._id}
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
@@ -302,7 +301,7 @@ export default async function TopicHubPage({
                     <span>{post.estimatedReadTime} min read</span>
                   )}
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
           <div className="mt-6 text-center">
@@ -320,13 +319,13 @@ export default async function TopicHubPage({
             All topics:
           </span>
           {ALL_TOPIC_SLUGS.filter((t) => t.slug !== slug).map((t) => (
-            <Link
+            <a
               key={t.slug}
               href={`/topics/${t.slug}`}
               className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
             >
               {t.title}
-            </Link>
+            </a>
           ))}
         </div>
       </Section>

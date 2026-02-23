@@ -8,7 +8,6 @@
  * JSON-LD: CollectionPage
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
 import {
@@ -215,7 +214,7 @@ export default async function BooksPage() {
 
                 {/* Copy */}
                 <div className="flex-1 text-center md:text-left">
-                  <Link
+                  <a
                     href={`/books/${book.slug}`}
                     className="relative block transition-colors hover:text-accent-500"
                   >
@@ -231,7 +230,7 @@ export default async function BooksPage() {
                     <h2 className="heading-stroke font-extrabold tracking-tight text-3xl uppercase text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
                       {book.title}
                     </h2>
-                  </Link>
+                  </a>
                   {book.subtitle && (
                     <p className="mt-2 text-lg font-medium text-brand-500">
                       {book.subtitle}

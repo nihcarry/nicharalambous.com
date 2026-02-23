@@ -18,7 +18,6 @@
  */
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
@@ -59,9 +58,9 @@ export default function AboutPage() {
             <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
               <p>
                 I am an obsessive entrepreneur,{" "}
-                <Link href="/speaker" className="text-accent-600 hover:underline">
+                <a href="/speaker" className="text-accent-600 hover:underline">
                   keynote speaker
-                </Link>
+                </a>
                 , product builder, and published author. I&rsquo;ve been building
                 businesses since I was 16, sold three of them, and spent more than
                 20 years learning tough lessons through failure and success.
@@ -77,9 +76,9 @@ export default function AboutPage() {
                   Yoco
                 </a>{" "}
                 and deliver{" "}
-                <Link href="/keynotes" className="text-accent-600 hover:underline">
+                <a href="/keynotes" className="text-accent-600 hover:underline">
                   virtual keynotes
-                </Link>{" "}
+                </a>{" "}
                 that help teams think differently about curiosity, innovation,
                 and failure.
               </p>
@@ -133,9 +132,9 @@ export default function AboutPage() {
             Through it all, I&rsquo;ve learned that above all else, culture
             creates change. My work today focuses on helping businesses build
             more curious, entrepreneurial cultures, whether through{" "}
-            <Link href="/keynotes" className="text-accent-600 hover:underline">
+            <a href="/keynotes" className="text-accent-600 hover:underline">
               keynotes
-            </Link>
+            </a>
             , coaching, or building products.
           </p>
         </div>

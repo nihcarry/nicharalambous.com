@@ -20,7 +20,6 @@
  * JSON-LD: Person + Service + FAQPage
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import {
   speakerPageQuery,

@@ -4,7 +4,6 @@
  * Used across the site for booking CTAs, navigation, and engagement.
  * Supports primary (filled) and secondary (outline) variants.
  */
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, Calendar, Compass, Home, Mail, Mic, Newspaper, User } from "lucide-react";
 
@@ -83,8 +82,8 @@ export function CTAButton({
   }
 
   return (
-    <Link href={href} className={combinedStyles}>
+    <a href={href} className={combinedStyles}>
       {buttonContent}
-    </Link>
+    </a>
   );
 }

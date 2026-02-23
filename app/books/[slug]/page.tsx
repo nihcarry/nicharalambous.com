@@ -16,7 +16,6 @@
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
 import {
@@ -205,13 +204,13 @@ export default async function BookPage({
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Topics</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             {book.relatedTopics.map((topic) => (
-              <Link
+              <a
                 key={topic.slug}
                 href={`/topics/${topic.slug}`}
                 className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
               >
                 {topic.title}
-              </Link>
+              </a>
             ))}
           </div>
         </Section>

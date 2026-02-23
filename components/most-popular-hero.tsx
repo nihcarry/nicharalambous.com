@@ -5,7 +5,6 @@
  * layout with rank, title, excerpt, topics, and CTA. Uses the lighter brutalist
  * card treatment (border-4) per the design system spec.
  */
-import Link from "next/link";
 
 interface FeaturedPost {
   _id: string;
@@ -57,7 +56,7 @@ export function MostPopularHero({ posts, className = "" }: MostPopularHeroProps)
       <ul className="mt-6 space-y-4" role="list">
         {displayPosts.map((post, index) => (
           <li key={post._id}>
-            <Link
+            <a
               href={`/blog/${post.slug}`}
               className="group flex items-start gap-4 overflow-hidden border-4 border-accent-600 bg-white p-6 transition-colors hover:bg-accent-50 sm:gap-6"
             >
@@ -84,14 +83,14 @@ export function MostPopularHero({ posts, className = "" }: MostPopularHeroProps)
                 {post.topics && post.topics.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {post.topics.map((topic) => (
-                      <Link
+                      <a
                         key={topic._id}
                         href={`/topics/${topic.slug}`}
                         className="bg-accent-100 px-2.5 py-0.5 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {topic.title}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 )}
@@ -165,7 +164,7 @@ export function MostPopularHero({ posts, className = "" }: MostPopularHeroProps)
                   />
                 </div>
               )}
-            </Link>
+            </a>
           </li>
         ))}
       </ul>

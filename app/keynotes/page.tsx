@@ -7,7 +7,6 @@
  * Keynote slides use curated copy for maximum impact.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
 import { SlideDeck } from "@/components/slide-deck";
@@ -99,9 +98,9 @@ export default function KeynotesPage() {
           <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
             Each keynote is grounded in 20+ years of real entrepreneurial
             experience and tailored to your audience.{" "}
-            <Link href="/speaker" className="text-accent-600 hover:underline">
+            <a href="/speaker" className="text-accent-600 hover:underline">
               Learn more about booking Nic &rarr;
-            </Link>
+            </a>
           </p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -123,7 +122,7 @@ export default function KeynotesPage() {
           className="md:justify-start"
         >
           <SlideContent>
-            <Link
+            <a
               href={`/keynotes/${keynote.slug}`}
               className="group flex w-full flex-col"
             >
@@ -194,7 +193,7 @@ export default function KeynotesPage() {
                 <span aria-hidden className="text-lg">→</span>
               </span>
             </div>
-          </Link>
+          </a>
           </SlideContent>
         </Slide>
       ))}

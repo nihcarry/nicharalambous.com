@@ -5,7 +5,6 @@
  * Used at the bottom of /blog/[slug] pages to keep readers engaged
  * and strengthen internal linking within topic clusters.
  */
-import Link from "next/link";
 
 interface RelatedPost {
   _id: string;
@@ -29,7 +28,7 @@ export function RelatedPosts({ posts, className = "" }: RelatedPostsProps) {
       <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Articles</h2>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <Link
+          <a
             key={post._id}
             href={`/blog/${post.slug}`}
             className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
@@ -56,7 +55,7 @@ export function RelatedPosts({ posts, className = "" }: RelatedPostsProps) {
                 <span>{post.estimatedReadTime} min read</span>
               )}
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>

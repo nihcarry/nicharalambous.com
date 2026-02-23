@@ -11,7 +11,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 
 interface TopicFilter {
   _id: string;
@@ -125,7 +124,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
       {paginatedPosts.length > 0 ? (
         <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {paginatedPosts.map((post) => (
-            <Link
+            <a
               key={post._id}
               href={`/blog/${post.slug}`}
               className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
@@ -180,7 +179,7 @@ export function BlogList({ posts, topics }: BlogListProps) {
                   ))}
                 </div>
               )}
-            </Link>
+            </a>
           ))}
         </div>
       ) : (

@@ -6,7 +6,6 @@
  * and bottom copyright bar. Extracted so footer content is defined once
  * and reused in two contexts.
  */
-import Link from "next/link";
 
 const footerLinks = {
   speaking: [
@@ -52,12 +51,12 @@ export function FooterContent() {
       <div className="grid gap-12 md:grid-cols-4">
         {/* Brand column */}
         <div>
-          <Link
+          <a
             href="/"
             className="text-lg font-bold tracking-tight text-brand-900"
           >
             Nic Haralambous
-          </Link>
+          </a>
           <p className="mt-3 text-sm leading-relaxed text-brand-600">
             Entrepreneur, AI product builder, and virtual keynote speaker.
             4 startup exits, 3 books, 20+ years building technology businesses.
@@ -72,12 +71,12 @@ export function FooterContent() {
           <ul className="mt-4 space-y-3">
             {footerLinks.speaking.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
                   className="text-sm text-brand-600 transition-colors hover:text-brand-900"
                 >
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -91,12 +90,12 @@ export function FooterContent() {
           <ul className="mt-4 space-y-3">
             {footerLinks.explore.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
                   className="text-sm text-brand-600 transition-colors hover:text-brand-900"
                 >
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -120,12 +119,12 @@ export function FooterContent() {
                     {link.label} &rarr;
                   </a>
                 ) : (
-                  <Link
+                  <a
                     href={link.href}
                     className="text-sm text-brand-600 transition-colors hover:text-brand-900"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 )}
               </li>
             ))}
@@ -152,18 +151,18 @@ export function FooterContent() {
           reserved.
         </p>
         <div className="flex gap-6">
-          <Link
+          <a
             href="/rss.xml"
             className="text-sm text-brand-400 transition-colors hover:text-brand-600"
           >
             RSS
-          </Link>
-          <Link
+          </a>
+          <a
             href="/sitemap.xml"
             className="text-sm text-brand-400 transition-colors hover:text-brand-600"
           >
             Sitemap
-          </Link>
+          </a>
         </div>
       </div>
     </>

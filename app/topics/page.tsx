@@ -9,7 +9,6 @@
  * JSON-LD: CollectionPage
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/lib/sanity/client";
 import {
@@ -182,7 +181,7 @@ export default async function TopicsPage() {
                 </div>
                 <div className="mt-3 space-y-6 md:col-span-3 md:mt-8 md:pl-16">
                   {slide.topics.map((topic, i) => (
-                    <Link
+                    <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
                       className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
@@ -197,7 +196,7 @@ export default async function TopicsPage() {
                       <p className="mt-4 font-semibold text-accent-600">
                         Explore topic hub →
                       </p>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -207,7 +206,7 @@ export default async function TopicsPage() {
               <div className="grid gap-8 md:grid-cols-5 md:gap-10">
                 <div className="order-2 space-y-6 md:order-1 md:col-span-3 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
                   {slide.topics.map((topic, i) => (
-                    <Link
+                    <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
                       className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
@@ -222,7 +221,7 @@ export default async function TopicsPage() {
                       <p className="mt-4 font-semibold text-accent-600">
                         Explore topic hub →
                       </p>
-                    </Link>
+                    </a>
                   ))}
                 </div>
                 <div className="order-1 md:order-2 md:col-span-2 md:text-right">
@@ -248,7 +247,7 @@ export default async function TopicsPage() {
                 </div>
                 <div className="mt-8 grid gap-6 md:grid-cols-2">
                   {slide.topics.map((topic, i) => (
-                    <Link
+                    <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
                       className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
@@ -263,7 +262,7 @@ export default async function TopicsPage() {
                       <p className="mt-4 font-semibold text-accent-600">
                         Explore topic hub →
                       </p>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
