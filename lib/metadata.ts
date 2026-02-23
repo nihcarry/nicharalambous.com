@@ -7,9 +7,9 @@
 import type { Metadata } from "next";
 
 const SITE_URL = "https://www.nicharalambous.com";
-const SITE_NAME = "Nic Haralambous";
+const SITE_NAME = "Nic Haralambous - Keynote Speaker";
 const DEFAULT_DESCRIPTION =
-  "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.";
+  "Nic Haralambous is a global keynote speaker, entrepreneur and AI product builder with 3 business exits, 2 best-selling books, and 20+ years building technology businesses.";
 
 interface PageMetadataOptions {
   title: string;
@@ -69,7 +69,7 @@ export function personJsonLd() {
     image: `${SITE_URL}/images/nic-haralambous.jpg`,
     sameAs: [
       "https://www.linkedin.com/in/nicharalambous/",
-      "https://twitter.com/nicharalambous",
+      "https://twitter.com/nicharry",
       "https://nichasgottago.substack.com/",
     ],
   };

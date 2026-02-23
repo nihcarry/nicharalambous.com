@@ -137,8 +137,8 @@ export default async function BooksPage() {
         }
       >
         <div>
-          <h1 className="heading-stroke font-extrabold tracking-tight text-7xl uppercase leading-[0.95] text-brand-900 sm:text-8xl md:text-9xl lg:text-[10rem] 2xl:text-[12rem]">
-            <span className="text-accent-600">My </span>Books
+          <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+            My Books
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
             Three books, two bestsellers from twenty years of building, failing and learning about business and life.

@@ -30,15 +30,15 @@ export const metadata: Metadata = {
     template: "%s | Nic Haralambous",
   },
   description:
-    "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+    "Nic Haralambous is a global keynote speaker, entrepreneur and AI product builder with 3 business exits, 2 best-selling books, and 20+ years building technology businesses.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Nic Haralambous",
+    siteName: "Nic Haralambous - Keynote Speaker",
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@nicharalambous",
+    creator: "@nicharry",
   },
   robots: {
     index: true,
