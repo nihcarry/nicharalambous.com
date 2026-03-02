@@ -82,7 +82,7 @@ And then I clicked a link.
 
 Every single link on the website opened a plain text file with a `.txt` extension. Not a page. A file. The whole site, every article, every page, every carefully built keynote landing page, was serving raw text files to anyone who visited.
 
-I had no idea what had happened. Neither did the AI, at first. It took me 15 or 20 minutes of digging with AI help to figure out that the `robots.txt` file wasn't correctly excluding `.txt` files from the build output. A small configuration detail. Completely invisible if you don't know to look for it. The kind of thing that would make a normal person think the whole project was broken beyond repair.
+I had no idea what had happened. Neither did the AI, at first. It took me 15 or 20 minutes of digging with AI help to figure out that the server wasn't correctly routing extensionless URLs—it was serving the raw `.txt` payload instead of the `.html` page for normal visits. A small configuration detail. Completely invisible if you don't know to look for it. The kind of thing that would make a normal person think the whole project was broken beyond repair.
 
 I knew it was solvable. I knew roughly where to look. I knew the language to use when asking for help diagnosing it. That knowledge came from two decades of building things and watching them break.
 
