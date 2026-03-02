@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Businesses Page Debug</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #f0f0f0; }
+    .section { margin-bottom: 20px; padding: 15px; background: white; border: 2px solid #333; }
+    .error { background: #fee; color: #c00; }
+    .success { background: #efe; color: #060; }
+    .warning { background: #ffc; color: #860; }
+    h2 { margin-top: 0; }
+    pre { overflow-x: auto; background: #f8f8f8; padding: 10px; border-left: 3px solid #333; }
+  </style>
+</head>
+<body>
+  <h1>Businesses Page Debug Report</h1>
+  <div id="output"></div>
+
+  <script>
+    async function checkPage() {
+      const output = document.getElementById('output');
+      
+      try {
+        const response = await fetch('http://localhost:3001/businesses');
+        const html = await response.text();
+        
+        // Check for key elements
+        const hasH1 = html.includes('<h1') && html.includes('Building');
+        const hasSlideDeck = html.includes('snap-y') || html.includes('md:h-screen');
+        const hasSlideContent = html.includes('SlideContent') || html.includes('framer-motion');
+        const hasHeroSlide = html.includes('id="hero"');
+        const hasCategorySlides = html.includes('What I') && html.includes('Building Now');
+        const hasGearPattern = html.includes('bg-gear-pattern');
+        const headingStrokeCount = (html.match(/heading-stroke/g) || []).length;
+        
+        output.innerHTML = `
+          <div class="section ${hasH1 ? 'success' : 'error'}">
+            <h2>✓ Hero H1 Present: ${hasH1 ? 'YES' : 'NO'}</h2>
+            <p>The hero H1 with "Building" text is ${hasH1 ? 'present in the HTML' : 'MISSING from the HTML'}.</p>
+          </div>
+          
+          <div class="section ${hasSlideDeck ? 'success' : 'error'}">
+            <h2>✓ SlideDeck Container: ${hasSlideDeck ? 'YES' : 'NO'}</h2>
+            <p>The slide deck wrapper with snap-scroll is ${hasSlideDeck ? 'present' : 'MISSING'}.</p>
+          </div>
+          
+          <div class="section ${hasHeroSlide ? 'success' : 'error'}">
+            <h2>✓ Hero Slide: ${hasHeroSlide ? 'YES' : 'NO'}</h2>
+            <p>The hero slide with id="hero" is ${hasHeroSlide ? 'present' : 'MISSING'}.</p>
+          </div>
+          
+          <div class="section ${hasCategorySlides ? 'success' : 'error'}">
+            <h2>✓ Category Slides: ${hasCategorySlides ? 'YES' : 'NO'}</h2>
+            <p>Category content ("What I'm Building Now") is ${hasCategorySlides ? 'present' : 'MISSING'}.</p>
+          </div>
+          
+          <div class="section ${hasGearPattern ? 'success' : 'error'}">
+            <h2>✓ Background Pattern: ${hasGearPattern ? 'YES' : 'NO'}</h2>
+            <p>The gear pattern background class is ${hasGearPattern ? 'applied' : 'MISSING'}.</p>
+          </div>
+          
+          <div class="section ${headingStrokeCount > 0 ? 'success' : 'error'}">
+            <h2>✓ Heading Stroke Classes: ${headingStrokeCount}</h2>
+            <p>Found ${headingStrokeCount} instances of heading-stroke classes in the HTML.</p>
+          </div>
+          
+          <div class="section warning">
+            <h2>⚠ Next Steps</h2>
+            <p>If content is present in HTML but not visible:</p>
+            <ul>
+              <li>Check if CSS is loading (inspect Network tab)</li>
+              <li>Check for JavaScript errors in Console</li>
+              <li>Check if Framer Motion animations are initialized</li>
+              <li>Check for z-index or positioning issues</li>
+              <li>Verify Tailwind classes are being applied</li>
+            </ul>
+          </div>
+          
+          <div class="section">
+            <h2>📊 HTML Sample (first 1000 chars after body)</h2>
+            <pre>${html.substring(html.indexOf('<body'), html.indexOf('<body') + 1000).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+          </div>
+        `;
+      } catch (error) {
+        output.innerHTML = `
+          <div class="section error">
+            <h2>❌ Error</h2>
+            <p>Failed to fetch page: ${error.message}</p>
+            <p>Make sure the dev server is running on port 3001.</p>
+          </div>
+        `;
+      }
+    }
+    
+    checkPage();
+  </script>
+</body>
+</html>
