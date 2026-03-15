@@ -26,6 +26,7 @@ import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { BlogList } from "@/components/blog-list";
 import { MostPopularHero } from "@/components/most-popular-hero";
+import { SearchUI } from "@/app/search/search-ui";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -108,6 +109,10 @@ export default async function BlogPage() {
           Real stories and actionable frameworks from 20+ years of building,
           failing, and learning. Explore by topic or start with the latest.
         </p>
+        {/* Blog search — Pagefind index is blog + archive only */}
+        <div className="mt-[10px] p-[10px]">
+          <SearchUI blogOnly placeholder="Search blog posts..." />
+        </div>
       </Section>
 
       {/* Most Popular — up to 5 (curated via post field "Most Popular" in Sanity) */}

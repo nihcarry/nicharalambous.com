@@ -18,7 +18,6 @@ const footerLinks = {
     { href: "/blog", label: "Blog" },
     { href: "/businesses", label: "Building" },
     { href: "/books", label: "Books" },
-    { href: "/search", label: "Search" },
   ],
   connect: [
     { href: "/about", label: "About Nic" },

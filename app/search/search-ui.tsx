@@ -28,13 +28,28 @@ interface PagefindInstance {
   ) => Promise<PagefindResponse | null>;
 }
 
-export function SearchUI() {
+const DEFAULT_PLACEHOLDER = "Search articles, keynotes, topics...";
+
+/** Returns true if the result URL is a blog or archive post (for blogOnly filtering). */
+function isBlogOrArchiveUrl(url: string): boolean {
+  return url.includes("/blog") || url.includes("/archive");
+}
+
+export interface SearchUIProps {
+  /** When true, only show results whose URL contains /blog or /archive. */
+  blogOnly?: boolean;
+  /** Placeholder text for the search input. Defaults to generic site search copy. */
+  placeholder?: string;
+}
+
+export function SearchUI({ blogOnly = false, placeholder }: SearchUIProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<PagefindResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
   const pagefindRef = useRef<PagefindInstance | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const displayPlaceholder = placeholder ?? DEFAULT_PLACEHOLDER;
 
   useEffect(() => {
     async function loadPagefind() {
@@ -68,14 +83,15 @@ export function SearchUI() {
         const data = await Promise.all(
           response.results.slice(0, 20).map((r) => r.data()),
         );
-        setResults(data);
+        const filtered = blogOnly ? data.filter((r) => isBlogOrArchiveUrl(r.url)) : data;
+        setResults(filtered);
       } catch {
         setResults([]);
       } finally {
         setLoading(false);
       }
     },
-    [],
+    [blogOnly],
   );
 
   return (
@@ -90,7 +106,7 @@ export function SearchUI() {
           type="search"
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder={ready ? "Search articles, keynotes, topics..." : "Loading search..."}
+          placeholder={ready ? displayPlaceholder : "Loading search..."}
           disabled={!ready}
           className="w-full border border-brand-300 bg-white py-4 pl-12 pr-12 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 disabled:opacity-50"
           autoFocus

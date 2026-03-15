@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"**/*.html\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\"",
+    "postbuild": "next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"{blog.html,blog/**/*.html,archive/**/*.html}\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\" && cp -r out/pagefind public/pagefind",
     "parse:medium": "tsx scripts/parse-medium.ts",
     "parse:substack": "tsx scripts/parse-substack.ts",
     "parse:all": "tsx scripts/parse-medium.ts && tsx scripts/parse-substack.ts",
@@ -20,7 +20,9 @@
     "import:sanity:dry-run": "tsx scripts/import-to-sanity.ts --dry-run",
     "import:full": "npm run import:parse && npm run enrich && npm run import:sanity",
     "verify:sanity": "tsx scripts/verify-sanity-speaker.ts",
-    "validate:redirects": "tsx scripts/validate-redirects.ts"
+    "validate:redirects": "tsx scripts/validate-redirects.ts",
+    "check:grammar": "tsx scripts/check-grammar-spell.ts",
+    "notion:md2html": "tsx scripts/notion-markdown-to-html.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
@@ -43,6 +45,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "cheerio": "^1.2.0",
+    "marked": "^15.0.0",
     "dotenv": "^17.3.1",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.1.0",

@@ -159,7 +159,7 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 }
 
 /** Routes that live inside the More overflow menu. Used to highlight More when active. */
-const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about", "/search"];
+const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about"];
 
 function isMoreMenuActive(pathname: string): boolean {
   return moreMenuRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
@@ -305,7 +305,6 @@ const moreMenuLinks = [
   { href: "/businesses", label: "Building", icon: "rocket" },
   { href: "/blog", label: "Blog", icon: "document" },
   { href: "/books", label: "Books", icon: "book" },
-  { href: "/search", label: "Search", icon: "search" },
 ];
 
 /** More overflow sheet — secondary nav links + status bar (Book Nic, About Nic, theme). */

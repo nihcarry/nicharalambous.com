@@ -255,15 +255,16 @@ export default async function BlogPostPage({
           <div
             className={[
               "prose-imported mt-8",
-              /* Paragraphs */
-              "[&>p]:mt-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700",
-              /* Headings */
-              "[&>h2]:mt-10 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900",
-              "[&>h3]:mt-8 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900",
-              "[&>h4]:mt-6 [&>h4]:text-lg [&>h4]:font-semibold [&>h4]:text-brand-800",
-              /* Lists */
-              "[&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700",
-              "[&>ol]:mt-4 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700",
+              /* Paragraphs — clear separation between blocks */
+              "[&>p]:mt-5 [&>p]:mb-0 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700",
+              /* Headings — H1 for section titles (e.g. Notion imports), H2–H4 for hierarchy */
+              "[&>h1]:mt-12 [&>h1]:mb-4 [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:text-brand-900 [&>h1]:first:mt-8",
+              "[&>h2]:mt-10 [&>h2]:mb-3 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900",
+              "[&>h3]:mt-8 [&>h3]:mb-2 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900",
+              "[&>h4]:mt-6 [&>h4]:mb-2 [&>h4]:text-lg [&>h4]:font-semibold [&>h4]:text-brand-800",
+              /* Lists — breathing room above and between items */
+              "[&>ul]:mt-5 [&>ul]:mb-5 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700",
+              "[&>ol]:mt-5 [&>ol]:mb-5 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700",
               "[&_li]:text-base [&_li]:leading-relaxed",
               /* Blockquotes */
               "[&>blockquote]:mt-6 [&>blockquote]:border-l-4 [&>blockquote]:border-accent-400 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-brand-600",
