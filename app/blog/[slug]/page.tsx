@@ -250,9 +250,12 @@ export default async function BlogPostPage({
 
         {/* Main content — Portable Text or raw HTML */}
         {hasPortableTextBody ? (
-          <PortableText value={post.body} className="mt-8" />
+          <div data-no-orphan-opt-out="true">
+            <PortableText value={post.body} className="mt-8" />
+          </div>
         ) : hasRawHtmlBody ? (
           <div
+            data-no-orphan-opt-out="true"
             className={[
               "prose-imported mt-8",
               /* Paragraphs — clear separation between blocks */

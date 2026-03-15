@@ -54,6 +54,7 @@ function shouldShrink(el: HTMLElement): boolean {
 function fitHeading(el: HTMLElement): void {
   if (isInNav(el)) return;
   if (el.dataset.noOrphanOptOut === "true") return;
+  if (el.closest("[data-no-orphan-opt-out='true']")) return;
 
   const computed = window.getComputedStyle(el);
 
