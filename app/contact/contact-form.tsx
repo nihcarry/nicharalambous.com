@@ -23,8 +23,10 @@ import { trackFormSubmission } from "@/lib/analytics";
 
 /* ---------- Formspree endpoint ---------- */
 
-const FORMSPREE_ENDPOINT =
-  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/placeholder";
+const CONTACT_EMAIL = "nic@nicharalambous.com";
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT?.trim() ?? "";
+const FORM_ENDPOINT_CONFIGURED =
+  FORMSPREE_ENDPOINT.length > 0 && !FORMSPREE_ENDPOINT.endsWith("/placeholder");
 
 /* ---------- Form options ---------- */
 
@@ -65,6 +67,14 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!FORM_ENDPOINT_CONFIGURED) {
+      setError(
+        `This form is temporarily unavailable. Please email ${CONTACT_EMAIL} directly.`
+      );
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
@@ -253,13 +263,24 @@ export function ContactForm() {
         />
       </div>
 
+      {/* Endpoint misconfiguration notice */}
+      {!FORM_ENDPOINT_CONFIGURED && (
+        <p className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Booking form is temporarily unavailable. Please email{" "}
+          <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
+            {CONTACT_EMAIL}
+          </a>{" "}
+          directly.
+        </p>
+      )}
+
       {/* Error message */}
       {error && <p className="text-sm text-red-600">{error}</p>}
 
       {/* Submit */}
       <button
         type="submit"
-        disabled={submitting}
+        disabled={submitting || !FORM_ENDPOINT_CONFIGURED}
         className="inline-flex w-full items-center justify-center bg-accent-600 px-6 py-3 font-bold text-xl uppercase tracking-[0.02em] text-white transition-colors hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:opacity-50 sm:w-auto"
       >
         {submitting ? "Sending..." : "Send Inquiry"}

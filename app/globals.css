@@ -44,11 +44,11 @@
   --spacing-section: 6rem;
   --spacing-section-sm: 4rem;
 
-  /* Typography scale */
-  --font-family-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-family-heading: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Typography scale — use next/font variable when present (layout sets --font-inter on html) */
+  --font-family-sans: var(--font-inter, "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif);
+  --font-family-heading: var(--font-inter, "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif);
   --font-family-mono: ui-monospace, "SF Mono", "Fira Code", monospace;
-  --font-family-bebas: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-family-bebas: var(--font-inter, "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif);
 
   /* Container */
   --container-max-width-content: 48rem;
