@@ -196,26 +196,26 @@ export default async function HomePage() {
               src="/slides/Nic_soap_16bit.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 right-0 z-[1] hidden h-[calc(100vh-503px)] w-auto select-none object-contain object-bottom md:block"
+              className="pointer-events-none absolute right-3 bottom-8 z-[1] hidden h-[180px] w-auto select-none object-contain object-bottom lg:h-[220px] xl:h-[260px] 2xl:h-[300px] md:block"
             />
           }
         >
           <SlideContent>
-            <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
+            <h2 className="heading-stroke font-extrabold tracking-tight pt-2 pb-3 text-center text-[clamp(1.9rem,4.5vw,3.6rem)] uppercase leading-[0.95] text-brand-900">
               Latest Thinking
             </h2>
-            <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 grid gap-4 px-2 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post, i) => (
                 <a
                   key={post._id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
+                  className="group flex flex-col border-[12px] border-accent-600 bg-white p-4 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50 md:border-[14px] md:p-5"
                   style={{ transform: `rotate(${tilt(i, 2)}deg)` }}
                 >
-                  <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                  <h3 className="font-extrabold tracking-tight text-xl uppercase leading-[1.02] text-accent-600 group-hover:text-accent-500 [overflow-wrap:anywhere] md:text-2xl">
                     {post.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-700">
+                  <p className="mt-2 flex-1 text-xs leading-relaxed text-brand-700 md:text-sm">
                     {post.excerpt}
                   </p>
                   <div className="mt-4 flex items-center gap-3 text-xs text-brand-500">
@@ -235,7 +235,7 @@ export default async function HomePage() {
                 </a>
               ))}
             </div>
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Read the Blog
               </CTAButton>
