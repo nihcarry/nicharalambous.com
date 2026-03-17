@@ -1,30 +1,16 @@
 /**
  * Contact form client component.
  *
- * Handles form state, submission to Formspree, and success/error feedback.
- * Separated from the page to allow server-side metadata export.
- *
- * Fields per plan:
- * - Name (required)
- * - Email (required)
- * - Company/Organisation (required)
- * - Role/Title
- * - Event type (dropdown)
- * - Preferred keynote topic (dropdown)
- * - Event date
- * - Estimated audience size
- * - Budget range (optional dropdown)
- * - Additional details (textarea)
+ * Submits via FormSubmit.co which emails submissions directly to Nic.
+ * No account or API keys required — just the destination email address.
  */
 "use client";
 
 import { useState } from "react";
 import { trackFormSubmission } from "@/lib/analytics";
 
-/* ---------- Formspree endpoint ---------- */
-
-const CONTACT_EMAIL = "nic@nicharalambous.com";
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xqeyyawz";
+const CONTACT_EMAIL = "nic@nharry.com";
+const FORMSUBMIT_URL = `https://formsubmit.co/${CONTACT_EMAIL}`;
 
 /* ---------- Form options ---------- */
 
@@ -73,7 +59,7 @@ export function ContactForm() {
     const data = new FormData(form);
 
     try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
+      const response = await fetch(FORMSUBMIT_URL, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -109,6 +95,11 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-12 space-y-6">
+      {/* FormSubmit config: disable captcha, set subject, stay on-site */}
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_subject" value="New Booking Inquiry from nicharalambous.com" />
+      <input type="hidden" name="_template" value="table" />
+
       {/* Name + Email row */}
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
