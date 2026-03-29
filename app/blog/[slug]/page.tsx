@@ -22,11 +22,18 @@ import { notFound } from "next/navigation";
 import { client } from "@/lib/sanity/client";
 import {
   blogPostBySlugQuery,
+  blogPostBySlugDevQuery,
   blogPostSlugListQuery,
+  blogPostSlugListDevQuery,
   relatedPostsQuery,
   type BlogPostData,
   type RelatedPostItem,
 } from "@/lib/sanity/queries";
+
+const postBySlugQuery =
+  process.env.NODE_ENV === "development" ? blogPostBySlugDevQuery : blogPostBySlugQuery;
+const postSlugListQuery =
+  process.env.NODE_ENV === "development" ? blogPostSlugListDevQuery : blogPostSlugListQuery;
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
@@ -41,7 +48,7 @@ import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
 
 async function getPost(slug: string): Promise<BlogPostData | null> {
   try {
-    const data = await client.fetch<BlogPostData | null>(blogPostBySlugQuery, {
+    const data = await client.fetch<BlogPostData | null>(postBySlugQuery, {
       slug,
     });
     return data;
@@ -52,7 +59,7 @@ async function getPost(slug: string): Promise<BlogPostData | null> {
 
 async function getPostSlugs(): Promise<{ slug: string }[]> {
   try {
-    const data = await client.fetch<{ slug: string }[]>(blogPostSlugListQuery);
+    const data = await client.fetch<{ slug: string }[]>(postSlugListQuery);
     return data && data.length > 0 ? data : FALLBACK_SLUGS;
   } catch {
     return FALLBACK_SLUGS;

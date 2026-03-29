@@ -399,8 +399,54 @@ export const blogPostBySlugQuery = `*[_type == "post" && slug.current == $slug &
   seo
 }`;
 
+/**
+ * Same projection as blogPostBySlugQuery, but allows pipeline drafts.
+ * Used only when `NODE_ENV === "development"` so you can preview imports
+ * without setting Content Status to Published. Production builds use
+ * blogPostBySlugQuery only.
+ */
+export const blogPostBySlugDevQuery = `*[_type == "post" && slug.current == $slug && contentStatus in ["published", "in-review", "ai-draft"]][0]{
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  publishedAt,
+  updatedAt,
+  estimatedReadTime,
+  body,
+  rawHtmlBody,
+  videoEmbed,
+  featured,
+  featuredLabel,
+  "featuredImage": featuredImage{
+    asset->{url},
+    alt
+  },
+  faq[]{
+    question,
+    answer
+  },
+  "topics": topics[]->{
+    _id,
+    title,
+    "slug": slug.current
+  },
+  "relatedKeynote": relatedKeynote->{
+    _id,
+    title,
+    "slug": slug.current,
+    tagline
+  },
+  seo
+}`;
+
 /** All published post slugs — used for generateStaticParams on /blog/[slug] */
 export const blogPostSlugListQuery = `*[_type == "post" && contentStatus == "published" && defined(slug.current)]{
+  "slug": slug.current
+}`;
+
+/** Dev-only: slugs for posts that are published or in the review pipeline */
+export const blogPostSlugListDevQuery = `*[_type == "post" && contentStatus in ["published", "in-review", "ai-draft"] && defined(slug.current)]{
   "slug": slug.current
 }`;
 

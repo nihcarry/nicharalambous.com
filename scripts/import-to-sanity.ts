@@ -7,7 +7,7 @@
  *
  * Environment:
  *   SANITY_WRITE_TOKEN — required, Editor role token from sanity.io/manage
- *   NEXT_PUBLIC_SANITY_PROJECT_ID — from .env.local (default: lsivhm7f)
+ *   NEXT_PUBLIC_SANITY_PROJECT_ID — from .env / .env.local (default: lsivhm7f)
  *   NEXT_PUBLIC_SANITY_DATASET — defaults to "production"
  *
  * Usage:
@@ -18,32 +18,18 @@
  *   npx tsx scripts/import-to-sanity.ts --dry-run                # Preview without writing
  */
 
+import "./load-env";
+
 import * as fs from "fs";
 import * as path from "path";
 import type { EnrichedArticle } from "./lib/types";
-
-// Load .env.local manually for Sanity credentials
-const envPath = path.resolve(__dirname, "../.env.local");
-if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, "utf-8");
-  for (const line of envContent.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const eqIndex = trimmed.indexOf("=");
-    if (eqIndex === -1) continue;
-    const key = trimmed.substring(0, eqIndex).trim();
-    const value = trimmed.substring(eqIndex + 1).trim();
-    if (!process.env[key]) {
-      process.env[key] = value;
-    }
-  }
-}
 
 const PROJECT_ID =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
 const API_VERSION =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
-const SANITY_WRITE_TOKEN = process.env.SANITY_WRITE_TOKEN;
+const SANITY_WRITE_TOKEN =
+  process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_WRITE_TOKEN;
 const ENRICHED_DIR = path.resolve(__dirname, "output/enriched");
 
 /** Batch size for Sanity mutations (max 100 per request). */

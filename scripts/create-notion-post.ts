@@ -1,32 +1,25 @@
 /**
- * One-off: create a single post in Sanity from Notion article data.
- * Used by the notion-article-to-blog skill. Loads .env.local for tokens.
+ * Create a single post in Sanity from a Notion-exported HTML file.
  *
  * Usage: npx tsx scripts/create-notion-post.ts
- * (Reads scripts/output/notion-therapy-article.html and creates the post.)
+ *
+ * Requires SANITY_WRITE_TOKEN (Editor) in `.env` or `.env.local`.
+ * HTML path and post payload are defined below for the current import.
  */
+
+import "./load-env";
 
 import * as fs from "fs";
 import * as path from "path";
 
-const envPath = path.resolve(__dirname, "../.env.local");
-if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, "utf-8");
-  for (const line of envContent.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const eqIndex = trimmed.indexOf("=");
-    if (eqIndex === -1) continue;
-    const key = trimmed.substring(0, eqIndex).trim();
-    const value = trimmed.substring(eqIndex + 1).trim();
-    if (!process.env[key]) process.env[key] = value;
-  }
-}
-
 const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
 const API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
-const SANITY_WRITE_TOKEN = process.env.SANITY_WRITE_TOKEN;
 const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+
+/** Prefer explicit write token; some setups use alternate names. */
+const SANITY_WRITE_TOKEN =
+  process.env.SANITY_WRITE_TOKEN ||
+  process.env.SANITY_API_WRITE_TOKEN;
 
 async function sanityQuery<T>(query: string): Promise<T> {
   const params = new URLSearchParams({ query });
@@ -54,57 +47,60 @@ async function sanityMutate(mutations: Record<string, unknown>[]): Promise<void>
 
 async function main(): Promise<void> {
   if (!SANITY_WRITE_TOKEN) {
-    console.error("❌ SANITY_WRITE_TOKEN not set in .env.local");
+    console.error(
+      "❌ No Sanity write token found. Add SANITY_WRITE_TOKEN (Editor role) to `.env` or `.env.local`.\n" +
+      "   See https://www.sanity.io/manage → API → Tokens"
+    );
     process.exit(1);
   }
 
-  const htmlPath = path.resolve(__dirname, "output/notion-therapy-article.html");
+  const htmlPath = path.resolve(__dirname, "output/notion-import-be-the-change.html");
   const rawHtmlBody = fs.readFileSync(htmlPath, "utf-8");
 
-  const slug = "this-is-how-i-do-therapy";
+  const slug = "be-the-change-you-want-to-see-in-young-men";
   const docId = `imported-notion-${slug}`;
 
   const enrichment = {
     excerpt:
-      "I've been going to therapy for over ten years now. I resisted therapy aggressively when I was in my 20s — here's how I frame it as mental coaching and what I do each month.",
-    seoTitle: "This is How I Do Therapy",
+      "From a noisy cinema to Louis Theroux’s Manosphere: male role models, algorithms, and choosing to model respect in public instead of only whispering from your seat.",
+    seoTitle: "Be the change you want to see in young men",
     seoDescription:
-      "How I frame therapy as mental coaching, find a therapist, and use sessions to build mental models. A practical guide from ten years in therapy.",
-    topics: ["focus", "agency", "curiosity"] as string[],
+      "A night at the movies, Netflix’s Manosphere, and a call for adults to model considerate, honest behaviour for the next generation.",
+    topics: ["agency", "focus", "curiosity"] as string[],
     relatedKeynote: "reclaiming-focus",
     targetKeywords: [
-      "how I do therapy",
-      "mental coaching",
-      "finding a therapist",
-      "therapy process",
-      "mental models therapy",
+      "Louis Theroux Manosphere",
+      "male role models young men",
+      "manosphere social media algorithms",
+      "considerate public spaces",
+      "misogyny young men online",
     ],
-    estimatedReadTime: 12,
+    estimatedReadTime: 3,
     faq: [
       {
-        question: "Is therapy a sign of weakness?",
+        question: "Is this article about Project Hail Mary?",
         answer:
-          "No. Seeing a psychologist is a sign of strength — that you take your mental health and relationships seriously. Top athletes and CEOs use mental coaches; therapy is the same idea.",
+          "No. The film sets the scene; the piece is about behaviour in the cinema and how online culture shapes young men.",
       },
       {
-        question: "How do I find a therapist?",
+        question: "What happened in the cinema?",
         answer:
-          "Ask trusted friends for recommendations, your GP, or use online directories like It's Complicated. Try both in-person and online options; EU in-person can be expensive and oversubscribed.",
+          "Groups of young men talked through the film; the author asked one group to stop, then reflected after watching Louis Theroux’s Manosphere.",
       },
       {
-        question: "How should I prepare for therapy sessions?",
+        question: "What is Manosphere about?",
         answer:
-          "Keep a therapy notebook (e.g. in Notion), take notes between sessions on actions and struggles, and build an agenda before each session so you use the time well.",
+          "The documentary explores how misogyny and toxic online content reach young men through algorithms and influencers.",
       },
       {
-        question: "Why record therapy sessions?",
+        question: "What does “be the change” mean here?",
         answer:
-          "Recording lets you review the conversation, extract mental models and key points, and with AI you can uncover patterns you might miss in the moment.",
+          "Modeling calm, respectful behaviour in public—showing teens what consideration looks like instead of only whisper-yelling from your seat.",
       },
       {
-        question: "What are mental models in therapy?",
+        question: "What should adults do?",
         answer:
-          "Frameworks you build with your therapist after a breakthrough — for example awareness of the real size of an irritation, choosing a different response, and changing your mind — that you then test in daily life.",
+          "Call out misogynistic rhetoric when you see it and show alternatives; don’t expect empty online “logic” to debate fairly.",
       },
     ],
   };
@@ -139,14 +135,16 @@ async function main(): Promise<void> {
   const doc = {
     _id: docId,
     _type: "post",
-    title: "This is How I Do Therapy",
+    title: "Be the change you want to see in young men",
     slug: { _type: "slug", current: slug },
-    publishedAt: "2026-03-15T14:30:03.566Z",
+    publishedAt: "2026-03-29T13:00:50.566Z",
     excerpt: enrichment.excerpt,
     rawHtmlBody,
     estimatedReadTime: enrichment.estimatedReadTime,
-    contentStatus: "in-review",
-    originalUrl: "https://www.notion.so/324401646a3e802c86bed352e497a8e0",
+    contentStatus: "published",
+    originalUrl: "https://www.notion.so/332401646a3e8058865dd2ac7a3db8e9",
+    optimizationNotes:
+      "Imported from Notion. Grammar: added missing \"and\" in \"watch it and decide\". Inline image uses Notion S3 presigned URL (short-lived); re-upload to Sanity for stable hosting.",
     topics: topicRefs.length > 0 ? topicRefs : undefined,
     relatedKeynote: relatedKeynote ?? undefined,
     faq: faq.length > 0 ? faq : undefined,
@@ -163,7 +161,7 @@ async function main(): Promise<void> {
   console.log(`   _id: ${docId}`);
   console.log(`   slug: ${slug}`);
   console.log(`   URL: /blog/${slug}`);
-  console.log(`   contentStatus: in-review (set to Published in Studio to go live)`);
+  console.log(`   contentStatus: published (visible on /blog in prod after deploy)`);
 }
 
 main().catch((err) => {
