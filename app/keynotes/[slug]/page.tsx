@@ -45,10 +45,7 @@ async function getKeynote(slug: string): Promise<KeynoteData | null> {
 
 async function getKeynotesSlugs(): Promise<{ slug: string }[]> {
   const data = await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
-  if (!data || data.length === 0) {
-    throw new Error("No keynote slugs returned from Sanity");
-  }
-  return data;
+  return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
 }
 
 /* ---------- Static params ---------- */

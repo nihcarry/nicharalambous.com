@@ -51,10 +51,7 @@ async function getBook(slug: string): Promise<BookData | null> {
 
 async function getBookSlugs(): Promise<{ slug: string }[]> {
   const data = await client.fetch<{ slug: string }[]>(bookSlugListQuery);
-  if (!data || data.length === 0) {
-    throw new Error("No book slugs returned from Sanity");
-  }
-  return data;
+  return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
 }
 
 /* ---------- Static params ---------- */

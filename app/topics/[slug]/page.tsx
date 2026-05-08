@@ -56,10 +56,7 @@ async function getPostsByTopic(topicId: string): Promise<TopicHubPost[]> {
 
 async function getTopicHubSlugs(): Promise<{ slug: string }[]> {
   const data = await client.fetch<{ slug: string }[]>(topicHubSlugListQuery);
-  if (!data || data.length === 0) {
-    throw new Error("No topic hub slugs returned from Sanity");
-  }
-  return data;
+  return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
 }
 
 /* ---------- Static params ---------- */
