@@ -7,7 +7,6 @@
  */
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { VisualEditingWrapper } from "@/components/visual-editing-wrapper";
 import { Header } from "@/components/header";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { HomePageVideoBackground } from "@/components/home-page-video-background";
@@ -75,7 +74,6 @@ export default function RootLayout({
           <Header />
           <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] md:pb-0 md:pt-[var(--header-clearance)]">{children}</main>
           <ConditionalFooter />
-          {process.env.NODE_ENV === "development" && <VisualEditingWrapper />}
         </ThemeProvider>
       </body>
     </html>
