@@ -2,6 +2,10 @@
 
 Static personal site and blog for Nic Haralambous. Built with Next.js 15 (static export), content from Sanity CMS at build time, deployed to S3 and served via CloudFront. No server runtime.
 
+## For editors
+
+**If you're editing site content (not code), start here: [docs/OPERATING-MANUAL.md](docs/OPERATING-MANUAL.md)**
+
 ## Where to find things
 
 | Location | Purpose |

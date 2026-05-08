@@ -1,5 +1,7 @@
 # Architecture
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 High-level overview of how nicharalambous.com is built and how data flows. For build and deploy details see [BUILD.md](BUILD.md) and [DEPLOY.md](DEPLOY.md).
 
 ## High-level
@@ -27,7 +29,7 @@ Sanity Studio is embedded in the app at `/studio` and runs client-side only; it 
 | **Dynamic** | `/blog/[slug]`, `/archive/[slug]`, `/keynotes/[slug]`, `/books/[slug]`, `/topics/[slug]` | `generateStaticParams()` in the page fetches slugs from Sanity and returns `{ slug }[]`; Next.js pre-renders one page per slug. |
 | **Studio** | `/studio`, `/studio/*` | Single client-side app; only root `/studio` is pre-rendered. |
 
-Dynamic routes require at least one param set (e.g. one slug) for static export; the codebase uses fallback slugs when Sanity returns none.
+Dynamic routes require at least one param set (e.g. one slug) for static export. The build will fail if Sanity returns no slugs for a doc type — there must be at least one published document of each type.
 
 ## Content model (Sanity)
 

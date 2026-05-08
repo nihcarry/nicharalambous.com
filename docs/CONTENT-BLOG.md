@@ -1,5 +1,7 @@
 # Blog content and publishing
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 How blog posts are stored, how to publish from Sanity vs from Cursor (content pipeline), and how URLs work.
 
 ## Where blog content lives

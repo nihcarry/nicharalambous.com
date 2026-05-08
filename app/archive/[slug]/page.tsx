@@ -36,14 +36,13 @@ async function getArchivePost(slug: string): Promise<ArchivePostData | null> {
 }
 
 async function getArchiveSlugs(): Promise<{ slug: string }[]> {
-  try {
-    const data = await client.fetch<{ slug: string }[]>(
-      archivePostSlugListQuery
-    );
-    return data && data.length > 0 ? data : FALLBACK_SLUGS;
-  } catch {
-    return FALLBACK_SLUGS;
+  const data = await client.fetch<{ slug: string }[]>(
+    archivePostSlugListQuery
+  );
+  if (!data || data.length === 0) {
+    throw new Error("No archive post slugs returned from Sanity");
   }
+  return data;
 }
 
 /* ---------- Static params ---------- */
@@ -61,7 +60,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = (await getArchivePost(slug)) || FALLBACK_ARCHIVE_POSTS[slug];
+  const post = await getArchivePost(slug);
   if (!post) return { title: "Archive Post Not Found" };
 
   return {
@@ -82,9 +81,7 @@ export default async function ArchivePostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const cmsPost = await getArchivePost(slug);
-  const fallback = FALLBACK_ARCHIVE_POSTS[slug];
-  const post = cmsPost || fallback;
+  const post = await getArchivePost(slug);
 
   if (!post) {
     notFound();
@@ -198,23 +195,3 @@ export default async function ArchivePostPage({
   );
 }
 
-/* ---------- Fallback data ---------- */
-
-/**
- * Fallback slugs — ensures generateStaticParams always returns at
- * least one entry (required by Next.js static export).
- */
-const FALLBACK_SLUGS = [{ slug: "placeholder" }];
-
-const FALLBACK_ARCHIVE_POSTS: Record<string, ArchivePostData> = {
-  placeholder: {
-    _id: "fa-placeholder",
-    title: "Archive",
-    slug: "placeholder",
-    publishedAt: null,
-    rawHtmlBody:
-      "<p>This is a placeholder for archived content. Archived posts from Medium, Substack, and Squarespace will appear here once imported.</p>",
-    originalUrl: null,
-    topics: [],
-  },
-};

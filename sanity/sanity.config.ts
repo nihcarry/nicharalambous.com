@@ -7,8 +7,11 @@
  */
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { presentationTool } from "sanity/presentation";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
+import { viewOnSiteAction } from "./actions/view-on-site";
+import { viewBuildStatusAction } from "./actions/view-build-status";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -21,6 +24,53 @@ export default defineConfig({
   dataset,
 
   plugins: [
+    presentationTool({
+      previewUrl: {
+        origin:
+          typeof window !== "undefined" && window.location.hostname === "localhost"
+            ? "http://localhost:3001"
+            : (process.env.NEXT_PUBLIC_PREVIEW_ORIGIN || "http://localhost:3001"),
+        preview: "/",
+      },
+      resolve: {
+        locations: {
+          post: {
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) =>
+              doc?.slug
+                ? { locations: [{ title: doc.title || "Post", href: `/blog/${doc.slug}` }] }
+                : undefined,
+          },
+          keynote: {
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) =>
+              doc?.slug
+                ? { locations: [{ title: doc.title || "Keynote", href: `/keynotes/${doc.slug}` }] }
+                : undefined,
+          },
+          topicHub: {
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) =>
+              doc?.slug
+                ? { locations: [{ title: doc.title || "Topic", href: `/topics/${doc.slug}` }] }
+                : undefined,
+          },
+          book: {
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) =>
+              doc?.slug
+                ? { locations: [{ title: doc.title || "Book", href: `/books/${doc.slug}` }] }
+                : undefined,
+          },
+          speaker: {
+            select: { title: "title" },
+            resolve: (doc) => ({
+              locations: [{ title: doc?.title || "Speaker Page", href: "/speaker" }],
+            }),
+          },
+        },
+      },
+    }),
     structureTool({
       structure: (S) =>
         S.list()
@@ -153,5 +203,29 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, context) => {
+      const actionTypes = [
+        "post",
+        "keynote",
+        "topicHub",
+        "book",
+        "mediaAppearance",
+        "business",
+        "speaker",
+        "siteSettings",
+      ];
+
+      if (!actionTypes.includes(context.schemaType)) return prev;
+
+      const extra =
+        context.schemaType === "siteSettings"
+          ? [viewBuildStatusAction]
+          : [viewOnSiteAction, viewBuildStatusAction];
+
+      return [...extra, ...prev];
+    },
   },
 });

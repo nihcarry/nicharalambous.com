@@ -50,12 +50,11 @@ async function getBook(slug: string): Promise<BookData | null> {
 }
 
 async function getBookSlugs(): Promise<{ slug: string }[]> {
-  try {
-    const data = await client.fetch<{ slug: string }[]>(bookSlugListQuery);
-    return data && data.length > 0 ? data : FALLBACK_SLUGS;
-  } catch {
-    return FALLBACK_SLUGS;
+  const data = await client.fetch<{ slug: string }[]>(bookSlugListQuery);
+  if (!data || data.length === 0) {
+    throw new Error("No book slugs returned from Sanity");
   }
+  return data;
 }
 
 /* ---------- Static params ---------- */
@@ -73,7 +72,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const book = (await getBook(slug)) || FALLBACK_BOOKS[slug];
+  const book = await getBook(slug);
   if (!book) return { title: "Book Not Found" };
 
   const title = `${book.title} | Books by Nic Haralambous`;
@@ -102,16 +101,14 @@ export default async function BookPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const cmsBook = await getBook(slug);
-  const fallback = FALLBACK_BOOKS[slug];
-  const book = cmsBook || fallback;
+  const book = await getBook(slug);
 
   if (!book) {
     notFound();
   }
 
-  const hasCmsDescription =
-    cmsBook?.description && cmsBook.description.length > 0;
+  const hasDescription =
+    book.description && book.description.length > 0;
 
   const coverUrl = book.coverImage?.asset
     ? urlFor(book.coverImage).width(600).auto("format").url()
@@ -181,20 +178,11 @@ export default async function BookPage({
         </div>
       </Section>
 
-      {/* Description — Portable Text from CMS or fallback */}
+      {/* Description — Portable Text from CMS */}
       <Section width="content" className="!pt-0 !pb-8 md:!pb-10">
         <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">About This Book</h2>
-        {hasCmsDescription ? (
-          <PortableText value={cmsBook!.description} className="mt-6" />
-        ) : (
-          fallback?.descriptionText?.map((paragraph: string, i: number) => (
-            <p
-              key={i}
-              className="mt-4 first:mt-6 text-base leading-relaxed text-brand-700"
-            >
-              {paragraph}
-            </p>
-          ))
+        {hasDescription && (
+          <PortableText value={book.description} className="mt-6" />
         )}
       </Section>
 
@@ -229,85 +217,3 @@ export default async function BookPage({
   );
 }
 
-/* ---------- Fallback data ---------- */
-
-interface FallbackBook extends BookData {
-  descriptionText: string[];
-}
-
-const FALLBACK_SLUGS = [
-  { slug: "do-fail-learn-repeat" },
-  { slug: "how-to-start-a-side-hustle" },
-  { slug: "the-business-builders-toolkit" },
-];
-
-const FALLBACK_BOOKS: Record<string, FallbackBook> = {
-  "do-fail-learn-repeat": {
-    _id: "fb-1",
-    title: "Do. Fail. Learn. Repeat.",
-    slug: "do-fail-learn-repeat",
-    subtitle: "The Entrepreneurship Memoir",
-    coverImage: null,
-    description: null,
-    descriptionText: [
-      "Do. Fail. Learn. Repeat. is Nic Haralambous's personal memoir of entrepreneurship — the real version, not the highlight reel. It covers the failures, the impostor phenomenon, the near-death experiences of startups, and the resilience required to keep going.",
-      "This book introduces the Do/Fail/Learn/Repeat cycle — a framework for turning failure into data and data into progress. Nic shares stories from his 20+ years of building companies, including the painful ones that teach the most.",
-      "If you're building something and feeling stuck, scared, or unsure — this book is for you. It won't give you a formula for success. It'll give you permission to fail forward.",
-    ],
-    publishedYear: 2020,
-    isbn: null,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/B084DHQM3L" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-      { _id: "t2", title: "Failure", slug: "failure" },
-      { _id: "t3", title: "Agency", slug: "agency" },
-    ],
-    seo: null,
-  },
-  "how-to-start-a-side-hustle": {
-    _id: "fb-2",
-    title: "How to Start a Side Hustle",
-    slug: "how-to-start-a-side-hustle",
-    subtitle: "Build a Business Without Quitting Your Day Job",
-    coverImage: null,
-    description: null,
-    descriptionText: [
-      "How to Start a Side Hustle is Nic Haralambous's comprehensive guide to building a business alongside your day job. It covers everything from ideation and planning to culture, leadership, and finding your first customers.",
-      "This book is practical and actionable. No motivational fluff — just the tools, frameworks, and hard-earned lessons from someone who's built multiple businesses from scratch.",
-      "Whether you're thinking about your first venture or already juggling a side project, this book gives you the toolkit to do it right.",
-    ],
-    publishedYear: 2019,
-    isbn: null,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/1776093380" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-    ],
-    seo: null,
-  },
-  "the-business-builders-toolkit": {
-    _id: "fb-3",
-    title: "The Business Builder's Toolkit",
-    slug: "the-business-builders-toolkit",
-    subtitle: "Frameworks for Modern Entrepreneurs",
-    coverImage: null,
-    description: null,
-    descriptionText: [
-      "The Business Builder's Toolkit distils Nic Haralambous's 20+ years of entrepreneurial experience into practical frameworks you can use immediately.",
-      "From validating ideas and building teams to navigating failure and scaling sustainably — this book is the toolkit Nic wishes he'd had when he started.",
-      "If you're serious about building something that lasts, this is your operating manual.",
-    ],
-    publishedYear: 2021,
-    isbn: null,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/B09EXAMPLE" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-    ],
-    seo: null,
-  },
-};

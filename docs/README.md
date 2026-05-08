@@ -2,8 +2,11 @@
 
 Project docs for nicharalambous.com. Use this as the single list of all docs (for humans and AI).
 
+> **Editing the site, not the code?** Start with [OPERATING-MANUAL.md](OPERATING-MANUAL.md) — it covers every common workflow.
+
 | Doc | Description |
 |-----|-------------|
+| [OPERATING-MANUAL.md](OPERATING-MANUAL.md) | **Start here if you're an editor.** Step-by-step workflows for publishing, previewing, and updating every page. |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | How the site is built: static export, Sanity at build time, route types, content model, key files. |
 | [BUILD.md](BUILD.md) | What `npm run build` does, prerequisites, how to verify output, Sanity client cache requirement. |
 | [DEPLOY.md](DEPLOY.md) | CI vs local deploy, triggers, GitHub secrets, Step 7 (commit & push after local deploy). |

@@ -1,5 +1,7 @@
 # Build
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 What happens when you run the build and how to verify it. For deployment see [DEPLOY.md](DEPLOY.md).
 
 ## What `npm run build` does

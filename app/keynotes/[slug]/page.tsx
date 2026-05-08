@@ -44,15 +44,11 @@ async function getKeynote(slug: string): Promise<KeynoteData | null> {
 }
 
 async function getKeynotesSlugs(): Promise<{ slug: string }[]> {
-  try {
-    const data = await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
-    const cmsSlugs = data && data.length > 0 ? data : [];
-    const seen = new Set(cmsSlugs.map((s) => s.slug));
-    const merged = [...cmsSlugs, ...FALLBACK_SLUGS.filter((s) => !seen.has(s.slug))];
-    return merged;
-  } catch {
-    return FALLBACK_SLUGS;
+  const data = await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
+  if (!data || data.length === 0) {
+    throw new Error("No keynote slugs returned from Sanity");
   }
+  return data;
 }
 
 /* ---------- Static params ---------- */
@@ -70,7 +66,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const keynote = (await getKeynote(slug)) || FALLBACK_KEYNOTES[slug];
+  const keynote = await getKeynote(slug);
   if (!keynote) return { title: "Keynote Not Found" };
 
   const title = `${keynote.title} | Virtual Keynote by Nic Haralambous`;
@@ -100,17 +96,14 @@ export default async function KeynotePage({
 }) {
   const { slug } = await params;
 
-  // Try CMS first, fall back to hardcoded data
-  const cmsKeynote = await getKeynote(slug);
-  const fallback = FALLBACK_KEYNOTES[slug];
-  const keynote = cmsKeynote || fallback;
+  const keynote = await getKeynote(slug);
 
   if (!keynote) {
     notFound();
   }
 
-  const hasCmsDescription =
-    cmsKeynote?.description && cmsKeynote.description.length > 0;
+  const hasDescription =
+    keynote.description && keynote.description.length > 0;
 
   return (
     <>
@@ -149,23 +142,12 @@ export default async function KeynotePage({
         </div>
       </Section>
 
-      {/* Description — Portable Text from CMS or fallback paragraphs */}
-      <Section width="content" className="bg-brand-50">
-        {hasCmsDescription ? (
-          <PortableText value={cmsKeynote!.description} />
-        ) : (
-          fallback?.descriptionParagraphs?.map(
-            (paragraph: string, i: number) => (
-              <p
-                key={i}
-                className="mt-4 first:mt-0 text-base leading-relaxed text-brand-700"
-              >
-                {paragraph}
-              </p>
-            )
-          )
-        )}
-      </Section>
+      {/* Description — Portable Text from CMS */}
+      {hasDescription && (
+        <Section width="content" className="bg-brand-50">
+          <PortableText value={keynote.description} />
+        </Section>
+      )}
 
       {/* What Attendees Leave With */}
       {keynote.outcomes && keynote.outcomes.length > 0 && (
@@ -205,14 +187,14 @@ export default async function KeynotePage({
         </Section>
       )}
 
-      {/* Testimonials — only shown if CMS has testimonial data */}
-      {cmsKeynote?.testimonials && cmsKeynote.testimonials.length > 0 && (
+      {/* Testimonials */}
+      {keynote.testimonials && keynote.testimonials.length > 0 && (
         <Section width="wide">
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             What People Say
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {cmsKeynote.testimonials.map((t, i) => (
+            {keynote.testimonials.map((t, i) => (
               <blockquote
                 key={t._id}
                 className="flex flex-col card-brutalist p-6"
@@ -308,222 +290,3 @@ function getVideoEmbedUrl(url: string): string | null {
   return null;
 }
 
-/* ---------- Fallback data (used when Sanity has no content) ---------- */
-
-interface FallbackKeynote extends KeynoteData {
-  descriptionParagraphs: string[];
-}
-
-const FALLBACK_SLUGS = [
-  { slug: "connected-not-consumed" },
-  { slug: "innovation-starts-at-home" },
-  { slug: "creating-a-curious-company" },
-  { slug: "reclaiming-focus" },
-  { slug: "breakthrough-product-teams" },
-  { slug: "curiosity-catalyst" },
-];
-
-const FALLBACK_KEYNOTES: Record<string, FallbackKeynote> = {
-  "connected-not-consumed": {
-    _id: "fallback-cnc",
-    title: "Connected, Not Consumed",
-    slug: "connected-not-consumed",
-    tagline: "Balancing Digital Life and Mental Health at Work",
-    description: null,
-    descriptionParagraphs: [
-      "Modern work rewards constant availability, fast replies, and full calendars while quietly destroying focus, decision quality, and health.",
-      "Most teams aren't failing from lack of effort. They're drowning in reaction.",
-      "This talk helps leaders and teams regain control of their attention without disconnecting from their work or the internet.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "A clear way to decide what actually matters each day",
-      "A practical system to protect focus inside noisy organisations",
-      "A shared language for agency, ownership, and meaningful work",
-      "The DIAL framework: Decide, Intend, Act, Loop back",
-    ],
-    audiences: [
-      "Corporate teams",
-      "Leadership groups",
-      "Remote/hybrid teams",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t-focus", title: "Focus", slug: "focus" },
-      { _id: "t-agency", title: "Agency", slug: "agency" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-  "innovation-starts-at-home": {
-    _id: "fallback-ish",
-    title: "Innovation Starts at Home",
-    slug: "innovation-starts-at-home",
-    tagline: "How to build teams that produce breakthroughs",
-    description: null,
-    descriptionParagraphs: [
-      "Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure.",
-      "This talk shows leaders how to build entrepreneurial teams that learn fast, act with agency, and turn failure into progress especially in the AI era.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "Reduce 'progress tax': meetings, process, work-around-work",
-      "Build agency and initiative without chaos",
-      "Create psychological safety with high standards",
-      "The innovation flywheel: Curiosity, Action, Information, Loop",
-    ],
-    audiences: [
-      "Product teams",
-      "Engineering leaders",
-      "Innovation departments",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t-innovation", title: "Innovation", slug: "innovation" },
-      { _id: "t-curiosity", title: "Curiosity", slug: "curiosity" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-  "creating-a-curious-company": {
-    _id: "fallback-cacc",
-    title: "Creating a Curious Company",
-    slug: "creating-a-curious-company",
-    tagline: "Why innovation stalls and how curiosity restarts it",
-    description: null,
-    descriptionParagraphs: [
-      "Most organisations don't have an innovation problem.",
-      "They have a curiosity problem.",
-      "In this keynote, Nic challenges the myths of \"innovation theatre\" and reactive change, and shows why real progress doesn't come from hackathons, buzzwords, or panic-driven ideas but from deliberately designing curiosity into how teams think, work, and experiment.",
-      "Through powerful stories, research-backed insights, and live audience interaction, this talk helps leaders and teams break out of stagnation by replacing fear, efficiency obsession, and short-term thinking with curiosity, experimentation, and long-term perspective.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "A clear understanding of why innovation stalls inside successful companies",
-      "Practical ways to turn curiosity into a daily leadership and team practice",
-      "Tools to move beyond \"innovation theatre\" into real, meaningful progress",
-      "A simple framework to help teams experiment, learn, and adapt without fear",
-    ],
-    audiences: [
-      "Conferences",
-      "C-suite retreats",
-      "Innovation teams",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t-curiosity2", title: "Curiosity", slug: "curiosity" },
-      { _id: "t-innovation2", title: "Innovation", slug: "innovation" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-  "reclaiming-focus": {
-    _id: "fallback-1",
-    title: "Reclaiming Focus in a World That Profits From Your Distraction",
-    slug: "reclaiming-focus",
-    tagline:
-      "The DIAL framework for attention management, defeating digital addiction, and reclaiming deep work.",
-    description: null,
-    descriptionParagraphs: [
-      "We live in an attention economy where every app, notification, and platform is engineered to steal your focus. The average person checks their phone 96 times per day. Your team's most valuable resource isn't time. It's attention.",
-      "In this keynote, Nic introduces the DIAL framework (Decide, Intend, Act, Loop): a practical system for reclaiming focus and building deep work habits. Drawing from his experience building 4 companies and the latest research on digital addiction, he shows how high-agency individuals and teams take control of their attention.",
-      "This isn't about going offline. It's about being intentional. Your team will leave with a concrete framework they can apply Monday morning to do their most important work.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "The DIAL framework for daily attention management",
-      "How to identify and eliminate the 'sacrifice fallacy' in your work",
-      "Practical strategies for 90-minute deep work blocks",
-      "Why boredom is a catalyst for creativity, not a bug",
-      "How to build team norms that protect focus time",
-    ],
-    audiences: [
-      "Corporate teams struggling with productivity",
-      "Leadership groups building remote/hybrid work culture",
-      "Conferences focused on wellbeing and performance",
-      "Teams experiencing burnout or attention fragmentation",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t1", title: "Focus", slug: "focus" },
-      { _id: "t2", title: "Agency", slug: "agency" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-  "breakthrough-product-teams": {
-    _id: "fallback-2",
-    title: "How to Build Breakthrough Product Teams",
-    slug: "breakthrough-product-teams",
-    tagline:
-      "The Innovation Flywheel: curiosity, experimentation, and high agency.",
-    description: null,
-    descriptionParagraphs: [
-      "Most teams aren't stuck because they lack talent. They're stuck because they've optimised for compliance over curiosity. The Innovation Flywheel (curiosity, experimentation, learning, agency) is how the best product teams consistently ship work that matters.",
-      "Nic draws from his experience building 4 companies and working with teams at every scale. He introduces the concept of T-shaped people, selective agency, and why 'action produces information': a principle that separates breakthrough teams from stagnant ones.",
-      "This keynote includes real stories from Nic's entrepreneurial journey, including how AI is reshaping how teams build products, why the Socratic method beats brainstorming, and what a $1.7M-per-person team (Gamma) can teach us about lean innovation.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "The Innovation Flywheel framework for team culture",
-      "How to hire and develop T-shaped people",
-      "Why selective agency beats blind autonomy",
-      "Practical ways to integrate AI into your product workflow",
-      "How to build a culture where action produces information",
-    ],
-    audiences: [
-      "Product and engineering teams",
-      "Innovation departments and R&D groups",
-      "Leadership teams building a culture of experimentation",
-      "Conferences focused on tech, product, or AI",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t3", title: "Innovation", slug: "innovation" },
-      { _id: "t4", title: "AI", slug: "ai" },
-      { _id: "t5", title: "Curiosity", slug: "curiosity" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-  "curiosity-catalyst": {
-    _id: "fallback-3",
-    title: "The Curiosity Catalyst",
-    slug: "curiosity-catalyst",
-    tagline:
-      "Why curiosity is the god particle of innovation, and how to diagnose and cure stagnation.",
-    description: null,
-    descriptionParagraphs: [
-      "Every organisation says they want innovation. Almost none of them invest in what actually drives it: curiosity. Nic's Stagnation Hypothesis is simple. When teams stop being curious, they start dying. Slowly at first, then all at once.",
-      "In this keynote, Nic unpacks the three types of curiosity (epistemic, diversive, and empathetic), explains why most 'innovation programs' are actually wackovation (chaotic activity disguised as progress), and shows how companies like Onfido hired specifically for curiosity to build breakthrough teams.",
-      "This is Nic's signature keynote. The one that makes teams uncomfortable in the best possible way. If your organisation is stuck on the OK Plateau, this is the catalyst that gets you moving again.",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    outcomes: [
-      "The Stagnation Hypothesis: how to diagnose whether your org is stuck",
-      "Three types of curiosity and how to cultivate each",
-      "The difference between innovation and wackovation",
-      "How to build curiosity into hiring, culture, and daily practice",
-      "Why 'curiosity is the god particle of innovation'",
-    ],
-    audiences: [
-      "C-suite and leadership offsites",
-      "Conferences and large-format events",
-      "Innovation and transformation teams",
-      "Any team that feels stuck or stagnant",
-    ],
-    videoEmbed: null,
-    topics: [
-      { _id: "t5", title: "Curiosity", slug: "curiosity" },
-      { _id: "t3", title: "Innovation", slug: "innovation" },
-    ],
-    testimonials: null,
-    seo: null,
-  },
-};

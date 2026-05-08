@@ -1,5 +1,7 @@
 # Updating page content
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 How to change content depending on whether the page is **CMS-driven** (Sanity) or **code-driven** (React/TS in the repo).
 
 ## CMS-driven content (edit in Sanity Studio)

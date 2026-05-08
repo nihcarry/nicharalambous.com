@@ -13,6 +13,7 @@
 # - CLOUDFRONT_DISTRIBUTION_ID
 # - NEXT_PUBLIC_SANITY_PROJECT_ID
 # - NEXT_PUBLIC_SANITY_DATASET (e.g. production)
+# - NTFY_TOPIC_URL (e.g. https://ntfy.sh/your-topic)
 
 name: Build & Deploy
 
@@ -51,6 +52,14 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
           NEXT_PUBLIC_SANITY_API_VERSION: "2026-02-14"
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**/*.[jt]s?(x)') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
 
       - name: Build
         run: npm run build
@@ -100,3 +109,27 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+
+      - name: Notify deploy success
+        if: success()
+        run: |
+          curl -s \
+            -H "Title: nicharalambous.com deployed" \
+            -H "Priority: default" \
+            -H "Tags: white_check_mark" \
+            -d "Commit: ${{ github.sha }}
+          Trigger: ${{ github.event_name }}
+          Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "${{ secrets.NTFY_TOPIC_URL }}" || true
+
+      - name: Notify deploy failure
+        if: failure()
+        run: |
+          curl -s \
+            -H "Title: nicharalambous.com deploy FAILED" \
+            -H "Priority: high" \
+            -H "Tags: x" \
+            -d "Commit: ${{ github.sha }}
+          Trigger: ${{ github.event_name }}
+          Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "${{ secrets.NTFY_TOPIC_URL }}" || true

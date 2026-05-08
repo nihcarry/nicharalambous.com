@@ -1,5 +1,7 @@
 # Deploy
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 Two ways to get the site to production: **CI (recommended)** and **local deploy**. After any successful local deploy, always commit and push so the repo matches production.
 
 ## Two paths

@@ -1,5 +1,7 @@
 # Environment and scripts
 
+> Editing the site, not the code? Read [OPERATING-MANUAL.md](OPERATING-MANUAL.md) instead.
+
 Quick reference for `.env.local` and `package.json` scripts. For full context see [ARCHITECTURE.md](ARCHITECTURE.md), [BUILD.md](BUILD.md), and [CONTENT-BLOG.md](CONTENT-BLOG.md).
 
 ## Environment (`.env.local`)
