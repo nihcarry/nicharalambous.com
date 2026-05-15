@@ -15,7 +15,7 @@ import {
 } from "@/lib/keynotes-data";
 
 const CONTACT_EMAIL = "nic@nharry.com";
-const FORMSUBMIT_URL = `https://formsubmit.co/${CONTACT_EMAIL}`;
+const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 
 /* ---------- Form options ---------- */
 
