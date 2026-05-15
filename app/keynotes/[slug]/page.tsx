@@ -1,17 +1,11 @@
 /**
  * Individual Keynote Page — /keynotes/{slug}
  *
- * Dynamic page for each keynote. Content fetched from Sanity at build time.
- * Falls back to hardcoded defaults if Sanity data is not yet published.
+ * Single-scroll content page with the site's visual identity (patterns,
+ * bold typography) but no slide-deck snapping. Content fetched from
+ * Sanity at build time with hardcoded fallback from lib/keynotes-data.ts.
  *
- * Per SEO strategy:
- * - H1: keynote title
- * - Title tag: "{Keynote Title} | Virtual Keynote by Nic Haralambous"
- * - Sections: tagline, description, outcomes, audiences, testimonials, CTA
- * - Every keynote page links to /speaker and related topic hub
- *
- * JSON-LD: Service + VideoObject (if video embed)
- *
+ * JSON-LD: Service
  * Static params generated at build time — one page per keynote.
  */
 import type { Metadata } from "next";
@@ -22,6 +16,7 @@ import {
   keynoteSlugListQuery,
   type KeynoteData,
 } from "@/lib/sanity/queries";
+import { KEYNOTE_SLIDES, getKeynoteBySlug } from "@/lib/keynotes-data";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
@@ -37,15 +32,61 @@ async function getKeynote(slug: string): Promise<KeynoteData | null> {
     const data = await client.fetch<KeynoteData | null>(keynoteBySlugQuery, {
       slug,
     });
-    return data;
+    if (data) return data;
   } catch {
-    return null;
+    // fall through to hardcoded fallback
   }
+
+  const fallback = getKeynoteBySlug(slug);
+  if (!fallback) return null;
+
+  const descParagraphs = Array.isArray(fallback.description)
+    ? fallback.description
+    : [fallback.description];
+
+  return {
+    _id: `fallback-${slug}`,
+    title: fallback.title,
+    slug: fallback.slug,
+    tagline: fallback.tagline,
+    description: descParagraphs.map((text, i) => ({
+      _type: "block",
+      _key: `p${i}`,
+      style: "normal",
+      children: [{ _type: "span", _key: `s${i}`, text }],
+      markDefs: [],
+    })),
+    deliveryFormat: fallback.deliveryFormat,
+    duration: fallback.duration,
+    audiences: fallback.audiences,
+    outcomes: fallback.keyTakeaways,
+    videoEmbed: null,
+    topics: [],
+    testimonials: null,
+    seo: null,
+  };
 }
 
 async function getKeynotesSlugs(): Promise<{ slug: string }[]> {
-  const data = await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
-  return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
+  let sanitySlugs: { slug: string }[] = [];
+  try {
+    const data =
+      await client.fetch<{ slug: string }[]>(keynoteSlugListQuery);
+    if (data && data.length > 0) sanitySlugs = data;
+  } catch {
+    // Sanity unavailable — hardcoded slugs will cover us
+  }
+
+  const hardcodedSlugs = KEYNOTE_SLIDES.map((k) => ({ slug: k.slug }));
+  const seen = new Set<string>();
+  const merged: { slug: string }[] = [];
+  for (const entry of [...hardcodedSlugs, ...sanitySlugs]) {
+    if (!seen.has(entry.slug)) {
+      seen.add(entry.slug);
+      merged.push(entry);
+    }
+  }
+  return merged;
 }
 
 /* ---------- Static params ---------- */
@@ -92,7 +133,6 @@ export default async function KeynotePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
   const keynote = await getKeynote(slug);
 
   if (!keynote) {
@@ -101,9 +141,15 @@ export default async function KeynotePage({
 
   const hasDescription =
     keynote.description && keynote.description.length > 0;
+  const hasOutcomes = keynote.outcomes && keynote.outcomes.length > 0;
+  const hasAudiences = keynote.audiences && keynote.audiences.length > 0;
+  const hasTestimonials =
+    keynote.testimonials && keynote.testimonials.length > 0;
+  const hasTopics = keynote.topics && keynote.topics.length > 0;
+  const hasVideo = !!keynote.videoEmbed;
 
   return (
-    <>
+    <div className="page-bg bg-spotlight-pattern">
       {/* Structured data */}
       <JsonLd
         data={serviceJsonLd({
@@ -114,17 +160,18 @@ export default async function KeynotePage({
       />
 
       {/* Hero */}
-      <Section width="content">
-        <p className="heading-display text-accent-600">
+      <Section width="content" className="text-center">
+        <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
           Virtual Keynote
         </p>
-        <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
+        <h1 className="heading-display-stroke-sm mt-3 text-4xl text-brand-900 sm:text-5xl md:text-6xl">
           {keynote.title}
         </h1>
-        <p className="mt-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-3 h-1 w-16 bg-accent-600" />
+        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-brand-600">
           {keynote.tagline}
         </p>
-        <div className="mt-6 flex flex-wrap gap-4 text-sm text-brand-500">
+        <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-brand-400">
           <span>
             Format:{" "}
             {keynote.deliveryFormat === "virtual"
@@ -137,61 +184,70 @@ export default async function KeynotePage({
           </span>
           <span>Duration: {keynote.duration || "45-60 minutes"}</span>
         </div>
+        <div className="mt-6">
+          <CTAButton href="/contact">Book This Keynote</CTAButton>
+        </div>
       </Section>
 
-      {/* Description — Portable Text from CMS */}
+      {/* Description */}
       {hasDescription && (
-        <Section width="content" className="bg-brand-50">
+        <Section width="content">
           <PortableText value={keynote.description} />
         </Section>
       )}
 
-      {/* What Attendees Leave With */}
-      {keynote.outcomes && keynote.outcomes.length > 0 && (
-        <Section width="content">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            What Your Team Will Leave With
-          </h2>
-          <ul className="mt-6 space-y-3">
-            {keynote.outcomes.map((outcome, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center bg-accent-100 text-xs font-bold text-accent-600">
-                  {i + 1}
-                </span>
-                <span className="text-brand-700">{outcome}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
+      {/* Outcomes + Audiences side by side */}
+      {(hasOutcomes || hasAudiences) && (
+        <Section width="wide">
+          <div className="grid gap-12 md:grid-cols-2">
+            {hasOutcomes && (
+              <div>
+                <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+                  What Your Team Will Leave With
+                </h2>
+                <ul className="mt-6 space-y-4">
+                  {keynote.outcomes.map((outcome, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center bg-accent-600 text-xs font-bold text-white">
+                        {i + 1}
+                      </span>
+                      <span className="text-brand-700">{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-      {/* Who Is This For */}
-      {keynote.audiences && keynote.audiences.length > 0 && (
-        <Section width="content" className="bg-brand-50">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            Who Is This Keynote For?
-          </h2>
-          <ul className="mt-6 space-y-2">
-            {keynote.audiences.map((audience, i) => (
-              <li
-                key={i}
-                className="text-brand-700 before:mr-2 before:content-['→']"
-              >
-                {audience}
-              </li>
-            ))}
-          </ul>
+            {hasAudiences && (
+              <div>
+                <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+                  Who Is This Keynote For?
+                </h2>
+                <ul className="mt-6 space-y-3">
+                  {keynote.audiences.map((audience, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-brand-700"
+                    >
+                      <span className="mt-1.5 block h-2.5 w-2.5 shrink-0 bg-accent-600" />
+                      {audience}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </Section>
       )}
 
       {/* Testimonials */}
-      {keynote.testimonials && keynote.testimonials.length > 0 && (
+      {hasTestimonials && (
         <Section width="wide">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
+          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             What People Say
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {keynote.testimonials.map((t, i) => (
+            {keynote.testimonials!.map((t, i) => (
               <blockquote
                 key={t._id}
                 className="flex flex-col card-brutalist p-6"
@@ -215,10 +271,30 @@ export default async function KeynotePage({
         </Section>
       )}
 
-      {/* Related Topics — links to topic hubs per internal linking strategy */}
-      {keynote.topics && keynote.topics.length > 0 && (
+      {/* Video embed */}
+      {hasVideo && (
         <Section width="content">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
+          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+            Watch a Preview
+          </h2>
+          <div className="mt-6 aspect-video overflow-hidden border-4 border-accent-600">
+            <iframe
+              src={
+                getVideoEmbedUrl(keynote.videoEmbed!) || keynote.videoEmbed!
+              }
+              title={`${keynote.title} preview`}
+              className="h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </Section>
+      )}
+
+      {/* Related Topics */}
+      {hasTopics && (
+        <Section width="content">
+          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Related Topics
           </h2>
           <div className="mt-4 flex flex-wrap gap-3">
@@ -239,27 +315,7 @@ export default async function KeynotePage({
         </Section>
       )}
 
-      {/* Video embed if available */}
-      {keynote.videoEmbed && (
-        <Section width="content">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            Watch a Preview
-          </h2>
-          <div className="mt-6 aspect-video overflow-hidden">
-            <iframe
-              src={
-                getVideoEmbedUrl(keynote.videoEmbed) || keynote.videoEmbed
-              }
-              title={`${keynote.title} preview`}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </Section>
-      )}
-
-      {/* CTA — links to /contact and /speaker */}
+      {/* CTA */}
       <FinalCta
         heading="Book This Keynote"
         description="Virtual delivery worldwide. Customized for your audience."
@@ -268,13 +324,12 @@ export default async function KeynotePage({
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"
       />
-    </>
+    </div>
   );
 }
 
 /* ---------- Utilities ---------- */
 
-/** Convert a YouTube or Vimeo URL to an embeddable URL */
 function getVideoEmbedUrl(url: string): string | null {
   const ytMatch = url.match(
     /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
@@ -286,4 +341,3 @@ function getVideoEmbedUrl(url: string): string | null {
 
   return null;
 }
-

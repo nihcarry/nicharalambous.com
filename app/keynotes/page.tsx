@@ -14,20 +14,7 @@ import { SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 
-/* ---------- Types ---------- */
-
-interface KeynoteSlide {
-  slug: string;
-  title: string;
-  tagline: string;
-  description: string | string[];
-  keyTakeaways: string[];
-  keyTakeawaysLabel?: string; // default "Key Takeaways"
-  closingLine?: string;
-  deliveryFormat: "virtual" | "hybrid" | "in-person";
-  duration: string;
-  audiences: string[];
-}
+import { KEYNOTE_SLIDES, type KeynoteSlideData } from "@/lib/keynotes-data";
 
 /* ---------- Metadata ---------- */
 
@@ -40,7 +27,7 @@ export const metadata: Metadata = {
 
 /* ---------- Helpers ---------- */
 
-function formatLabel(keynote: KeynoteSlide): string {
+function formatLabel(keynote: KeynoteSlideData): string {
   if (keynote.deliveryFormat === "virtual") return "Virtual";
   if (keynote.deliveryFormat === "hybrid") return "Hybrid";
   if (keynote.deliveryFormat === "in-person") return "In-Person";
@@ -238,70 +225,3 @@ export default function KeynotesPage() {
   );
 }
 
-/* ---------- Keynote slides content ---------- */
-
-const KEYNOTE_SLIDES: KeynoteSlide[] = [
-  {
-    slug: "connected-not-consumed",
-    title: "Connected, Not Consumed",
-    tagline: "Balancing Digital Life and Mental Health at Work",
-    description:
-      "Modern work rewards constant availability, fast replies, and full calendars while quietly destroying focus, decision quality, and health. Most teams aren't failing from lack of effort. They're drowning in reaction. This talk helps leaders and teams regain control of their attention without disconnecting from their work or the internet.",
-    keyTakeaways: [
-      "A clear way to decide what actually matters each day",
-      "A practical system to protect focus inside noisy organisations",
-      "A shared language for agency, ownership, and meaningful work",
-      "The DIAL framework: Decide, Intend, Act, Loop back",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    audiences: ["Corporate teams", "Leadership groups", "Remote/hybrid teams"],
-  },
-  {
-    slug: "innovation-starts-at-home",
-    title: "Innovation Starts at Home",
-    tagline: "How to build teams that produce breakthroughs",
-    description:
-      "Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure. This talk shows leaders how to build entrepreneurial teams that learn fast, act with agency, and turn failure into progress especially in the AI era.",
-    keyTakeaways: [
-      "Reduce 'progress tax': meetings, process, work-around-work",
-      "Build agency and initiative without chaos",
-      "Create psychological safety with high standards",
-      "The innovation flywheel: Curiosity, Action, Information, Loop",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    audiences: [
-      "Product teams",
-      "Engineering leaders",
-      "Innovation departments",
-    ],
-  },
-  {
-    slug: "creating-a-curious-company",
-    title: "Creating a Curious Company",
-    tagline: "Why innovation stalls and how curiosity restarts it",
-    description: [
-      "Most organisations don't have an innovation problem.",
-      "They have a curiosity problem.",
-      "In this keynote, Nic challenges the myths of \"innovation theatre\" and reactive change, and shows why real progress doesn't come from hackathons, buzzwords, or panic-driven ideas but from deliberately designing curiosity into how teams think, work, and experiment.",
-      "Through powerful stories, research-backed insights, and live audience interaction, this talk helps leaders and teams break out of stagnation by replacing fear, efficiency obsession, and short-term thinking with curiosity, experimentation, and long-term perspective.",
-    ],
-    keyTakeaways: [
-      "A clear understanding of why innovation stalls inside successful companies",
-      "Practical ways to turn curiosity into a daily leadership and team practice",
-      "Tools to move beyond \"innovation theatre\" into real, meaningful progress",
-      "A simple framework to help teams experiment, learn, and adapt without fear",
-    ],
-    keyTakeawaysLabel: "Audiences leave with:",
-    closingLine:
-      "Designed for remote teams. Highly interactive. Built to spark action, not just ideas.",
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    audiences: [
-      "Conferences",
-      "C-suite retreats",
-      "Innovation teams",
-    ],
-  },
-];

@@ -14,6 +14,7 @@ import {
   booksListQuery,
   type BookListItem,
 } from "@/lib/sanity/queries";
+import { FALLBACK_BOOKS } from "@/lib/books-data";
 import { CTAButton } from "@/components/cta-button";
 import { Slide } from "@/components/slide";
 import { SlideDeck } from "@/components/slide-deck";
@@ -287,59 +288,3 @@ export default async function BooksPage() {
   );
 }
 
-/* ---------- Fallback data ---------- */
-
-const FALLBACK_BOOKS: BookListItem[] = [
-  {
-    _id: "fb-1",
-    title: "Do. Fail. Learn. Repeat.",
-    slug: "do-fail-learn-repeat",
-    subtitle: "The Entrepreneurship Memoir",
-    shortSummary:
-      "Nic's personal memoir of entrepreneurship: the real version, not the highlight reel. Failures, impostor syndrome, near-death startup experiences, and the resilience required to keep going.",
-    coverImage: null,
-    publishedYear: 2020,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/B084DHQM3L" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-      { _id: "t2", title: "Failure", slug: "failure" },
-    ],
-    seo: null,
-  },
-  {
-    _id: "fb-2",
-    title: "How to Start a Side Hustle",
-    slug: "how-to-start-a-side-hustle",
-    subtitle: "Build a Business Without Quitting Your Day Job",
-    shortSummary:
-      "A comprehensive, no-fluff guide to building a business alongside your day job. Covers ideation, planning, culture, leadership, and finding your first customers.",
-    coverImage: null,
-    publishedYear: 2019,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/1776093380" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-    ],
-    seo: null,
-  },
-  {
-    _id: "fb-3",
-    title: "The Business Builder's Toolkit",
-    slug: "the-business-builders-toolkit",
-    subtitle: "Frameworks for Modern Entrepreneurs",
-    shortSummary:
-      "Practical frameworks and hard-earned lessons for modern entrepreneurs. The tools you need to build, scale, and survive the journey.",
-    coverImage: null,
-    publishedYear: 2021,
-    buyLinks: [
-      { label: "Amazon", url: "https://www.amazon.com/dp/B09EXAMPLE" },
-    ],
-    relatedTopics: [
-      { _id: "t1", title: "Entrepreneurship", slug: "entrepreneurship" },
-    ],
-    seo: null,
-  },
-];

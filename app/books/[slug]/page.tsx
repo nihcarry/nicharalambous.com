@@ -1,15 +1,9 @@
 /**
  * Individual Book Page — /books/{slug}
  *
- * Dynamic page for each of Nic's books. Content fetched from Sanity at
- * build time. Falls back to hardcoded defaults if Sanity has no data.
- *
- * Sections:
- * 1. Hero with title, subtitle, cover image
- * 2. Description (Portable Text from CMS)
- * 3. Buy links
- * 4. Related topics
- * 5. CTA → /speaker
+ * Single-scroll content page with the site's visual identity (patterns,
+ * bold typography) but no slide-deck snapping. Content fetched from
+ * Sanity at build time with hardcoded fallback from lib/books-data.ts.
  *
  * JSON-LD: Book
  * Static params generated at build time — one page per book.
@@ -23,6 +17,11 @@ import {
   bookSlugListQuery,
   type BookData,
 } from "@/lib/sanity/queries";
+import {
+  FALLBACK_BOOKS,
+  getFallbackBookBySlug,
+  fallbackBookToBookData,
+} from "@/lib/books-data";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
@@ -43,15 +42,35 @@ const STATIC_COVERS: Record<string, string> = {
 async function getBook(slug: string): Promise<BookData | null> {
   try {
     const data = await client.fetch<BookData | null>(bookBySlugQuery, { slug });
-    return data;
+    if (data) return data;
   } catch {
-    return null;
+    // fall through to hardcoded fallback
   }
+
+  const fallback = getFallbackBookBySlug(slug);
+  if (!fallback) return null;
+  return fallbackBookToBookData(fallback);
 }
 
 async function getBookSlugs(): Promise<{ slug: string }[]> {
-  const data = await client.fetch<{ slug: string }[]>(bookSlugListQuery);
-  return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
+  let sanitySlugs: { slug: string }[] = [];
+  try {
+    const data = await client.fetch<{ slug: string }[]>(bookSlugListQuery);
+    if (data && data.length > 0) sanitySlugs = data;
+  } catch {
+    // Sanity unavailable — hardcoded slugs will cover us
+  }
+
+  const hardcodedSlugs = FALLBACK_BOOKS.map((b) => ({ slug: b.slug }));
+  const seen = new Set<string>();
+  const merged: { slug: string }[] = [];
+  for (const entry of [...hardcodedSlugs, ...sanitySlugs]) {
+    if (!seen.has(entry.slug)) {
+      seen.add(entry.slug);
+      merged.push(entry);
+    }
+  }
+  return merged;
 }
 
 /* ---------- Static params ---------- */
@@ -104,15 +123,16 @@ export default async function BookPage({
     notFound();
   }
 
-  const hasDescription =
-    book.description && book.description.length > 0;
+  const hasDescription = book.description && book.description.length > 0;
 
   const coverUrl = book.coverImage?.asset
     ? urlFor(book.coverImage).width(600).auto("format").url()
     : STATIC_COVERS[slug];
 
+  const buyUrl = book.buyLinks?.[0]?.url;
+
   return (
-    <div className="page-bg bg-bookmark-pattern">
+    <div className="page-bg bg-openbook-pattern">
       {/* Structured data */}
       <JsonLd
         data={bookJsonLd({
@@ -126,7 +146,7 @@ export default async function BookPage({
       />
 
       {/* Hero */}
-      <Section width="content" className="!pb-8 md:!pb-10">
+      <Section width="content">
         <div className="flex flex-col gap-8 md:flex-row md:items-start">
           {/* Cover image */}
           {coverUrl && (
@@ -135,16 +155,16 @@ export default async function BookPage({
               <img
                 src={coverUrl}
                 alt={`${book.title} cover`}
-                className="w-full"
+                className="w-full border-4 border-brand-200"
               />
             </div>
           )}
 
           <div className="flex-1">
-            <p className="heading-display text-accent-600">
+            <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
               Book
             </p>
-            <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
+            <h1 className="heading-display-stroke-sm mt-2 text-4xl text-brand-900 sm:text-5xl">
               {book.title}
             </h1>
             {book.subtitle && (
@@ -152,41 +172,43 @@ export default async function BookPage({
             )}
             <div className="mt-4 flex flex-wrap gap-4 text-sm text-brand-400">
               <span>By Nic Haralambous</span>
-              {book.publishedYear && <span>Published {book.publishedYear}</span>}
+              {book.publishedYear && (
+                <span>Published {book.publishedYear}</span>
+              )}
               {book.isbn && <span>ISBN: {book.isbn}</span>}
             </div>
 
             {/* Buy links */}
-            {book.buyLinks && book.buyLinks.length > 0 && (
-              <div className="mt-6 flex flex-wrap gap-3">
-                {book.buyLinks.map((link) => (
-                  <CTAButton
-                    key={link.url}
-                    href={link.url}
-                    external
-                    className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-                  >
-                    Buy Now
-                  </CTAButton>
-                ))}
+            {buyUrl && (
+              <div className="mt-6">
+                <CTAButton
+                  href={buyUrl}
+                  external
+                >
+                  Buy Now
+                </CTAButton>
               </div>
             )}
           </div>
         </div>
       </Section>
 
-      {/* Description — Portable Text from CMS */}
-      <Section width="content" className="!pt-0 !pb-8 md:!pb-10">
-        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">About This Book</h2>
-        {hasDescription && (
-          <PortableText value={book.description} className="mt-6" />
-        )}
-      </Section>
+      {/* Description */}
+      {hasDescription && (
+        <Section width="content">
+          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+            About This Book
+          </h2>
+          <PortableText value={book.description} className="mt-4" />
+        </Section>
+      )}
 
       {/* Related topics */}
       {book.relatedTopics && book.relatedTopics.length > 0 && (
-        <Section width="content" className="!pt-0 !pb-8 md:!pb-10">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Topics</h2>
+        <Section width="content">
+          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+            Related Topics
+          </h2>
           <div className="mt-4 flex flex-wrap gap-3">
             {book.relatedTopics.map((topic) => (
               <a
@@ -213,4 +235,3 @@ export default async function BookPage({
     </div>
   );
 }
-
