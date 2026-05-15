@@ -17,6 +17,13 @@ import {
   type KeynoteData,
 } from "@/lib/sanity/queries";
 import { KEYNOTE_SLIDES, getKeynoteBySlug } from "@/lib/keynotes-data";
+
+/**
+ * Keynotes with a dedicated `app/keynotes/{slug}/page.tsx` must be excluded
+ * from `generateStaticParams` here. Otherwise `next build` exports the same
+ * path twice and the [slug] template can overwrite the bespoke landing in `out/`.
+ */
+const SLUGS_WITH_DEDICATED_PAGE = new Set(["escaping-the-apathy-trap"]);
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
@@ -93,7 +100,9 @@ async function getKeynotesSlugs(): Promise<{ slug: string }[]> {
 
 export async function generateStaticParams() {
   const slugs = await getKeynotesSlugs();
-  return slugs.map(({ slug }) => ({ slug }));
+  return slugs
+    .filter(({ slug }) => !SLUGS_WITH_DEDICATED_PAGE.has(slug))
+    .map(({ slug }) => ({ slug }));
 }
 
 /* ---------- Metadata ---------- */
