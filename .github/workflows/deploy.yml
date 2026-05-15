@@ -99,9 +99,11 @@ jobs:
 
       - name: Deploy to S3
         run: |
+          # No --size-only: hashed chunks can share byte-size across builds
+          # while containing different code. --size-only skips those uploads,
+          # leaving HTML pointing at chunks that don't exist on S3 → 403s.
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
-            --size-only \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
             --exclude "sitemap*.xml" \
@@ -109,12 +111,8 @@ jobs:
             --exclude "rss.xml" \
             --exclude "llms.txt"
 
-          # HTML and dynamic files get short cache (invalidated on deploy).
-          # --delete: remove from S3 any HTML/sitemap/robots/rss/llms that no longer
-          # exist in out/ (e.g. deleted blog posts), so removed routes stop being served.
-          # Do NOT use --size-only here: HTML files can be the same byte size
-          # across builds while referencing different JS chunk hashes. Skipping
-          # the upload causes 403 ChunkLoadErrors in production.
+          # HTML gets short cache, invalidated on deploy via CloudFront.
+          # --delete removes HTML for deleted routes (e.g. removed blog posts).
           aws s3 sync out/ s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
             --exclude "*" \
