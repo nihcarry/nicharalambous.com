@@ -16,7 +16,11 @@ import {
   keynoteSlugListQuery,
   type KeynoteData,
 } from "@/lib/sanity/queries";
-import { KEYNOTE_SLIDES, getKeynoteBySlug } from "@/lib/keynotes-data";
+import {
+  KEYNOTE_SLIDES,
+  getKeynoteBySlug,
+  getKeynoteBookingUrl,
+} from "@/lib/keynotes-data";
 
 /**
  * Keynotes with a dedicated `app/keynotes/{slug}/page.tsx` must be excluded
@@ -194,7 +198,9 @@ export default async function KeynotePage({
           <span>Duration: {keynote.duration || "45-60 minutes"}</span>
         </div>
         <div className="mt-6">
-          <CTAButton href="/contact">Book This Keynote</CTAButton>
+          <CTAButton href={getKeynoteBookingUrl(slug)}>
+            Book This Keynote
+          </CTAButton>
         </div>
       </Section>
 
@@ -328,7 +334,7 @@ export default async function KeynotePage({
       <FinalCta
         heading="Book This Keynote"
         description="Virtual delivery worldwide. Customized for your audience."
-        primaryHref="/contact"
+        primaryHref={getKeynoteBookingUrl(slug)}
         primaryLabel="Enquire Now"
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"

@@ -136,3 +136,14 @@ export function getKeynoteBySlug(
 ): KeynoteSlideData | undefined {
   return KEYNOTE_SLIDES.find((k) => k.slug === slug);
 }
+
+/** Keynote titles for the contact form dropdown (plus a catch-all). */
+export const KEYNOTE_BOOKING_OPTIONS = [
+  ...KEYNOTE_SLIDES.map((k) => k.title),
+  "Custom / Not Sure Yet",
+] as const;
+
+/** Contact page URL with the keynote pre-selected via ?keynote=slug */
+export function getKeynoteBookingUrl(slug: string): string {
+  return `/contact?keynote=${encodeURIComponent(slug)}`;
+}

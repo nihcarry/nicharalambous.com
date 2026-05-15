@@ -15,7 +15,10 @@ import { FinalCta } from "@/components/final-cta";
 import { IncredibleClients } from "@/components/incredible-clients";
 import { JsonLd } from "@/components/json-ld";
 import { generatePageMetadata, serviceJsonLd } from "@/lib/metadata";
+import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
 import { tilt } from "@/lib/tilt";
+
+const KEYNOTE_SLUG = "escaping-the-apathy-trap";
 
 /* ---------- Metadata ---------- */
 
@@ -137,7 +140,9 @@ export default function EscapingTheApathyTrapPage() {
         </p>
 
         <div className="mt-8">
-          <CTAButton href="/contact">Book This Keynote</CTAButton>
+          <CTAButton href={getKeynoteBookingUrl(KEYNOTE_SLUG)}>
+            Book This Keynote
+          </CTAButton>
         </div>
       </Section>
 
@@ -407,7 +412,7 @@ export default function EscapingTheApathyTrapPage() {
       <FinalCta
         heading="Escape the Apathy Trap"
         description="Bring this keynote to your organisation. Virtual delivery worldwide."
-        primaryHref="/contact"
+        primaryHref={getKeynoteBookingUrl(KEYNOTE_SLUG)}
         primaryLabel="Book This Keynote"
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"

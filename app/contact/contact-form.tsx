@@ -6,8 +6,13 @@
  */
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { trackFormSubmission } from "@/lib/analytics";
+import {
+  KEYNOTE_BOOKING_OPTIONS,
+  getKeynoteBySlug,
+} from "@/lib/keynotes-data";
 
 const CONTACT_EMAIL = "nic@nharry.com";
 const FORMSUBMIT_URL = `https://formsubmit.co/${CONTACT_EMAIL}`;
@@ -20,13 +25,6 @@ const EVENT_TYPES = [
   "Team Offsite",
   "Webinar",
   "Other",
-];
-
-const KEYNOTE_TOPICS = [
-  "Reclaiming Focus: The DIAL Framework",
-  "How to Build Breakthrough Product Teams",
-  "The Curiosity Catalyst",
-  "Custom / Not Sure Yet",
 ];
 
 const BUDGET_RANGES = [
@@ -44,10 +42,24 @@ const inputStyles =
 
 /* ---------- Component ---------- */
 
-export function ContactForm() {
+function ContactFormFields() {
+  const searchParams = useSearchParams();
+  const preselectedKeynote = useMemo(() => {
+    const slug = searchParams.get("keynote");
+    if (!slug) return "";
+    return getKeynoteBySlug(slug)?.title ?? "";
+  }, [searchParams]);
+
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [keynoteTopic, setKeynoteTopic] = useState("");
+
+  useEffect(() => {
+    if (preselectedKeynote) {
+      setKeynoteTopic(preselectedKeynote);
+    }
+  }, [preselectedKeynote]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -178,9 +190,15 @@ export function ContactForm() {
           <label htmlFor="keynoteTopic" className="block text-sm font-medium text-brand-700">
             Preferred Keynote Topic
           </label>
-          <select id="keynoteTopic" name="keynoteTopic" className={inputStyles}>
+          <select
+            id="keynoteTopic"
+            name="keynoteTopic"
+            className={inputStyles}
+            value={keynoteTopic}
+            onChange={(e) => setKeynoteTopic(e.target.value)}
+          >
             <option value="">Select a keynote</option>
-            {KEYNOTE_TOPICS.map((topic) => (
+            {KEYNOTE_BOOKING_OPTIONS.map((topic) => (
               <option key={topic} value={topic}>
                 {topic}
               </option>
@@ -257,5 +275,21 @@ export function ContactForm() {
         {submitting ? "Sending..." : "Send Inquiry"}
       </button>
     </form>
+  );
+}
+
+function ContactFormFallback() {
+  return (
+    <form className="mt-12 space-y-6" aria-busy="true" aria-label="Loading booking form">
+      <div className="h-48 animate-pulse bg-brand-100" />
+    </form>
+  );
+}
+
+export function ContactForm() {
+  return (
+    <Suspense fallback={<ContactFormFallback />}>
+      <ContactFormFields />
+    </Suspense>
   );
 }
