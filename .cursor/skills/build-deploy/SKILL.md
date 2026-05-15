@@ -10,7 +10,7 @@ description: Builds and deploys the nicharalambous.com static site to S3/CloudFr
 Static Next.js site (`output: "export"`) deployed to S3 + CloudFront. All content fetched from Sanity CMS at build time. No server runtime.
 
 ```
-npm run build → out/ → S3 sync → CloudFront invalidation → verify live → commit & push (when you have code changes; see Step 7)
+npm run build → out/ → verify → S3 sync → CF invalidate → verify live → commit & push → monitor CI
 ```
 
 ## Prerequisites
@@ -25,7 +25,7 @@ Before building, verify:
 
 ### Step 1: Clean build
 
-Always delete `.next` and `out` before building to avoid stale cache issues:
+Always delete `.next` and `out` before building. This is critical — a stale `.next/cache/fetch-cache` contains cached Sanity API responses and will cause new/updated posts to be silently skipped.
 
 ```bash
 cd /Users/nicharry/Projects/nicharalambous.com
@@ -35,7 +35,7 @@ npm run build
 
 **Expected output:**
 - "Compiled successfully"
-- "Generating static pages (N/N)" — should include all blog posts (178+ published)
+- "Generating static pages (N/N)" — should include all blog posts (170+ published)
 - "Exporting (2/2)"
 - `next-sitemap` generation at the end
 - Exit code 0
@@ -46,22 +46,24 @@ npm run build
 
 ### Step 2: Verify build output
 
-Before deploying, confirm the build produced real content, not error shells:
+Before deploying, confirm the build produced real content, not error shells. **Always verify both a known post AND the specific post you're deploying (if applicable).**
 
 ```bash
+# Page count — must be 170+ blog HTML files
+ls out/blog/*.html | wc -l
+
+# Known post check
 head -c 150 out/blog/the-brutality-of-burnout.html
+wc -c out/blog/the-brutality-of-burnout.html  # Should be 80KB+, not 16KB
+
+# If deploying a specific new/changed post, verify it exists and has content:
+# head -c 150 out/blog/<your-new-slug>.html
+# wc -c out/blog/<your-new-slug>.html
 ```
 
 **Must see:** `<html lang="en"` — this means real content.
 **Bad sign:** `<html id="__next_error__">` — this means data fetching failed during build. Do NOT deploy. See Troubleshooting below.
-
-Also verify a few key metrics:
-
-```bash
-wc -c out/blog/the-brutality-of-burnout.html  # Should be 80KB+, not 16KB
-grep -c 'lang="en"' out/blog/the-brutality-of-burnout.html  # Should be 1
-grep -c 'lang="en"' out/blog.html  # Should be 1
-```
+**Bad sign:** Page count drops below 170 — Sanity data is incomplete. Do NOT deploy.
 
 ### Step 3: Deploy to S3
 
@@ -84,9 +86,11 @@ $AWS s3 sync out/ s3://nicharalambous-com-site \
 # Phase 2: HTML + dynamic files — short cache, revalidated on deploy.
 # --delete removes from S3 any HTML/sitemap/robots/rss/llms no longer in out/
 # (e.g. deleted blog posts), so removed routes stop being served.
+# Do NOT use --size-only: HTML can be the same byte size across builds while
+# referencing different JS chunk hashes. Skipping the upload causes
+# 403 ChunkLoadErrors in production.
 $AWS s3 sync out/ s3://nicharalambous-com-site \
   --delete \
-  --size-only \
   --exclude "*" \
   --include "*.html" \
   --include "sitemap*.xml" \
@@ -96,14 +100,18 @@ $AWS s3 sync out/ s3://nicharalambous-com-site \
   --cache-control "public, max-age=3600, must-revalidate"
 ```
 
-**CRITICAL: Always use `--size-only`.** Without it, `s3 sync` compares timestamps. If a CI build deployed more recently than your local build, sync will skip your files even though they're different. `--size-only` compares file sizes instead, which catches content changes reliably.
+**Phase 1 uses `--size-only`** because assets are content-hashed (different content = different filename). Phase 2 does **NOT** use `--size-only` because HTML files can change content without changing size (e.g. different JS chunk references). This matches the CI workflow.
 
 ### Step 4: Verify S3 upload
 
-Confirm S3 has the correct files before invalidating CloudFront:
+Confirm S3 has the correct files. **If deploying a new post, verify both .html and .txt exist.**
 
 ```bash
 $AWS s3api head-object --bucket nicharalambous-com-site --key blog/the-brutality-of-burnout.html | grep ContentLength
+
+# For a new post:
+# $AWS s3 ls s3://nicharalambous-com-site/blog/ | grep <your-slug>
+# Should show BOTH .html and .txt files
 ```
 
 Should match the local file size (80KB+, not 16KB).
@@ -135,13 +143,16 @@ echo "Title: $(echo "$HTML" | grep -oE '<h1[^>]*>[^<]+</h1>' | head -1 | sed 's/
 
 HTML=$(curl -s https://d18g1r3g4snekl.cloudfront.net/blog.html)
 echo "Blog posts: $(echo "$HTML" | grep -oE '/blog/[a-z0-9][a-z0-9-]+' | grep -v '/_next' | sort -u | wc -l | tr -d ' ')"
+
+# For a new post, also verify it returns 200:
+# curl -sI https://www.nicharalambous.com/blog/<your-slug> | head -3
 ```
 
 If live content is still wrong after invalidation completes, a CI/CD run may have overwritten your deploy. See "CI/CD Stomping" below.
 
 ### Step 7: Commit and push (always run after Steps 1–6)
 
-**Always run this step** after a successful local deploy (Steps 1–6 done, live site verified). Check `git status`; if there are uncommitted changes, commit and push so the repo matches production. If there are no changes (e.g. you only changed Sanity content and had no code changes), there is nothing to push — that’s the only case to skip.
+**Always run this step** after a successful local deploy (Steps 1–6 done, live site verified). Check `git status`; if there are uncommitted changes, commit and push so the repo matches production. If there are no changes (e.g. you only changed Sanity content and had no code changes), there is nothing to push — that's the only case to skip.
 
 **Why:** After a local deploy, production has your changes but `main` may not. If you skip this step when you do have changes, the next CI run (e.g. from a Sanity webhook) will deploy from the old `main` and overwrite what you just deployed.
 
@@ -154,6 +165,27 @@ git push origin main
 
 **If push fails:** Retry until it succeeds. Do not leave production ahead of the repo — that is when CI stomping happens.
 
+### Step 8: Monitor CI run after push (CRITICAL)
+
+**Pushing to `main` triggers a CI rebuild and deploy.** Even with the fetch-cache purge in CI, always confirm the CI run doesn't break the page you just deployed.
+
+```bash
+# Wait ~3 minutes for CI to finish, then check:
+curl -s "https://api.github.com/repos/nihcarry/nicharalambous.com/actions/runs?per_page=3" | python3 -c "import json,sys;[print(f'{r[\"id\"]} {r[\"status\"]:12} {r[\"conclusion\"] or \"\":12} sha:{r[\"head_sha\"][:8]}') for r in json.load(sys.stdin).get('workflow_runs',[])[:3]]"
+
+# Once CI shows "completed success", verify the new page survived:
+# curl -sI https://www.nicharalambous.com/blog/<your-slug> | head -3
+# Must return HTTP/2 200
+```
+
+**If the page returns 403 after CI:** CI's build didn't produce the page (see Troubleshooting). Re-upload immediately:
+```bash
+$AWS s3 cp out/blog/<slug>.html s3://nicharalambous-com-site/blog/<slug>.html --content-type "text/html" --cache-control "public, max-age=3600, must-revalidate"
+$AWS s3 cp out/blog/<slug>.txt s3://nicharalambous-com-site/blog/<slug>.txt --cache-control "public, max-age=31536000, immutable"
+$AWS cloudfront create-invalidation --distribution-id E1ACQY3898IZF9 --paths "/*"
+```
+Then investigate why CI skipped the page.
+
 ## Automated Deploy (CI/CD)
 
 Pushing to `main` triggers GitHub Actions (`.github/workflows/deploy.yml`) which runs the same build + deploy. This is the preferred path for routine changes:
@@ -163,6 +195,11 @@ git add -A && git commit -m "your message" && git push origin main
 ```
 
 The CI pipeline also triggers on Sanity content updates via `repository_dispatch` webhook.
+
+**CI safeguards (built into deploy.yml):**
+- Purges `.next/cache/fetch-cache` before build to ensure fresh Sanity data
+- Verifies page count is 170+ before deploying (fails the run if below)
+- Spot-checks a known post for `__next_error__` shells
 
 ## Troubleshooting
 
@@ -174,6 +211,17 @@ The CI pipeline also triggers on Sanity content updates via `repository_dispatch
 
 **Fix:** `lib/sanity/client.ts` MUST use `cache: "force-cache"`. Never change this to `"no-store"` or `"no-cache"`.
 
+### New posts get 403 after CI deploy
+
+**Symptom:** A newly created Sanity post works on local deploy but returns 403 after CI runs.
+
+**Root cause:** Next.js caches Sanity API responses in `.next/cache/fetch-cache`. The CI workflow restores this cache from prior runs. If the cache predates the new post, `generateStaticParams` returns a stale slug list that doesn't include the new post. The page isn't built, and `s3 sync --delete` removes it from S3. S3 returns 403 for missing objects.
+
+**Fix (already in place):** The CI workflow purges `.next/cache/fetch-cache` before every build. If this somehow recurs:
+1. Verify Sanity CDN sees the post: query `*[slug.current == "<slug>" && contentStatus == "published"]` against both `api.sanity.io` and `apicdn.sanity.io`
+2. Check the CI build log page count — if it's lower than expected, the fetch cache purge may not have worked
+3. Re-upload the HTML/TXT to S3 immediately (see Step 8 emergency commands)
+
 ### CI/CD stomping local deploys
 
 **Symptom:** You deploy locally, verify it works, but minutes later the site reverts to broken content.
@@ -184,6 +232,7 @@ The CI pipeline also triggers on Sanity content updates via `repository_dispatch
 1. Check for active runs: `curl -s "https://api.github.com/repos/nihcarry/nicharalambous.com/actions/runs?per_page=5" | python3 -c "import json,sys;[print(f'{r[\"id\"]} {r[\"status\"]:12} {r[\"event\"]:25} sha:{r[\"head_sha\"][:8]}') for r in json.load(sys.stdin).get('workflow_runs',[])[:5]]"`
 2. If old-SHA runs are in progress/queued, cancel them via GitHub API or the Actions UI
 3. Ensure your fix is pushed to `main` before deploying — CI runs check out HEAD of main
+4. **Always do Step 8** — monitor the CI run after push to confirm the new page survived
 
 ### Bulk Sanity imports trigger webhook storms
 
@@ -200,9 +249,7 @@ The CI pipeline also triggers on Sanity content updates via `repository_dispatch
 
 **Symptom:** Local build has correct content but S3 still has old files after sync.
 
-**Root cause:** `s3 sync` without `--size-only` uses timestamp comparison. If a CI build deployed a newer (but broken) version, sync thinks S3 is already up-to-date.
-
-**Fix:** Always use `--size-only` flag on `s3 sync`. This is already included in the commands above.
+**Root cause:** Phase 1 (assets) uses `--size-only` which is correct for content-hashed files. Phase 2 (HTML) does NOT use `--size-only` because HTML can change content without changing size. If you accidentally add `--size-only` to phase 2, changed HTML won't upload.
 
 ## Key Files
 
@@ -219,7 +266,7 @@ The CI pipeline also triggers on Sanity content updates via `repository_dispatch
 
 ```
 Full local build + deploy:
-  rm -rf .next out && npm run build && verify → S3 sync → CF invalidate → verify live → Step 7: commit & push (always run Step 7; skip only when git status shows nothing to commit)
+  rm -rf .next out && npm run build && verify page count + content → S3 sync (two phases) → CF invalidate → verify live → commit & push → monitor CI run (Step 8)
 
 Push to CI (preferred for routine changes):
   git add -A && git commit -m "..." && git push origin main → CI handles build + deploy automatically

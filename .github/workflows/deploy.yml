@@ -76,6 +76,20 @@ jobs:
           NEXT_PUBLIC_SANITY_API_VERSION: "2026-02-14"
           SITE_URL: https://www.nicharalambous.com
 
+      - name: Verify build page count
+        run: |
+          BLOG_COUNT=$(ls out/blog/*.html 2>/dev/null | wc -l | tr -d ' ')
+          echo "Blog HTML pages built: $BLOG_COUNT"
+          if [ "$BLOG_COUNT" -lt 170 ]; then
+            echo "::error::Only $BLOG_COUNT blog pages built (expected 170+). Sanity data may be incomplete — aborting deploy."
+            exit 1
+          fi
+          # Spot-check a known post to catch __next_error__ shells
+          if grep -q '__next_error__' out/blog/the-brutality-of-burnout.html; then
+            echo "::error::Build produced error shell HTML. Sanity fetch likely failed — aborting deploy."
+            exit 1
+          fi
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
