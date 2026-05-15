@@ -21,6 +21,7 @@ import {
   FALLBACK_BOOKS,
   getFallbackBookBySlug,
   fallbackBookToBookData,
+  getPrimaryBuyUrl,
 } from "@/lib/books-data";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
@@ -129,7 +130,7 @@ export default async function BookPage({
     ? urlFor(book.coverImage).width(600).auto("format").url()
     : STATIC_COVERS[slug];
 
-  const buyUrl = book.buyLinks?.[0]?.url;
+  const buyUrl = getPrimaryBuyUrl(slug, book.buyLinks);
 
   return (
     <div className="page-bg bg-openbook-pattern">

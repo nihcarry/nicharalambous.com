@@ -1,8 +1,8 @@
 /**
  * Books Listing Page — /books
  *
- * Keynote-style slide deck showcasing Nic's three published books.
- * Hero slide + one full-viewport slide per book + footer slide.
+ * Single-page layout showcasing Nic's three published books.
+ * Hero section + compact book cards with Buy Now CTAs.
  * Content is fetched from Sanity at build time with hardcoded fallbacks.
  *
  * JSON-LD: CollectionPage
@@ -14,50 +14,35 @@ import {
   booksListQuery,
   type BookListItem,
 } from "@/lib/sanity/queries";
-import { FALLBACK_BOOKS } from "@/lib/books-data";
+import { FALLBACK_BOOKS, getPrimaryBuyUrl } from "@/lib/books-data";
 import { CTAButton } from "@/components/cta-button";
-import { Slide } from "@/components/slide";
-import { SlideDeck } from "@/components/slide-deck";
-import { SlideContent } from "@/components/slide-animations";
-import { FooterContent } from "@/components/footer-content";
-import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { Section } from "@/components/section";
+import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
-/* ---------- 16-bit placeholder config per slide ---------- */
+/* ---------- Hero decorative image ---------- */
 
-const HERO_PLACEHOLDERS = [
-  {
-    src: "/slides/Nic_Book_6.png",
-    className:
-      "pointer-events-none absolute bottom-0 right-0 z-[1] hidden h-[55vh] w-auto select-none object-contain object-bottom md:block",
-  },
-];
-
-const BOOK_PLACEHOLDERS: Record<number, { src: string; className: string }[]> = {
-  0: [],
-  1: [],
-  2: [],
+const HERO_IMAGE = {
+  src: "/slides/Nic_Book_6.png",
+  className:
+    "pointer-events-none fixed bottom-0 right-0 z-[1] hidden h-[41vh] w-auto select-none object-contain object-bottom md:block",
 };
 
-/* ---------- Inline 16-bit images rendered above the book title ---------- */
-
-const BOOK_INLINE_IMAGES: Record<number, { src: string; className: string }> = {};
-
-/* ---------- Inline 16-bit images rendered below the CTAs ---------- */
+/* ---------- Decorative 16-bit images rendered below each book's CTA ---------- */
 
 const BOOK_BELOW_CTA_IMAGES: Record<number, { src: string; className: string }> = {
   0: {
     src: "/slides/Nic_book_1.png",
-    className: "mx-auto mt-6 h-64 w-auto md:h-72",
+    className: "mx-auto mt-4 h-48 w-auto md:h-56",
   },
   1: {
     src: "/slides/Nic_book_4.png",
-    className: "mx-auto mt-6 h-56 w-auto md:h-64",
+    className: "mx-auto mt-4 h-44 w-auto md:h-52",
   },
   2: {
     src: "/slides/Nic_book_3.png",
-    className: "mx-auto mt-6 h-56 w-auto md:h-64",
+    className: "mx-auto mt-4 h-44 w-auto md:h-52",
   },
 };
 
@@ -103,8 +88,7 @@ export default async function BooksPage() {
   const books = cmsBooks || FALLBACK_BOOKS;
 
   return (
-    <SlideDeck>
-      {/* Structured data */}
+    <div className="page-bg bg-openbook-pattern">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Books by Nic Haralambous",
@@ -114,177 +98,121 @@ export default async function BooksPage() {
         })}
       />
 
-      <NextSlideIndicator />
+      {/* Fixed decorative image — bottom-right, content scrolls over it */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={HERO_IMAGE.src}
+        alt=""
+        aria-hidden="true"
+        className={HERO_IMAGE.className}
+      />
 
-      {/* Slide 1: Hero */}
-      <Slide
-        variant="hero"
-        id="hero"
-        background="bg-openbook-pattern"
-        className="text-center md:justify-start"
-        image={
-          <>
-            {HERO_PLACEHOLDERS.map((ph) => (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                key={ph.src}
-                src={ph.src}
-                alt=""
-                aria-hidden="true"
-                className={ph.className}
-              />
-            ))}
-          </>
-        }
-      >
-        <div>
-          <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
-            My Books
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
-            Three books, two bestsellers from twenty years of building, failing and learning about business and life.
-          </p>
-        </div>
-      </Slide>
+      {/* Hero */}
+      <Section width="wide" className="relative z-10 pb-0 md:pb-0 text-center">
+        <h1 className="heading-stroke font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+          My Books
+        </h1>
+        <p className="mx-auto mt-6 max-w-2xl text-xl font-semibold leading-relaxed text-brand-700 sm:text-2xl">
+          Three books, two bestsellers from twenty years of building, failing and learning about business and life.
+        </p>
+      </Section>
 
-      {/* Book slides — one per book */}
+      {/* Book cards */}
       {books.map((book, index) => {
-        const placeholders = BOOK_PLACEHOLDERS[index] || [];
         const coverUrl = book.coverImage?.asset
           ? urlFor(book.coverImage).width(480).auto("format").url()
           : STATIC_COVERS[book.slug];
-        const buyUrl = book.buyLinks?.[0]?.url;
+        const buyUrl = getPrimaryBuyUrl(book.slug, book.buyLinks);
         const summary = book.shortSummary || book.subtitle;
-        const inlineImage = BOOK_INLINE_IMAGES[index];
         const belowCtaImage = BOOK_BELOW_CTA_IMAGES[index];
 
         return (
-          <Slide
-            key={book.slug}
-            id={book.slug}
-            variant="centered"
-            background="bg-openbook-pattern"
-            className="md:justify-start"
-            image={
-              placeholders.length > 0 ? (
-                <>
-                  {placeholders.map((ph) => (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      key={ph.src}
-                      src={ph.src}
-                      alt=""
-                      aria-hidden="true"
-                      className={ph.className}
-                    />
-                  ))}
-                </>
-              ) : undefined
-            }
-          >
-            <SlideContent>
-              <div className="flex flex-col items-center gap-8 md:flex-row md:items-start md:gap-12">
-                {/* Cover image or placeholder */}
-                <div className="shrink-0 w-48 md:w-56">
-                  {coverUrl ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={coverUrl}
-                      alt={`${book.title} cover`}
-                      className="w-full border-4 border-brand-200"
-                    />
-                  ) : (
-                    <div className="flex aspect-[2/3] w-full items-center justify-center border-4 border-brand-200 bg-brand-100">
-                      <svg
-                        className="h-16 w-16 text-brand-300"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1}
-                        stroke="currentColor"
-                        aria-hidden
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
-                        />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-
-                {/* Copy */}
-                <div className="flex-1 text-center md:text-left">
-                  <a
-                    href={`/books/${book.slug}`}
-                    className="relative block transition-colors hover:text-accent-500"
-                  >
-                    {inlineImage && (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={inlineImage.src}
-                        alt=""
-                        aria-hidden="true"
-                        className={inlineImage.className}
+          <Section key={book.slug} width="content" className="relative z-10 py-8 md:py-12">
+            <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-10">
+              {/* Cover image */}
+              <div className="shrink-0 w-44 md:w-52">
+                {coverUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={coverUrl}
+                    alt={`${book.title} cover`}
+                    className="w-full border-4 border-brand-200"
+                  />
+                ) : (
+                  <div className="flex aspect-[2/3] w-full items-center justify-center border-4 border-brand-200 bg-brand-100">
+                    <svg
+                      className="h-16 w-16 text-brand-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1}
+                      stroke="currentColor"
+                      aria-hidden
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
                       />
-                    )}
-                    <h2 className="heading-stroke font-extrabold tracking-tight text-3xl uppercase text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
-                      {book.title}
-                    </h2>
-                  </a>
-                  {book.subtitle && (
-                    <p className="mt-2 text-lg font-medium text-brand-500">
-                      {book.subtitle}
-                    </p>
-                  )}
-                  {summary && (
-                    <p className="mt-4 max-w-xl text-base leading-relaxed text-brand-700">
-                      {summary}
-                    </p>
-                  )}
+                    </svg>
+                  </div>
+                )}
+              </div>
 
-                  {/* CTAs */}
-                  <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:justify-center md:justify-start">
-                    {buyUrl && (
-                      <CTAButton
-                        href={buyUrl}
-                        external
-                        className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-                      >
-                        Buy Now
-                      </CTAButton>
-                    )}
+              {/* Copy */}
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="heading-stroke font-extrabold tracking-tight text-3xl uppercase text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
+                  {book.title}
+                </h2>
+                {book.subtitle && (
+                  <p className="mt-2 text-lg font-medium text-brand-500">
+                    {book.subtitle}
+                  </p>
+                )}
+                {summary && (
+                  <p className="mt-3 max-w-xl text-base leading-relaxed text-brand-700">
+                    {summary}
+                  </p>
+                )}
+
+                {/* CTA */}
+                {buyUrl && (
+                  <div className="mt-5">
                     <CTAButton
-                      href={`/books/${book.slug}`}
-                      variant="secondary"
+                      href={buyUrl}
+                      external
                       className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
                     >
-                      Learn More
+                      Buy Now
                     </CTAButton>
                   </div>
-                </div>
+                )}
               </div>
-              {belowCtaImage && (
-                <div className="mt-6 text-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={belowCtaImage.src}
-                    alt=""
-                    aria-hidden="true"
-                    className={belowCtaImage.className}
-                  />
-                </div>
-              )}
-            </SlideContent>
-          </Slide>
+            </div>
+
+            {belowCtaImage && (
+              <div className="mt-4 text-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={belowCtaImage.src}
+                  alt=""
+                  aria-hidden="true"
+                  className={belowCtaImage.className}
+                />
+              </div>
+            )}
+          </Section>
         );
       })}
 
-      {/* Footer slide */}
-      <Slide variant="footer" background="bg-foot-pattern" id="footer">
-        <FooterContent />
-      </Slide>
-    </SlideDeck>
+      {/* Final CTA */}
+      <FinalCta
+        heading="Want Nic at Your Next Event?"
+        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
+        primaryHref="/speaker"
+        primaryLabel="About Nic as a Speaker"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic"
+      />
+    </div>
   );
 }
-

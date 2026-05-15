@@ -22,6 +22,34 @@ export interface KeynoteSlideData {
 
 export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
   {
+    slug: "escaping-the-apathy-trap",
+    title: "Escaping the Apathy Trap",
+    tagline: "How to increase engagement in a fast-changing world",
+    description: [
+      "AI is making it easier than ever for organisations to mistake output for engagement. Teams are producing more, shipping faster, and attending more meetings — but beneath the surface, curiosity is declining, experimentation is stalling, and organisational apathy is quietly spreading.",
+      "In this keynote, Nic diagnoses a problem hiding in plain sight: the invisible gap between activity and engagement. He explores why traditional engagement signals no longer work, why AI accelerates visible productivity while masking disengagement, and what leaders can do to engineer curiosity back into their organisations.",
+      "This is not an AI keynote or a motivational talk. It is a strategic exploration of why smart, capable people slowly stop showing up — and what structurally needs to change to reverse it.",
+    ],
+    keyTakeaways: [
+      "Practical ways to engineer curiosity into teams and workflows",
+      "Clearer engagement signals that go beyond activity metrics",
+      "Frameworks for reducing organisational drag and alignment theatre",
+      "Methods for building experimentation rhythms that stick",
+      "Ways to rethink incentives and trust structures for the AI era",
+    ],
+    keyTakeawaysLabel: "Teams leave with:",
+    closingLine:
+      "Designed for leadership teams navigating AI adoption without losing the human curiosity that innovation depends on.",
+    deliveryFormat: "virtual",
+    duration: "45-60 minutes",
+    audiences: [
+      "HR leaders and executive teams",
+      "Innovation and transformation leaders",
+      "Conference organisers and leadership summits",
+      "Organisations navigating AI adoption and engagement challenges",
+    ],
+  },
+  {
     slug: "connected-not-consumed",
     title: "Connected, Not Consumed",
     tagline: "Balancing Digital Life and Mental Health at Work",

@@ -17,9 +17,7 @@ export function ConditionalFooter() {
     pathname === "/" ||
     pathname === "/speaker" ||
     pathname === "/keynotes" ||
-    pathname === "/books" ||
-    pathname === "/topics" ||
-    pathname === "/businesses"
+    pathname === "/topics"
   ) {
     return null;
   }

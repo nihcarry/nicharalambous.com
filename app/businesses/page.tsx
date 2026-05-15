@@ -1,12 +1,13 @@
 /**
  * Businesses Page — /businesses
  *
- * Slide-based entrepreneurial history organised into:
+ * Single-page entrepreneurial history:
  * 1. Hero narrative
  * 2. What I'm Building Now (active)
  * 3. Past Startups (exits)
  * 4. Deadpool (non-clickable archive)
  *
+ * Decorative hero image is fixed bottom-right (md+); content scrolls above it.
  * Content is fetched from Sanity at build time and falls back to hardcoded
  * records when CMS content is unavailable.
  *
@@ -19,11 +20,7 @@ import {
   businessesQuery,
   type BusinessData,
 } from "@/lib/sanity/queries";
-import { Slide } from "@/components/slide";
-import { SlideDeck } from "@/components/slide-deck";
-import { SlideContent } from "@/components/slide-animations";
-import { NextSlideIndicator } from "@/components/next-slide-indicator";
-import { FooterContent } from "@/components/footer-content";
+import { Section } from "@/components/section";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
 import { tilt } from "@/lib/tilt";
@@ -60,15 +57,6 @@ function partitionBusinesses(businesses: BusinessData[]) {
   }
 
   return { active, exits, deadpool };
-}
-
-function chunkBusinesses<T>(items: T[], chunkSize: number): T[][] {
-  if (items.length === 0) return [];
-  const chunks: T[][] = [];
-  for (let i = 0; i < items.length; i += chunkSize) {
-    chunks.push(items.slice(i, i + chunkSize));
-  }
-  return chunks;
 }
 
 function isExternalUrl(url: string): boolean {
@@ -136,17 +124,9 @@ export default async function BusinessesPage() {
   const cmsBusinesses = await getBusinesses();
   const all = cmsBusinesses || FALLBACK_BUSINESSES;
   const { exits, deadpool } = partitionBusinesses(all);
-  const currentBuildSlides = chunkBusinesses(CURRENT_BUILDS, 2);
-  const exitSlides = chunkBusinesses(exits, 6);
-  const deadpoolFirstSlide = deadpool.slice(0, 4);
-  const deadpoolSecondSlide = deadpool.slice(4, 9);
-  const deadpoolRemainingSlides = chunkBusinesses(deadpool.slice(9), 3);
 
   return (
-    <SlideDeck>
-      <NextSlideIndicator />
-
-      {/* Structured data */}
+    <div className="page-bg bg-gear-pattern">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Businesses by Nic Haralambous",
@@ -156,237 +136,130 @@ export default async function BusinessesPage() {
         })}
       />
 
-      <Slide
-        variant="grid-3"
-        background="bg-gear-pattern"
-        id="hero"
-        className="md:justify-start"
-        image={
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src="/slides/Nic_Building_1.png"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute right-0 bottom-0 z-[1] hidden h-[40vh] w-auto select-none object-contain object-bottom md:block"
-          />
-        }
-      >
-        <SlideContent>
-          <h1 className="heading-stroke text-center font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
-            Building
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
-            I started my first business at school at the age of 16. Since then
-            I haven&apos;t gone a year in my life without a business being
-            built.
-          </p>
-          <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
-            Below you&apos;ll find my current projects, past exits, and a list
-            of dead startups that I tried to get off the ground but didn&apos;t
-            work for one reason or another.
-          </p>
-        </SlideContent>
-      </Slide>
+      {/* Fixed decorative image — bottom-right, content scrolls over it */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/slides/Nic_Building_1.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-0 right-0 z-[1] hidden h-[40vh] w-auto select-none object-contain object-bottom md:block"
+      />
 
-      {currentBuildSlides.map((slideBuilds, slideIndex) => (
-        <Slide
-          key={`active-slide-${slideIndex}`}
-          variant="grid-3"
-          background="bg-gear-pattern"
-          id={slideIndex === 0 ? "active" : `active-${slideIndex + 1}`}
-          className={
-            slideIndex === 0
-              ? "md:justify-start"
-              : "md:justify-start"
-          }
-        >
-          <SlideContent>
-            {slideIndex === 0 ? (
-              <div className="mb-8 md:mb-10">
-                <h2 className="heading-stroke mt-2 text-center text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-                  What I&apos;m Building Now
-                </h2>
-                <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
-                  Live products I&apos;m actively shipping right now.
+      <Section id="hero" width="wide" className="relative z-10 text-center">
+        <h1 className="heading-stroke font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+          Building
+        </h1>
+        <p className="mx-auto mt-6 max-w-3xl text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
+          I started my first business at school at the age of 16. Since then
+          I haven&apos;t gone a year in my life without a business being
+          built.
+        </p>
+        <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
+          Below you&apos;ll find my current projects, past exits, and a list
+          of dead startups that I tried to get off the ground but didn&apos;t
+          work for one reason or another.
+        </p>
+      </Section>
+
+      <Section id="active" width="wide" className="relative z-10">
+        <div className="mb-8 text-center md:mb-10">
+          <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+            What I&apos;m Building Now
+          </h2>
+          <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
+            Live products I&apos;m actively shipping right now.
+          </p>
+        </div>
+        <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2 md:gap-4">
+          {CURRENT_BUILDS.map((build, cardIndex) => (
+            <a
+              key={build.url}
+              href={build.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group card-brutalist flex h-full flex-col overflow-hidden bg-white transition-colors hover:bg-accent-50"
+              style={{ transform: `rotate(${tilt(cardIndex, 180)}deg)` }}
+            >
+              <div className="relative aspect-[16/8] border-b-4 border-brand-200 bg-brand-100 md:aspect-[16/6]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={build.screenshotSrc}
+                  alt={`${build.name} screenshot`}
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-base font-extrabold tracking-tight uppercase text-brand-900 md:text-lg">
+                    {build.name}
+                  </h3>
+                  <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
+                    Live
+                  </span>
+                </div>
+                <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-500">
+                  {getHostname(build.url)}
+                </p>
+                <p className="mt-2 flex-1 text-xs leading-snug text-brand-600">
+                  {build.summary}
+                </p>
+                <p className="mt-3 text-sm font-semibold text-accent-600">
+                  Open project <span aria-hidden>&rarr;</span>
                 </p>
               </div>
-            ) : (
-              <div className="mb-6 text-center" />
-            )}
-            <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2 md:gap-4">
-              {slideBuilds.map((build, cardIndex) => (
-                <a
-                  key={build.url}
-                  href={build.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group card-brutalist flex h-full flex-col overflow-hidden bg-white transition-colors hover:bg-accent-50"
-                  style={{ transform: `rotate(${tilt(cardIndex, 180 + slideIndex)}deg)` }}
-                >
-                  <div className="relative aspect-[16/8] border-b-4 border-brand-200 bg-brand-100 md:aspect-[16/6]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={build.screenshotSrc}
-                      alt={`${build.name} screenshot`}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <h3 className="text-base font-extrabold tracking-tight uppercase text-brand-900 md:text-lg">
-                        {build.name}
-                      </h3>
-                      <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
-                        Live
-                      </span>
-                    </div>
-                    <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-500">
-                      {getHostname(build.url)}
-                    </p>
-                    <p className="mt-2 flex-1 text-xs leading-snug text-brand-600">
-                      {build.summary}
-                    </p>
-                    <p className="mt-3 text-sm font-semibold text-accent-600">
-                      Open project <span aria-hidden>&rarr;</span>
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </SlideContent>
-        </Slide>
-      ))}
+            </a>
+          ))}
+        </div>
+      </Section>
 
-      {exitSlides.map((slideBusinesses, slideIndex) => (
-        <Slide
-          key={`exits-slide-${slideIndex}`}
-          variant="grid-3"
-          background="bg-gear-pattern"
-          id={slideIndex === 0 ? "past-startups" : `past-startups-${slideIndex + 1}`}
-        >
-          <SlideContent>
-            <div className="mb-8 text-center">
-              <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-                Past Startups
-              </h2>
-              <p className="mt-2 text-base text-brand-500">
-                Businesses I co-founded and have exited.
-              </p>
-              {slideIndex > 0 && (
-                <p className="text-sm text-brand-500">
-                  Continuation
-                </p>
-              )}
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {slideBusinesses.map((business, cardIndex) => (
-                <BusinessCard
-                  key={business._id || `exit-${slideIndex}-${cardIndex}`}
-                  business={business}
-                  cardIndex={cardIndex}
-                  seed={120 + slideIndex}
-                  variant="exit"
-                />
-              ))}
-            </div>
-          </SlideContent>
-        </Slide>
-      ))}
-
-      {deadpoolFirstSlide.length > 0 && (
-        <Slide
-          variant="grid-3"
-          background="bg-gear-pattern"
-          id="deadpool"
-          className="md:justify-start"
-        >
-          <SlideContent>
-            <div className="mb-8 text-center">
-              <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-                Deadpool
-              </h2>
-              <p className="mt-2 text-base text-brand-500">
-                Businesses that didn&apos;t make it.
-              </p>
-            </div>
-            <div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-2">
-              {deadpoolFirstSlide.map((business, cardIndex) => (
-                <BusinessCard
-                  key={business._id || `dead-top-${cardIndex}`}
-                  business={business}
-                  cardIndex={cardIndex}
-                  seed={130}
-                  variant="deadpool"
-                />
-              ))}
-            </div>
-          </SlideContent>
-        </Slide>
+      {exits.length > 0 && (
+        <Section id="past-startups" width="wide" className="relative z-10">
+          <div className="mb-8 text-center">
+            <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+              Past Startups
+            </h2>
+            <p className="mt-2 text-base text-brand-500">
+              Businesses I co-founded and have exited.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {exits.map((business, cardIndex) => (
+              <BusinessCard
+                key={business._id || `exit-${cardIndex}`}
+                business={business}
+                cardIndex={cardIndex}
+                seed={120 + cardIndex}
+                variant="exit"
+              />
+            ))}
+          </div>
+        </Section>
       )}
 
-      {deadpoolSecondSlide.length > 0 && (
-        <Slide
-          variant="grid-3"
-          background="bg-gear-pattern"
-          id="deadpool-2"
-          className="md:justify-start"
-        >
-          <SlideContent>
-            <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
-              {deadpoolSecondSlide.slice(0, 3).map((business, cardIndex) => (
-                <BusinessCard
-                  key={business._id || `dead-second-top-${cardIndex}`}
-                  business={business}
-                  cardIndex={cardIndex}
-                  seed={132}
-                  variant="deadpool"
-                />
-              ))}
-            </div>
-            {deadpoolSecondSlide.length > 3 && (
-              <div className="mx-auto mt-4 grid max-w-4xl gap-4 md:grid-cols-2">
-                {deadpoolSecondSlide.slice(3, 5).map((business, cardIndex) => (
-                  <BusinessCard
-                    key={business._id || `dead-second-bottom-${cardIndex}`}
-                    business={business}
-                    cardIndex={cardIndex + 3}
-                    seed={133}
-                    variant="deadpool"
-                  />
-                ))}
-              </div>
-            )}
-          </SlideContent>
-        </Slide>
+      {deadpool.length > 0 && (
+        <Section id="deadpool" width="wide" className="relative z-10">
+          <div className="mb-8 text-center">
+            <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
+              Deadpool
+            </h2>
+            <p className="mt-2 text-base text-brand-500">
+              Businesses that didn&apos;t make it.
+            </p>
+          </div>
+          <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {deadpool.map((business, cardIndex) => (
+              <BusinessCard
+                key={business._id || `deadpool-${cardIndex}`}
+                business={business}
+                cardIndex={cardIndex}
+                seed={130 + cardIndex}
+                variant="deadpool"
+              />
+            ))}
+          </div>
+        </Section>
       )}
-
-      {deadpoolRemainingSlides.map((slideBusinesses, slideIndex) => (
-        <Slide
-          key={`deadpool-remaining-slide-${slideIndex}`}
-          variant="grid-3"
-          background="bg-gear-pattern"
-          id={`deadpool-${slideIndex + 3}`}
-        >
-          <SlideContent>
-            <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
-              {slideBusinesses.map((business, cardIndex) => (
-                <BusinessCard
-                  key={business._id || `dead-remaining-${slideIndex}-${cardIndex}`}
-                  business={business}
-                  cardIndex={cardIndex}
-                  seed={140 + slideIndex}
-                  variant="deadpool"
-                />
-              ))}
-            </div>
-          </SlideContent>
-        </Slide>
-      ))}
-
-      <Slide variant="footer" background="bg-foot-pattern" id="footer">
-        <FooterContent />
-      </Slide>
-    </SlideDeck>
+    </div>
   );
 }
 

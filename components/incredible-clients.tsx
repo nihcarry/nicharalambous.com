@@ -11,15 +11,26 @@ import { filterVisibleClientMarks, getClientLogoSrc } from "@/lib/client-logos";
 interface IncredibleClientsProps {
   /** List of client/media names to display */
   names: string[];
+  /**
+   * `slide` — full slide-deck scale (homepage / speaker).
+   * `section` — matches interior page section headings (e.g. keynote landers).
+   */
+  headingSize?: "slide" | "section";
 }
 
-export function IncredibleClients({ names }: IncredibleClientsProps) {
+export function IncredibleClients({
+  names,
+  headingSize = "slide",
+}: IncredibleClientsProps) {
   const visibleNames = filterVisibleClientMarks(names);
+  const headingClassName =
+    headingSize === "section"
+      ? "heading-display-stroke-sm text-center text-3xl text-brand-900 sm:text-4xl md:text-5xl"
+      : "heading-stroke text-center text-4xl font-extrabold uppercase tracking-tight text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl";
+
   return (
     <>
-      <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-        Incredible Clients
-      </h2>
+      <h2 className={headingClassName}>Incredible Clients</h2>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-8">
         {visibleNames.map((name) => {
           const src = getClientLogoSrc(name);
