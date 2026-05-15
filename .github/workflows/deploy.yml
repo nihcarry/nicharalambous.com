@@ -61,6 +61,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
 
+      - name: Purge stale Sanity fetch cache
+        run: rm -rf .next/cache/fetch-cache
+        # The restored Next.js cache may contain stale Sanity API responses.
+        # New/updated posts would be invisible to generateStaticParams, causing
+        # missing pages and 403s after s3 sync --delete. Webpack/chunk caches
+        # are preserved for fast builds; only fetch results are cleared.
+
       - name: Build
         run: npm run build
         env:
