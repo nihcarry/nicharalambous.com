@@ -19,6 +19,7 @@ import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
 import { tilt } from "@/lib/tilt";
 
 const KEYNOTE_SLUG = "escaping-the-apathy-trap";
+const HERO_VIDEO_URL = "https://youtu.be/d39zRC9pWQ8";
 
 /* ---------- Metadata ---------- */
 
@@ -66,13 +67,65 @@ const CLIENT_NAMES = [
   "Nedbank",
 ];
 
-const APATHY_ARCH_STEPS = [
-  { label: "Curiosity", description: "Teams explore, question, and experiment" },
-  { label: "Boredom", description: "Repetition replaces exploration" },
-  { label: "Apathy", description: "People stop caring about outcomes" },
-  { label: "Indifference", description: "Engagement becomes performance" },
-  { label: "Exit", description: "Talent leaves — or worse, stays and disengages" },
+const APATHY_ARCH_IMAGE_BASE =
+  "/keynotes/escaping-the-apathy-trap/apathy-arch";
+
+const APATHY_ARCH_IMAGE_CLASS =
+  "block h-auto w-full max-w-[11rem] object-contain object-bottom sm:max-w-[12rem] md:max-w-[13rem]";
+
+const APATHY_ARCH_STEPS: {
+  label: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  imageClassName?: string;
+}[] = [
+  {
+    label: "Curiosity",
+    description: "Teams explore, question, and experiment",
+    image: `${APATHY_ARCH_IMAGE_BASE}/01-curiosity.png`,
+    imageAlt:
+      "16-bit character kneeling with a magnifying glass, examining a flower under glass",
+  },
+  {
+    label: "Boredom",
+    description: "Repetition replaces exploration",
+    image: `${APATHY_ARCH_IMAGE_BASE}/02-boredom.png`,
+    imageAlt:
+      "16-bit character slumped in a chair watching TV static with a remote",
+  },
+  {
+    label: "Apathy",
+    description: "People stop caring about outcomes",
+    image: `${APATHY_ARCH_IMAGE_BASE}/03-apathy.png`,
+    imageAlt:
+      "16-bit character slumped at a desk, head in hand, staring at a monitor",
+  },
+  {
+    label: "Indifference",
+    description: "Engagement becomes performance",
+    image: `${APATHY_ARCH_IMAGE_BASE}/04-indifference.png`,
+    imageAlt:
+      "16-bit character reclined at a desk, shrugging, mug labelled meh",
+  },
+  {
+    label: "Exit",
+    description: "Talent leaves or worse, disengages.",
+    image: `${APATHY_ARCH_IMAGE_BASE}/05-exit.png`,
+    imageAlt:
+      "16-bit character carrying a box of belongings toward an open door",
+    imageClassName:
+      "block h-auto w-full max-w-[8.8rem] object-contain object-bottom sm:max-w-[9.6rem] md:max-w-[10.4rem]",
+  },
 ];
+
+const APATHY_ARCH_HEIGHTS = [
+  "md:h-40",
+  "md:h-52",
+  "md:h-64",
+  "md:h-52",
+  "md:h-40",
+] as const;
 
 const OUTCOMES = [
   "Practical ways to engineer curiosity into teams and workflows",
@@ -126,9 +179,9 @@ export default function EscapingTheApathyTrapPage() {
         </p>
 
         <h1 className="heading-display-stroke-sm mx-auto mt-8 max-w-4xl text-3xl leading-[1.1] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
-          Escaping the Apathy Trap:{" "}
-          <span className="text-accent-600">
-            How to Increase Engagement in a Fast-Changing World
+          <span className="block">Escape the Apathy Trap:</span>
+          <span className="mt-2 block text-accent-600">
+            Lead the Change Before the Change Leads You
           </span>
         </h1>
 
@@ -139,6 +192,21 @@ export default function EscapingTheApathyTrapPage() {
           for engagement.
         </p>
 
+        {getVideoEmbedUrl(HERO_VIDEO_URL) && (
+          <div className="mx-auto mt-8 max-w-3xl">
+            <div className="aspect-video overflow-hidden border-4 border-accent-600">
+              <iframe
+                src={getVideoEmbedUrl(HERO_VIDEO_URL)!}
+                title="Escaping the Apathy Trap — keynote preview"
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+        )}
+
         <div className="mt-8">
           <CTAButton href={getKeynoteBookingUrl(KEYNOTE_SLUG)}>
             Book This Keynote
@@ -148,75 +216,76 @@ export default function EscapingTheApathyTrapPage() {
 
       {/* ── 2. The Problem — what's increasing vs declining (framed) ── */}
       <Section width="wide">
-        <div className="mx-auto max-w-3xl text-center md:max-w-4xl">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-            The Pattern
-          </p>
-          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-            Activity is up. Engagement is quietly down.
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-brand-600">
-            This isn&rsquo;t two different companies &mdash; it&rsquo;s most
-            knowledge-work teams right now. Generative AI makes it easier to
-            ship visible work, fill calendars, and show &ldquo;velocity&rdquo;
-            on the left. The behaviours on the right are harder to spot on a
-            dashboard, so they can erode while leadership still reads the org as
-            healthy. The talk starts here: recognising the split before apathy
-            hardens into indifference.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-12">
-          <div>
-            <h3 className="heading-display text-sm font-bold uppercase tracking-[0.15em] text-brand-400">
-              What&rsquo;s Increasing
-            </h3>
-            <p className="mt-2 text-sm text-brand-500">
-              What shows up in updates, tools, and leadership packs.
+        {/* Same centred measure as headings + body above—two cols sit inside it */}
+        <div className="mx-auto w-full max-w-3xl space-y-0 md:max-w-4xl">
+          <div className="text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
+              The Pattern
             </p>
-            <ul className="mt-6 space-y-4">
-              {[
-                "Visible activity",
-                "AI tool adoption",
-                "Meetings and communication",
-                "Output and deliverables",
-                "Process and reporting",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-lg text-brand-700"
-                >
-                  <span className="mt-1.5 block h-3 w-3 shrink-0 bg-brand-300" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+              <span className="block">Activity is up.</span>
+              <span className="mt-2 block text-accent-600">
+                Employee engagement is down.
+              </span>
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-brand-600">
+              Research shows that 40% of workers globally fear losing their job
+              to AI. Focus efficiency has fallen to a three-year low of 60%
+              with disengagement risk up 23%. While rigorous experiments show
+              that high-quality AI can cause skilled workers to &ldquo;fall
+              asleep at the wheel,&rdquo; and outsource critical thinking.
+            </p>
+            <p className="mt-4 text-lg leading-relaxed text-brand-600">
+              So yes, activity is up&hellip; but at what cost?
+            </p>
           </div>
 
-          <div>
-            <h3 className="heading-display text-sm font-bold uppercase tracking-[0.15em] text-accent-600">
-              What&rsquo;s Declining
-            </h3>
-            <p className="mt-2 text-sm text-brand-500">
-              What actually determines whether people keep showing up.
-            </p>
-            <ul className="mt-6 space-y-4">
-              {[
-                "Curiosity",
-                "Experimentation",
-                "Agency and ownership",
-                "Engagement",
-                "Original thinking",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-lg font-medium text-brand-900"
-                >
-                  <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-14 flex w-full flex-col gap-12 text-left md:flex-row md:gap-x-10 lg:gap-x-14">
+            <div className="min-w-0 flex-1 basis-0">
+              <h3 className="text-lg font-bold leading-snug text-brand-900 sm:text-xl md:min-h-[4.75rem]">
+                What looks good, but isn&rsquo;t
+              </h3>
+              <ul className="mt-6 space-y-4 md:mt-7">
+                {[
+                  "Output increases",
+                  "AI usage increases",
+                  "More alignment meetings",
+                  "Increased process",
+                  "AI slop everywhere",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-lg text-brand-700"
+                  >
+                    <span className="mt-1.5 block h-3 w-3 shrink-0 bg-brand-300" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="min-w-0 flex-1 basis-0">
+              <h3 className="text-lg font-bold leading-snug text-accent-600 sm:text-xl md:min-h-[4.75rem]">
+                What you can&rsquo;t see, but is bad
+              </h3>
+              <ul className="mt-6 space-y-4 md:mt-7">
+                {[
+                  "Curiosity is down",
+                  "Experimentation stops happening",
+                  "Critical thinking is outsourced to AI",
+                  "Staff engagement plummets",
+                  "The customer is forgotten",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-lg font-medium text-brand-900"
+                  >
+                    <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </Section>
@@ -259,55 +328,67 @@ export default function EscapingTheApathyTrapPage() {
           <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
             The Apathy Arch
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-brand-500">
-            Apathy is not sudden. It is progressive erosion.
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-brand-600">
+            Apathy is not sudden; it is a progressive erosion that begins with
+            the loss of curiosity. Then boredom fills their spare time. Staff are
+            then struck by an apathy for their work and an indifference towards
+            the company, the company&rsquo;s vision, mission, and the work
+            itself. Eventually, your brightest talent will exit, or worse, will
+            remain at your company but disengage from the work, your customers
+            and their colleagues.
           </p>
         </div>
 
         {/* Arch visualization */}
         <div className="mt-12 flex flex-col items-stretch gap-4 md:flex-row md:items-end md:gap-0">
           {APATHY_ARCH_STEPS.map((step, i) => {
-            const heights = [
-              "md:h-40",
-              "md:h-52",
-              "md:h-64",
-              "md:h-52",
-              "md:h-40",
-            ];
-            const isCenter = i === 2;
             return (
               <div
                 key={step.label}
-                className={`flex flex-1 flex-col justify-end border-2 p-4 text-center transition-colors md:p-6 ${heights[i]} ${
-                  isCenter
-                    ? "border-accent-600 bg-accent-50"
-                    : "border-brand-200 bg-white"
+                className={`flex min-w-0 flex-1 flex-col items-center ${
+                  step.image ? "justify-end gap-0" : ""
                 }`}
               >
-                <p
-                  className={`text-xs font-bold uppercase tracking-widest ${
-                    isCenter ? "text-accent-600" : "text-brand-400"
-                  }`}
+                {step.image && step.imageAlt && (
+                  <div className="flex w-full justify-center leading-none">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={step.image}
+                      alt={step.imageAlt}
+                      className={step.imageClassName ?? APATHY_ARCH_IMAGE_CLASS}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
+                <div
+                  className={`flex w-full flex-col justify-end border-2 text-center transition-colors ${APATHY_ARCH_HEIGHTS[i]} ${
+                    step.image
+                      ? "px-4 pb-4 pt-0 md:px-6 md:pb-6 md:pt-0"
+                      : "p-4 md:p-6"
+                  } border-brand-200 bg-white`}
                 >
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <p
-                  className={`mt-2 text-lg font-bold ${
-                    isCenter ? "text-accent-600" : "text-brand-900"
-                  } md:text-xl`}
-                >
-                  {step.label}
-                </p>
-                <p className="mt-1 text-sm text-brand-500">
-                  {step.description}
-                </p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-brand-400">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-2 text-lg font-bold text-brand-900 md:text-xl">
+                    {step.label}
+                  </p>
+                  <p className="mt-1 text-sm text-brand-500">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             );
           })}
         </div>
 
         {/* Supporting concepts */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
+        <p className="mx-auto mt-16 max-w-3xl text-center text-lg font-semibold leading-relaxed text-brand-900 md:text-xl">
+          When the Apathy Arch is left unchecked, the slow erosion of your
+          organisation begins with:
+        </p>
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
           {SUPPORTING_CONCEPTS.map((concept) => (
             <div
               key={concept.title}
@@ -419,4 +500,16 @@ export default function EscapingTheApathyTrapPage() {
       />
     </div>
   );
+}
+
+function getVideoEmbedUrl(url: string): string | null {
+  const ytMatch = url.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
+  );
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+
+  return null;
 }
