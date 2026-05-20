@@ -219,16 +219,6 @@ export default async function BlogPostPage({
           </div>
         </header>
 
-        {/* Video Read-Along — above hero image when present */}
-        {hasVideo && (
-          <VideoReadAlong
-            videoUrl={post.videoEmbed!}
-            title={post.title}
-            featuredLabel={post.featuredLabel}
-            className="mt-8"
-          />
-        )}
-
         {/* Featured image */}
         {post.featuredImage?.asset?.url && (
           <figure className="mt-8">
@@ -251,6 +241,14 @@ export default async function BlogPostPage({
               {post.excerpt}
             </p>
           </aside>
+        )}
+
+        {/* Video callout — compact card below TL;DR */}
+        {hasVideo && (
+          <VideoReadAlong
+            videoUrl={post.videoEmbed!}
+            title={post.title}
+          />
         )}
 
         {/* Main content — Portable Text or raw HTML */}
