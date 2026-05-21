@@ -3,8 +3,8 @@
  *
  * Standalone one-pager landing page sent directly to prospective clients.
  * Dedicated route (takes priority over the [slug] dynamic template)
- * because the layout is bespoke: manifesto-style hero, framework
- * visualization, editorial copy blocks.
+ * because the layout is bespoke: manifesto-style hero, editorial
+ * copy blocks, blockquote callouts.
  *
  * JSON-LD: Service
  */
@@ -26,7 +26,7 @@ const HERO_VIDEO_URL = "https://youtu.be/d39zRC9pWQ8";
 export const metadata: Metadata = generatePageMetadata({
   title: "Escaping the Apathy Trap — Keynote",
   description:
-    "AI is making it easier than ever for organisations to mistake output for engagement. A strategic leadership keynote by Nic Haralambous on diagnosing hidden disengagement and engineering curiosity.",
+    "A keynote about curiosity, complacency, and what happens when powerful technology meets passive culture. For organisations rebuilding curiosity, ownership, and movement.",
   path: "/keynotes/escaping-the-apathy-trap",
 });
 
@@ -67,97 +67,6 @@ const CLIENT_NAMES = [
   "Nedbank",
 ];
 
-const APATHY_ARCH_IMAGE_BASE =
-  "/keynotes/escaping-the-apathy-trap/apathy-arch";
-
-const APATHY_ARCH_IMAGE_CLASS =
-  "block h-auto w-full max-w-[11rem] object-contain object-bottom sm:max-w-[12rem] md:max-w-[13rem]";
-
-const APATHY_ARCH_STEPS: {
-  label: string;
-  description: string;
-  image?: string;
-  imageAlt?: string;
-  imageClassName?: string;
-}[] = [
-  {
-    label: "Curiosity",
-    description: "Teams explore, question, and experiment",
-    image: `${APATHY_ARCH_IMAGE_BASE}/01-curiosity.png`,
-    imageAlt:
-      "16-bit character kneeling with a magnifying glass, examining a flower under glass",
-  },
-  {
-    label: "Boredom",
-    description: "Repetition replaces exploration",
-    image: `${APATHY_ARCH_IMAGE_BASE}/02-boredom.png`,
-    imageAlt:
-      "16-bit character slumped in a chair watching TV static with a remote",
-  },
-  {
-    label: "Apathy",
-    description: "People stop caring about outcomes",
-    image: `${APATHY_ARCH_IMAGE_BASE}/03-apathy.png`,
-    imageAlt:
-      "16-bit character slumped at a desk, head in hand, staring at a monitor",
-  },
-  {
-    label: "Indifference",
-    description: "Engagement becomes performance",
-    image: `${APATHY_ARCH_IMAGE_BASE}/04-indifference.png`,
-    imageAlt:
-      "16-bit character reclined at a desk, shrugging, mug labelled meh",
-  },
-  {
-    label: "Exit",
-    description: "Talent leaves or worse, disengages.",
-    image: `${APATHY_ARCH_IMAGE_BASE}/05-exit.png`,
-    imageAlt:
-      "16-bit character carrying a box of belongings toward an open door",
-    imageClassName:
-      "block h-auto w-full max-w-[8.8rem] object-contain object-bottom sm:max-w-[9.6rem] md:max-w-[10.4rem]",
-  },
-];
-
-const APATHY_ARCH_HEIGHTS = [
-  "md:h-40",
-  "md:h-52",
-  "md:h-64",
-  "md:h-52",
-  "md:h-40",
-] as const;
-
-const OUTCOMES = [
-  "Practical ways to engineer curiosity into teams and workflows",
-  "Clearer engagement signals that go beyond activity metrics",
-  "Frameworks for reducing organisational drag and alignment theatre",
-  "Methods for building experimentation rhythms that stick",
-  "Ways to rethink incentives and trust structures for the AI era",
-];
-
-const SUPPORTING_CONCEPTS = [
-  {
-    title: "Organisational Entropy",
-    description:
-      "The organisation appears functional on the surface while invisible decay spreads underneath.",
-  },
-  {
-    title: "Alignment Theatre",
-    description:
-      "Meetings, communication, and collaboration metrics increase — but focus, experimentation, and original thinking decline.",
-  },
-  {
-    title: "The Wrong AI",
-    description:
-      "Organisations believe Artificial Intelligence is the main conversation. The real AI problem is Apathy and Indifference.",
-  },
-  {
-    title: "The Unread Library Effect",
-    description:
-      "AI creates the appearance of capability and knowledge without necessarily building understanding or original thought.",
-  },
-];
-
 /* ---------- Page ---------- */
 
 export default function EscapingTheApathyTrapPage() {
@@ -165,31 +74,45 @@ export default function EscapingTheApathyTrapPage() {
     <div className="page-bg bg-spotlight-pattern">
       <JsonLd
         data={serviceJsonLd({
-          name: "Escaping the Apathy Trap: How to Increase Engagement in a Fast-Changing World",
+          name: "Escaping the Apathy Trap: A Keynote on Curiosity, Culture, and Action",
           description:
-            "AI is making it easier than ever for organisations to mistake output for engagement. A keynote on diagnosing hidden disengagement and engineering curiosity.",
+            "A keynote about curiosity, complacency, and what happens when powerful technology meets passive culture. For organisations rebuilding curiosity, ownership, and movement.",
           url: "https://nicharalambous.com/keynotes/escaping-the-apathy-trap",
         })}
       />
 
       {/* ── 1. Hero ── */}
       <Section width="content" className="pt-12 text-center md:pt-20">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-          Strategic Leadership Keynote
-        </p>
-
-        <h1 className="heading-display-stroke-sm mx-auto mt-8 max-w-4xl text-3xl leading-[1.1] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
-          <span className="block">Escape the Apathy Trap:</span>
+        <h1 className="heading-display-stroke-sm mx-auto max-w-4xl text-3xl leading-[1.1] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
+          <span className="block">
+            The future does not belong to the companies with the best tools.
+          </span>
           <span className="mt-2 block text-accent-600">
-            Lead the Change Before the Change Leads You
+            It belongs to the ones whose people still care enough to act.
           </span>
         </h1>
 
         <div className="mx-auto mt-6 h-1 w-20 bg-accent-600" />
 
-        <p className="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-brand-600 md:text-2xl">
-          AI is making it easier than ever for organisations to mistake output
-          for engagement.
+        <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600 md:text-xl">
+          <p>
+            AI is changing how we work, think, build, and compete.
+          </p>
+          <p>
+            But while technology accelerates, many organisations are
+            unintentionally creating cultures where people stop questioning,
+            stop experimenting, and stop taking initiative.
+          </p>
+          <p>
+            <em>Escaping the Apathy Trap</em> is a keynote about curiosity,
+            complacency, and what happens when powerful technology meets passive
+            culture.
+          </p>
+        </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-base font-bold uppercase tracking-[0.2em] text-accent-600">
+          A keynote for organisations trying to rebuild curiosity, ownership,
+          and movement.
         </p>
 
         {getVideoEmbedUrl(HERO_VIDEO_URL) && (
@@ -209,226 +132,286 @@ export default function EscapingTheApathyTrapPage() {
 
         <div className="mt-8">
           <CTAButton href={getKeynoteBookingUrl(KEYNOTE_SLUG)}>
-            Book This Keynote
+            Bring This Talk To Your Team
           </CTAButton>
         </div>
       </Section>
 
-      {/* ── 2. The Problem — what's increasing vs declining (framed) ── */}
-      <Section width="wide">
-        {/* Same centred measure as headings + body above—two cols sit inside it */}
-        <div className="mx-auto w-full max-w-3xl space-y-0 md:max-w-4xl">
-          <div className="text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-              The Pattern
-            </p>
-            <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-              <span className="block">Activity is up.</span>
-              <span className="mt-2 block text-accent-600">
-                Employee engagement is down.
-              </span>
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-brand-600">
-              Research shows that 40% of workers globally fear losing their job
-              to AI. Focus efficiency has fallen to a three-year low of 60%
-              with disengagement risk up 23%. While rigorous experiments show
-              that high-quality AI can cause skilled workers to &ldquo;fall
-              asleep at the wheel,&rdquo; and outsource critical thinking.
-            </p>
-            <p className="mt-4 text-lg leading-relaxed text-brand-600">
-              So yes, activity is up&hellip; but at what cost?
-            </p>
-          </div>
-
-          <div className="mt-14 flex w-full flex-col gap-12 text-left md:flex-row md:gap-x-10 lg:gap-x-14">
-            <div className="min-w-0 flex-1 basis-0">
-              <h3 className="text-lg font-bold leading-snug text-brand-900 sm:text-xl md:min-h-[4.75rem]">
-                What looks good, but isn&rsquo;t
-              </h3>
-              <ul className="mt-6 space-y-4 md:mt-7">
-                {[
-                  "Output increases",
-                  "AI usage increases",
-                  "More alignment meetings",
-                  "Increased process",
-                  "AI slop everywhere",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-lg text-brand-700"
-                  >
-                    <span className="mt-1.5 block h-3 w-3 shrink-0 bg-brand-300" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="min-w-0 flex-1 basis-0">
-              <h3 className="text-lg font-bold leading-snug text-accent-600 sm:text-xl md:min-h-[4.75rem]">
-                What you can&rsquo;t see, but is bad
-              </h3>
-              <ul className="mt-6 space-y-4 md:mt-7">
-                {[
-                  "Curiosity is down",
-                  "Experimentation stops happening",
-                  "Critical thinking is outsourced to AI",
-                  "Staff engagement plummets",
-                  "The customer is forgotten",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-lg font-medium text-brand-900"
-                  >
-                    <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* ── 3. The Thesis ── */}
-      <Section width="content" className="text-center">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-          The Core Thesis
-        </p>
-        <h2 className="heading-display-stroke-sm mx-auto mt-8 max-w-3xl text-3xl uppercase leading-[0.95] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
-          We&rsquo;re Focusing on{" "}
-          <span className="text-accent-600">the Wrong AI</span>
-        </h2>
-        <h3 className="heading-display-stroke-sm mx-auto mt-10 max-w-3xl text-2xl text-brand-900 sm:text-3xl md:text-4xl">
-          We&rsquo;re obsessed with Artificial Intelligence when Apathy and
-          Indifference are killing our businesses.
-        </h3>
-        <div className="mx-auto mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-600">
-          <p>
-            Teams can now generate emails, summaries, presentations, strategy
-            documents, and meeting notes without increasing curiosity, ownership,
-            experimentation, or initiative.
-          </p>
-          <p>
-            The old indicators of engagement no longer work. Output is no longer
-            proof of involvement. Activity is no longer proof of care.
-          </p>
-          <p className="font-semibold text-brand-900">
-            People are performing engagement instead of practising it.
-          </p>
-        </div>
-      </Section>
-
-      {/* ── 4. The Apathy Arch ── */}
-      <Section width="wide">
-        <div className="text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-            Signature Framework
-          </p>
-          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-            The Apathy Arch
-          </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-brand-600">
-            Apathy is not sudden; it is a progressive erosion that begins with
-            the loss of curiosity. Then boredom fills their spare time. Staff are
-            then struck by an apathy for their work and an indifference towards
-            the company, the company&rsquo;s vision, mission, and the work
-            itself. Eventually, your brightest talent will exit, or worse, will
-            remain at your company but disengage from the work, your customers
-            and their colleagues.
-          </p>
-        </div>
-
-        {/* Arch visualization */}
-        <div className="mt-12 flex flex-col items-stretch gap-4 md:flex-row md:items-end md:gap-0">
-          {APATHY_ARCH_STEPS.map((step, i) => {
-            return (
-              <div
-                key={step.label}
-                className={`flex min-w-0 flex-1 flex-col items-center ${
-                  step.image ? "justify-end gap-0" : ""
-                }`}
-              >
-                {step.image && step.imageAlt && (
-                  <div className="flex w-full justify-center leading-none">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={step.image}
-                      alt={step.imageAlt}
-                      className={step.imageClassName ?? APATHY_ARCH_IMAGE_CLASS}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                )}
-                <div
-                  className={`flex w-full flex-col justify-end border-2 text-center transition-colors ${APATHY_ARCH_HEIGHTS[i]} ${
-                    step.image
-                      ? "px-4 pb-4 pt-0 md:px-6 md:pb-6 md:pt-0"
-                      : "p-4 md:p-6"
-                  } border-brand-200 bg-white`}
-                >
-                  <p className="text-xs font-bold uppercase tracking-widest text-brand-400">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <p className="mt-2 text-lg font-bold text-brand-900 md:text-xl">
-                    {step.label}
-                  </p>
-                  <p className="mt-1 text-sm text-brand-500">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Supporting concepts */}
-        <p className="mx-auto mt-16 max-w-3xl text-center text-lg font-semibold leading-relaxed text-brand-900 md:text-xl">
-          When the Apathy Arch is left unchecked, the slow erosion of your
-          organisation begins with:
-        </p>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          {SUPPORTING_CONCEPTS.map((concept) => (
-            <div
-              key={concept.title}
-              className="border-l-4 border-accent-600 py-2 pl-6"
-            >
-              <h3 className="text-base font-bold text-brand-900">
-                {concept.title}
-              </h3>
-              <p className="mt-1 text-sm leading-relaxed text-brand-600">
-                {concept.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* ── 5. Audience Outcomes ── */}
+      {/* ── 2. The Trap ── */}
       <Section width="content">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
-            What Your Team Gets
+            The Trap
           </p>
-          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl">
-            Teams Leave With
+          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            <span className="block">
+              Apathy doesn&rsquo;t arrive all at once.
+            </span>
+            <span className="mt-2 block text-accent-600">
+              It settles in slowly.
+            </span>
           </h2>
         </div>
 
-        <ul className="mx-auto mt-10 max-w-2xl space-y-5">
-          {OUTCOMES.map((outcome, i) => (
-            <li key={i} className="flex gap-4">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-accent-600 text-sm font-bold text-white">
-                {i + 1}
-              </span>
-              <span className="text-lg text-brand-700">{outcome}</span>
+        <div className="mx-auto mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-600">
+          <p>
+            Most organisations do not intentionally create passive cultures.
+          </p>
+          <p>But over time, many workplaces quietly reward:</p>
+        </div>
+
+        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+          {[
+            "agreement over curiosity",
+            "process over experimentation",
+            "caution over initiative",
+            "predictability over movement",
+          ].map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 text-lg text-brand-700"
+            >
+              <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
+              {item}
             </li>
           ))}
         </ul>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-600">
+          <p>The result is not immediate failure.</p>
+          <p>
+            It&rsquo;s something more dangerous: smart people slowly learning
+            that action is risky and compliance is rewarded.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            Meetings can create the illusion of momentum while nothing actually
+            moves.
+          </blockquote>
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            The trap is not that people stop working. It&rsquo;s that they stop
+            caring enough to act.
+          </blockquote>
+        </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+          And in the age of artificial intelligence, passive cultures become far
+          more dangerous.
+        </p>
       </Section>
 
-      {/* ── 6. Speaker Credibility ── */}
+      {/* ── 3. Why It Matters Now ── */}
+      <Section width="content">
+        <div className="text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
+            Why It Matters Now
+          </p>
+          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            Passive cultures become dangerous when the world speeds up.
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+          <p>AI is amplifying human behaviour.</p>
+          <p>
+            Curious people become more capable. Experimental teams become more
+            effective. Fast learners gain leverage.
+          </p>
+          <p>But passive cultures struggle.</p>
+          <p>
+            Because when people are trained to wait, avoid risk, and seek
+            permission, even powerful tools cannot create meaningful movement.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            The future belongs to organisations that can learn faster than they
+            fear change.
+          </blockquote>
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            Technology accelerates. Complacency compounds.
+          </blockquote>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+          <p>The answer is not working harder.</p>
+          <p className="font-semibold text-brand-900">
+            It&rsquo;s rebuilding cultures where action feels possible again.
+          </p>
+        </div>
+      </Section>
+
+      {/* ── 4. The Insight ── */}
+      <Section width="content">
+        <div className="text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
+            The Insight
+          </p>
+          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            Alignment is not action.
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+          <p>
+            Most organisations do not suffer from a lack of information. They
+            suffer from a gap between knowing and doing.
+          </p>
+          <p>
+            People know they should experiment more. Move faster. Challenge
+            ideas earlier. Take initiative. Think creatively.
+          </p>
+          <p>
+            But many workplaces unintentionally reward the opposite.
+          </p>
+          <p>Over time:</p>
+        </div>
+
+        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+          {[
+            "process replaces momentum",
+            "caution replaces curiosity",
+            "meetings replace movement",
+            "compliance replaces contribution",
+          ].map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 text-lg text-brand-700"
+            >
+              <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+          <p>The result is not laziness. It is behavioural drift.</p>
+          <p className="font-semibold text-brand-900">
+            People contribute differently in environments that reward
+            initiative.
+          </p>
+        </div>
+      </Section>
+
+      {/* ── 5. The Shift ── */}
+      <Section width="content">
+        <div className="text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
+            The Shift
+          </p>
+          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            Healthy cultures reward action, not just alignment.
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+          <p>The solution is not chaos. And it is not removing structure.</p>
+          <p>
+            The organisations that thrive are often the ones that create
+            environments where people:
+          </p>
+        </div>
+
+        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+          {[
+            "experiment more freely",
+            "contribute more openly",
+            "challenge ideas earlier",
+            "take thoughtful initiative",
+            "learn faster from mistakes",
+            "move before certainty arrives",
+          ].map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 text-lg text-brand-700"
+            >
+              <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg font-semibold text-brand-900">
+          Curiosity is not soft. It is operational leverage.
+        </p>
+
+        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            People act differently in environments that reward initiative.
+          </blockquote>
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            The goal is not perfection. It&rsquo;s movement.
+          </blockquote>
+        </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+          This keynote gives audiences a new lens on curiosity, culture, and
+          action in the age of AI.
+        </p>
+      </Section>
+
+      {/* ── 6. What Audiences Walk Away With ── */}
+      <Section width="content">
+        <div className="text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
+            What Audiences Walk Away With
+          </p>
+          <h2 className="heading-display-stroke-sm mt-4 text-3xl text-brand-900 sm:text-4xl">
+            People leave seeing the hidden cost of passive culture.
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-2xl">
+          <p className="text-lg leading-relaxed text-brand-600">
+            Audiences leave with a clearer understanding of:
+          </p>
+          <ul className="mt-4 space-y-3">
+            {[
+              "why people stop taking initiative",
+              "how cultures unintentionally reward passivity",
+              "what happens when process replaces movement",
+              "why curiosity matters more in the age of AI",
+              "how incentives shape behaviour",
+              "what modern organisations may be teaching people without realising it",
+            ].map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-3 text-lg text-brand-700"
+              >
+                <span className="mt-1.5 block h-3 w-3 shrink-0 bg-accent-600" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+          The keynote is designed to create recognition first, then movement.
+        </p>
+
+        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            The behaviours organisations reward eventually become the culture
+            they inherit.
+          </blockquote>
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            Passive cultures are built one small compromise at a time.
+          </blockquote>
+          <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
+            Most people want to contribute more than their environment allows.
+          </blockquote>
+        </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+          This perspective is shaped by two decades of building companies,
+          leading teams, and watching how people behave inside systems.
+        </p>
+      </Section>
+
+      {/* ── 7. Speaker Credibility ── */}
       <Section width="content" className="text-center">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
           Your Speaker
@@ -456,12 +439,12 @@ export default function EscapingTheApathyTrapPage() {
         </div>
       </Section>
 
-      {/* ── 7. Client Logos ── */}
+      {/* ── 8. Client Logos ── */}
       <Section width="wide">
         <IncredibleClients names={CLIENT_NAMES} headingSize="section" />
       </Section>
 
-      {/* ── 8. Testimonials ── */}
+      {/* ── 9. Testimonials ── */}
       <Section width="wide">
         <div className="text-center">
           <h2 className="heading-display-stroke-sm text-center text-3xl text-brand-900 sm:text-4xl md:text-5xl">
@@ -489,12 +472,12 @@ export default function EscapingTheApathyTrapPage() {
         </div>
       </Section>
 
-      {/* ── 9. Booking CTA ── */}
+      {/* ── 10. Booking CTA ── */}
       <FinalCta
         heading="Escape the Apathy Trap"
         description="Bring this keynote to your organisation. Virtual delivery worldwide."
         primaryHref={getKeynoteBookingUrl(KEYNOTE_SLUG)}
-        primaryLabel="Book This Keynote"
+        primaryLabel="Bring This Talk To Your Team"
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"
       />
