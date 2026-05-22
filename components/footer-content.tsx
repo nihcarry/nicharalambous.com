@@ -11,7 +11,8 @@ const footerLinks = {
   speaking: [
     { href: "/speaker", label: "Virtual Keynote Speaker" },
     { href: "/keynotes", label: "Keynote Topics" },
-    { href: "/contact", label: "Book Nic" },
+    { href: "/contact", label: "Book a Talk" },
+    { href: "/session", label: "Consulting Session" },
   ],
   explore: [
     { href: "/topics", label: "Topics" },

@@ -159,7 +159,7 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 }
 
 /** Routes that live inside the More overflow menu. Used to highlight More when active. */
-const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/about"];
+const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/session", "/about"];
 
 function isMoreMenuActive(pathname: string): boolean {
   return moreMenuRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
@@ -194,6 +194,75 @@ function MainNav({ onNavClick }: { onNavClick?: () => void }) {
   );
 }
 
+/** Dropdown menu for the "Book Nic" button — shows "Book a Talk" and "Book a Session" options. */
+function BookNicDropdown({ isActive }: { isActive: boolean }) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
+        style={{ backgroundColor: "var(--color-nav-blue)" }}
+      >
+        Book Nic
+        {open || isActive ? <ChevronDown className="h-3 w-3 shrink-0" /> : <ChevronUp className="h-3 w-3 shrink-0" />}
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute top-full left-0 z-50 mt-1.5 w-48 overflow-hidden rounded-lg border border-white/15 bg-nav-bg shadow-lg"
+        >
+          <a
+            href="/contact"
+            role="menuitem"
+            className="flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-nav-text transition-colors hover:bg-white/10"
+            onClick={() => setOpen(false)}
+          >
+            <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+            </svg>
+            Book a Talk
+          </a>
+          <a
+            href="/session"
+            role="menuitem"
+            className="flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-nav-text transition-colors hover:bg-white/10"
+            onClick={() => setOpen(false)}
+          >
+            <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+            </svg>
+            Book a Session
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** Bottom status/CTA row — green left section, theme switcher right section. */
 function NavStatusBar({
   onNavClick,
@@ -205,20 +274,37 @@ function NavStatusBar({
 }) {
   const pathname = usePathname();
   const isContactActive = isNavLinkActive(pathname, "/contact");
+  const isSessionActive = isNavLinkActive(pathname, "/session");
+  const isBookingActive = isContactActive || isSessionActive;
   const isAboutActive = isNavLinkActive(pathname, "/about");
 
   if (variant === "compact") {
     return (
       <div className="flex flex-col gap-2">
-        <a
-          href="/contact"
-          onClick={onNavClick}
-          className="flex items-center gap-2 rounded-lg px-3 py-2 text-nav-text transition-colors hover:bg-white/10"
-          style={{ backgroundColor: "var(--color-nav-blue)" }}
-        >
-          <span className="text-xs font-semibold text-white">Book Nic</span>
-          {isContactActive && <ChevronDown className="h-3 w-3 shrink-0 text-white" />}
-        </a>
+        <div className="flex flex-col gap-1 rounded-lg p-1" style={{ backgroundColor: "var(--color-nav-blue)" }}>
+          <a
+            href="/contact"
+            onClick={onNavClick}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-white transition-colors hover:bg-white/15"
+          >
+            <svg className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+            </svg>
+            <span className="text-xs font-semibold">Book a Talk</span>
+            {isContactActive && <ChevronDown className="h-3 w-3 shrink-0 text-white" />}
+          </a>
+          <a
+            href="/session"
+            onClick={onNavClick}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-white transition-colors hover:bg-white/15"
+          >
+            <svg className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+            </svg>
+            <span className="text-xs font-semibold">Book a Session</span>
+            {isSessionActive && <ChevronDown className="h-3 w-3 shrink-0 text-white" />}
+          </a>
+        </div>
         <a
           href="/about"
           onClick={onNavClick}
@@ -236,10 +322,10 @@ function NavStatusBar({
   }
 
   return (
-    <div className="flex w-fit flex-nowrap items-stretch overflow-clip rounded-b-lg">
-      {/* Green section: caret, Book Nic, shield, About Nic */}
+    <div className="flex w-fit flex-nowrap items-stretch">
+      {/* Green section: caret, Book Nic dropdown, shield, About Nic */}
       <div
-        className="flex flex-nowrap items-center gap-2 pt-0.5 pb-px pl-3 pr-2"
+        className="flex flex-nowrap items-center gap-2 rounded-bl-lg pt-0.5 pb-px pl-3 pr-2"
         style={{ backgroundColor: "var(--color-nav-green)" }}
       >
         {/* 1. Upward caret */}
@@ -248,16 +334,8 @@ function NavStatusBar({
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75 12 8.25l7.5 7.5" />
           </svg>
         </span>
-        {/* 2. Blue "Book Nic" — links to contact/booking page */}
-        <a
-          href="/contact"
-          onClick={onNavClick}
-          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight text-white transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-nav-bg"
-          style={{ backgroundColor: "var(--color-nav-blue)" }}
-        >
-          Book Nic
-          {isContactActive ? <ChevronDown className="h-3 w-3 shrink-0" /> : <ChevronUp className="h-3 w-3 shrink-0" />}
-        </a>
+        {/* 2. Blue "Book Nic" dropdown */}
+        <BookNicDropdown isActive={isBookingActive} />
         {/* 3. Shield */}
         <span className="flex shrink-0 items-center justify-center text-[#374151]" aria-hidden>
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -279,7 +357,7 @@ function NavStatusBar({
       </div>
       {/* Red section: Theme switcher (replaced Share) */}
       <div
-        className="flex items-center px-3 pt-0.5 pb-px"
+        className="flex items-center rounded-br-lg px-3 pt-0.5 pb-px"
         style={{ backgroundColor: "var(--color-nav-red)" }}
       >
         <ThemeSwitcher />
