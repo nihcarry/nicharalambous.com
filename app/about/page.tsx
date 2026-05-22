@@ -23,7 +23,7 @@ import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { aboutPageJsonLd } from "@/lib/metadata";
-import { tilt } from "@/lib/tilt";
+import { ArrowRight, Crosshair } from "lucide-react";
 
 /* ---------- Metadata ---------- */
 
@@ -159,10 +159,16 @@ export default function AboutPage() {
           {CAREER_PILLARS.map((pillar, i) => (
             <div
               key={pillar.title}
-              className="card-brutalist p-6 md:p-8"
-              style={{ transform: `rotate(${tilt(i, 50)}deg)` }}
+              className="flex flex-col border border-brand-900 bg-white p-6 md:p-8"
             >
-              <h3 className="heading-display text-2xl text-accent-600">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  PILLAR_{String(i + 1).padStart(2, "0")}
+                </span>
+                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+              </div>
+              <div className="my-3 border-t border-brand-200" />
+              <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900">
                 {pillar.title}
               </h3>
               <div className="mt-6 space-y-4">
@@ -200,21 +206,31 @@ export default function AboutPage() {
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
           What I&apos;m building now.
         </p>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {CURRENT_BUILDS_PREVIEW.map((business) => (
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {CURRENT_BUILDS_PREVIEW.map((business, i) => (
             <a
               key={business.name}
               href={business.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="card-brutalist block p-5 transition-colors hover:bg-accent-50"
+              className="group flex flex-col border border-brand-900 bg-white p-6"
             >
-              <p className="text-lg font-extrabold uppercase tracking-tight text-brand-900">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  BUILD_{String(i + 1).padStart(2, "0")}
+                </span>
+                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+              </div>
+              <div className="my-3 border-t border-brand-200" />
+              <p className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
                 {business.name}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-brand-600">
+              <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
                 {business.summary}
               </p>
+              <div className="mt-auto pt-4 flex justify-end">
+                <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </div>
             </a>
           ))}
         </div>

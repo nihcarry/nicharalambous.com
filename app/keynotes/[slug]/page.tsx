@@ -34,7 +34,7 @@ import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { serviceJsonLd } from "@/lib/metadata";
-import { tilt } from "@/lib/tilt";
+import { Crosshair } from "lucide-react";
 
 /* ---------- Data fetching ---------- */
 
@@ -173,7 +173,7 @@ export default async function KeynotePage({
       />
 
       {/* Hero */}
-      <Section width="content" className="text-center">
+      <Section width="landing" className="text-center">
         <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
           Virtual Keynote
         </p>
@@ -181,7 +181,7 @@ export default async function KeynotePage({
           {keynote.title}
         </h1>
         <div className="mx-auto mt-3 h-1 w-16 bg-accent-600" />
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-4 max-w-4xl text-lg leading-relaxed text-brand-600">
           {keynote.tagline}
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-brand-400">
@@ -206,7 +206,7 @@ export default async function KeynotePage({
 
       {/* Description */}
       {hasDescription && (
-        <Section width="content">
+        <Section width="landing">
           <PortableText value={keynote.description} />
         </Section>
       )}
@@ -265,20 +265,28 @@ export default async function KeynotePage({
             {keynote.testimonials!.map((t, i) => (
               <blockquote
                 key={t._id}
-                className="flex flex-col card-brutalist p-6"
-                style={{ transform: `rotate(${tilt(i, 70)}deg)` }}
+                className="flex flex-col border border-brand-900 bg-white p-6"
               >
-                <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-accent-600">
+                    TESTIMONIAL_{String(i + 1).padStart(2, "0")}
+                  </span>
+                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                </div>
+                <div className="my-3 border-t border-brand-200" />
+                <p className="flex-1 font-mono text-sm italic leading-relaxed text-brand-700">
                   &ldquo;{t.quote}&rdquo;
                 </p>
-                <footer className="mt-4 border-t border-brand-100 pt-4">
-                  <p className="text-sm font-semibold text-brand-900">
-                    {t.authorName}
-                  </p>
-                  <p className="text-xs text-brand-500">
-                    {t.authorTitle}
-                    {t.company && `, ${t.company}`}
-                  </p>
+                <footer className="mt-auto pt-6 border-t border-brand-200">
+                  <div className="pt-4">
+                    <p className="text-sm font-semibold text-brand-900">
+                      {t.authorName}
+                    </p>
+                    <p className="font-mono text-xs text-brand-500">
+                      {t.authorTitle}
+                      {t.company && `, ${t.company}`}
+                    </p>
+                  </div>
                 </footer>
               </blockquote>
             ))}
@@ -288,7 +296,7 @@ export default async function KeynotePage({
 
       {/* Video embed */}
       {hasVideo && (
-        <Section width="content">
+        <Section width="landing">
           <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Watch a Preview
           </h2>
@@ -308,7 +316,7 @@ export default async function KeynotePage({
 
       {/* Related Topics */}
       {hasTopics && (
-        <Section width="content">
+        <Section width="landing">
           <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Related Topics
           </h2>
@@ -338,6 +346,7 @@ export default async function KeynotePage({
         primaryLabel="Enquire Now"
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"
+        contentWidth="landing"
       />
     </div>
   );

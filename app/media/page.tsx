@@ -19,7 +19,7 @@ import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
-import { tilt } from "@/lib/tilt";
+import { ArrowRight, Crosshair } from "lucide-react";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
 /* ---------- Data fetching ---------- */
@@ -107,64 +107,60 @@ export default async function MediaPage() {
               {items.map((item, i) => (
                 <article
                   key={item._id}
-                  className="card-brutalist flex flex-col p-6 transition-colors hover:bg-accent-50"
-                  style={{ transform: `rotate(${tilt(i, 130)}deg)` }}
+                  className="flex flex-col border border-brand-900 bg-white p-6"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h3 className="heading-display text-lg text-brand-900">
-                        {item.url ? (
-                          <a
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-accent-600"
-                          >
-                            {item.title}
-                          </a>
-                        ) : (
-                          item.title
-                        )}
-                      </h3>
-                      {item.publication && (
-                        <p className="mt-1 text-sm font-medium text-accent-600">
-                          {item.publication}
-                        </p>
-                      )}
-                    </div>
-                    <span className="shrink-0 bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600">
-                      {formatType(item.type)}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-widest text-accent-600">
+                      {formatType(item.type).toUpperCase()}_{String(i + 1).padStart(2, "0")}
                     </span>
+                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
                   </div>
-
-                  {item.description && (
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
-                      {item.description}
-                    </p>
-                  )}
-
-                  <div className="mt-4 flex items-center gap-3">
-                    {item.date && (
-                      <time
-                        dateTime={item.date}
-                        className="text-xs text-brand-400"
-                      >
-                        {new Date(item.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                        })}
-                      </time>
-                    )}
-                    {item.url && (
+                  <div className="my-3 border-t border-brand-200" />
+                  <h3 className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900">
+                    {item.url ? (
                       <a
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-medium text-accent-600 hover:underline"
+                        className="transition-colors hover:text-accent-600"
                       >
-                        View &rarr;
+                        {item.title}
                       </a>
+                    ) : (
+                      item.title
                     )}
+                  </h3>
+                  {item.publication && (
+                    <p className="mt-1 font-mono text-xs tracking-widest text-accent-600">
+                      {item.publication}
+                    </p>
+                  )}
+
+                  {item.description && (
+                    <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
+                      {item.description}
+                    </p>
+                  )}
+
+                  <div className="mt-auto pt-6">
+                    <div className="border-t border-brand-200 pt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-brand-500">
+                          {item.date && new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}
+                        </span>
+                        {item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group inline-flex items-center gap-1 font-mono text-xs text-accent-600"
+                          >
+                            View
+                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </article>
               ))}

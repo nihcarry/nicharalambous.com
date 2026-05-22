@@ -11,6 +11,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ArrowRight, Crosshair } from "lucide-react";
 
 interface TopicFilter {
   _id: string;
@@ -123,13 +124,20 @@ export function BlogList({ posts, topics }: BlogListProps) {
       {/* Post grid */}
       {paginatedPosts.length > 0 ? (
         <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {paginatedPosts.map((post) => (
+          {paginatedPosts.map((post, i) => (
             <a
               key={post._id}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
+              className="group flex flex-col border border-brand-900 bg-white p-6"
             >
-              {/* Featured image */}
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  POST_{String(((currentPage - 1) * POSTS_PER_PAGE) + i + 1).padStart(2, "0")}
+                </span>
+                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+              </div>
+              <div className="my-3 border-t border-brand-200" />
+
               {post.featuredImage?.asset?.url && (
                 <div className="mb-4 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -142,43 +150,39 @@ export function BlogList({ posts, topics }: BlogListProps) {
                 </div>
               )}
 
-              <h2 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
+              <h2 className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
                 {post.title}
               </h2>
               {post.excerpt && (
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
+                <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
                   {post.excerpt}
                 </p>
               )}
 
-              <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
-                {post.publishedAt && (
-                  <time dateTime={post.publishedAt}>
-                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </time>
-                )}
-                {post.estimatedReadTime && (
-                  <span>{post.estimatedReadTime} min read</span>
-                )}
-              </div>
-
-              {/* Topic tags */}
               {post.topics && post.topics.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {post.topics.map((topic) => (
                     <span
                       key={topic._id}
-                      className="bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600"
+                      className="bg-brand-100 px-2.5 py-0.5 font-mono text-xs text-brand-600"
                     >
                       {topic.title}
                     </span>
                   ))}
                 </div>
               )}
+
+              <div className="mt-auto pt-6">
+                <div className="border-t border-brand-200 pt-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-widest text-brand-500">
+                      {post.publishedAt && new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                      {post.estimatedReadTime && ` · ${post.estimatedReadTime} min`}
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </div>
+                </div>
+              </div>
             </a>
           ))}
         </div>

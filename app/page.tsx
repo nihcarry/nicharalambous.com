@@ -36,6 +36,7 @@ import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
 import { HeroVideoPlayButton } from "@/components/hero-video-play-button";
+import { ArrowRight, Crosshair } from "lucide-react";
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -141,43 +142,69 @@ export default async function HomePage() {
           <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-[clamp(1.75rem,8vw,2.25rem)] uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
             What Nic Speaks About
           </h2>
-          <div className="mt-6 grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
-            <div
-              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
-              style={{ transform: `rotate(${tilt(0, 1)}deg)` }}
-            >
-              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
-                Activating human agency at work
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-700">
-                I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.
-              </p>
-            </div>
-            <div
-              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
-              style={{ transform: `rotate(${tilt(1, 1)}deg)` }}
-            >
-              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
-                Staying connected without becoming consumed
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-700">
-                I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.
-              </p>
-            </div>
-            <div
-              className="border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000]"
-              style={{ transform: `rotate(${tilt(2, 1)}deg)` }}
-            >
-              <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 md:text-3xl">
-                Curiosity, Action and Failure
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-brand-700">
-                I help organisations build entrepreneurial teams that learn fast, act with agency, and turn failure into progress, especially in the AI era.
-              </p>
-            </div>
+          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                label: "TOPIC_01",
+                title: "Activating Human Agency",
+                body: "I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.",
+                output: "OWNERSHIP",
+                href: "/keynotes/escaping-the-apathy-trap",
+              },
+              {
+                label: "TOPIC_02",
+                title: "Staying Connected Without Becoming Consumed",
+                body: "I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.",
+                output: "FOCUS",
+                href: "/keynotes/connected-not-consumed",
+              },
+              {
+                label: "TOPIC_03",
+                title: "Curiosity, Action and Failure",
+                body: "I help organisations build entrepreneurial teams that learn fast, act with agency, and turn failure into progress, especially in the AI era.",
+                output: "PROGRESS",
+                href: "/keynotes/innovation-starts-at-home",
+              },
+            ].map((pillar) => (
+              <div
+                key={pillar.label}
+                className="flex flex-col border border-brand-900 bg-white p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-accent-600">
+                    {pillar.label}
+                  </span>
+                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                </div>
+                <div className="my-3 border-t border-brand-200" />
+                <a href={pillar.href} className="group">
+                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
+                    {pillar.title}
+                  </h3>
+                </a>
+                <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
+                  {pillar.body}
+                </p>
+                <div className="mt-auto pt-6">
+                  <div className="border-t border-brand-200 pt-4">
+                    <a href={pillar.href} className="group flex items-center justify-between">
+                      <span className="font-mono text-xs tracking-widest text-accent-600">
+                        OUTPUT: {pillar.output}
+                      </span>
+                      <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="mt-6 text-center">
-            <CTAButton href="/keynotes" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
+          <div className="mt-8 text-center">
+            <CTAButton
+              href="/keynotes"
+              variant="secondary"
+              icon={<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />}
+              className="!rounded-none !border-accent-600 !text-accent-600 font-mono font-semibold tracking-[0.05em] text-base uppercase hover:!bg-accent-50"
+            >
               View All Keynotes
             </CTAButton>
           </div>
@@ -204,33 +231,36 @@ export default async function HomePage() {
             <h2 className="heading-stroke font-extrabold tracking-tight pt-2 pb-3 text-center text-[clamp(1.9rem,4.5vw,3.6rem)] uppercase leading-[0.95] text-brand-900">
               Latest Thinking
             </h2>
-            <div className="mt-3 grid gap-4 px-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post, i) => (
                 <a
                   key={post._id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col border-[12px] border-accent-600 bg-white p-4 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50 md:border-[14px] md:p-5"
-                  style={{ transform: `rotate(${tilt(i, 2)}deg)` }}
+                  className="group flex flex-col border border-brand-900 bg-white p-6"
                 >
-                  <h3 className="font-extrabold tracking-tight text-xl uppercase leading-[1.02] text-accent-600 group-hover:text-accent-500 [overflow-wrap:anywhere] md:text-2xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-widest text-accent-600">
+                      POST_{String(i + 1).padStart(2, "0")}
+                    </span>
+                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                  </div>
+                  <div className="my-3 border-t border-brand-200" />
+                  <h3 className="text-xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 [overflow-wrap:anywhere] md:text-2xl">
                     {post.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-brand-700 md:text-sm">
+                  <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
                     {post.excerpt}
                   </p>
-                  <div className="mt-4 flex items-center gap-3 text-xs text-brand-500">
-                    {post.publishedAt && (
-                      <time dateTime={post.publishedAt}>
-                        {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </time>
-                    )}
-                    {post.estimatedReadTime && (
-                      <span>{post.estimatedReadTime} min read</span>
-                    )}
+                  <div className="mt-auto pt-6">
+                    <div className="border-t border-brand-200 pt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-brand-500">
+                          {post.publishedAt && new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                          {post.estimatedReadTime && ` · ${post.estimatedReadTime} min`}
+                        </span>
+                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </div>
+                    </div>
                   </div>
                 </a>
               ))}
@@ -251,7 +281,7 @@ export default async function HomePage() {
         id="topics"
       >
         <SlideContent>
-          <div className="grid gap-6 px-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* Heading in place of first two cards */}
             <div className="flex items-center sm:col-span-2">
               <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-[85px]">
@@ -269,15 +299,22 @@ export default async function HomePage() {
               />
               <a
                 href={TOPIC_PREVIEWS[0].href}
-                className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
-                style={{ transform: `rotate(${tilt(0, 3)}deg)` }}
+                className="group flex flex-col border border-brand-900 bg-white p-6"
               >
-                <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_01</span>
+                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                </div>
+                <div className="my-3 border-t border-brand-200" />
+                <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
                   {TOPIC_PREVIEWS[0].title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
                   {TOPIC_PREVIEWS[0].description}
                 </p>
+                <div className="mt-auto pt-6 flex justify-end">
+                  <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </div>
               </a>
             </div>
             {/* Bottom row — 3 cards */}
@@ -293,30 +330,44 @@ export default async function HomePage() {
                   />
                   <a
                     href={topic.href}
-                    className="group block border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
-                    style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
+                    className="group flex flex-col border border-brand-900 bg-white p-6"
                   >
-                    <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_{String(i + 2).padStart(2, "0")}</span>
+                      <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                    </div>
+                    <div className="my-3 border-t border-brand-200" />
+                    <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
                       {topic.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                    <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
                       {topic.description}
                     </p>
+                    <div className="mt-auto pt-6 flex justify-end">
+                      <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </div>
                   </a>
                 </div>
               ) : (
                 <a
                   key={topic.href}
                   href={topic.href}
-                  className="group border-[20px] border-accent-600 bg-white p-6 [box-shadow:0_0_0_2px_#000] transition-colors hover:bg-accent-50"
-                  style={{ transform: `rotate(${tilt(i + 1, 3)}deg)` }}
+                  className="group flex flex-col border border-brand-900 bg-white p-6"
                 >
-                  <h3 className="font-extrabold tracking-tight text-2xl uppercase text-accent-600 group-hover:text-accent-500 md:text-3xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_{String(i + 2).padStart(2, "0")}</span>
+                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                  </div>
+                  <div className="my-3 border-t border-brand-200" />
+                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
                     {topic.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-brand-700">
+                  <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
                     {topic.description}
                   </p>
+                  <div className="mt-auto pt-6 flex justify-end">
+                    <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </div>
                 </a>
               )
             ))}

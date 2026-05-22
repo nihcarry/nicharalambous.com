@@ -20,6 +20,8 @@ interface FinalCtaProps {
   quoteAttribution?: string;
   /** Optional className for the heading (e.g. landing-page slide style) */
   headingClassName?: string;
+  /** Inner content width. Defaults to content (48rem). Use landing on keynote one-pagers. */
+  contentWidth?: "content" | "landing" | "wide";
 }
 
 export function FinalCta({
@@ -32,10 +34,17 @@ export function FinalCta({
   quote,
   quoteAttribution,
   headingClassName,
+  contentWidth = "content",
 }: FinalCtaProps) {
+  const contentContainerClass = {
+    content: "container-content",
+    landing: "container-landing",
+    wide: "container-wide",
+  }[contentWidth];
+
   return (
     <Section width="full" className="bg-cta-pattern text-center">
-      <div className="container-content">
+      <div className={contentContainerClass}>
         {quote && (
           <>
             <blockquote

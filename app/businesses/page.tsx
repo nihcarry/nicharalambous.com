@@ -23,7 +23,7 @@ import {
 import { Section } from "@/components/section";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
-import { tilt } from "@/lib/tilt";
+import { ArrowRight, Crosshair } from "lucide-react";
 
 /* ---------- Data fetching ---------- */
 
@@ -170,17 +170,16 @@ export default async function BusinessesPage() {
             Live products I&apos;m actively shipping right now.
           </p>
         </div>
-        <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2 md:gap-4">
+        <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2">
           {CURRENT_BUILDS.map((build, cardIndex) => (
             <a
               key={build.url}
               href={build.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group card-brutalist flex h-full flex-col overflow-hidden bg-white transition-colors hover:bg-accent-50"
-              style={{ transform: `rotate(${tilt(cardIndex, 180)}deg)` }}
+              className="group flex h-full flex-col overflow-hidden border border-brand-900 bg-white"
             >
-              <div className="relative aspect-[16/8] border-b-4 border-brand-200 bg-brand-100 md:aspect-[16/6]">
+              <div className="relative aspect-[16/8] border-b border-brand-200 bg-brand-100 md:aspect-[16/6]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={build.screenshotSrc}
@@ -188,24 +187,31 @@ export default async function BusinessesPage() {
                   className="h-full w-full object-cover object-top"
                 />
               </div>
-              <div className="flex flex-1 flex-col p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-base font-extrabold tracking-tight uppercase text-brand-900 md:text-lg">
-                    {build.name}
-                  </h3>
+              <div className="flex flex-1 flex-col p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-accent-600">
+                    BUILD_{String(cardIndex + 1).padStart(2, "0")}
+                  </span>
                   <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
                     Live
                   </span>
                 </div>
-                <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-brand-500">
+                <div className="my-3 border-t border-brand-200" />
+                <h3 className="text-base font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-lg">
+                  {build.name}
+                </h3>
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-brand-500">
                   {getHostname(build.url)}
                 </p>
-                <p className="mt-2 flex-1 text-xs leading-snug text-brand-600">
+                <p className="mt-2 flex-1 font-mono text-xs leading-snug text-brand-600">
                   {build.summary}
                 </p>
-                <p className="mt-3 text-sm font-semibold text-accent-600">
-                  Open project <span aria-hidden>&rarr;</span>
-                </p>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-accent-600">
+                    Open project
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </div>
               </div>
             </a>
           ))}
@@ -288,13 +294,21 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
     ? "text-base font-extrabold tracking-tight uppercase text-brand-700"
     : "text-lg font-extrabold tracking-tight uppercase text-brand-900";
   const cardClassName = deadpool
-    ? "border-[12px] border-black bg-brand-100/40 p-4 opacity-90 md:border-[20px]"
-    : "card-brutalist flex h-full flex-col overflow-hidden bg-white";
+    ? "border border-brand-400 bg-brand-100/40 p-4 opacity-90"
+    : "flex h-full flex-col overflow-hidden border border-brand-900 bg-white";
+
+  const statusBadge = active ? (
+    <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-600">Active</span>
+  ) : exit ? (
+    <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">{formatOutcome(business.outcome || "exit-sold")}</span>
+  ) : deadpool ? (
+    <span className="shrink-0 bg-brand-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-brand-600">Archived</span>
+  ) : null;
 
   const content = (
     <>
       {active && (
-        <div className="relative aspect-[16/9] border-b-4 border-brand-200 bg-brand-100">
+        <div className="relative aspect-[16/9] border-b border-brand-200 bg-brand-100">
           {visualUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -305,11 +319,8 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
           ) : (
             <div className="flex h-full items-center justify-center bg-brand-100 text-center">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand-400">
                   Visual Coming Soon
-                </p>
-                <p className="mt-1 text-sm text-brand-500">
-                  Screenshot or logo placeholder
                 </p>
               </div>
             </div>
@@ -318,38 +329,32 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
       )}
 
       <div className={deadpool ? "pt-4" : "flex flex-1 flex-col p-5"}>
-        <div className="flex items-start justify-between gap-3">
-          <h3 className={titleClassName}>
-            {business.name}
-            {canLink && <span className="ml-1 text-brand-400">&rarr;</span>}
-          </h3>
-          {active && (
-            <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-600">
-              Active
-            </span>
-          )}
-          {exit && (
-            <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
-              {formatOutcome(business.outcome || "exit-sold")}
-            </span>
-          )}
-          {deadpool && (
-            <span className="shrink-0 bg-brand-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-brand-600">
-              Archived
-            </span>
-          )}
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-xs tracking-widest text-accent-600">
+            {deadpool ? "ARCHIVED" : active ? "ACTIVE" : "EXIT"}
+          </span>
+          {statusBadge}
         </div>
+        <div className="my-3 border-t border-brand-200" />
+        <h3 className={titleClassName}>
+          {business.name}
+        </h3>
 
         {business.role && (
-          <p className="mt-1 text-sm text-brand-500">{business.role}</p>
+          <p className="mt-1 font-mono text-xs text-brand-500">{business.role}</p>
         )}
         {business.description && (
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-600">
+          <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
             {business.description}
           </p>
         )}
         {dateLabel && (
-          <p className="mt-4 text-xs font-medium text-brand-400">{dateLabel}</p>
+          <p className="mt-4 font-mono text-xs text-brand-400">{dateLabel}</p>
+        )}
+        {canLink && (
+          <div className="mt-auto pt-4 flex justify-end">
+            <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </div>
         )}
       </div>
     </>
@@ -357,10 +362,7 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
 
   if (!canLink) {
     return (
-      <article
-        className={cardClassName}
-        style={{ transform: `rotate(${tilt(cardIndex, seed)}deg)` }}
-      >
+      <article className={cardClassName}>
         {content}
       </article>
     );
@@ -371,8 +373,7 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
       href={business.url || "#"}
       target={business.url && isExternalUrl(business.url) ? "_blank" : undefined}
       rel={business.url && isExternalUrl(business.url) ? "noopener noreferrer" : undefined}
-      className={`${cardClassName} transition-colors hover:bg-accent-50`}
-      style={{ transform: `rotate(${tilt(cardIndex, seed)}deg)` }}
+      className={`${cardClassName} group transition-colors hover:bg-accent-50`}
     >
       {content}
     </a>

@@ -8,7 +8,7 @@
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
-  width?: "content" | "wide" | "full";
+  width?: "content" | "landing" | "wide" | "full";
   as?: "section" | "div" | "article" | "aside";
   id?: string;
 }
@@ -22,6 +22,7 @@ export function Section({
 }: SectionProps) {
   const widthStyles = {
     content: "container-content",
+    landing: "container-landing",
     wide: "container-wide",
     full: "",
   };

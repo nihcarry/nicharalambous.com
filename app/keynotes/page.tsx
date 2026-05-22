@@ -45,57 +45,61 @@ export default function KeynotesPage() {
 
       {/* Slide 1: Hero — Keynote Topics, audience image at bottom behind next-slide button */}
       <Slide
-        variant="grid-3"
+        variant="hero"
         background="bg-spotlight-pattern"
         id="hero"
-        className="md:justify-start"
+        className="md:!pb-[calc(45vh+0.5rem)]"
         image={
-          <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] overflow-hidden md:block">
-            {/* Audience — centered at bottom */}
+          <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] items-end justify-center overflow-hidden md:flex">
+            {/* Flexbox row: pillar | audience | pillar — siblings sit
+                directly adjacent so there is never a gap between them,
+                at any viewport width. Pillars keep their natural aspect
+                ratio (w-auto) and the audience flexes to fill the
+                remaining space (flex-1 + object-cover). */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/slides/16Bit_Pillar_Keynote.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none h-full w-auto shrink-0 select-none -mr-[4%]"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/slides/16bit_Audience.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom"
+              className="pointer-events-none h-full min-w-0 flex-1 select-none object-cover object-bottom"
             />
-            {/* Left pillar — absolutely positioned, overlaps audience edge */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/slides/16Bit_Pillar_Keynote.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 left-[8%] z-[2] h-full w-auto select-none object-contain object-bottom md:left-[12%]"
-            />
-            {/* Right pillar — absolutely positioned, overlaps audience edge */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/slides/16Bit_Pillar_Keynote.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-0 right-[8%] z-[2] h-full w-auto select-none object-contain object-bottom md:right-[12%]"
+              className="pointer-events-none h-full w-auto shrink-0 select-none -ml-[4%]"
             />
           </div>
+        }
+        foreground={
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src="/slides/16Bit_Nic_Keynotes.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-[41vh] left-1/2 z-[5] hidden h-[min(200px,25vh)] w-auto -translate-x-1/2 select-none object-contain md:block"
+          />
         }
       >
         <SlideContent>
           <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
             Flagship Keynotes
           </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
-            Each keynote is grounded in 20+ years of real entrepreneurial
-            experience and tailored to your audience.{" "}
+          <p className="mx-auto mt-4 mb-[150px] max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
+            Each keynote is grounded in 20 years of entrepreneurial experience,
+            deep research, and tailored to your audience.{" "}
             <a href="/speaker" className="text-accent-600 hover:underline">
-              Learn more about booking Nic &rarr;
+              Learn more about booking Nic.
             </a>
           </p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/slides/16Bit_Nic_Keynotes.png"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none mx-auto mt-6 mb-[10px] hidden h-[min(200px,25vh)] w-auto select-none object-contain md:block"
-          />
         </SlideContent>
       </Slide>
 
@@ -109,10 +113,7 @@ export default function KeynotesPage() {
           className="md:justify-start"
         >
           <SlideContent>
-            <a
-              href={`/keynotes/${keynote.slug}`}
-              className="group flex w-full flex-col"
-            >
+            <div className="flex w-full flex-col">
               {/* Header: title + tagline */}
               <div className="mb-10 md:mb-14">
               <h2
@@ -175,12 +176,11 @@ export default function KeynotesPage() {
                   {keynote.audiences.join(", ")}
                 </span>
               </div>
-              <span className="inline-flex items-center gap-2 font-semibold text-accent-600 transition-transform group-hover:translate-x-1 group-hover:text-accent-500">
+              <CTAButton href={`/keynotes/${keynote.slug}`}>
                 View keynote details
-                <span aria-hidden className="text-lg">→</span>
-              </span>
+              </CTAButton>
             </div>
-          </a>
+            </div>
           </SlideContent>
         </Slide>
       ))}

@@ -6,6 +6,8 @@
  * and strengthen internal linking within topic clusters.
  */
 
+import { ArrowRight, Crosshair } from "lucide-react";
+
 interface RelatedPost {
   _id: string;
   title: string;
@@ -27,33 +29,37 @@ export function RelatedPosts({ posts, className = "" }: RelatedPostsProps) {
     <div className={className}>
       <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">Related Articles</h2>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
+        {posts.map((post, i) => (
           <a
             key={post._id}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col border-2 border-accent-600 p-6 transition-colors hover:bg-accent-50"
+            className="group flex flex-col border border-brand-900 bg-white p-6"
           >
-            <h3 className="heading-display text-lg text-brand-900 group-hover:text-accent-600">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs tracking-widest text-accent-600">
+                RELATED_{String(i + 1).padStart(2, "0")}
+              </span>
+              <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+            </div>
+            <div className="my-3 border-t border-brand-200" />
+            <h3 className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
               {post.title}
             </h3>
             {post.excerpt && (
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-600">
+              <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
                 {post.excerpt}
               </p>
             )}
-            <div className="mt-4 flex items-center gap-3 text-xs text-brand-400">
-              {post.publishedAt && (
-                <time dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </time>
-              )}
-              {post.estimatedReadTime && (
-                <span>{post.estimatedReadTime} min read</span>
-              )}
+            <div className="mt-auto pt-6">
+              <div className="border-t border-brand-200 pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-brand-500">
+                    {post.publishedAt && new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    {post.estimatedReadTime && ` · ${post.estimatedReadTime} min`}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </div>
+              </div>
             </div>
           </a>
         ))}

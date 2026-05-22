@@ -16,7 +16,7 @@ import { IncredibleClients } from "@/components/incredible-clients";
 import { JsonLd } from "@/components/json-ld";
 import { generatePageMetadata, serviceJsonLd } from "@/lib/metadata";
 import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
-import { tilt } from "@/lib/tilt";
+import { Crosshair } from "lucide-react";
 
 const KEYNOTE_SLUG = "escaping-the-apathy-trap";
 const HERO_VIDEO_URL = "https://youtu.be/d39zRC9pWQ8";
@@ -82,8 +82,8 @@ export default function EscapingTheApathyTrapPage() {
       />
 
       {/* ── 1. Hero ── */}
-      <Section width="content" className="pt-12 text-center md:pt-20">
-        <h1 className="heading-display-stroke-sm mx-auto max-w-4xl text-3xl leading-[1.1] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
+      <Section width="landing" className="pt-12 text-center md:pt-20">
+        <h1 className="heading-display-stroke-sm mx-auto max-w-5xl text-3xl leading-[1.1] text-brand-900 sm:text-4xl md:text-5xl lg:text-6xl">
           <span className="block">
             The future does not belong to the companies with the best tools.
           </span>
@@ -94,7 +94,7 @@ export default function EscapingTheApathyTrapPage() {
 
         <div className="mx-auto mt-6 h-1 w-20 bg-accent-600" />
 
-        <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600 md:text-xl">
+        <div className="mx-auto mt-6 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600 md:text-xl">
           <p>
             AI is changing how we work, think, build, and compete.
           </p>
@@ -110,13 +110,13 @@ export default function EscapingTheApathyTrapPage() {
           </p>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-base font-bold uppercase tracking-[0.2em] text-accent-600">
+        <p className="mx-auto mt-8 max-w-4xl text-base font-bold uppercase tracking-[0.2em] text-accent-600">
           A keynote for organisations trying to rebuild curiosity, ownership,
           and movement.
         </p>
 
         {getVideoEmbedUrl(HERO_VIDEO_URL) && (
-          <div className="mx-auto mt-8 max-w-3xl">
+          <div className="mx-auto mt-8 max-w-5xl">
             <div className="aspect-video overflow-hidden border-4 border-accent-600">
               <iframe
                 src={getVideoEmbedUrl(HERO_VIDEO_URL)!}
@@ -138,7 +138,7 @@ export default function EscapingTheApathyTrapPage() {
       </Section>
 
       {/* ── 2. The Trap ── */}
-      <Section width="content">
+      <Section width="landing">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
             The Trap
@@ -153,14 +153,14 @@ export default function EscapingTheApathyTrapPage() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-6 text-lg leading-relaxed text-brand-600">
           <p>
             Most organisations do not intentionally create passive cultures.
           </p>
           <p>But over time, many workplaces quietly reward:</p>
         </div>
 
-        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+        <ul className="mx-auto mt-4 max-w-4xl space-y-3">
           {[
             "agreement over curiosity",
             "process over experimentation",
@@ -177,7 +177,7 @@ export default function EscapingTheApathyTrapPage() {
           ))}
         </ul>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-6 text-lg leading-relaxed text-brand-600">
           <p>The result is not immediate failure.</p>
           <p>
             It&rsquo;s something more dangerous: smart people slowly learning
@@ -185,7 +185,7 @@ export default function EscapingTheApathyTrapPage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+        <div className="mx-auto mt-10 max-w-4xl space-y-4">
           <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
             Meetings can create the illusion of momentum while nothing actually
             moves.
@@ -196,14 +196,14 @@ export default function EscapingTheApathyTrapPage() {
           </blockquote>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-brand-600">
           And in the age of artificial intelligence, passive cultures become far
           more dangerous.
         </p>
       </Section>
 
       {/* ── 3. Why It Matters Now ── */}
-      <Section width="content">
+      <Section width="landing">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
             Why It Matters Now
@@ -213,7 +213,7 @@ export default function EscapingTheApathyTrapPage() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600">
           <p>AI is amplifying human behaviour.</p>
           <p>
             Curious people become more capable. Experimental teams become more
@@ -226,7 +226,7 @@ export default function EscapingTheApathyTrapPage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+        <div className="mx-auto mt-10 max-w-4xl space-y-4">
           <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
             The future belongs to organisations that can learn faster than they
             fear change.
@@ -236,7 +236,7 @@ export default function EscapingTheApathyTrapPage() {
           </blockquote>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600">
           <p>The answer is not working harder.</p>
           <p className="font-semibold text-brand-900">
             It&rsquo;s rebuilding cultures where action feels possible again.
@@ -245,7 +245,7 @@ export default function EscapingTheApathyTrapPage() {
       </Section>
 
       {/* ── 4. The Insight ── */}
-      <Section width="content">
+      <Section width="landing">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
             The Insight
@@ -255,7 +255,7 @@ export default function EscapingTheApathyTrapPage() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600">
           <p>
             Most organisations do not suffer from a lack of information. They
             suffer from a gap between knowing and doing.
@@ -270,7 +270,7 @@ export default function EscapingTheApathyTrapPage() {
           <p>Over time:</p>
         </div>
 
-        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+        <ul className="mx-auto mt-4 max-w-4xl space-y-3">
           {[
             "process replaces momentum",
             "caution replaces curiosity",
@@ -287,7 +287,7 @@ export default function EscapingTheApathyTrapPage() {
           ))}
         </ul>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600">
           <p>The result is not laziness. It is behavioural drift.</p>
           <p className="font-semibold text-brand-900">
             People contribute differently in environments that reward
@@ -297,7 +297,7 @@ export default function EscapingTheApathyTrapPage() {
       </Section>
 
       {/* ── 5. The Shift ── */}
-      <Section width="content">
+      <Section width="landing">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
             The Shift
@@ -307,7 +307,7 @@ export default function EscapingTheApathyTrapPage() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-brand-600">
+        <div className="mx-auto mt-8 max-w-4xl space-y-4 text-lg leading-relaxed text-brand-600">
           <p>The solution is not chaos. And it is not removing structure.</p>
           <p>
             The organisations that thrive are often the ones that create
@@ -315,7 +315,7 @@ export default function EscapingTheApathyTrapPage() {
           </p>
         </div>
 
-        <ul className="mx-auto mt-4 max-w-2xl space-y-3">
+        <ul className="mx-auto mt-4 max-w-4xl space-y-3">
           {[
             "experiment more freely",
             "contribute more openly",
@@ -334,11 +334,11 @@ export default function EscapingTheApathyTrapPage() {
           ))}
         </ul>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg font-semibold text-brand-900">
+        <p className="mx-auto mt-8 max-w-4xl text-lg font-semibold text-brand-900">
           Curiosity is not soft. It is operational leverage.
         </p>
 
-        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+        <div className="mx-auto mt-10 max-w-4xl space-y-4">
           <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
             People act differently in environments that reward initiative.
           </blockquote>
@@ -347,14 +347,14 @@ export default function EscapingTheApathyTrapPage() {
           </blockquote>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-brand-600">
           This keynote gives audiences a new lens on curiosity, culture, and
           action in the age of AI.
         </p>
       </Section>
 
       {/* ── 6. What Audiences Walk Away With ── */}
-      <Section width="content">
+      <Section width="landing">
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
             What Audiences Walk Away With
@@ -364,7 +364,7 @@ export default function EscapingTheApathyTrapPage() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl">
+        <div className="mx-auto mt-8 max-w-4xl">
           <p className="text-lg leading-relaxed text-brand-600">
             Audiences leave with a clearer understanding of:
           </p>
@@ -388,11 +388,11 @@ export default function EscapingTheApathyTrapPage() {
           </ul>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-brand-600">
           The keynote is designed to create recognition first, then movement.
         </p>
 
-        <div className="mx-auto mt-10 max-w-2xl space-y-4">
+        <div className="mx-auto mt-10 max-w-4xl space-y-4">
           <blockquote className="border-l-4 border-accent-600 py-2 pl-6 text-lg font-medium italic text-brand-900">
             The behaviours organisations reward eventually become the culture
             they inherit.
@@ -405,14 +405,14 @@ export default function EscapingTheApathyTrapPage() {
           </blockquote>
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-brand-600">
           This perspective is shaped by two decades of building companies,
           leading teams, and watching how people behave inside systems.
         </p>
       </Section>
 
       {/* ── 7. Speaker Credibility ── */}
-      <Section width="content" className="text-center">
+      <Section width="landing" className="text-center">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent-600">
           Your Speaker
         </p>
@@ -420,7 +420,7 @@ export default function EscapingTheApathyTrapPage() {
           Nic Haralambous
         </h2>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-600">
+        <p className="mx-auto mt-6 max-w-4xl text-lg leading-relaxed text-brand-600">
           Entrepreneur, product builder, and keynote speaker focused on the
           intersection of technology and human behaviour. Three business exits.
           Products scaled to millions of users. Two decades inside both startups
@@ -456,16 +456,24 @@ export default function EscapingTheApathyTrapPage() {
           {TESTIMONIALS.map((t, i) => (
             <blockquote
               key={t.company}
-              className="flex flex-col card-brutalist p-6"
-              style={{ transform: `rotate(${tilt(i, 42)}deg)` }}
+              className="flex flex-col border border-brand-900 bg-white p-6"
             >
-              <p className="flex-1 text-sm italic leading-relaxed text-brand-700">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  TESTIMONIAL_{String(i + 1).padStart(2, "0")}
+                </span>
+                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+              </div>
+              <div className="my-3 border-t border-brand-200" />
+              <p className="flex-1 font-mono text-sm italic leading-relaxed text-brand-700">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              <footer className="mt-4 border-t border-brand-100 pt-4">
-                <p className="text-sm font-semibold text-brand-900">
-                  {t.company}
-                </p>
+              <footer className="mt-auto pt-6 border-t border-brand-200">
+                <div className="pt-4">
+                  <p className="text-sm font-semibold text-brand-900">
+                    {t.company}
+                  </p>
+                </div>
               </footer>
             </blockquote>
           ))}
@@ -480,6 +488,7 @@ export default function EscapingTheApathyTrapPage() {
         primaryLabel="Bring This Talk To Your Team"
         secondaryHref="/speaker"
         secondaryLabel="About Nic as a Speaker"
+        contentWidth="landing"
       />
     </div>
   );

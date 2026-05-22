@@ -23,7 +23,7 @@ import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { FooterContent } from "@/components/footer-content";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
-import { tilt } from "@/lib/tilt";
+import { ArrowRight, Crosshair } from "lucide-react";
 
 /* ---------- Data fetching ---------- */
 
@@ -184,18 +184,27 @@ export default async function TopicsPage() {
                     <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
-                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
-                      style={{ transform: `rotate(${tilt(i, 4)}deg)` }}
+                      className="group flex flex-col border border-brand-900 bg-white p-6"
                     >
-                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          TOPIC_{String(i + 1).padStart(2, "0")}
+                        </span>
+                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                      </div>
+                      <div className="my-3 border-t border-brand-200" />
+                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
                         {topic.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
                         {topic.oneSentenceSummary}
                       </p>
-                      <p className="mt-4 font-semibold text-accent-600">
-                        Explore topic hub →
-                      </p>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          Explore topic hub
+                        </span>
+                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </div>
                     </a>
                   ))}
                 </div>
@@ -209,18 +218,27 @@ export default async function TopicsPage() {
                     <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
-                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
-                      style={{ transform: `rotate(${tilt(i + 2, 4)}deg)` }}
+                      className="group flex flex-col border border-brand-900 bg-white p-6"
                     >
-                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          TOPIC_{String(i + 3).padStart(2, "0")}
+                        </span>
+                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                      </div>
+                      <div className="my-3 border-t border-brand-200" />
+                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
                         {topic.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
                         {topic.oneSentenceSummary}
                       </p>
-                      <p className="mt-4 font-semibold text-accent-600">
-                        Explore topic hub →
-                      </p>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          Explore topic hub
+                        </span>
+                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </div>
                     </a>
                   ))}
                 </div>
@@ -250,18 +268,27 @@ export default async function TopicsPage() {
                     <a
                       key={topic.slug}
                       href={`/topics/${topic.slug}`}
-                      className="group block card-brutalist p-6 transition-colors hover:bg-accent-50"
-                      style={{ transform: `rotate(${tilt(i + 4, 4)}deg)` }}
+                      className="group flex flex-col border border-brand-900 bg-white p-6"
                     >
-                      <h3 className="font-extrabold tracking-tight text-3xl uppercase leading-[0.95] text-accent-600 sm:text-4xl">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          TOPIC_{String(i + 5).padStart(2, "0")}
+                        </span>
+                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                      </div>
+                      <div className="my-3 border-t border-brand-200" />
+                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
                         {topic.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-brand-700 md:text-base">
+                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
                         {topic.oneSentenceSummary}
                       </p>
-                      <p className="mt-4 font-semibold text-accent-600">
-                        Explore topic hub →
-                      </p>
+                      <div className="mt-4 flex items-center justify-between">
+                        <span className="font-mono text-xs tracking-widest text-accent-600">
+                          Explore topic hub
+                        </span>
+                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </div>
                     </a>
                   ))}
                 </div>

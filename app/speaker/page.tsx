@@ -232,13 +232,13 @@ export default async function SpeakerPage() {
           <p className="mt-4 text-lg font-semibold leading-relaxed text-brand-700 sm:text-xl">
             {subheadline}
           </p>
-          <div className="mt-4 aspect-video w-full max-w-xl mx-auto md:max-w-lg">
+          <div className="mt-4 aspect-video w-full overflow-hidden border-4 border-accent-600">
             <iframe
               src="https://www.youtube.com/embed/yxg_qMH-s-Y"
               title="Virtual keynote speaker video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="h-full w-full rounded border-0"
+              className="h-full w-full border-0"
             />
           </div>
           <div className="mt-4">
