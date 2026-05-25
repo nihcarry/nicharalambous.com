@@ -101,7 +101,16 @@ export default async function BlogPage() {
         })}
       />
 
-      <Section width="content" className="text-center">
+      {/* Fixed decorative image — bottom-left, content scrolls over it */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/slides/Blog_Bottom_Left.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-0 left-0 z-[1] hidden h-[28vh] w-auto select-none object-contain object-bottom md:block"
+      />
+
+      <Section width="content" className="relative z-10 text-center">
         <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
           Blog
         </h1>
@@ -117,12 +126,12 @@ export default async function BlogPage() {
 
       {/* Most Popular — up to 5 (curated via post field "Most Popular" in Sanity) */}
       {mostPopularPosts.length > 0 && (
-        <Section width="wide">
+        <Section width="wide" className="relative z-10">
           <MostPopularHero posts={mostPopularPosts} />
         </Section>
       )}
 
-      <Section width="wide">
+      <Section width="wide" className="relative z-10">
         {posts.length > 0 ? (
           <BlogList posts={posts} topics={topics} />
         ) : (

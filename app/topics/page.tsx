@@ -9,7 +9,6 @@
  * JSON-LD: CollectionPage
  */
 import type { Metadata } from "next";
-import Image from "next/image";
 import { client } from "@/lib/sanity/client";
 import {
   topicHubsListQuery,
@@ -20,6 +19,7 @@ import { Slide } from "@/components/slide";
 import { SlideDeck } from "@/components/slide-deck";
 import { SlideContent } from "@/components/slide-animations";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
+import { TopicsHeroTopicLinks } from "@/components/topics-hero-topic-links";
 import { FooterContent } from "@/components/footer-content";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
@@ -88,6 +88,13 @@ const STORYBOARD_SLIDES = [
   },
 ];
 
+/** Fixed bottom-left decoration — persists across all slides (md+). ~12% smaller than hero-only version. */
+const TOPICS_DECK_IMAGE = {
+  src: "/slides/%20Nic_Topics_2.png",
+  className:
+    "pointer-events-none fixed bottom-0 left-0 z-[1] hidden h-[33vh] w-auto select-none object-contain object-bottom md:block lg:h-[40vh]",
+};
+
 /* ---------- Page ---------- */
 
 export default async function TopicsPage() {
@@ -103,6 +110,14 @@ export default async function TopicsPage() {
       .filter((topic): topic is TopicHubListItem => Boolean(topic)),
   })).filter((slide) => slide.topics.length > 0);
 
+  const heroTopicLinks = slides.flatMap((slide) =>
+    slide.topics.map((topic) => ({
+      slug: topic.slug,
+      title: topic.title,
+      slideId: slide.id,
+    })),
+  );
+
   return (
     <SlideDeck>
       <NextSlideIndicator />
@@ -117,24 +132,21 @@ export default async function TopicsPage() {
         })}
       />
 
+      {/* Fixed decorative image — bottom-left, visible on every slide including footer */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={TOPICS_DECK_IMAGE.src}
+        alt=""
+        aria-hidden="true"
+        fetchPriority="high"
+        className={TOPICS_DECK_IMAGE.className}
+      />
+
       <Slide
         variant="grid-3"
         background="bg-compass-pattern"
         id="hero"
         className="md:justify-start"
-        image={
-          <div className="pointer-events-none absolute bottom-0 left-0 z-0 hidden md:block">
-            <Image
-              src="/slides/%20Nic_Topics_2.png"
-              alt=""
-              aria-hidden="true"
-              width={768}
-              height={1024}
-              className="h-[38vh] w-auto lg:h-[46vh]"
-              priority
-            />
-          </div>
-        }
       >
         <SlideContent>
           <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
@@ -147,7 +159,8 @@ export default async function TopicsPage() {
           <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
             Explore each topic hub for related articles and keynote pathways.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <TopicsHeroTopicLinks items={heroTopicLinks} />
+          <div className="mt-20 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
               About Nic as a Speaker
             </CTAButton>

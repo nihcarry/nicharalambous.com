@@ -51,31 +51,26 @@ export default function KeynotesPage() {
         className="md:!pb-[calc(45vh+0.5rem)]"
         image={
           <div className="absolute inset-x-0 bottom-0 hidden h-[45vh] items-end justify-center overflow-hidden md:flex">
-            {/* Flexbox row: pillar | audience | pillar — siblings sit
-                directly adjacent so there is never a gap between them,
-                at any viewport width. Pillars keep their natural aspect
-                ratio (w-auto) and the audience flexes to fill the
-                remaining space (flex-1 + object-cover). */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/slides/16Bit_Pillar_Keynote.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none h-full w-auto shrink-0 select-none -mr-[4%]"
+              className="pointer-events-none relative z-10 h-full w-auto shrink-0 select-none -mr-[4%]"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/slides/16bit_Audience.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none h-full min-w-0 flex-1 select-none object-cover object-bottom"
+              className="pointer-events-none h-full w-auto select-none object-bottom"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/slides/16Bit_Pillar_Keynote.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none h-full w-auto shrink-0 select-none -ml-[4%]"
+              className="pointer-events-none relative z-10 h-full w-auto shrink-0 select-none -ml-[4%]"
             />
           </div>
         }
