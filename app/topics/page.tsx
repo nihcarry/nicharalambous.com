@@ -149,7 +149,7 @@ export default async function TopicsPage() {
         className="md:justify-start"
       >
         <SlideContent>
-          <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
+          <h1 className="heading-stroke font-extrabold tracking-tight pt-8 md:pt-16 text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
             Topics
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
