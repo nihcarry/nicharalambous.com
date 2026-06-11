@@ -10,7 +10,7 @@ export function HeroVideoPlayButton() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event("home-video-overlay:open"))}
-      className="hidden h-12 w-12 items-center justify-center rounded-full border-[4px] border-brand-900 bg-white/95 text-brand-900 shadow-[var(--shadow-cta)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 md:inline-flex md:h-14 md:w-14"
+      className="hidden h-12 w-12 items-center justify-center rounded-full border-[4px] border-brand-900 bg-white/95 text-brand-900 shadow-[var(--shadow-cta)] transition-transform hover:scale-105 hover:[animation-play-state:paused] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 md:inline-flex md:h-14 md:w-14 animate-wiggle-bounce"
       aria-label="Play full-screen hero video with sound"
     >
       <Play className="h-5 w-5 translate-x-[1px] stroke-[2.75] md:h-6 md:w-6" />

@@ -43,6 +43,10 @@ import { RelatedPosts } from "@/components/related-posts";
 import { ContextualCta } from "@/components/contextual-cta";
 import { VideoReadAlong } from "@/components/video-read-along";
 import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
+import {
+  rawHtmlToPlainText,
+  splitLeadingRawHtmlH1,
+} from "@/lib/blog/split-leading-heading";
 
 /* ---------- Data fetching ---------- */
 
@@ -148,6 +152,9 @@ export default async function BlogPostPage({
   const hasPortableTextBody = post.body && post.body.length > 0;
   const hasRawHtmlBody =
     post.rawHtmlBody && post.rawHtmlBody.trim().length > 0;
+  const rawHtmlSplit = hasRawHtmlBody
+    ? splitLeadingRawHtmlH1(post.rawHtmlBody!)
+    : { leadHeadingHtml: null, bodyHtml: "" };
   const hasFaq = post.faq && post.faq.length > 0;
   const hasTopics = post.topics && post.topics.length > 0;
   const hasVideo = post.videoEmbed && post.videoEmbed.trim().length > 0;
@@ -219,6 +226,13 @@ export default async function BlogPostPage({
           </div>
         </header>
 
+        {/* Deck subheading — leading H1 from Notion/raw HTML imports */}
+        {rawHtmlSplit.leadHeadingHtml && (
+          <h2 className="mt-6 text-2xl font-bold text-brand-900 sm:text-3xl">
+            {rawHtmlToPlainText(rawHtmlSplit.leadHeadingHtml)}
+          </h2>
+        )}
+
         {/* Featured image */}
         {post.featuredImage?.asset?.url && (
           <figure className="mt-8">
@@ -277,6 +291,8 @@ export default async function BlogPostPage({
               /* Images — standalone and inside figures */
               "[&>img]:my-6 [&>img]:w-full [&>img]:rounded-lg",
               "[&>figure]:my-6 [&_figure_img]:w-full [&_figure_img]:rounded-lg",
+              "[&_figure.img-float-right]:float-right [&_figure.img-float-right]:ml-5 [&_figure.img-float-right]:mb-3 [&_figure.img-float-right]:mt-1 [&_figure.img-float-right]:w-[42%] [&_figure.img-float-right]:min-w-[9.5rem] [&_figure.img-float-right]:max-w-[17.5rem] sm:[&_figure.img-float-right]:max-w-[20rem]",
+              "[&_figure.img-float-right_img]:w-full [&_figure.img-float-right_img]:rounded-lg",
               "[&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:italic [&_figcaption]:text-brand-500",
               /* Horizontal rules */
               "[&>hr]:my-8 [&>hr]:border-brand-200",
@@ -284,10 +300,15 @@ export default async function BlogPostPage({
               "[&>iframe]:my-6 [&>iframe]:aspect-video [&>iframe]:w-full [&>iframe]:rounded-lg",
               /* Links (any depth) */
               "[&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500",
+              /* In-article primary CTA — matches CTAButton */
+              "[&>p.prose-cta-wrap]:mt-8 [&>p.prose-cta-wrap]:mb-2 [&>p.prose-cta-wrap]:text-center",
+              "[&_a.prose-cta]:inline-flex [&_a.prose-cta]:items-center [&_a.prose-cta]:justify-center [&_a.prose-cta]:gap-2 [&_a.prose-cta]:rounded-none [&_a.prose-cta]:px-8 [&_a.prose-cta]:py-4 [&_a.prose-cta]:text-lg [&_a.prose-cta]:font-semibold [&_a.prose-cta]:whitespace-nowrap [&_a.prose-cta]:no-underline [&_a.prose-cta]:shadow-[var(--shadow-cta)] [&_a.prose-cta]:bg-accent-600 [&_a.prose-cta]:text-white [&_a.prose-cta]:transition-colors [&_a.prose-cta]:duration-200 [&_a.prose-cta:hover]:bg-accent-500 [&_a.prose-cta:hover]:text-white [&_a.prose-cta:focus-visible]:outline-2 [&_a.prose-cta:focus-visible]:outline-offset-2 [&_a.prose-cta:focus-visible]:outline-accent-500",
               /* Strikethrough */
               "[&_s]:text-brand-400",
             ].join(" ")}
-            dangerouslySetInnerHTML={{ __html: post.rawHtmlBody! }}
+            dangerouslySetInnerHTML={{
+              __html: rawHtmlSplit.bodyHtml || post.rawHtmlBody!,
+            }}
           />
         ) : (
           <p className="mt-8 text-brand-500 italic">
