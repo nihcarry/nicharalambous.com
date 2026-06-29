@@ -1,0 +1,46 @@
+# YouTube Video Import Cron
+#
+# Runs daily at 8 AM UTC to check for new YouTube videos
+# and create draft blog posts in Sanity.
+#
+# Required GitHub Secrets:
+# - SANITY_WRITE_TOKEN (Editor role token)
+# - YOUTUBE_CHANNEL_ID (your channel ID)
+# - NEXT_PUBLIC_SANITY_PROJECT_ID
+# - NEXT_PUBLIC_SANITY_DATASET
+
+name: YouTube Import
+
+on:
+  schedule:
+    # Daily at 8:00 AM UTC (10:00 AM CEST in summer)
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+    # Allow manual trigger for testing
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Import YouTube videos
+        run: npx tsx scripts/import-youtube-video.ts
+        env:
+          YOUTUBE_CHANNEL_ID: ${{ secrets.YOUTUBE_CHANNEL_ID }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
