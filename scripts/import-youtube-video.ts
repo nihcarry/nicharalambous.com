@@ -100,7 +100,16 @@ function decodeHtmlEntities(text: string): string {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&apos;/g, "'");
+    .replace(/&apos;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&rsquo;/g, "'")
+    .replace(/&lsquo;/g, "'")
+    .replace(/&rdquo;/g, '"')
+    .replace(/&ldquo;/g, '"')
+    .replace(/&mdash;/g, "—")
+    .replace(/&ndash;/g, "–")
+    .replace(/&hellip;/g, "...")
+    .replace(/&#(\d+);/g, (_, num) => String.fromCharCode(parseInt(num, 10)));
 }
 
 // ─── Transcript fetching ──────────────────────────────────────────────
@@ -121,9 +130,9 @@ async function fetchTranscript(videoId: string): Promise<string | null> {
       return null;
     }
 
-    // Join all transcript segments into plain text
+    // Join all transcript segments into plain text and decode HTML entities
     const fullText = transcript.snippets
-      .map((segment: TranscriptSegment) => segment.text)
+      .map((segment: TranscriptSegment) => decodeHtmlEntities(segment.text))
       .join(" ")
       .replace(/\s+/g, " ")
       .trim();
@@ -167,11 +176,7 @@ function generateSummary(transcript: string, maxLength: number = 200): string {
 
 // ─── HTML formatting ──────────────────────────────────────────────────
 
-function formatTranscriptAsHtml(
-  transcript: string,
-  videoUrl: string,
-  title: string
-): string {
+function formatTranscriptAsHtml(transcript: string): string {
   // Split transcript into paragraphs (roughly every 3-4 sentences)
   const sentences = transcript
     .replace(/([.!?])\s+/g, "$1|")
@@ -192,24 +197,11 @@ function formatTranscriptAsHtml(
     paragraphs.push(currentParagraph.join(" "));
   }
 
-  // Build HTML with video embed and transcript
-  const embedUrl = `https://www.youtube.com/embed/${extractVideoId(videoUrl)}?rel=0`;
-
+  // Build HTML with just the transcript (video is shown by VideoReadAlong component)
   const html = `
-<div class="video-embed" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 2rem;">
-  <iframe 
-    src="${embedUrl}" 
-    title="${escapeHtml(title)}"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen>
-  </iframe>
-</div>
-
 <h2>Transcript</h2>
 
-${paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n\n")}
+${paragraphs.map((p) => `<p>${p}</p>`).join("\n\n")}
 `.trim();
 
   return html;
@@ -563,10 +555,10 @@ function buildSanityDocument(
     }
   }
 
-  // Generate HTML body with video embed and transcript
+  // Generate HTML body with transcript (video shown by VideoReadAlong component)
   let rawHtmlBody: string | undefined;
   if (transcript) {
-    rawHtmlBody = formatTranscriptAsHtml(transcript, video.videoUrl, video.title);
+    rawHtmlBody = formatTranscriptAsHtml(transcript);
   }
 
   // Calculate read time from transcript
