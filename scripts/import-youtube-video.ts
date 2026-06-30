@@ -176,7 +176,7 @@ function generateSummary(transcript: string, maxLength: number = 200): string {
 
 // ─── HTML formatting ──────────────────────────────────────────────────
 
-function formatTranscriptAsHtml(transcript: string): string {
+function formatTranscriptAsHtml(transcript: string, videoId: string, title: string): string {
   // Split transcript into paragraphs (roughly every 3-4 sentences)
   const sentences = transcript
     .replace(/([.!?])\s+/g, "$1|")
@@ -197,8 +197,20 @@ function formatTranscriptAsHtml(transcript: string): string {
     paragraphs.push(currentParagraph.join(" "));
   }
 
-  // Build HTML with just the transcript (video is shown by VideoReadAlong component)
+  // Build HTML with video embed visible at top, then transcript
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+
   const html = `
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 2rem;">
+  <iframe 
+    src="${embedUrl}" 
+    title="${title.replace(/"/g, '&quot;')}"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+
 <h2>Transcript</h2>
 
 ${paragraphs.map((p) => `<p>${p}</p>`).join("\n\n")}
@@ -555,10 +567,10 @@ function buildSanityDocument(
     }
   }
 
-  // Generate HTML body with transcript (video shown by VideoReadAlong component)
+  // Generate HTML body with video embed + transcript
   let rawHtmlBody: string | undefined;
   if (transcript) {
-    rawHtmlBody = formatTranscriptAsHtml(transcript);
+    rawHtmlBody = formatTranscriptAsHtml(transcript, video.videoId, video.title);
   }
 
   // Calculate read time from transcript
@@ -586,7 +598,8 @@ function buildSanityDocument(
     publishedAt: video.publishedAt,
     excerpt,
     rawHtmlBody,
-    videoEmbed: video.videoUrl,
+    // Don't set videoEmbed - video is embedded in rawHtmlBody, no need for VideoReadAlong component
+    videoEmbed: null,
     estimatedReadTime,
     contentStatus: "ai-draft",
     originalUrl: video.videoUrl,
