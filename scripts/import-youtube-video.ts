@@ -1,9 +1,9 @@
 /**
  * YouTube video import script.
  *
- * Fetches recent videos from a YouTube channel RSS feed and creates
- * blog post drafts in Sanity. Skips YouTube Shorts and previously
- * imported videos (idempotent via createOrReplace).
+ * Fetches recent videos from a YouTube channel RSS feed, pulls transcripts,
+ * generates summaries, and creates blog post drafts in Sanity.
+ * Skips YouTube Shorts and previously imported videos (idempotent via createOrReplace).
  *
  * Environment:
  *   YOUTUBE_CHANNEL_ID — required, the channel ID (starts with UC)
@@ -19,11 +19,10 @@
  */
 
 import "./load-env";
+import { YouTubeTranscriptApi } from "youtube-transcript-api-js";
 
-const PROJECT_ID =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
-const API_VERSION =
-  process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
+const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
+const API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
 const SANITY_WRITE_TOKEN =
   process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_WRITE_TOKEN;
 const YOUTUBE_CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
@@ -40,10 +39,6 @@ interface YouTubeVideo {
   isShort: boolean;
 }
 
-/**
- * Fetch and parse YouTube channel RSS feed.
- * Returns the 15 most recent videos (YouTube RSS limit).
- */
 async function fetchYouTubeRSS(channelId: string): Promise<YouTubeVideo[]> {
   const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
 
@@ -55,7 +50,6 @@ async function fetchYouTubeRSS(channelId: string): Promise<YouTubeVideo[]> {
   const xml = await response.text();
   const videos: YouTubeVideo[] = [];
 
-  // Parse entries from XML (simple regex-based extraction)
   const entryRegex = /<entry>([\s\S]*?)<\/entry>/g;
   let match;
 
@@ -109,36 +103,291 @@ function decodeHtmlEntities(text: string): string {
     .replace(/&apos;/g, "'");
 }
 
-// ─── Topic detection (from enrich-articles.ts) ────────────────────────
+// ─── Transcript fetching ──────────────────────────────────────────────
 
-const TOPIC_KEYWORDS: Record<string, { primary: string[]; secondary: string[] }> = {
+interface TranscriptSegment {
+  text: string;
+  start: number;
+  duration: number;
+}
+
+async function fetchTranscript(videoId: string): Promise<string | null> {
+  try {
+    const api = new YouTubeTranscriptApi();
+    const transcript = await api.fetch(videoId, ["en"]);
+
+    if (!transcript || !transcript.snippets || transcript.snippets.length === 0) {
+      console.log(`    No transcript available for ${videoId}`);
+      return null;
+    }
+
+    // Join all transcript segments into plain text
+    const fullText = transcript.snippets
+      .map((segment: TranscriptSegment) => segment.text)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    return fullText;
+  } catch (err) {
+    console.log(`    Transcript fetch failed for ${videoId}: ${err}`);
+    return null;
+  }
+}
+
+// ─── Summary generation (local, no API) ───────────────────────────────
+
+function generateSummary(transcript: string, maxLength: number = 200): string {
+  // Split into sentences
+  const sentences = transcript
+    .replace(/([.!?])\s+/g, "$1|")
+    .split("|")
+    .filter((s) => s.trim().length > 10);
+
+  if (sentences.length === 0) {
+    return transcript.substring(0, maxLength);
+  }
+
+  // Take first 2-3 sentences that fit in maxLength
+  let summary = "";
+  for (const sentence of sentences.slice(0, 3)) {
+    if ((summary + " " + sentence).length <= maxLength) {
+      summary = summary ? summary + " " + sentence : sentence;
+    } else {
+      break;
+    }
+  }
+
+  if (!summary) {
+    summary = sentences[0].substring(0, maxLength - 3) + "...";
+  }
+
+  return summary.trim();
+}
+
+// ─── HTML formatting ──────────────────────────────────────────────────
+
+function formatTranscriptAsHtml(
+  transcript: string,
+  videoUrl: string,
+  title: string
+): string {
+  // Split transcript into paragraphs (roughly every 3-4 sentences)
+  const sentences = transcript
+    .replace(/([.!?])\s+/g, "$1|")
+    .split("|")
+    .filter((s) => s.trim().length > 0);
+
+  const paragraphs: string[] = [];
+  let currentParagraph: string[] = [];
+
+  for (const sentence of sentences) {
+    currentParagraph.push(sentence);
+    if (currentParagraph.length >= 4) {
+      paragraphs.push(currentParagraph.join(" "));
+      currentParagraph = [];
+    }
+  }
+  if (currentParagraph.length > 0) {
+    paragraphs.push(currentParagraph.join(" "));
+  }
+
+  // Build HTML with video embed and transcript
+  const embedUrl = `https://www.youtube.com/embed/${extractVideoId(videoUrl)}?rel=0`;
+
+  const html = `
+<div class="video-embed" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 2rem;">
+  <iframe 
+    src="${embedUrl}" 
+    title="${escapeHtml(title)}"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+
+<h2>Transcript</h2>
+
+${paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n\n")}
+`.trim();
+
+  return html;
+}
+
+function extractVideoId(url: string): string {
+  const match = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/);
+  return match ? match[1] : "";
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+// ─── Topic detection ──────────────────────────────────────────────────
+
+const TOPIC_KEYWORDS: Record<
+  string,
+  { primary: string[]; secondary: string[] }
+> = {
   curiosity: {
-    primary: ["curiosity", "curious", "question", "wonder", "explore", "discovery", "learn"],
-    secondary: ["experiment", "interest", "investigate", "ask", "unknown", "surprise", "new idea", "open mind"],
+    primary: [
+      "curiosity",
+      "curious",
+      "question",
+      "wonder",
+      "explore",
+      "discovery",
+      "learn",
+    ],
+    secondary: [
+      "experiment",
+      "interest",
+      "investigate",
+      "ask",
+      "unknown",
+      "surprise",
+      "new idea",
+      "open mind",
+    ],
   },
   innovation: {
-    primary: ["innovation", "innovate", "disrupt", "breakthrough", "invent", "creative", "build"],
-    secondary: ["technology", "product", "iterate", "prototype", "design", "ship", "launch", "create", "maker"],
+    primary: [
+      "innovation",
+      "innovate",
+      "disrupt",
+      "breakthrough",
+      "invent",
+      "creative",
+      "build",
+    ],
+    secondary: [
+      "technology",
+      "product",
+      "iterate",
+      "prototype",
+      "design",
+      "ship",
+      "launch",
+      "create",
+      "maker",
+    ],
   },
   entrepreneurship: {
-    primary: ["entrepreneur", "startup", "business", "founder", "company", "venture"],
-    secondary: ["hustle", "customer", "revenue", "profit", "market", "growth", "scale", "pivot", "investor", "funding", "bootstrapp"],
+    primary: [
+      "entrepreneur",
+      "startup",
+      "business",
+      "founder",
+      "company",
+      "venture",
+    ],
+    secondary: [
+      "hustle",
+      "customer",
+      "revenue",
+      "profit",
+      "market",
+      "growth",
+      "scale",
+      "pivot",
+      "investor",
+      "funding",
+      "bootstrapp",
+    ],
   },
   focus: {
-    primary: ["focus", "distraction", "attention", "screen time", "digital", "mindful", "present"],
-    secondary: ["phone", "social media", "scroll", "productivity", "deep work", "concentration", "boredom", "habit", "discipline", "addiction"],
+    primary: [
+      "focus",
+      "distraction",
+      "attention",
+      "screen time",
+      "digital",
+      "mindful",
+      "present",
+    ],
+    secondary: [
+      "phone",
+      "social media",
+      "scroll",
+      "productivity",
+      "deep work",
+      "concentration",
+      "boredom",
+      "habit",
+      "discipline",
+      "addiction",
+    ],
   },
   ai: {
-    primary: ["artificial intelligence", " ai ", "machine learning", "chatgpt", "llm", "generative"],
-    secondary: ["algorithm", "automat", "neural", "model", "prompt", "robot", "copilot", "claude", "openai", "gpt"],
+    primary: [
+      "artificial intelligence",
+      " ai ",
+      "machine learning",
+      "chatgpt",
+      "llm",
+      "generative",
+    ],
+    secondary: [
+      "algorithm",
+      "automat",
+      "neural",
+      "model",
+      "prompt",
+      "robot",
+      "copilot",
+      "claude",
+      "openai",
+      "gpt",
+    ],
   },
   agency: {
-    primary: ["agency", "autonomy", "choice", "control", "decision", "ownership", "empower"],
-    secondary: ["action", "proactive", "initiative", "self-determin", "independen", "accountab", "responsib", "intention"],
+    primary: [
+      "agency",
+      "autonomy",
+      "choice",
+      "control",
+      "decision",
+      "ownership",
+      "empower",
+    ],
+    secondary: [
+      "action",
+      "proactive",
+      "initiative",
+      "self-determin",
+      "independen",
+      "accountab",
+      "responsib",
+      "intention",
+    ],
   },
   failure: {
-    primary: ["failure", "fail", "mistake", "wrong", "error", "setback", "loss"],
-    secondary: ["resilience", "bounce back", "lesson", "recover", "overcome", "persist", "grit", "tough", "struggle", "adversity"],
+    primary: [
+      "failure",
+      "fail",
+      "mistake",
+      "wrong",
+      "error",
+      "setback",
+      "loss",
+    ],
+    secondary: [
+      "resilience",
+      "bounce back",
+      "lesson",
+      "recover",
+      "overcome",
+      "persist",
+      "grit",
+      "tough",
+      "struggle",
+      "adversity",
+    ],
   },
 };
 
@@ -205,7 +454,9 @@ async function sanityQuery<T>(query: string, dataset: string): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error(`Sanity query failed: ${response.status} ${await response.text()}`);
+    throw new Error(
+      `Sanity query failed: ${response.status} ${await response.text()}`
+    );
   }
 
   const json = await response.json();
@@ -269,11 +520,16 @@ async function fetchKeynoteMap(dataset: string): Promise<Map<string, string>> {
 
 function buildSanityDocument(
   video: YouTubeVideo,
+  transcript: string | null,
   topicMap: Map<string, string>,
   keynoteMap: Map<string, string>
 ): Record<string, unknown> {
-  const combinedText = `${video.title} ${video.description}`;
-  const topicScores = detectTopics(combinedText);
+  // Use transcript for topic detection if available, otherwise use title + description
+  const textForAnalysis = transcript
+    ? `${video.title} ${transcript}`
+    : `${video.title} ${video.description}`;
+
+  const topicScores = detectTopics(textForAnalysis);
   const topicSlugs = topicScores.slice(0, 3).map((t) => t.slug);
   if (topicSlugs.length === 0) topicSlugs.push("curiosity");
 
@@ -293,14 +549,29 @@ function buildSanityDocument(
     ? { _type: "reference", _ref: keynoteId }
     : undefined;
 
-  // Truncate description for excerpt (max 200 chars)
-  let excerpt = video.description.replace(/\n+/g, " ").trim();
-  if (excerpt.length > 200) {
-    excerpt = excerpt.substring(0, 197) + "...";
+  // Generate excerpt from transcript or fall back to description
+  let excerpt: string;
+  if (transcript) {
+    excerpt = generateSummary(transcript, 200);
+  } else {
+    excerpt = video.description.replace(/\n+/g, " ").trim();
+    if (excerpt.length > 200) {
+      excerpt = excerpt.substring(0, 197) + "...";
+    }
+    if (!excerpt) {
+      excerpt = `Watch: ${video.title}`;
+    }
   }
-  if (!excerpt) {
-    excerpt = `Watch: ${video.title}`;
+
+  // Generate HTML body with video embed and transcript
+  let rawHtmlBody: string | undefined;
+  if (transcript) {
+    rawHtmlBody = formatTranscriptAsHtml(transcript, video.videoUrl, video.title);
   }
+
+  // Calculate read time from transcript
+  const wordCount = transcript ? transcript.split(/\s+/).length : 0;
+  const estimatedReadTime = wordCount > 0 ? Math.max(1, Math.round(wordCount / 225)) : undefined;
 
   // SEO fields
   let seoTitle = video.title;
@@ -322,7 +593,9 @@ function buildSanityDocument(
     slug: { _type: "slug", current: slug },
     publishedAt: video.publishedAt,
     excerpt,
+    rawHtmlBody,
     videoEmbed: video.videoUrl,
+    estimatedReadTime,
     contentStatus: "ai-draft",
     originalUrl: video.videoUrl,
     topics: topicRefs.length > 0 ? topicRefs : undefined,
@@ -389,7 +662,7 @@ export async function importYouTubeVideos(options?: {
     throw new Error("SANITY_WRITE_TOKEN not set");
   }
 
-  console.log(`📺 YouTube Import\n`);
+  console.log(`📺 YouTube Import (with transcripts)\n`);
   console.log(`  Channel:  ${YOUTUBE_CHANNEL_ID}`);
   console.log(`  Dataset:  ${dataset}`);
   console.log(`  Dry run:  ${dryRun}`);
@@ -435,51 +708,50 @@ export async function importYouTubeVideos(options?: {
   console.log(`  Topic hubs: ${topicMap.size}`);
   console.log(`  Keynotes: ${keynoteMap.size}`);
 
-  // Build documents
-  const documents = videosToImport.map((video) =>
-    buildSanityDocument(video, topicMap, keynoteMap)
-  );
-
-  // Dry run preview
-  if (dryRun) {
-    console.log(`\n  🔍 DRY RUN — Preview of documents:`);
-    for (const doc of documents) {
-      console.log(`\n  - ${doc.title}`);
-      console.log(`    ID: ${doc._id}`);
-      console.log(`    Slug: ${(doc.slug as { current: string }).current}`);
-      console.log(`    Video: ${doc.videoEmbed}`);
-    }
-    console.log(`\n  Would import ${documents.length} videos. Exiting.`);
-    return {
-      imported: [],
-      skipped: videosToImport.map((v) => v.videoId),
-    };
-  }
-
-  // Import to Sanity
-  console.log(`\n  Importing ${documents.length} videos...`);
+  // Process each video
   const imported: string[] = [];
   const skipped: string[] = [];
 
-  for (const doc of documents) {
-    const video = videosToImport.find(
-      (v) => `imported-youtube-${v.videoId}` === doc._id
-    );
+  for (const video of videosToImport) {
+    console.log(`\n  Processing: ${video.title}`);
 
+    // Fetch transcript
+    console.log(`    Fetching transcript...`);
+    const transcript = await fetchTranscript(video.videoId);
+
+    if (transcript) {
+      const wordCount = transcript.split(/\s+/).length;
+      console.log(`    Transcript: ${wordCount} words`);
+    } else {
+      console.log(`    No transcript available - will use description only`);
+    }
+
+    // Build document
+    const doc = buildSanityDocument(video, transcript, topicMap, keynoteMap);
+
+    // Dry run preview
+    if (dryRun) {
+      console.log(`    Would create: ${doc._id}`);
+      console.log(`    Slug: ${(doc.slug as { current: string }).current}`);
+      console.log(`    Excerpt: ${(doc.excerpt as string).substring(0, 80)}...`);
+      skipped.push(video.videoId);
+      continue;
+    }
+
+    // Import to Sanity
     try {
-      const mutations = [{ createOrReplace: doc }];
-      await sanityMutate(mutations, dataset);
-      imported.push(doc._id as string);
-      console.log(`  ✅ ${doc.title}`);
+      await sanityMutate([{ createOrReplace: doc }], dataset);
+      imported.push(video.videoId);
+      console.log(`    ✅ Imported`);
     } catch (err) {
-      skipped.push(doc._id as string);
-      console.log(`  ❌ ${doc.title}: ${err}`);
+      skipped.push(video.videoId);
+      console.log(`    ❌ Failed: ${err}`);
     }
   }
 
   console.log(`\n✅ Import complete:`);
   console.log(`   Imported: ${imported.length}`);
-  console.log(`   Failed:   ${skipped.length}`);
+  console.log(`   Skipped:  ${skipped.length}`);
 
   return { imported, skipped };
 }
@@ -510,7 +782,7 @@ async function main(): Promise<void> {
   });
 }
 
-// Run if executed directly (not imported)
+// Run if executed directly
 if (require.main === module) {
   main().catch((err) => {
     console.error("Fatal error:", err);
