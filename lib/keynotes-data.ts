@@ -23,19 +23,19 @@ export interface KeynoteSlideData {
 export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
   {
     slug: "escaping-the-apathy-trap",
-    title: "Escaping the Apathy Trap",
-    tagline: "What happens when powerful technology meets passive culture",
+    title: "Interrupt Apathy!",
+    tagline: "How to build confident, curious teams that move instead of align",
     description: [
       "AI is changing how we work, think, build, and compete. But while technology accelerates, many organisations are unintentionally creating cultures where people stop questioning, stop experimenting, and stop taking initiative.",
       "Escaping the Apathy Trap is a keynote about curiosity, complacency, and what happens when powerful technology meets passive culture. It explores why people stop taking initiative, how cultures unintentionally reward passivity, and what structurally needs to change to reverse it.",
-      "This is not a motivational talk. It is a strategic exploration designed to create recognition first, then movement — shaped by two decades of building companies, leading teams, and watching how people behave inside systems.",
+      "This is not a motivational talk. It is a strategic exploration designed to create recognition first, then movement. Shaped by two decades of building companies, leading teams, and watching how people behave inside systems.",
     ],
     keyTakeaways: [
-      "Why people stop taking initiative — and what triggers the drift",
+      "Why people stop taking initiative, and what triggers the drift",
       "How cultures unintentionally reward passivity over contribution",
       "What happens when process replaces movement and meetings replace momentum",
       "Why curiosity matters more than ever in the age of AI",
-      "How incentives shape behaviour — and what organisations may be teaching people without realising it",
+      "How incentives shape behaviour, and what organisations may be teaching people without realising it",
       "What structurally needs to change to rebuild cultures where action feels possible",
     ],
     keyTakeawaysLabel: "Audiences leave understanding:",
@@ -73,31 +73,6 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
       "Leadership groups building remote/hybrid work culture",
       "Conferences focused on wellbeing and performance",
       "Teams experiencing burnout or attention fragmentation",
-    ],
-  },
-  {
-    slug: "innovation-starts-at-home",
-    title: "Innovation Starts at Home",
-    tagline: "How to build teams that produce breakthroughs",
-    description: [
-      "Most organisations want innovation but run systems built for caution: approvals, meetings, process drag, and fear of failure. Talented people become passive. Ideas die in committee. And the business mistakes motion for progress.",
-      "In this keynote, Nic shows leaders how to build entrepreneurial teams inside existing organisations — teams that learn fast, act with agency, and turn failure into progress. Drawing from 20+ years of building startups and the patterns he's seen across hundreds of teams, he breaks down why innovation stalls and what practically restarts it.",
-      "This talk is especially relevant in the AI era, where the gap between companies that experiment and companies that wait is widening every quarter. Your team will leave with a clear understanding of what's slowing them down and a practical playbook for building momentum.",
-    ],
-    keyTakeaways: [
-      "How to identify and reduce 'progress tax': meetings, process, work-around-work",
-      "A framework for building agency and initiative without chaos",
-      "How to create psychological safety alongside high standards",
-      "The innovation flywheel: Curiosity, Action, Information, Loop",
-      "Why the best teams treat failure as data, not disaster",
-    ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
-    audiences: [
-      "Product and engineering teams seeking faster iteration",
-      "Leadership groups driving organisational transformation",
-      "Innovation departments stuck in 'innovation theatre'",
-      "Companies navigating AI adoption and digital change",
     ],
   },
   {

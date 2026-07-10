@@ -35,7 +35,6 @@ import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
-import { HeroVideoPlayButton } from "@/components/hero-video-play-button";
 import { ArrowRight, Crosshair } from "lucide-react";
 
 /**
@@ -86,38 +85,41 @@ export default async function HomePage() {
         variant="hero"
         id="hero"
         background="bg-rocket-pattern-mobile-only"
-        className=""
+        className="md:!pt-[10.5rem] md:!justify-start"
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
-        <div>
+        <div className="text-center">
           <h1
-            className="heading-stroke font-extrabold tracking-tight text-[clamp(2.25rem,6.8vw,6.5rem)] uppercase leading-[0.95] text-accent-600"
+            className="heading-stroke-white font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
           >
-            Keynote Speaker
+            Why do smart, capable people stop showing up?
           </h1>
-          <h2 className="mt-2 font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 [-webkit-text-stroke:2px_white] [paint-order:stroke_fill] sm:mt-3">
-            <span className="block text-[clamp(1.9rem,9vw,5rem)]">Entrepreneur</span>
-            <span className="block text-[clamp(1.55rem,7.25vw,4rem)]">
-              AI Product Builder
-            </span>
-          </h2>
-          {/* Body + CTAs — below the headline, left-aligned, away from the image */}
-          <div className="mt-4 flex flex-col items-start md:mt-6 md:max-w-[45%]">
-            <p className="max-w-xl text-base leading-relaxed text-brand-800 md:text-brand-50 md:text-lg">
-              I help teams rediscover their agency.
+          {/* Body + CTAs — centered below the headline */}
+          <div className="mx-auto mt-4 flex flex-col items-center md:mt-6 md:max-w-[65%]">
+            <div className="rounded-sm bg-brand-900/50 p-4 backdrop-blur-sm md:p-6">
+              <p className="max-w-xl text-base leading-relaxed text-brand-100 md:text-lg">
+              Output is up but engagement is down.
+              <br />
+              The unspoken team war cry becomes &ldquo;stay in my lane&rdquo;.
+              <br />
+              Everyone is waiting instead of initiating.
               <br /><br />
-              Through hard-earned experience (3 exits, 2 best-selling books,
-              20+ years in tech), I show organisations how to think differently,
-              experiment boldly with AI, and ship products that actually matter.
-            </p>
+              The silent killer is not Artificial Intelligence, it&apos;s Apathy and Indifference and it grows inside organisations that look fine from the outside.
+              <br /><br />
+              This is what I speak about. How people can{" "}
+              <a href="/keynotes/escaping-the-apathy-trap" className="font-bold text-accent-400 underline underline-offset-2 hover:text-accent-300">
+                INTERRUPT APATHY
+              </a>{" "}
+              and build confident, curious teams that move instead of align.
+              </p>
+            </div>
             <div className="mt-4 flex flex-col gap-4 sm:flex-row md:mt-6">
               <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-                Book a Virtual Keynote
+                Enquire to Book
               </CTAButton>
               <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
                 Explore Keynotes
               </CTAButton>
-              <HeroVideoPlayButton />
             </div>
           </div>
         </div>

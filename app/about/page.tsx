@@ -52,35 +52,12 @@ export default function AboutPage() {
       <Section width="wide">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <h1 className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,10vw,3.75rem)] uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl">
+            <h1 className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,10vw,3.75rem)] uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl relative z-20">
               I Am Nic Haralambous
             </h1>
             <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
               <p>
-                I am an obsessive entrepreneur,{" "}
-                <a href="/speaker" className="text-accent-600 hover:underline">
-                  keynote speaker
-                </a>
-                , product builder, and published author. I&rsquo;ve been building
-                businesses since I was 16, sold three of them, and spent more than
-                20 years learning tough lessons through failure and success.
-              </p>
-              <p>
-                Today I build products at{" "}
-                <a
-                  href="https://www.yoco.com"
-                  className="text-accent-600 hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Yoco
-                </a>{" "}
-                and deliver{" "}
-                <a href="/keynotes" className="text-accent-600 hover:underline">
-                  virtual keynotes
-                </a>{" "}
-                that help teams think differently about curiosity, innovation,
-                and failure.
+                I am a keynote speaker, entrepreneur, product builder, and best-selling author. I&rsquo;ve been building businesses since I was 16, sold three of them, and spent more than 20 years learning lessons through failure and success.
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -102,11 +79,11 @@ export default function AboutPage() {
           <div className="flex justify-center">
             <div className="relative">
               <Image
-                src="/slides/Nic_About_new_16bit.png"
+                src="/slides/Nic_Speaker_Photo.jpg"
                 alt="Nic Haralambous"
                 width={480}
                 height={800}
-                className="relative z-10 h-auto w-full max-w-[16rem] md:max-w-[18.75rem]"
+                className="relative z-0 h-auto w-full max-w-[16rem] max-h-[24rem] object-cover md:max-w-[18.75rem] md:max-h-[28rem]"
                 priority
               />
             </div>

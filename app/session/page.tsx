@@ -15,13 +15,13 @@ import { ArrowRight, Crosshair } from "lucide-react";
 const STRIPE_PAYMENT_LINK = "https://book.stripe.com/28E3cv3B00to8KS41Q2wU00";
 
 export const metadata: Metadata = {
-  title: "Book a Consulting Session",
+  title: "Pick Nic's Brain",
   description:
     "Book a 1-on-1 consulting session with Nic Haralambous. Get expert guidance on startups, product strategy, AI integration, and scaling your business.",
   alternates: { canonical: "https://nicharalambous.com/session" },
   openGraph: {
     type: "website",
-    title: "Book a Consulting Session | Nic Haralambous",
+    title: "Pick Nic's Brain | Nic Haralambous",
     description:
       "1-on-1 consulting with a 4x exited entrepreneur. Startups, product, AI, and growth.",
     url: "https://nicharalambous.com/session",
@@ -59,7 +59,7 @@ export default function SessionPage() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center">
             <h1 className="heading-display-stroke-sm text-5xl text-brand-900 sm:text-6xl">
-              Book a Consulting Session
+              Pick Nic's Brain
             </h1>
             <p className="mt-4 text-lg text-brand-600">
               A focused 1-on-1 session with Nic to tackle your biggest
