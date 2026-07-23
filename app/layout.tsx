@@ -9,7 +9,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/header";
 import { ConditionalFooter } from "@/components/conditional-footer";
-import { HomePageVideoBackground } from "@/components/home-page-video-background";
 import { SmartHeadingManager } from "@/components/smart-heading-manager";
 import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
@@ -69,8 +68,6 @@ export default function RootLayout({
           {/* Sitewide structured data */}
           <JsonLd data={personJsonLd()} />
           <JsonLd data={websiteJsonLd()} />
-          <HomePageVideoBackground />
-
           <Header />
           <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] md:pb-0 md:pt-[var(--header-clearance)]">{children}</main>
           <ConditionalFooter />

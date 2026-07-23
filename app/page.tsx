@@ -84,34 +84,58 @@ export default async function HomePage() {
       <Slide
         variant="hero"
         id="hero"
-        background="bg-rocket-pattern-mobile-only"
+        background="bg-beard-pattern"
         className="md:!pt-[10.5rem] md:!justify-start"
+        image={
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden grid-cols-6 items-end md:grid"
+          >
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                key={n}
+                src={`/slides/nic-hero-${n}.png`}
+                alt=""
+                className="max-h-[42vh] w-full select-none object-contain object-bottom"
+              />
+            ))}
+          </div>
+        }
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="text-center">
           <h1
-            className="heading-stroke-white font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
+            className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
           >
-            Why do smart, capable people stop showing up?
+            INTERRUPT APATHY!
           </h1>
           {/* Body + CTAs — centered below the headline */}
-          <div className="mx-auto mt-4 flex flex-col items-center md:mt-6 md:max-w-[65%]">
-            <div className="rounded-sm bg-brand-900/50 p-4 backdrop-blur-sm md:p-6">
-              <p className="max-w-xl text-base leading-relaxed text-brand-100 md:text-lg">
-              Output is up but engagement is down.
-              <br />
-              The unspoken team war cry becomes &ldquo;stay in my lane&rdquo;.
-              <br />
-              Everyone is waiting instead of initiating.
-              <br /><br />
-              The silent killer is not Artificial Intelligence, it&apos;s Apathy and Indifference and it grows inside organisations that look fine from the outside.
-              <br /><br />
-              This is what I speak about. How people can{" "}
-              <a href="/keynotes/escaping-the-apathy-trap" className="font-bold text-accent-400 underline underline-offset-2 hover:text-accent-300">
-                INTERRUPT APATHY
-              </a>{" "}
-              and build confident, curious teams that move instead of align.
+          <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
+            <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
+              {/* Hook — the thesis, largest and boldest */}
+              <p className="text-xl font-bold leading-tight text-brand-900 md:text-3xl">
+                Artificial Intelligence is not killing your business.{" "}
+                <span className="text-accent-600">Apathy and Indifference</span> are the{" "}
+                <span className="text-accent-600">silent killers.</span>
               </p>
+              {/* Symptoms — the problem, medium weight */}
+              <p className="text-base leading-relaxed text-brand-700 md:text-xl">
+                Something feels off in your organisation.
+                <br />
+                Output is up but engagement is down.
+                <br />
+                Everyone is waiting instead of initiating.
+              </p>
+              {/* Offer — set apart with a mono kicker */}
+              <div>
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  WHAT I SPEAK ABOUT
+                </span>
+                <p className="mt-2 text-base font-medium leading-relaxed text-brand-900 md:text-lg">
+                  Why smart, capable people stop showing up and how to re-engage them right now.
+                </p>
+              </div>
             </div>
             <div className="mt-4 flex flex-col gap-4 sm:flex-row md:mt-6">
               <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">

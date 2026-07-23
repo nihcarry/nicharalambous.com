@@ -272,6 +272,22 @@
     background-size: 24px 24px;
   }
 
+  /* Slide 1 — Hero: repeating beard silhouette tile */
+  .bg-beard-pattern {
+    background-color: #f7f7f5;
+    position: relative;
+  }
+  .bg-beard-pattern::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/slides/beard-pattern-tile.png");
+    background-size: 72px 72px;
+    background-repeat: repeat;
+    opacity: 0.09;
+    pointer-events: none;
+  }
+
   /* Slide 1 — Hero: handheld megaphone (speaker, amplify your message), tilted -20° */
   .bg-rocket-pattern {
     background-color: #f7f7f5;
