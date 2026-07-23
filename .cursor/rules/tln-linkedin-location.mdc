@@ -1,0 +1,41 @@
+---
+description: TLN LinkedIn outreach — Netherlands location is mandatory and must never be wrong
+globs:
+alwaysApply: false
+---
+
+# TLN LinkedIn location (non-negotiable)
+
+This chapter targets **South African expats living in the Netherlands only**. Wrong country = outreach failure.
+
+## Forbidden
+
+- **Never** construct LinkedIn search URLs with `geoUrn`, `facetGeoRegion`, or any guessed location ID.
+- **Never** invite someone whose profile location is outside the Netherlands (e.g. Gauteng, Cape Town, United Kingdom).
+- **Never** proceed if the active location filter is not **Netherlands**.
+
+## Required: set location via LinkedIn UI only
+
+Country-wide search:
+
+1. Search: `South African Netherlands` (People).
+2. Click **Locations** → check **Netherlands** (country) → **Show results**.
+
+City searches (rotate these; do not only search country-wide):
+
+1. Search: `South African` (People).
+2. Click **Locations** → pick a **Dutch city** (Amsterdam, Rotterdam, The Hague, Utrecht, Eindhoven, Haarlem, Leiden, etc.) → **Show results**.
+
+**Verify** before inviting: snapshot must show the correct location filter; each prospect's listed location must be in the Netherlands.
+
+**Pagination:** read `.cursor/skills/linkedin-outreach/search-cursors.json` and start at `lastPage + 1` for that query. Do not re-scan page 1 of a query already browsed this week.
+
+## If filter looks wrong
+
+Stop immediately. Reset filters. Re-apply Netherlands via UI. Do not send invites until verified.
+
+## Reference
+
+Netherlands geo code is `102890719` (for human verification of URL after UI filter only — do not build URLs from this). Wrong code `103630371` resolves to Watford, UK.
+
+See `.cursor/skills/linkedin-outreach/SKILL.md` for full workflow.

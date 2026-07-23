@@ -603,8 +603,9 @@ Work is ordered by dependency. Each block depends on the one before it (with som
 - Portable Text renderer in `components/portable-text.tsx` handles all custom blocks (video, code, pull quotes).
 
 **Sanity webhook setup (manual steps required):**
-1. Create a GitHub Personal Access Token (fine-grained) at https://github.com/settings/tokens with `Contents: Read` permission for the `nihcarry/nicharalambous.com` repo
-2. In Sanity dashboard (https://www.sanity.io/manage → project → API → Webhooks), create a webhook:
+
+1. Create a GitHub Personal Access Token — see [docs/SANITY-WEBHOOK-SETUP.md](docs/SANITY-WEBHOOK-SETUP.md). Classic PAT: **`public_repo`** scope. Fine-grained: **Contents read and write** (not read-only).
+2. In Sanity dashboard (https://www.sanity.io/manage → project → API → Webhooks), create or edit the webhook:
    - Name: `Deploy on publish`
    - URL: `https://api.github.com/repos/nihcarry/nicharalambous.com/dispatches`
    - Trigger on: Create, Update, Delete

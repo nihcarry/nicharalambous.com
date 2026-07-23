@@ -27,6 +27,12 @@ on:
 permissions:
   contents: read
 
+# Prevent webhook storms (e.g. bulk Sanity imports) from running hundreds of
+# overlapping deploys. New dispatches queue instead of running in parallel.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

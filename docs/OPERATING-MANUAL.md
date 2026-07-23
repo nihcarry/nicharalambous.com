@@ -150,10 +150,17 @@ GitHub → Actions → **Build & Deploy** → **Run workflow** → click the gre
 
 ### "I published but the site isn't updated"
 
-1. Check if a deploy is running: Studio → "View build status" or GitHub Actions.
-2. If no run started, the webhook may not have fired. Trigger a manual rebuild from GitHub Actions.
-3. If the run completed but the site looks stale, it might be your browser cache. Hard-refresh (Cmd+Shift+R) or try incognito.
-4. If the run failed, click the ntfy notification link to see the error log.
+**Blog posts require two steps in Studio:**
+
+1. Set **Content Status → Published** (not AI Draft).
+2. Click Sanity's **Publish** button.
+
+**Then a site rebuild must run** (static site — Publish alone does not update the live HTML):
+
+1. Check if **Build & Deploy** started: Studio → "View build status" or [GitHub Actions](https://github.com/nihcarry/nicharalambous.com/actions/workflows/deploy.yml). Look for trigger **repository_dispatch**.
+2. If **no run started**, the Sanity → GitHub webhook is broken (usually an expired GitHub token). See [SANITY-WEBHOOK-SETUP.md](SANITY-WEBHOOK-SETUP.md). Until fixed, run **Build & Deploy** manually from GitHub Actions.
+3. If the run **completed** but the site looks stale, hard-refresh (Cmd+Shift+R) or try incognito.
+4. If the run **failed**, open the run log or check your ntfy notification for the error.
 
 ### "Something looks wrong on the live site"
 

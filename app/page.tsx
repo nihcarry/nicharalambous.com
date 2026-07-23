@@ -114,26 +114,30 @@ export default async function HomePage() {
           <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
             <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
               {/* Hook — the thesis, largest and boldest */}
-              <p className="text-xl font-bold leading-tight text-brand-900 md:text-3xl">
-                Artificial Intelligence is not killing your business.{" "}
-                <span className="text-accent-600">Apathy and Indifference</span> are the{" "}
-                <span className="text-accent-600">silent killers.</span>
+              <p className="text-balance text-xl font-bold leading-tight text-brand-900 md:text-3xl">
+                I bet you think AI is the biggest threat to your future.
+                <br />
+                You&apos;re wrong.
+                <br />
+                <span className="text-accent-600">Apathy</span> is the biggest threat to your future.
               </p>
               {/* Symptoms — the problem, medium weight */}
               <p className="text-base leading-relaxed text-brand-700 md:text-xl">
-                Something feels off in your organisation.
+                You feel like an observer in your life.
                 <br />
-                Output is up but engagement is down.
+                Your staff don&apos;t want to take the initiative.
                 <br />
-                Everyone is waiting instead of initiating.
+                Your management team seems disengaged from your mission.
+                <br />
+                Snap out of it and interrupt the apathy!
               </p>
               {/* Offer — set apart with a mono kicker */}
               <div>
-                <span className="font-mono text-xs tracking-widest text-accent-600">
-                  WHAT I SPEAK ABOUT
+                <span className="font-mono text-sm font-semibold tracking-widest text-accent-600">
+                  WHAT I THINK AND SPEAK ABOUT
                 </span>
                 <p className="mt-2 text-base font-medium leading-relaxed text-brand-900 md:text-lg">
-                  Why smart, capable people stop showing up and how to re-engage them right now.
+                  Why smart, capable people stop showing up in business and life.
                 </p>
               </div>
             </div>
