@@ -1,7 +1,14 @@
-# YouTube Video Import Cron
+# YouTube Video Import
 #
-# Runs daily at 8 AM UTC to check for new YouTube videos
-# and create draft blog posts in Sanity.
+# Manual trigger only. YouTube blocks transcript fetches from GitHub Actions
+# datacenter IPs, so running this in CI produced posts with no transcript
+# (video + description only). Run the import LOCALLY instead, where transcripts
+# succeed:
+#
+#   npm run import:youtube            # import new videos (video + transcript)
+#   npm run import:youtube:dry-run    # preview without writing
+#
+# This workflow is kept for emergencies (video + description fallback only).
 #
 # Required GitHub Secrets:
 # - SANITY_WRITE_TOKEN (Editor role token)
@@ -12,11 +19,9 @@
 name: YouTube Import
 
 on:
-  schedule:
-    # Daily at 8:00 AM UTC (10:00 AM CEST in summer)
-    - cron: "0 8 * * *"
+  # Scheduled runs disabled: transcripts can't be fetched from CI IPs.
+  # Run locally via `npm run import:youtube`. Manual dispatch kept as a fallback.
   workflow_dispatch:
-    # Allow manual trigger for testing
 
 permissions:
   contents: read

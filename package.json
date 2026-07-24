@@ -24,7 +24,11 @@
     "check:grammar": "tsx scripts/check-grammar-spell.ts",
     "notion:md2html": "tsx scripts/notion-markdown-to-html.ts",
     "test:webhook": "tsx scripts/test-github-dispatch.ts",
-    "trigger:deploy": "tsx scripts/test-github-dispatch.ts --trigger"
+    "trigger:deploy": "tsx scripts/test-github-dispatch.ts --trigger",
+    "import:youtube": "tsx scripts/import-youtube-video.ts",
+    "import:youtube:dry-run": "tsx scripts/import-youtube-video.ts --dry-run",
+    "tldr": "tsx scripts/generate-tldrs.ts",
+    "tldr:apply": "tsx scripts/generate-tldrs.ts --apply"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

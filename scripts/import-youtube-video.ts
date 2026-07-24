@@ -144,79 +144,81 @@ async function fetchTranscript(videoId: string): Promise<string | null> {
   }
 }
 
-// ─── Summary generation (local, no API) ───────────────────────────────
-
-function generateSummary(transcript: string, maxLength: number = 200): string {
-  // Split into sentences
-  const sentences = transcript
-    .replace(/([.!?])\s+/g, "$1|")
-    .split("|")
-    .filter((s) => s.trim().length > 10);
-
-  if (sentences.length === 0) {
-    return transcript.substring(0, maxLength);
-  }
-
-  // Take first 2-3 sentences that fit in maxLength
-  let summary = "";
-  for (const sentence of sentences.slice(0, 3)) {
-    if ((summary + " " + sentence).length <= maxLength) {
-      summary = summary ? summary + " " + sentence : sentence;
-    } else {
-      break;
-    }
-  }
-
-  if (!summary) {
-    summary = sentences[0].substring(0, maxLength - 3) + "...";
-  }
-
-  return summary.trim();
-}
-
 // ─── HTML formatting ──────────────────────────────────────────────────
 
-function formatTranscriptAsHtml(transcript: string, videoId: string, title: string): string {
-  // Split transcript into paragraphs (roughly every 3-4 sentences)
-  const sentences = transcript
+/** Group a block of prose into readable paragraphs (~4 sentences each). */
+function groupIntoParagraphs(text: string): string[] {
+  const sentences = text
     .replace(/([.!?])\s+/g, "$1|")
     .split("|")
-    .filter((s) => s.trim().length > 0);
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
   const paragraphs: string[] = [];
-  let currentParagraph: string[] = [];
-
+  let current: string[] = [];
   for (const sentence of sentences) {
-    currentParagraph.push(sentence);
-    if (currentParagraph.length >= 4) {
-      paragraphs.push(currentParagraph.join(" "));
-      currentParagraph = [];
+    current.push(sentence);
+    if (current.length >= 4) {
+      paragraphs.push(current.join(" "));
+      current = [];
     }
   }
-  if (currentParagraph.length > 0) {
-    paragraphs.push(currentParagraph.join(" "));
-  }
+  if (current.length > 0) paragraphs.push(current.join(" "));
+  return paragraphs;
+}
 
-  // Build HTML with video embed visible at top, then transcript
+/** Trim promotional boilerplate that follows the first "---" in a YouTube description. */
+function cleanDescription(description: string): string {
+  const cut = description.split(/\n-{2,}\n/)[0] ?? description;
+  return cut.trim();
+}
+
+/**
+ * Build the post body as raw HTML.
+ *
+ * The video embed is ALWAYS included at the top so a post is never empty,
+ * even when the transcript can't be fetched. The transcript (when available)
+ * provides body copy to work from; otherwise we fall back to the cleaned
+ * YouTube description.
+ */
+function buildRawHtmlBody(
+  videoId: string,
+  title: string,
+  transcript: string | null,
+  description: string
+): string {
   const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
 
-  const html = `
+  const embed = `
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-bottom: 2rem;">
   <iframe 
     src="${embedUrl}" 
-    title="${title.replace(/"/g, '&quot;')}"
+    title="${title.replace(/"/g, "&quot;")}"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px;"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
     allowfullscreen>
   </iframe>
-</div>
+</div>`.trim();
 
-<h2>Transcript</h2>
+  let copy: string;
+  if (transcript && transcript.trim().length > 0) {
+    const paragraphs = groupIntoParagraphs(transcript)
+      .map((p) => `<p>${escapeHtml(p)}</p>`)
+      .join("\n\n");
+    copy = `<h2>Video Transcript</h2>\n\n${paragraphs}`;
+  } else {
+    const desc = cleanDescription(description);
+    copy = desc
+      ? desc
+          .split(/\n{2,}/)
+          .map((p) => p.trim())
+          .filter(Boolean)
+          .map((p) => `<p>${escapeHtml(p)}</p>`)
+          .join("\n\n")
+      : `<p>Watch the video above.</p>`;
+  }
 
-${paragraphs.map((p) => `<p>${p}</p>`).join("\n\n")}
-`.trim();
-
-  return html;
+  return `${embed}\n\n${copy}`.trim();
 }
 
 function extractVideoId(url: string): string {
@@ -520,13 +522,46 @@ async function fetchKeynoteMap(dataset: string): Promise<Map<string, string>> {
   return map;
 }
 
+/**
+ * Fetch status + whether a hand-written Portable Text body exists for the
+ * already-imported YouTube posts, so re-runs don't reset your published
+ * status or overwrite content you've edited in Studio.
+ */
+async function fetchExistingPosts(
+  dataset: string
+): Promise<Map<string, ExistingPost>> {
+  const rows = await sanityQuery<
+    { _id: string; contentStatus?: string; hasBody?: boolean; excerpt?: string }[]
+  >(
+    `*[_type == "post" && _id match "imported-youtube-*"]{ _id, contentStatus, excerpt, "hasBody": defined(body) && length(body) > 0 }`,
+    dataset
+  );
+
+  const map = new Map<string, ExistingPost>();
+  for (const row of rows) {
+    map.set(row._id, {
+      contentStatus: row.contentStatus,
+      hasBody: row.hasBody,
+      excerpt: row.excerpt,
+    });
+  }
+  return map;
+}
+
 // ─── Document building ────────────────────────────────────────────────
+
+interface ExistingPost {
+  contentStatus?: string;
+  hasBody?: boolean;
+  excerpt?: string;
+}
 
 function buildSanityDocument(
   video: YouTubeVideo,
   transcript: string | null,
   topicMap: Map<string, string>,
-  keynoteMap: Map<string, string>
+  keynoteMap: Map<string, string>,
+  existing?: ExistingPost
 ): Record<string, unknown> {
   // Use transcript for topic detection if available, otherwise use title + description
   const textForAnalysis = transcript
@@ -553,25 +588,23 @@ function buildSanityDocument(
     ? { _type: "reference", _ref: keynoteId }
     : undefined;
 
-  // Generate excerpt from transcript or fall back to description
-  let excerpt: string;
-  if (transcript) {
-    excerpt = generateSummary(transcript, 200);
-  } else {
-    excerpt = video.description.replace(/\n+/g, " ").trim();
-    if (excerpt.length > 200) {
-      excerpt = excerpt.substring(0, 197) + "...";
-    }
-    if (!excerpt) {
-      excerpt = `Watch: ${video.title}`;
-    }
-  }
+  // Excerpt / TL;DR. Preserve an existing excerpt (hand-written or generated by
+  // `npm run tldr`) so re-imports never clobber a meaningful TL;DR. Brand-new
+  // imports are deliberately left with an empty excerpt — `npm run tldr` then
+  // reads the transcript and writes a real TL;DR (see scripts/generate-tldrs.ts).
+  const excerpt =
+    existing?.excerpt && existing.excerpt.trim().length > 0
+      ? existing.excerpt.trim()
+      : "";
 
-  // Generate HTML body with video embed + transcript
-  let rawHtmlBody: string | undefined;
-  if (transcript) {
-    rawHtmlBody = formatTranscriptAsHtml(transcript, video.videoId, video.title);
-  }
+  // Always build a body with the video embedded at the top, plus body copy
+  // from the transcript (or the description as a fallback). Never empty.
+  const rawHtmlBody = buildRawHtmlBody(
+    video.videoId,
+    video.title,
+    transcript,
+    video.description
+  );
 
   // Calculate read time from transcript
   const wordCount = transcript ? transcript.split(/\s+/).length : 0;
@@ -601,7 +634,9 @@ function buildSanityDocument(
     // Don't set videoEmbed - video is embedded in rawHtmlBody, no need for VideoReadAlong component
     videoEmbed: null,
     estimatedReadTime,
-    contentStatus: "ai-draft",
+    // Preserve the status of an already-imported post (e.g. one you've
+    // published or moved to in-review). New imports start as ai-draft.
+    contentStatus: existing?.contentStatus ?? "ai-draft",
     originalUrl: video.videoUrl,
     topics: topicRefs.length > 0 ? topicRefs : undefined,
     relatedKeynote: relatedKeynote || undefined,
@@ -710,8 +745,10 @@ export async function importYouTubeVideos(options?: {
   console.log(`\n  Fetching reference data from Sanity...`);
   const topicMap = await fetchTopicHubMap(dataset);
   const keynoteMap = await fetchKeynoteMap(dataset);
+  const existingPosts = await fetchExistingPosts(dataset);
   console.log(`  Topic hubs: ${topicMap.size}`);
   console.log(`  Keynotes: ${keynoteMap.size}`);
+  console.log(`  Already imported: ${existingPosts.size}`);
 
   // Process each video
   const imported: string[] = [];
@@ -731,8 +768,24 @@ export async function importYouTubeVideos(options?: {
       console.log(`    No transcript available - will use description only`);
     }
 
-    // Build document
-    const doc = buildSanityDocument(video, transcript, topicMap, keynoteMap);
+    // Skip posts you've hand-edited in Studio (Portable Text body present),
+    // so the import never overwrites your own writing.
+    const docId = `imported-youtube-${video.videoId}`;
+    const existing = existingPosts.get(docId);
+    if (existing?.hasBody) {
+      console.log(`    ⏭ Skipping - has a hand-written body in Studio`);
+      skipped.push(video.videoId);
+      continue;
+    }
+
+    // Build document (preserving existing status if already imported)
+    const doc = buildSanityDocument(
+      video,
+      transcript,
+      topicMap,
+      keynoteMap,
+      existing
+    );
 
     // Dry run preview
     if (dryRun) {
