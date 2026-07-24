@@ -19,7 +19,7 @@
  */
 
 import "./load-env";
-import { YouTubeTranscriptApi } from "youtube-transcript-api-js";
+import { decodeHtmlEntities, fetchTranscript } from "./lib/transcript";
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
 const API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
@@ -91,57 +91,6 @@ function extractAttr(xml: string, tag: string, attr: string): string | null {
   const regex = new RegExp(`<${tag}[^>]*${attr}="([^"]*)"`, "i");
   const match = xml.match(regex);
   return match ? match[1] : null;
-}
-
-function decodeHtmlEntities(text: string): string {
-  return text
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&apos;/g, "'")
-    .replace(/&#x27;/g, "'")
-    .replace(/&rsquo;/g, "'")
-    .replace(/&lsquo;/g, "'")
-    .replace(/&rdquo;/g, '"')
-    .replace(/&ldquo;/g, '"')
-    .replace(/&mdash;/g, "—")
-    .replace(/&ndash;/g, "–")
-    .replace(/&hellip;/g, "...")
-    .replace(/&#(\d+);/g, (_, num) => String.fromCharCode(parseInt(num, 10)));
-}
-
-// ─── Transcript fetching ──────────────────────────────────────────────
-
-interface TranscriptSegment {
-  text: string;
-  start: number;
-  duration: number;
-}
-
-async function fetchTranscript(videoId: string): Promise<string | null> {
-  try {
-    const api = new YouTubeTranscriptApi();
-    const transcript = await api.fetch(videoId, ["en"]);
-
-    if (!transcript || !transcript.snippets || transcript.snippets.length === 0) {
-      console.log(`    No transcript available for ${videoId}`);
-      return null;
-    }
-
-    // Join all transcript segments into plain text and decode HTML entities
-    const fullText = transcript.snippets
-      .map((segment: TranscriptSegment) => decodeHtmlEntities(segment.text))
-      .join(" ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    return fullText;
-  } catch (err) {
-    console.log(`    Transcript fetch failed for ${videoId}: ${err}`);
-    return null;
-  }
 }
 
 // ─── HTML formatting ──────────────────────────────────────────────────
