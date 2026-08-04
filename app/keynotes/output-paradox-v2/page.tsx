@@ -368,10 +368,14 @@ export default function OutputParadoxPreviewPage() {
             </p>
             <p>
               The Apathy Trap is quieter and more dangerous than a bad quarter.
-              Curiosity doesn&rsquo;t vanish overnight. It erodes: curiosity,
-              then boredom, then apathy, then indifference. By the time your
-              best people check out, you&rsquo;re already late. AI often speeds
-              up the slide, because easy work replaces hard thinking.
+              Curiosity doesn&rsquo;t vanish overnight. It erodes because it
+              gets ignored: curiosity vanishes, then boredom arrives, then
+              apathy takes hold, and indifference dominates.
+            </p>
+            <p>
+              By the time your best people check out, you&rsquo;re already too
+              late. AI often speeds up the slide, because easy work replaces
+              hard thinking.
             </p>
           </div>
         </div>
