@@ -22,25 +22,23 @@ export interface KeynoteSlideData {
 
 export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
   {
-    slug: "escaping-the-apathy-trap",
-    title: "Interrupt Apathy!",
-    tagline: "How to build confident, curious teams that move instead of align",
+    slug: "output-paradox-reengage-teams",
+    title: "The Output Paradox",
+    tagline: "How to reengage teams in the age of AI",
     description: [
-      "AI is changing how we work, think, build, and compete. But while technology accelerates, many organisations are unintentionally creating cultures where people stop questioning, stop experimenting, and stop taking initiative.",
-      "Escaping the Apathy Trap is a keynote about curiosity, complacency, and what happens when powerful technology meets passive culture. It explores why people stop taking initiative, how cultures unintentionally reward passivity, and what structurally needs to change to reverse it.",
-      "This is not a motivational talk. It is a strategic exploration designed to create recognition first, then movement. Shaped by two decades of building companies, leading teams, and watching how people behave inside systems.",
+      "Your teams are shipping more. They're also checking out. Productivity is up. Activity is up. Engagement is down. That's the Output Paradox.",
+      "Nearly 1 in 4 of your employees is disengaged right now. You can't see it clearly because AI is masking the signal. More documents. Bigger roadmaps. More meetings about work nobody reads. Everything looks busy. Something still feels off.",
+      "This keynote maps the Apathy Trap — how curiosity erodes into indifference — and gives teams a structural fix: incentives, trust, and room to think. You can't outsource curiosity to a tool.",
     ],
     keyTakeaways: [
-      "Why people stop taking initiative, and what triggers the drift",
-      "How cultures unintentionally reward passivity over contribution",
-      "What happens when process replaces movement and meetings replace momentum",
-      "Why curiosity matters more than ever in the age of AI",
-      "How incentives shape behaviour, and what organisations may be teaching people without realising it",
-      "What structurally needs to change to rebuild cultures where action feels possible",
+      "A clear read on what your organisation actually rewards, versus what it says it values",
+      "A map of where your people sit on the Apathy Arch, and why that's a structure problem, not a performance one",
+      "A working model for turning curiosity into action, without waiting for permission",
+      "One change your team can make in the room, before the applause stops",
     ],
-    keyTakeawaysLabel: "Audiences leave understanding:",
+    keyTakeawaysLabel: "What your team leaves with:",
     closingLine:
-      "The keynote is designed to create recognition first, then movement.",
+      "You can't outsource curiosity to a tool. The fix is structural: incentives, trust, and room to think.",
     deliveryFormat: "virtual",
     duration: "45-60 minutes",
     audiences: [

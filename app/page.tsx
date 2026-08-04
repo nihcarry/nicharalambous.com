@@ -179,7 +179,7 @@ export default async function HomePage() {
                 title: "Activating Human Agency",
                 body: "I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.",
                 output: "OWNERSHIP",
-                href: "/keynotes/escaping-the-apathy-trap",
+                href: "/keynotes/output-paradox-reengage-teams",
               },
               {
                 label: "TOPIC_02",

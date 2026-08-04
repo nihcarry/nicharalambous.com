@@ -15,7 +15,8 @@ var redirects = {
   '/virtual-keynote-speaker': '/speaker',
   '/contact-me': '/contact',
   '/its-not-over': '/media',
-  '/side-hustle-course': '/books/how-to-start-a-side-hustle'
+  '/side-hustle-course': '/books/how-to-start-a-side-hustle',
+  '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams'
 };
 
 function handler(event) {

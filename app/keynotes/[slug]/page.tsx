@@ -27,7 +27,7 @@ import {
  * from `generateStaticParams` here. Otherwise `next build` exports the same
  * path twice and the [slug] template can overwrite the bespoke landing in `out/`.
  */
-const SLUGS_WITH_DEDICATED_PAGE = new Set(["escaping-the-apathy-trap"]);
+const SLUGS_WITH_DEDICATED_PAGE = new Set(["output-paradox-reengage-teams"]);
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { FinalCta } from "@/components/final-cta";

@@ -170,7 +170,7 @@ async function main(): Promise<void> {
     seoDescription:
       "Why AI speed theatre, move-fast experiments, and vanity metrics slow real progress — and how to slow down to speed up.",
     topics: ["ai", "agency", "focus"] as string[],
-    relatedKeynote: "escaping-the-apathy-trap",
+    relatedKeynote: "output-paradox-reengage-teams",
     relatedKeynoteFallback: "reclaiming-focus",
     targetKeywords: [
       "move fast and break things",
