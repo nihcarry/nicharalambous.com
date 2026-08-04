@@ -179,31 +179,43 @@ export default function OutputParadoxPage() {
       {/* ── 1. Hero — full-bleed dark, runs up behind the floating nav ── */}
       <Section
         width="full"
-        className="bg-brand-900 md:-mt-[var(--header-clearance)] md:pt-[calc(var(--header-clearance)+3rem)]"
+        className="relative overflow-hidden bg-brand-900 md:-mt-[var(--header-clearance)] md:pt-[calc(var(--header-clearance)+3rem)]"
       >
-        <div className="container-landing">
+        {/* Stage cut-out — desktop only; bottom-anchored on the right as in mockup */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-[min(46vw,30rem)] md:block lg:w-[min(42vw,34rem)]">
+          <Image
+            src="/slides/nic-hero-4.png"
+            alt="Nic Haralambous mid-keynote, gesturing with a presentation clicker"
+            width={682}
+            height={1024}
+            priority
+            className="absolute bottom-0 right-0 h-[92%] w-auto max-w-none select-none object-contain object-bottom"
+          />
+        </div>
+
+        <div className="container-landing relative z-10">
           <p className="font-mono text-xs tracking-widest text-accent-400">
             KEYNOTE_01 &nbsp;//&nbsp; 45-60 MIN &nbsp;//&nbsp; VIRTUAL OR
             IN-PERSON
           </p>
 
-          <h1 className="mt-6 font-extrabold uppercase leading-[0.85] tracking-tight text-[clamp(2.75rem,12vw,7.5rem)]">
+          <h1 className="mt-6 max-w-3xl font-extrabold uppercase leading-[0.85] tracking-tight text-[clamp(2.75rem,12vw,7.5rem)]">
             <span className="block text-white">The Output</span>
             <span className="heading-stroke-white block text-brand-900">
               Paradox
             </span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-xl font-medium text-accent-400 sm:text-2xl md:text-3xl">
+          <p className="mt-6 max-w-xl text-xl font-medium text-accent-400 sm:text-2xl md:text-3xl">
             How to reengage teams in the age of AI
           </p>
 
-          <p className="mt-8 max-w-3xl text-xl leading-relaxed text-brand-100 md:text-2xl">
+          <p className="mt-8 max-w-xl text-xl leading-relaxed text-brand-100 md:text-2xl">
             Your teams are shipping more. They&rsquo;re also checking out.
           </p>
 
-          {/* Paradox ledger */}
-          <div className="mt-10 grid grid-cols-1 border-y border-brand-700 sm:grid-cols-3 sm:divide-x sm:divide-brand-700">
+          {/* Paradox ledger — sits under the cut-out on the right, as in the mockup */}
+          <div className="mt-10 grid max-w-3xl grid-cols-1 border-y border-brand-700 sm:grid-cols-3 sm:divide-x sm:divide-brand-700">
             {LEDGER.map((cell) => {
               const isDown = cell.direction === "Down";
               const Icon = isDown ? TrendingDown : TrendingUp;
