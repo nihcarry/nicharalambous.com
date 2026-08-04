@@ -308,27 +308,35 @@ export default function OutputParadoxPreviewPage() {
           The data says the same thing
         </h2>
 
-        <div className="mt-10 grid border-y-2 border-brand-900 sm:grid-cols-3 sm:divide-x sm:divide-brand-300">
-          {STATS.map((stat) => (
-            <div
-              key={stat.value}
-              className="border-b border-brand-200 py-8 last:border-b-0 sm:border-b-0 sm:px-6 sm:first:pl-0"
-            >
-              <p className="heading-stroke font-extrabold uppercase leading-[0.9] tracking-tight text-brand-900 text-[clamp(2.25rem,7vw,3.5rem)]">
-                {stat.value}
-              </p>
-              <p className="mt-4 text-base leading-snug text-brand-600">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-10 max-w-3xl text-lg leading-relaxed text-brand-600">
+        <p className="mt-8 max-w-4xl text-2xl font-medium leading-snug text-brand-900 sm:text-3xl md:text-4xl">
           After AI adoption, email, chat, and collaboration climb hard. Focus
-          time drops. Disengagement risk rises with it. Output gets louder.
-          Attention gets thinner.
+          time drops. Disengagement risk rises with it.{" "}
+          <span className="text-accent-600">
+            Output gets louder. Attention gets thinner.
+          </span>
         </p>
+
+        <div className="mt-14">
+          <p className="font-mono text-xs tracking-widest text-accent-600">
+            WHAT THAT&rsquo;S BASED ON
+          </p>
+
+          <div className="mt-5 grid border-y border-brand-300 sm:grid-cols-3 sm:divide-x sm:divide-brand-200">
+            {STATS.map((stat) => (
+              <div
+                key={stat.value}
+                className="border-b border-brand-200 py-5 last:border-b-0 sm:border-b-0 sm:px-6 sm:py-6 sm:first:pl-0"
+              >
+                <p className="heading-display text-2xl text-brand-900 sm:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-sm leading-snug text-brand-500">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </Section>
 
       {/* ── 6. Pull quote — full-bleed dark ── */}
