@@ -105,6 +105,21 @@ const ARCH_STAGES = [
   },
 ];
 
+const SHIFTS = [
+  {
+    title: "Rewire what you reward.",
+    body: "Stop rewarding speed and calling it culture.",
+  },
+  {
+    title: "Fix placement, not performance.",
+    body: "Most disengagement isn\u2019t a person problem. It\u2019s a seat problem.",
+  },
+  {
+    title: "Make curiosity a practice, not a poster.",
+    body: "Small bets, short cycles, permission to be wrong.",
+  },
+];
+
 const TAKEAWAYS = [
   "A clear read on what your organisation actually rewards, versus what it says it values",
   "A map of where your people sit on the Apathy Arch, and why that\u2019s a structure problem, not a performance one",
@@ -423,7 +438,48 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 8. What your team leaves with ── */}
+      {/* ── 8. Where the fix starts ── */}
+      <Section width="wide">
+        <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+          Where the fix starts
+        </h2>
+
+        <p className="mt-4 max-w-3xl text-xl font-medium text-accent-600 sm:text-2xl">
+          Three shifts. Not eight action items.
+        </p>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {SHIFTS.map((shift, i) => (
+            <div
+              key={shift.title}
+              className="flex flex-col border border-brand-900 bg-white p-6"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest text-accent-600">
+                  SHIFT_{String(i + 1).padStart(2, "0")}
+                </span>
+                <Crosshair
+                  className="h-4 w-4 text-accent-600"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="my-3 border-t border-brand-200" />
+              <h3 className="text-xl font-extrabold leading-tight tracking-tight text-brand-900">
+                {shift.title}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-brand-700">
+                {shift.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-10 max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
+          None of this is inspiration. It&rsquo;s a way in.
+        </p>
+      </Section>
+
+      {/* ── 9. What your team leaves with ── */}
       <Section width="wide">
         <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
           What your team leaves with
@@ -451,7 +507,7 @@ export default function OutputParadoxPage() {
         </p>
       </Section>
 
-      {/* ── 9. Book this talk ── */}
+      {/* ── 10. Book this talk ── */}
       <Section width="landing" className="text-center">
         <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
           Book this talk
@@ -467,12 +523,12 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 10. Client logos ── */}
+      {/* ── 11. Client logos ── */}
       <Section width="wide">
         <IncredibleClients names={CLIENT_NAMES} headingSize="section" />
       </Section>
 
-      {/* ── 11. Testimonials ── */}
+      {/* ── 12. Testimonials ── */}
       <Section width="wide">
         <h2 className="heading-display-stroke-sm text-center text-3xl text-brand-900 sm:text-4xl md:text-5xl">
           What clients say
@@ -509,7 +565,7 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 12. Final CTA ── */}
+      {/* ── 13. Final CTA ── */}
       <FinalCta
         heading="The Output Paradox"
         description="If your team is doing more and feeling less, this is the conversation they need next."
