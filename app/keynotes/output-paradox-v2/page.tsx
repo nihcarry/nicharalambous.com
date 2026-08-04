@@ -286,10 +286,9 @@ export default function OutputParadoxPreviewPage() {
           </p>
 
           <p className="mt-8 max-w-4xl text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
-            The wrong AI isn&rsquo;t Artificial Intelligence.{" "}
-            <span className="text-accent-400">
-              It&rsquo;s Apathy and Indifference.
-            </span>
+            Artificial Intelligence won&rsquo;t kill your business. It&rsquo;s
+            the other AI you should be worried about:{" "}
+            <span className="text-accent-400">Apathy and Indifference.</span>
           </p>
 
           <p className="mt-10 max-w-3xl text-lg leading-relaxed text-brand-200">
