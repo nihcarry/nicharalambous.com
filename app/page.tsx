@@ -119,22 +119,19 @@ export default async function HomePage() {
             <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
               {/* Hook — the thesis, largest and boldest */}
               <p className="text-balance text-xl font-bold leading-tight text-brand-900 md:text-3xl">
-                Your teams are shipping more.
+                Your teams are shipping more, but they&apos;re checking out.
                 <br />
-                They&apos;re also checking out.
-                <br />
-                <span className="text-accent-600">
-                  Productivity up. Activity up. Engagement down.
-                </span>
+                Productivity is up. Activity is up. But{" "}
+                <span className="text-accent-600">engagement is down.</span>
               </p>
               {/* Symptoms — the problem, medium weight */}
               <p className="text-base leading-relaxed text-brand-700 md:text-xl">
-                Everything looks busy. Something still feels off.
+                It&apos;s not Artificial Intelligence you need to worry about.
                 <br />
-                Artificial Intelligence won&apos;t kill your business.
-                <br />
-                It&apos;s the other AI you should be worried about: apathy and
-                indifference.
+                It&apos;s{" "}
+                <span className="font-semibold text-brand-900">
+                  Apathy and Indifference.
+                </span>
               </p>
               {/* Offer — set apart with a mono kicker */}
               <div>
@@ -142,8 +139,8 @@ export default async function HomePage() {
                   THE KEYNOTE
                 </span>
                 <p className="mt-2 text-base font-medium leading-relaxed text-brand-900 md:text-lg">
-                  How to reengage teams in the age of AI, and why smart, capable
-                  people stop showing up.
+                  The Output Paradox &mdash; How to reengage teams in the age of
+                  AI.
                 </p>
               </div>
             </div>
