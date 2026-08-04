@@ -117,20 +117,27 @@ export default async function HomePage() {
           {/* Body + CTAs — centered below the headline */}
           <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
             <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
-              {/* Hook — the thesis, largest and boldest */}
+              {/* Hook — the thesis, largest and boldest.
+                  Non-breaking spaces keep trailing words from wrapping alone. */}
               <p className="text-balance text-xl font-bold leading-tight text-brand-900 md:text-3xl">
-                Your teams are shipping more, but they&apos;re checking out.
+                Your teams are shipping more, but they&apos;re
+                checking&nbsp;out.
                 <br />
-                Productivity is up. Activity is up. But{" "}
-                <span className="text-accent-600">engagement is down.</span>
+                Productivity is up. Activity is&nbsp;up.
+                <br />
+                But&nbsp;
+                <span className="text-accent-600">
+                  engagement is&nbsp;down.
+                </span>
               </p>
               {/* Symptoms — the problem, medium weight */}
-              <p className="text-base leading-relaxed text-brand-700 md:text-xl">
-                It&apos;s not Artificial Intelligence you need to worry about.
+              <p className="text-balance text-base leading-relaxed text-brand-700 md:text-xl">
+                It&apos;s not Artificial Intelligence you need to
+                worry&nbsp;about.
                 <br />
-                It&apos;s{" "}
+                It&apos;s&nbsp;
                 <span className="font-semibold text-brand-900">
-                  Apathy and Indifference.
+                  Apathy and&nbsp;Indifference.
                 </span>
               </p>
               {/* Offer — set apart with a mono kicker */}
