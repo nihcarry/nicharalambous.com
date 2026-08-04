@@ -35,7 +35,11 @@ import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
+import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
 import { ArrowRight, Crosshair } from "lucide-react";
+
+/** Flagship keynote the hero slide sells. */
+const OUTPUT_PARADOX_SLUG = "output-paradox-reengage-teams";
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -108,45 +112,54 @@ export default async function HomePage() {
           <h1
             className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
           >
-            INTERRUPT APATHY!
+            THE OUTPUT PARADOX
           </h1>
           {/* Body + CTAs — centered below the headline */}
           <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
             <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
               {/* Hook — the thesis, largest and boldest */}
               <p className="text-balance text-xl font-bold leading-tight text-brand-900 md:text-3xl">
-                I bet you think AI is the biggest threat to your future.
+                Your teams are shipping more.
                 <br />
-                You&apos;re wrong.
+                They&apos;re also checking out.
                 <br />
-                <span className="text-accent-600">Apathy</span> is the biggest threat to your future.
+                <span className="text-accent-600">
+                  Productivity up. Activity up. Engagement down.
+                </span>
               </p>
               {/* Symptoms — the problem, medium weight */}
               <p className="text-base leading-relaxed text-brand-700 md:text-xl">
-                You feel like an observer in your life.
+                Everything looks busy. Something still feels off.
                 <br />
-                Your staff don&apos;t want to take the initiative.
+                Artificial Intelligence won&apos;t kill your business.
                 <br />
-                Your management team seems disengaged from your mission.
-                <br />
-                Snap out of it and interrupt the apathy!
+                It&apos;s the other AI you should be worried about: apathy and
+                indifference.
               </p>
               {/* Offer — set apart with a mono kicker */}
               <div>
                 <span className="font-mono text-sm font-semibold tracking-widest text-accent-600">
-                  WHAT I THINK AND SPEAK ABOUT
+                  THE KEYNOTE
                 </span>
                 <p className="mt-2 text-base font-medium leading-relaxed text-brand-900 md:text-lg">
-                  Why smart, capable people stop showing up in business and life.
+                  How to reengage teams in the age of AI, and why smart, capable
+                  people stop showing up.
                 </p>
               </div>
             </div>
             <div className="mt-4 flex flex-col gap-4 sm:flex-row md:mt-6">
-              <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-                Enquire to Book
+              <CTAButton
+                href={getKeynoteBookingUrl(OUTPUT_PARADOX_SLUG)}
+                className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
+              >
+                Book This Talk
               </CTAButton>
-              <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-                Explore Keynotes
+              <CTAButton
+                href={`/keynotes/${OUTPUT_PARADOX_SLUG}`}
+                variant="secondary"
+                className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
+              >
+                See The Keynote
               </CTAButton>
             </div>
           </div>
@@ -179,7 +192,7 @@ export default async function HomePage() {
                 title: "Activating Human Agency",
                 body: "I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.",
                 output: "OWNERSHIP",
-                href: "/keynotes/output-paradox-reengage-teams",
+                href: `/keynotes/${OUTPUT_PARADOX_SLUG}`,
               },
               {
                 label: "TOPIC_02",
