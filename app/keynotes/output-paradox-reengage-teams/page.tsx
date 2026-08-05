@@ -257,6 +257,13 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
+      {/*
+        Alignment rule for this page:
+        - Headings + prose → container-landing (one shared left edge)
+        - Card / illustration grids → container-wide (intentionally wider)
+        Never nest containers; never put a left-aligned title in wide alone.
+      */}
+
       {/* ── 2. 1 in 4 ── */}
       <Section width="landing">
         <div className="grid items-start gap-8 md:grid-cols-[auto_1fr] md:gap-12">
@@ -276,12 +283,14 @@ export default function OutputParadoxPage() {
       </Section>
 
       {/* ── 3. It looks like this ── */}
-      <Section width="wide">
-        <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-          It looks like this
-        </h2>
+      <Section width="full">
+        <div className="container-landing">
+          <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            It looks like this
+          </h2>
+        </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="container-wide mt-10 grid gap-6 md:grid-cols-3">
           {SIGNALS.map((signal, i) => (
             <div
               key={signal.heading}
@@ -393,8 +402,8 @@ export default function OutputParadoxPage() {
       </Section>
 
       {/* ── 7. Busy is not bought in + the Apathy Arch ── */}
-      <Section width="wide">
-        <div className="container-landing !px-0">
+      <Section width="full">
+        <div className="container-landing">
           <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
             Busy is not bought in
           </h2>
@@ -417,52 +426,54 @@ export default function OutputParadoxPage() {
               hard thinking.
             </p>
           </div>
+
+          <div className="mt-14">
+            <p className="font-mono text-xs tracking-widest text-accent-600">
+              THE APATHY ARCH
+            </p>
+            <h3 className="mt-3 text-2xl font-extrabold uppercase tracking-tight text-brand-900 sm:text-3xl">
+              Five stages. Nobody announces the drift.
+            </h3>
+          </div>
         </div>
 
-        <div className="mt-14">
-          <p className="font-mono text-xs tracking-widest text-accent-600">
-            THE APATHY ARCH
-          </p>
-          <h3 className="mt-3 text-2xl font-extrabold uppercase tracking-tight text-brand-900 sm:text-3xl">
-            Five stages. Nobody announces the drift.
-          </h3>
-
-          <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-5">
-            {ARCH_STAGES.map((stage, i) => (
-              <li key={stage.name} className="flex flex-col">
-                <span className="font-mono text-xs tracking-widest text-accent-600">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className={`mt-2 h-1 w-full ${stage.bar}`} />
-                <div className="mt-5 flex h-28 items-end sm:h-36">
-                  <Image
-                    src={`${ARCH_IMAGE_BASE}/${stage.file}`}
-                    alt={stage.alt}
-                    width={330}
-                    height={300}
-                    className="h-full w-auto object-contain object-bottom"
-                  />
-                </div>
-                <p className="mt-4 text-sm font-extrabold uppercase tracking-tight text-brand-900 sm:text-base">
-                  {stage.name}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ol className="container-wide mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-5">
+          {ARCH_STAGES.map((stage, i) => (
+            <li key={stage.name} className="flex flex-col">
+              <span className="font-mono text-xs tracking-widest text-accent-600">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className={`mt-2 h-1 w-full ${stage.bar}`} />
+              <div className="mt-5 flex h-28 items-end sm:h-36">
+                <Image
+                  src={`${ARCH_IMAGE_BASE}/${stage.file}`}
+                  alt={stage.alt}
+                  width={330}
+                  height={300}
+                  className="h-full w-auto object-contain object-bottom"
+                />
+              </div>
+              <p className="mt-4 text-sm font-extrabold uppercase tracking-tight text-brand-900 sm:text-base">
+                {stage.name}
+              </p>
+            </li>
+          ))}
+        </ol>
       </Section>
 
       {/* ── 8. Where the fix starts ── */}
-      <Section width="wide">
-        <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-          Where the fix starts
-        </h2>
+      <Section width="full">
+        <div className="container-landing">
+          <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            Where the fix starts
+          </h2>
 
-        <p className="mt-4 max-w-3xl text-xl font-medium text-accent-600 sm:text-2xl">
-          Three shifts. Not eight action items.
-        </p>
+          <p className="mt-4 max-w-3xl text-xl font-medium text-accent-600 sm:text-2xl">
+            Three shifts. Not eight action items.
+          </p>
+        </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="container-wide mt-10 grid gap-6 md:grid-cols-3">
           {SHIFTS.map((shift, i) => (
             <div
               key={shift.title}
@@ -488,18 +499,22 @@ export default function OutputParadoxPage() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
-          None of this is inspiration. It&rsquo;s a way in.
-        </p>
+        <div className="container-landing mt-10">
+          <p className="max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
+            None of this is inspiration. It&rsquo;s a way in.
+          </p>
+        </div>
       </Section>
 
       {/* ── 9. What your team leaves with ── */}
-      <Section width="wide">
-        <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-          What your team leaves with
-        </h2>
+      <Section width="full">
+        <div className="container-landing">
+          <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+            What your team leaves with
+          </h2>
+        </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="container-wide mt-10 grid gap-6 sm:grid-cols-2">
           {TAKEAWAYS.map((item, i) => (
             <div
               key={item}
@@ -515,10 +530,12 @@ export default function OutputParadoxPage() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
-          You can&rsquo;t outsource curiosity to a tool. The fix is structural:
-          incentives, trust, and room to think.
-        </p>
+        <div className="container-landing mt-10">
+          <p className="max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
+            You can&rsquo;t outsource curiosity to a tool. The fix is structural:
+            incentives, trust, and room to think.
+          </p>
+        </div>
       </Section>
 
       {/* ── 10. Book this talk ── */}
