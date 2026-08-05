@@ -325,28 +325,43 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 4. The wrong AI — full-bleed dark ── */}
-      <Section width="full" className="bg-brand-900">
-        <div className="container-landing">
-          <p className="max-w-3xl text-lg leading-relaxed text-brand-200 md:text-xl">
-            People aren&rsquo;t going deep. They&rsquo;re phoning it in. AI
-            talks to AI. Roadmaps keep moving.
-          </p>
+      {/* ── 4. The wrong AI — full-bleed dark, cut-out in the left margin ── */}
+      <Section width="full" className="relative overflow-hidden bg-brand-900">
+        <div className="container-wide grid items-end gap-8 md:grid-cols-[minmax(16rem,0.9fr)_minmax(0,1.5fr)]">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none relative hidden min-h-[22rem] md:block lg:min-h-[28rem]"
+          >
+            <Image
+              src="/slides/nic-hero-5.png"
+              alt=""
+              width={682}
+              height={1024}
+              className="absolute bottom-0 left-0 h-full w-auto max-w-none select-none object-contain object-left-bottom"
+            />
+          </div>
 
-          <p className="mt-8 max-w-4xl text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
-            Artificial Intelligence won&rsquo;t kill your business. It&rsquo;s
-            the other AI you should be worried about:{" "}
-            <span className="text-accent-400">Apathy and Indifference.</span>
-          </p>
+          <div>
+            <p className="max-w-3xl text-lg leading-relaxed text-brand-200 md:text-xl">
+              People aren&rsquo;t going deep. They&rsquo;re phoning it in. AI
+              talks to AI. Roadmaps keep moving.
+            </p>
 
-          <p className="mt-10 max-w-3xl text-lg leading-relaxed text-brand-200">
-            If that sounds like your team, you already feel this. You just
-            didn&rsquo;t have the words for it yet.
-          </p>
+            <p className="mt-8 max-w-4xl text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
+              Artificial Intelligence won&rsquo;t kill your business. It&rsquo;s
+              the other AI you should be worried about:{" "}
+              <span className="text-accent-400">Apathy and Indifference.</span>
+            </p>
 
-          <p className="mt-8 inline-block border-l-4 border-accent-500 pl-5 font-mono text-sm uppercase tracking-widest text-white sm:text-base">
-            This isn&rsquo;t a vibe. It&rsquo;s already in the building.
-          </p>
+            <p className="mt-10 max-w-3xl text-lg leading-relaxed text-brand-200">
+              If that sounds like your team, you already feel this. You just
+              didn&rsquo;t have the words for it yet.
+            </p>
+
+            <p className="mt-8 inline-block border-l-4 border-accent-500 pl-5 font-mono text-sm uppercase tracking-widest text-white sm:text-base">
+              This isn&rsquo;t a vibe. It&rsquo;s already in the building.
+            </p>
+          </div>
         </div>
       </Section>
 
