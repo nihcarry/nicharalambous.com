@@ -343,8 +343,9 @@ export default function OutputParadoxPage() {
         </div>
 
         <div className="container-wide relative z-10">
-          {/* ml, not pl — container-wide's padding-inline would override pl */}
-          <div className="md:ml-[min(40vw,26rem)] lg:ml-[min(36vw,28rem)]">
+          {/* ml tracks the figure width against the centered container so the
+              gap stays tight (~2–3rem) instead of growing on wide screens. */}
+          <div className="md:ml-[max(0px,calc(28rem-((100vw-72rem)/2)))]">
             <p className="max-w-3xl text-lg leading-relaxed text-brand-200 md:text-xl">
               People aren&rsquo;t going deep. They&rsquo;re phoning it in. AI
               talks to AI. Roadmaps keep moving.
