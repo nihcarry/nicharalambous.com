@@ -184,7 +184,7 @@ export default function OutputParadoxPage() {
         {/* Stage cut-out — desktop only; bottom-anchored on the right as in mockup */}
         <div className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-[min(46vw,30rem)] md:block lg:w-[min(42vw,34rem)]">
           <Image
-            src="/slides/nic-hero-4.png"
+            src="/slides/nic-hero-3.png"
             alt="Nic Haralambous mid-keynote, gesturing with a presentation clicker"
             width={682}
             height={1024}
