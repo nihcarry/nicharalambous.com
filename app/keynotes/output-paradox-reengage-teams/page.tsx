@@ -211,7 +211,9 @@ export default function OutputParadoxPage() {
           </p>
 
           <p className="mt-8 max-w-xl text-xl leading-relaxed text-brand-100 md:text-2xl">
-            Your teams are shipping more. They&rsquo;re also checking out.
+            Your teams are shipping more.
+            <br />
+            But they&rsquo;re also checking out faster than&nbsp;ever.
           </p>
 
           {/* Paradox ledger — sits under the cut-out on the right, as in the mockup */}
