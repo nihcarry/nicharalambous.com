@@ -480,14 +480,14 @@ export default function OutputParadoxPage() {
         </ol>
       </Section>
 
-      {/* ── 8. Where the fix starts ── */}
-      <Section width="full">
+      {/* ── 8. Where the fix starts — full-bleed dark ── */}
+      <Section width="full" className="bg-brand-900">
         <div className="container-landing">
-          <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
+          <h2 className="heading-display text-3xl text-white sm:text-4xl md:text-5xl">
             Where the fix starts
           </h2>
 
-          <p className="mt-4 max-w-3xl text-xl font-medium text-accent-600 sm:text-2xl">
+          <p className="mt-4 max-w-3xl text-xl font-medium text-accent-400 sm:text-2xl">
             Three shifts. Not eight action items.
           </p>
         </div>
@@ -519,7 +519,7 @@ export default function OutputParadoxPage() {
         </div>
 
         <div className="container-landing mt-10">
-          <p className="max-w-3xl text-lg font-semibold leading-relaxed text-brand-900">
+          <p className="max-w-3xl text-lg font-semibold leading-relaxed text-white">
             None of this is inspiration. It&rsquo;s a way in.
           </p>
         </div>
