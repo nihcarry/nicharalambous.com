@@ -325,23 +325,26 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 4. The wrong AI — full-bleed dark, cut-out in the left margin ── */}
+      {/* ── 4. The wrong AI — full-bleed dark, cut-out pinned to section floor ── */}
       <Section width="full" className="relative overflow-hidden bg-brand-900">
-        <div className="container-wide grid items-end gap-8 md:grid-cols-[minmax(16rem,0.9fr)_minmax(0,1.5fr)]">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none relative hidden min-h-[22rem] md:block lg:min-h-[28rem]"
-          >
-            <Image
-              src="/slides/nic-hero-5.png"
-              alt=""
-              width={682}
-              height={1024}
-              className="absolute bottom-0 left-0 h-full w-auto max-w-none select-none object-contain object-left-bottom"
-            />
-          </div>
+        {/* Absolute to the section so he sits on the true bottom edge and
+            fills the left column height — not the padded content box. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-[min(48vw,32rem)] md:block lg:w-[min(44vw,36rem)]"
+        >
+          <Image
+            src="/slides/nic-hero-5.png"
+            alt=""
+            width={682}
+            height={1024}
+            className="absolute bottom-0 left-0 h-full w-auto max-w-none select-none object-contain object-left-bottom"
+          />
+        </div>
 
-          <div>
+        <div className="container-wide relative z-10">
+          {/* ml, not pl — container-wide's padding-inline would override pl */}
+          <div className="md:ml-[min(40vw,26rem)] lg:ml-[min(36vw,28rem)]">
             <p className="max-w-3xl text-lg leading-relaxed text-brand-200 md:text-xl">
               People aren&rsquo;t going deep. They&rsquo;re phoning it in. AI
               talks to AI. Roadmaps keep moving.
