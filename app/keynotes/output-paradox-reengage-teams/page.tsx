@@ -22,6 +22,7 @@ import { Crosshair, TrendingDown, TrendingUp } from "lucide-react";
 
 const KEYNOTE_SLUG = "output-paradox-reengage-teams";
 const ARCH_IMAGE_BASE = `/keynotes/${KEYNOTE_SLUG}/apathy-arch`;
+const PREVIEW_VIDEO_URL = "https://youtu.be/U0xubG3VP2w";
 
 /* ---------- Metadata ---------- */
 
@@ -264,7 +265,23 @@ export default function OutputParadoxPage() {
         Never nest containers; never put a left-aligned title in wide alone.
       */}
 
-      {/* ── 2. 1 in 4 ── */}
+      {/* ── 2. Preview video ── */}
+      {getVideoEmbedUrl(PREVIEW_VIDEO_URL) && (
+        <Section width="landing">
+          <div className="aspect-video overflow-hidden border-4 border-accent-600">
+            <iframe
+              src={getVideoEmbedUrl(PREVIEW_VIDEO_URL)!}
+              title="The Output Paradox — keynote preview"
+              className="h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+        </Section>
+      )}
+
+      {/* ── 3. 1 in 4 ── */}
       <Section width="landing">
         <div className="grid items-start gap-8 md:grid-cols-[auto_1fr] md:gap-12">
           <p
@@ -282,7 +299,7 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 3. It looks like this ── */}
+      {/* ── 4. It looks like this ── */}
       <Section width="full">
         <div className="container-landing">
           <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
@@ -627,4 +644,16 @@ export default function OutputParadoxPage() {
       />
     </div>
   );
+}
+
+function getVideoEmbedUrl(url: string): string | null {
+  const ytMatch = url.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
+  );
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0`;
+
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+
+  return null;
 }
