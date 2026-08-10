@@ -38,6 +38,7 @@
 
 import "./load-env";
 import fs from "fs";
+import { extractTranscriptFromRawHtml } from "./lib/post-body";
 import { fetchTranscript } from "./lib/transcript";
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
@@ -197,19 +198,21 @@ interface Post {
   title: string;
   videoId: string;
   excerpt?: string;
+  rawHtmlBody?: string;
 }
 
 async function selectPosts(args: Args): Promise<Post[]> {
   const rows = await sanityQuery<
-    { _id: string; title: string; excerpt?: string }[]
+    { _id: string; title: string; excerpt?: string; rawHtmlBody?: string }[]
   >(
-    `*[_type == "post" && _id match "imported-youtube-*"]{ _id, title, excerpt }`
+    `*[_type == "post" && _id match "imported-youtube-*"]{ _id, title, excerpt, rawHtmlBody }`
   );
   return rows
     .map((r) => ({
       _id: r._id,
       title: r.title,
       excerpt: r.excerpt,
+      rawHtmlBody: r.rawHtmlBody,
       videoId: r._id.replace(/^imported-youtube-/, ""),
     }))
     .filter((p) => {
@@ -219,6 +222,20 @@ async function selectPosts(args: Args): Promise<Post[]> {
       if (args.force) return true;
       return !p.excerpt || p.excerpt.trim().length === 0;
     });
+}
+
+/**
+ * Prefer the transcript already stored on the post (free, no API). Only hit
+ * Supadata / YouTube when the body doesn't have one yet.
+ */
+async function resolveTranscript(p: Post): Promise<string | null> {
+  const fromBody = extractTranscriptFromRawHtml(p.rawHtmlBody);
+  if (fromBody) {
+    console.log(`    Using transcript already on post (${fromBody.split(/\s+/).length} words)`);
+    return fromBody;
+  }
+  console.log(`    Fetching transcript...`);
+  return fetchTranscript(p.videoId);
 }
 
 async function patchTldr(
@@ -281,11 +298,11 @@ async function main(): Promise<void> {
 
   console.log(`Found ${posts.length} post(s) needing a TL;DR.\n`);
 
-  // Fetch transcripts for the selected posts.
+  // Resolve transcripts for the selected posts (stored body first, API fallback).
   const withTranscripts: (Post & { transcript: string })[] = [];
   for (const p of posts) {
-    console.log(`  Fetching transcript: ${p.title}`);
-    const transcript = await fetchTranscript(p.videoId);
+    console.log(`  Resolving transcript: ${p.title}`);
+    const transcript = await resolveTranscript(p);
     if (!transcript) {
       console.log(`    ⚠️  No transcript — skipping ${p._id}`);
       continue;

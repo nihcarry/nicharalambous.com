@@ -1,7 +1,7 @@
 # YouTube → blog automation
 
 New YouTube videos become published blog posts automatically. A scheduled
-GitHub Action runs daily and, for each new video:
+GitHub Action runs daily and, for each **new** video:
 
 1. Creates a post — video embed at the top, plus body copy from the transcript
    (under a **Video Transcript** heading).
@@ -25,6 +25,11 @@ server-side (with a Whisper fallback for videos without captions).
 
 - Sign up at <https://supadata.ai> — **free tier is 100/month, no credit card**.
 - Copy the API key from the dashboard.
+
+The importer only calls Supadata for videos that are brand-new or still missing
+a transcript body. Posts that already have a `Video Transcript` section are
+skipped (no API call), so a daily run costs ~1 request per new upload — well
+inside the free tier.
 
 ### 2. Anthropic / Claude (TL;DR)
 
@@ -51,11 +56,17 @@ That's it. The daily run (`.github/workflows/youtube-import.yml`) handles the re
 
 ## Guarantees / safety
 
-- **No blank posts.** If a transcript can't be fetched, the post is left as a
-  draft and never auto-published — it's retried on the next run.
-- **Your drafts are safe.** Auto-publish only touches posts the run just
-  completed (brand-new imports). Existing drafts you're holding back are not
-  published, and hand-written excerpts/bodies are never overwritten.
+- **No blank posts.** If a transcript can't be fetched for a *brand-new* video,
+  the post is left as a draft and never auto-published — it's retried on the
+  next run.
+- **No quota burn.** Already-imported posts with a transcript body are skipped
+  entirely (no Supadata call).
+- **No clobbering.** If a transcript fetch fails for an existing post, the
+  importer leaves that post untouched — it will never replace a good transcript
+  with a description stub.
+- **Your drafts are safe.** Auto-publish only touches posts the TL;DR step just
+  completed. Existing drafts you're holding back are not published, and
+  hand-written Portable Text bodies / excerpts are never overwritten.
 - **You stay in control.** You can edit or unpublish any auto-published post in
   Sanity at any time (set `contentStatus` back to `ai-draft`/`archived`).
 
@@ -67,7 +78,8 @@ That's it. The daily run (`.github/workflows/youtube-import.yml`) handles the re
 - **Locally** (transcripts work from your home IP without Supadata):
 
   ```bash
-  npm run import:youtube            # create/update posts (video + transcript)
+  npm run import:youtube            # new videos + backfill missing transcripts
+  npm run import:youtube -- --force # re-fetch even when a transcript exists
   npm run tldr                      # write TL;DRs (Claude if ANTHROPIC_API_KEY
                                     # is in .env.local, else queues for review)
   npm run tldr -- --auto-publish    # …and publish the ones it just completed

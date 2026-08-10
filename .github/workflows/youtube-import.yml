@@ -7,8 +7,11 @@
 #      Sanity webhook → deploy → the post goes live.
 #
 # Transcripts are fetched via Supadata (SUPADATA_API_KEY), because YouTube blocks
-# transcript requests from GitHub's datacenter IPs. Posts without an available
-# transcript are left as drafts (never auto-published) and retried next run.
+# transcript requests from GitHub's datacenter IPs. The importer only calls
+# Supadata for brand-new videos (or posts still missing a transcript body) —
+# already-imported transcript posts are skipped to stay inside the free tier.
+# Posts without an available transcript are left as drafts (never auto-published)
+# and retried next run; a failed fetch never overwrites an existing post.
 #
 # Required GitHub Secrets (Settings → Secrets and variables → Actions):
 # - SANITY_WRITE_TOKEN            Editor-role token from sanity.io/manage

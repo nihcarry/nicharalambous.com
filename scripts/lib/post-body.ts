@@ -5,12 +5,42 @@
  * every post is built identically.
  */
 
+import { decodeHtmlEntities } from "./transcript";
+
+export const TRANSCRIPT_HEADING = "<h2>Video Transcript</h2>";
+
 export function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/** True when a stored rawHtmlBody already contains a full transcript section. */
+export function hasTranscriptHeading(rawHtmlBody?: string | null): boolean {
+  return Boolean(rawHtmlBody && rawHtmlBody.includes(TRANSCRIPT_HEADING));
+}
+
+/**
+ * Recover plain-text transcript from a previously imported rawHtmlBody so we
+ * can write TL;DRs without re-hitting Supadata / YouTube.
+ */
+export function extractTranscriptFromRawHtml(
+  rawHtmlBody?: string | null
+): string | null {
+  if (!rawHtmlBody || !hasTranscriptHeading(rawHtmlBody)) return null;
+  const idx = rawHtmlBody.indexOf(TRANSCRIPT_HEADING);
+  const after = rawHtmlBody.slice(idx + TRANSCRIPT_HEADING.length);
+  const text = decodeHtmlEntities(
+    after
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/p>/gi, "\n")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+  return text.length > 0 ? text : null;
 }
 
 /** Group a block of prose into readable paragraphs (~4 sentences each). */
@@ -71,7 +101,7 @@ export function buildRawHtmlBody(
     const paragraphs = groupIntoParagraphs(transcript)
       .map((p) => `<p>${escapeHtml(p)}</p>`)
       .join("\n\n");
-    copy = `<h2>Video Transcript</h2>\n\n${paragraphs}`;
+    copy = `${TRANSCRIPT_HEADING}\n\n${paragraphs}`;
   } else {
     const desc = cleanDescription(description);
     copy = desc

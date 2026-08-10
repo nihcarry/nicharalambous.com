@@ -2,8 +2,16 @@
  * YouTube video import script.
  *
  * Fetches recent videos from a YouTube channel RSS feed, pulls transcripts,
- * generates summaries, and creates blog post drafts in Sanity.
- * Skips YouTube Shorts and previously imported videos (idempotent via createOrReplace).
+ * and creates blog post drafts in Sanity.
+ *
+ * Quota-safe behaviour:
+ *   - Skips YouTube Shorts.
+ *   - Skips posts that already have a transcript body (no Supadata call).
+ *   - Skips posts you've hand-edited in Studio (Portable Text `body`).
+ *   - Only fetches a transcript for brand-new videos, or posts whose body is
+ *     still description-only (backfill after a failed cloud run).
+ *   - Never replaces an existing post with a description-only body when the
+ *     transcript fetch fails.
  *
  * Environment:
  *   YOUTUBE_CHANNEL_ID — required, the channel ID (starts with UC)
@@ -12,15 +20,16 @@
  *   NEXT_PUBLIC_SANITY_DATASET — defaults to "production"
  *
  * Usage:
- *   npx tsx scripts/import-youtube-video.ts                     # Import all new videos
+ *   npx tsx scripts/import-youtube-video.ts                     # Import new / backfill missing
  *   npx tsx scripts/import-youtube-video.ts --video-id=abc123   # Import specific video
+ *   npx tsx scripts/import-youtube-video.ts --force             # Re-fetch even if transcript exists
  *   npx tsx scripts/import-youtube-video.ts --dry-run           # Preview without writing
  *   npx tsx scripts/import-youtube-video.ts --limit 5           # Limit to 5 most recent
  */
 
 import "./load-env";
 import { decodeHtmlEntities, fetchTranscript } from "./lib/transcript";
-import { buildRawHtmlBody } from "./lib/post-body";
+import { buildRawHtmlBody, hasTranscriptHeading } from "./lib/post-body";
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "lsivhm7f";
 const API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-14";
@@ -383,36 +392,76 @@ async function fetchKeynoteMap(dataset: string): Promise<Map<string, string>> {
 }
 
 /**
- * Fetch status + whether a hand-written Portable Text body exists for the
- * already-imported YouTube posts, so re-runs don't reset your published
- * status or overwrite content you've edited in Studio.
+ * Fetch status + body signals for already-imported YouTube posts so re-runs
+ * don't burn transcript quota or overwrite good content.
  */
 async function fetchExistingPosts(
   dataset: string
 ): Promise<Map<string, ExistingPost>> {
   const rows = await sanityQuery<
-    { _id: string; contentStatus?: string; hasBody?: boolean; excerpt?: string }[]
+    {
+      _id: string;
+      title?: string;
+      publishedAt?: string;
+      originalUrl?: string;
+      contentStatus?: string;
+      hasHandWrittenBody?: boolean;
+      rawHtmlBody?: string;
+      excerpt?: string;
+    }[]
   >(
-    `*[_type == "post" && _id match "imported-youtube-*"]{ _id, contentStatus, excerpt, "hasBody": defined(body) && length(body) > 0 }`,
+    `*[_type == "post" && _id match "imported-youtube-*"]{
+      _id,
+      title,
+      publishedAt,
+      originalUrl,
+      contentStatus,
+      excerpt,
+      rawHtmlBody,
+      "hasHandWrittenBody": defined(body) && length(body) > 0
+    }`,
     dataset
   );
 
   const map = new Map<string, ExistingPost>();
   for (const row of rows) {
     map.set(row._id, {
+      title: row.title,
+      publishedAt: row.publishedAt,
+      originalUrl: row.originalUrl,
       contentStatus: row.contentStatus,
-      hasBody: row.hasBody,
+      hasHandWrittenBody: row.hasHandWrittenBody,
+      hasTranscript: hasTranscriptHeading(row.rawHtmlBody),
       excerpt: row.excerpt,
     });
   }
   return map;
 }
 
+/** Rebuild a YouTubeVideo from a Sanity post that aged out of the RSS feed. */
+function videoFromExisting(videoId: string, existing: ExistingPost): YouTubeVideo {
+  const videoUrl =
+    existing.originalUrl || `https://www.youtube.com/watch?v=${videoId}`;
+  return {
+    videoId,
+    title: existing.title || `YouTube video ${videoId}`,
+    publishedAt: existing.publishedAt || new Date().toISOString(),
+    description: "",
+    thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+    videoUrl,
+    isShort: videoUrl.includes("/shorts/"),
+  };
+}
+
 // ─── Document building ────────────────────────────────────────────────
 
 interface ExistingPost {
+  title?: string;
+  publishedAt?: string;
+  originalUrl?: string;
   contentStatus?: string;
-  hasBody?: boolean;
+  hasHandWrittenBody?: boolean;
+  hasTranscript?: boolean;
   excerpt?: string;
 }
 
@@ -515,6 +564,7 @@ interface CliArgs {
   videoId?: string;
   limit?: number;
   dryRun: boolean;
+  force: boolean;
 }
 
 function parseArgs(): CliArgs {
@@ -522,6 +572,7 @@ function parseArgs(): CliArgs {
   const result: CliArgs = {
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
     dryRun: false,
+    force: false,
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -538,6 +589,8 @@ function parseArgs(): CliArgs {
       i++;
     } else if (args[i] === "--dry-run") {
       result.dryRun = true;
+    } else if (args[i] === "--force") {
+      result.force = true;
     }
   }
 
@@ -550,9 +603,11 @@ export async function importYouTubeVideos(options?: {
   dryRun?: boolean;
   limit?: number;
   videoId?: string;
+  force?: boolean;
 }): Promise<{ imported: string[]; skipped: string[] }> {
   const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
   const dryRun = options?.dryRun ?? false;
+  const force = options?.force ?? false;
 
   if (!YOUTUBE_CHANNEL_ID) {
     throw new Error("YOUTUBE_CHANNEL_ID not set");
@@ -566,18 +621,20 @@ export async function importYouTubeVideos(options?: {
   console.log(`  Channel:  ${YOUTUBE_CHANNEL_ID}`);
   console.log(`  Dataset:  ${dataset}`);
   console.log(`  Dry run:  ${dryRun}`);
+  console.log(`  Force:    ${force}`);
 
   // Fetch videos from RSS
   console.log(`\n  Fetching YouTube RSS feed...`);
   let videos = await fetchYouTubeRSS(YOUTUBE_CHANNEL_ID);
   console.log(`  Found ${videos.length} videos in feed`);
 
-  // Filter by specific video ID if provided
+  // Filter by specific video ID if provided (may be absent from RSS if aged out)
   if (options?.videoId) {
     videos = videos.filter((v) => v.videoId === options.videoId);
     if (videos.length === 0) {
-      console.log(`  ⚠ Video ${options.videoId} not found in RSS feed`);
-      return { imported: [], skipped: [] };
+      console.log(
+        `  ⚠ Video ${options.videoId} not in RSS feed — will try Sanity backfill`
+      );
     }
   }
 
@@ -594,12 +651,7 @@ export async function importYouTubeVideos(options?: {
     videosToImport = regularVideos.slice(0, options.limit);
   }
 
-  if (videosToImport.length === 0) {
-    console.log(`  No videos to import`);
-    return { imported: [], skipped: [] };
-  }
-
-  console.log(`  Videos to import: ${videosToImport.length}`);
+  console.log(`  Candidates in feed: ${videosToImport.length}`);
 
   // Fetch reference maps from Sanity
   console.log(`\n  Fetching reference data from Sanity...`);
@@ -610,35 +662,54 @@ export async function importYouTubeVideos(options?: {
   console.log(`  Keynotes: ${keynoteMap.size}`);
   console.log(`  Already imported: ${existingPosts.size}`);
 
-  // Process each video
   const imported: string[] = [];
   const skipped: string[] = [];
+  const seen = new Set<string>();
 
-  for (const video of videosToImport) {
+  const processVideo = async (video: YouTubeVideo): Promise<void> => {
+    if (seen.has(video.videoId)) return;
+    seen.add(video.videoId);
+
     console.log(`\n  Processing: ${video.title}`);
 
-    // Fetch transcript
+    const docId = `imported-youtube-${video.videoId}`;
+    const existing = existingPosts.get(docId);
+
+    // Never overwrite hand-edited Studio content.
+    if (existing?.hasHandWrittenBody) {
+      console.log(`    ⏭ Skipping - has a hand-written body in Studio`);
+      skipped.push(video.videoId);
+      return;
+    }
+
+    // Already has a transcript body → do not re-fetch (protects Supadata quota).
+    if (existing?.hasTranscript && !force) {
+      console.log(`    ⏭ Skipping - transcript already imported`);
+      skipped.push(video.videoId);
+      return;
+    }
+
+    // Fetch transcript only when we actually need to write.
     console.log(`    Fetching transcript...`);
     const transcript = await fetchTranscript(video.videoId);
 
     if (transcript) {
       const wordCount = transcript.split(/\s+/).length;
       console.log(`    Transcript: ${wordCount} words`);
-    } else {
-      console.log(`    No transcript available - will use description only`);
-    }
-
-    // Skip posts you've hand-edited in Studio (Portable Text body present),
-    // so the import never overwrites your own writing.
-    const docId = `imported-youtube-${video.videoId}`;
-    const existing = existingPosts.get(docId);
-    if (existing?.hasBody) {
-      console.log(`    ⏭ Skipping - has a hand-written body in Studio`);
+    } else if (existing) {
+      // Existing post + no transcript: leave it alone. Writing a description
+      // fallback would clobber a previous good body (or churn the same stub).
+      console.log(
+        `    ⏭ Skipping write - no transcript, leaving existing post untouched`
+      );
       skipped.push(video.videoId);
-      continue;
+      return;
+    } else {
+      console.log(
+        `    No transcript available - creating description-only draft to retry later`
+      );
     }
 
-    // Build document (preserving existing status if already imported)
     const doc = buildSanityDocument(
       video,
       transcript,
@@ -647,16 +718,14 @@ export async function importYouTubeVideos(options?: {
       existing
     );
 
-    // Dry run preview
     if (dryRun) {
       console.log(`    Would create: ${doc._id}`);
       console.log(`    Slug: ${(doc.slug as { current: string }).current}`);
       console.log(`    Excerpt: ${(doc.excerpt as string).substring(0, 80)}...`);
       skipped.push(video.videoId);
-      continue;
+      return;
     }
 
-    // Import to Sanity
     try {
       await sanityMutate([{ createOrReplace: doc }], dataset);
       imported.push(video.videoId);
@@ -664,6 +733,37 @@ export async function importYouTubeVideos(options?: {
     } catch (err) {
       skipped.push(video.videoId);
       console.log(`    ❌ Failed: ${err}`);
+    }
+  };
+
+  for (const video of videosToImport) {
+    await processVideo(video);
+  }
+
+  // Backfill posts that aged out of the RSS feed but still lack a transcript.
+  // (YouTube's feed only keeps ~15 items; older imports would otherwise be stuck.)
+  if (!options?.videoId) {
+    const agedOut = [...existingPosts.entries()].filter(
+      ([docId, post]) =>
+        !seen.has(docId.replace(/^imported-youtube-/, "")) &&
+        !post.hasTranscript &&
+        !post.hasHandWrittenBody
+    );
+    if (agedOut.length > 0) {
+      console.log(
+        `\n  Backfilling ${agedOut.length} older post(s) missing transcripts...`
+      );
+      for (const [docId, post] of agedOut) {
+        const videoId = docId.replace(/^imported-youtube-/, "");
+        await processVideo(videoFromExisting(videoId, post));
+      }
+    }
+  } else if (videosToImport.length === 0) {
+    // --video-id=… for a post no longer in the RSS feed
+    const docId = `imported-youtube-${options.videoId}`;
+    const existing = existingPosts.get(docId);
+    if (existing) {
+      await processVideo(videoFromExisting(options.videoId, existing));
     }
   }
 
@@ -697,6 +797,7 @@ async function main(): Promise<void> {
     dryRun: cliArgs.dryRun,
     limit: cliArgs.limit,
     videoId: cliArgs.videoId,
+    force: cliArgs.force,
   });
 }
 
