@@ -290,12 +290,24 @@ export default function OutputParadoxPage() {
           >
             1 in 4
           </p>
-          <p className="text-xl leading-relaxed text-brand-700 md:text-2xl">
-            Nearly 1 in 4 of your employees is disengaged right now. You
-            can&rsquo;t see it clearly because AI is masking the signal. More
-            documents. Bigger roadmaps. More meetings about work nobody reads.
-            Everything looks busy. Something still feels off.
-          </p>
+          <div>
+            <p className="text-xl leading-relaxed text-brand-700 md:text-2xl">
+              Nearly 1 in 4 of your employees is disengaged right now. You
+              can&rsquo;t see it clearly because AI is masking the signal. More
+              documents. Bigger roadmaps. More meetings about work nobody reads.
+              Everything looks busy. Something still feels off.
+            </p>
+            <p className="mt-4 font-mono text-xs tracking-widest text-brand-400">
+              <a
+                href="https://www.activtrak.com/resources/state-of-the-workplace/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-brand-300 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-500"
+              >
+                Source: ActivTrak State of the Workplace
+              </a>
+            </p>
+          </div>
         </div>
       </Section>
 
@@ -303,7 +315,7 @@ export default function OutputParadoxPage() {
       <Section width="full">
         <div className="container-landing">
           <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-            It looks like this
+            The Output Paradox looks like this:
           </h2>
         </div>
 
@@ -370,17 +382,16 @@ export default function OutputParadoxPage() {
 
             <p className="mt-8 max-w-4xl text-3xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
               Artificial Intelligence won&rsquo;t kill your business. It&rsquo;s
-              the other AI you should be worried about:{" "}
-              <span className="text-accent-400">Apathy and Indifference.</span>
+              the other AI you should be worried about:
+              <br />
+              <span className="whitespace-nowrap text-accent-400">
+                Apathy and Indifference.
+              </span>
             </p>
 
             <p className="mt-10 max-w-3xl text-lg leading-relaxed text-brand-200">
               If that sounds like your team, you already feel this. You just
               didn&rsquo;t have the words for it yet.
-            </p>
-
-            <p className="mt-8 inline-block border-l-4 border-accent-500 pl-5 font-mono text-sm uppercase tracking-widest text-white sm:text-base">
-              This isn&rsquo;t a vibe. It&rsquo;s already in the building.
             </p>
           </div>
         </div>
@@ -423,13 +434,17 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 6. Pull quote — full-bleed dark ── */}
+      {/* ── 6. Statement — full-bleed dark ── */}
       <Section width="full" className="bg-brand-900">
         <div className="container-landing">
-          <blockquote className="border-l-4 border-accent-500 pl-6 text-3xl font-medium italic leading-[1.15] text-white sm:pl-8 sm:text-4xl md:text-5xl">
-            &ldquo;Passivity is the brain&rsquo;s default. Your people
-            aren&rsquo;t choosing apathy. They&rsquo;re reverting to it.&rdquo;
-          </blockquote>
+          <p className="max-w-4xl text-3xl font-medium leading-[1.15] text-white sm:text-4xl md:text-5xl">
+            Passivity is the brain&rsquo;s default. Your people aren&rsquo;t
+            choosing apathy. They&rsquo;re reverting to it.
+          </p>
+          <p className="mt-6 font-mono text-xs tracking-widest text-brand-400">
+            Source: &ldquo;The law of least mental effort&rdquo; (Patzelt, Kool,
+            Millner &amp; Gershman, Harvard, Scientific Reports, 2019)
+          </p>
           <p className="mt-10 max-w-3xl text-lg font-medium text-accent-400 md:text-xl">
             The question is whether your organisation is fighting that default,
             or feeding it.
@@ -437,40 +452,12 @@ export default function OutputParadoxPage() {
         </div>
       </Section>
 
-      {/* ── 7. Busy is not bought in + the Apathy Arch ── */}
+      {/* ── 7. The Apathy Arch + Busy is not bought in ── */}
       <Section width="full">
         <div className="container-landing">
           <h2 className="heading-display-stroke-sm text-3xl text-brand-900 sm:text-4xl md:text-5xl">
-            Busy is not bought in
+            The Apathy Arch
           </h2>
-
-          <div className="mt-8 max-w-3xl space-y-6 text-lg leading-relaxed text-brand-600">
-            <p>
-              Alignment theatre is rising: meetings, messages, and collaboration
-              metrics go up while focus time collapses. People perform
-              engagement. They don&rsquo;t practise it.
-            </p>
-            <p>
-              The Apathy Trap is quieter and more dangerous than a bad quarter.
-              Curiosity doesn&rsquo;t vanish overnight. It erodes because it
-              gets ignored: curiosity vanishes, then boredom arrives, then
-              apathy takes hold, and indifference dominates.
-            </p>
-            <p>
-              By the time your best people check out, you&rsquo;re already too
-              late. AI often speeds up the slide, because easy work replaces
-              hard thinking.
-            </p>
-          </div>
-
-          <div className="mt-14">
-            <p className="font-mono text-xs tracking-widest text-accent-600">
-              THE APATHY ARCH
-            </p>
-            <h3 className="mt-3 text-2xl font-extrabold uppercase tracking-tight text-brand-900 sm:text-3xl">
-              Five stages. Nobody announces the drift.
-            </h3>
-          </div>
         </div>
 
         <ol className="container-wide mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-5">
@@ -495,6 +482,31 @@ export default function OutputParadoxPage() {
             </li>
           ))}
         </ol>
+
+        <div className="container-landing mt-14">
+          <h3 className="text-2xl font-extrabold tracking-tight text-brand-900 sm:text-3xl">
+            Busy is not bought in
+          </h3>
+
+          <div className="mt-8 max-w-3xl space-y-6 text-lg leading-relaxed text-brand-600">
+            <p>
+              Alignment theatre is rising: meetings, messages, and collaboration
+              metrics go up while focus time collapses. People perform
+              engagement. They don&rsquo;t practise it.
+            </p>
+            <p>
+              The Apathy Trap is quieter and more dangerous than a bad quarter.
+              Curiosity doesn&rsquo;t vanish overnight. It erodes because it
+              gets ignored: curiosity vanishes, then boredom arrives, then
+              apathy takes hold, and indifference dominates.
+            </p>
+            <p>
+              By the time your best people check out, you&rsquo;re already too
+              late. AI often speeds up the slide, because easy work replaces
+              hard thinking.
+            </p>
+          </div>
+        </div>
       </Section>
 
       {/* ── 8. Where the fix starts — full-bleed dark ── */}
