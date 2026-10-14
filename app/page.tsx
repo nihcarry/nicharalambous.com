@@ -15,7 +15,8 @@
  * 5. What Clients Say (testimonials)
  * 6. Incredible Clients (logos)
  * 7. Final CTA → /speaker
- * 8. Footer
+ * 8. Newsletter signup
+ * 9. Footer
  *
  * Content is fetched from Sanity at build time. Falls back to hardcoded
  * defaults if Sanity data is not yet published.
@@ -32,6 +33,7 @@ import { Slide } from "@/components/slide";
 import { SlideDeck } from "@/components/slide-deck";
 import { SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
@@ -478,7 +480,20 @@ export default async function HomePage() {
         </SlideContent>
       </Slide>
 
-      {/* Slide 8: Footer */}
+      {/* Slide 8: Newsletter. After the booking ask so the speaking
+          funnel stays first, and before the footer so it is its own slide. */}
+      <Slide
+        variant="cta"
+        background="bg-envelope-pattern"
+        className="text-center"
+        id="newsletter"
+      >
+        <SlideContent>
+          <NewsletterSignup variant="section" />
+        </SlideContent>
+      </Slide>
+
+      {/* Slide 9: Footer */}
       <Slide variant="footer" background="bg-foot-pattern" id="footer">
         <FooterContent />
       </Slide>
