@@ -16,20 +16,19 @@ import { viewBuildStatusAction } from "./actions/view-build-status";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
-export default defineConfig({
-  name: "nicharalambous",
-  title: "Nic Haralambous",
+/**
+ * Presentation can only preview against the Next dev server (`next dev -p 3001`).
+ * Production is a static export: there is no server to render drafts, and the
+ * site does not load Sanity visual editing. Registering the tool in production
+ * pointed the preview iframe at http://localhost:3001. Published pages stay
+ * available from the "View on site" document action.
+ */
+const isDev = process.env.NODE_ENV === "development";
 
-  projectId,
-  dataset,
-
-  plugins: [
-    presentationTool({
+const presentation = isDev
+  ? presentationTool({
       previewUrl: {
-        origin:
-          typeof window !== "undefined" && window.location.hostname === "localhost"
-            ? "http://localhost:3001"
-            : (process.env.NEXT_PUBLIC_PREVIEW_ORIGIN || "http://localhost:3001"),
+        origin: "http://localhost:3001",
         preview: "/",
       },
       resolve: {
@@ -70,7 +69,18 @@ export default defineConfig({
           },
         },
       },
-    }),
+    })
+  : null;
+
+export default defineConfig({
+  name: "nicharalambous",
+  title: "Nic Haralambous",
+
+  projectId,
+  dataset,
+
+  plugins: [
+    ...(presentation ? [presentation] : []),
     structureTool({
       structure: (S) =>
         S.list()
