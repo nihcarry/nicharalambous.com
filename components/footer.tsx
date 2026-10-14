@@ -9,7 +9,7 @@ import { FooterContent } from "@/components/footer-content";
 
 export function Footer() {
   return (
-    <footer className="border-t border-brand-200 bg-foot-pattern">
+    <footer className="border-t border-brand-200 bg-foot-pattern max-md:pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))]">
       <div className="container-wide py-16">
         <FooterContent />
       </div>

@@ -1,11 +1,13 @@
 /**
- * FooterContent — shared footer layout used by both the global Footer
+ * FooterContent: shared footer layout used by both the global Footer
  * component and the homepage footer slide.
  *
  * Contains the link columns (Speaking, Explore, Connect), social links,
- * and bottom copyright bar. Extracted so footer content is defined once
- * and reused in two contexts.
+ * a compact newsletter signup, and the bottom copyright bar. Extracted
+ * so footer content is defined once and reused in two contexts.
  */
+
+import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const footerLinks = {
   speaking: [
@@ -144,8 +146,12 @@ export function FooterContent() {
         </div>
       </div>
 
+      <div className="mt-12 border-t border-brand-200 pt-8">
+        <NewsletterSignup variant="compact" />
+      </div>
+
       {/* Bottom bar */}
-      <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand-200 pt-8 md:flex-row">
+      <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-brand-200 pt-8 md:flex-row">
         <p className="text-sm text-brand-400">
           &copy; {new Date().getFullYear()} Nic Haralambous. All rights
           reserved.
