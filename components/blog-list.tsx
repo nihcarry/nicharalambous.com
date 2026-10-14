@@ -12,6 +12,7 @@
 
 import { useState, useMemo } from "react";
 import { ArrowRight, Crosshair } from "lucide-react";
+import { featuredImageIsPortrait } from "@/lib/featured-image";
 
 interface TopicFilter {
   _id: string;
@@ -26,7 +27,10 @@ interface BlogPost {
   excerpt: string | null;
   publishedAt: string;
   estimatedReadTime: number | null;
-  featuredImage: { asset: { url: string }; alt: string } | null;
+  featuredImage: {
+    asset: { url: string; width?: number | null; height?: number | null };
+    alt: string;
+  } | null;
   topics: TopicFilter[];
 }
 
@@ -140,11 +144,17 @@ export function BlogList({ posts, topics }: BlogListProps) {
 
               {post.featuredImage?.asset?.url && (
                 <div className="mb-4 overflow-hidden">
+                  {/* Portrait screenshots stay fully visible inside the 16:9 frame.
+                      Landscape photos keep the cover crop so the grid stays even. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post.featuredImage.asset.url}
                     alt={post.featuredImage.alt || post.title}
-                    className="aspect-[16/9] w-full object-cover"
+                    className={
+                      featuredImageIsPortrait(post.featuredImage)
+                        ? "aspect-[16/9] w-full bg-brand-50 object-contain"
+                        : "aspect-[16/9] w-full object-cover"
+                    }
                     loading="lazy"
                   />
                 </div>

@@ -11,6 +11,7 @@
  */
 
 import { MostPopularTopicLink } from "@/components/most-popular-topic-link";
+import { featuredImageIsPortrait } from "@/lib/featured-image";
 
 interface FeaturedPost {
   _id: string;
@@ -21,7 +22,10 @@ interface FeaturedPost {
   estimatedReadTime: number | null;
   featuredLabel: string | null;
   videoEmbed: string | null;
-  featuredImage: { asset: { url: string }; alt: string } | null;
+  featuredImage: {
+    asset: { url: string; width?: number | null; height?: number | null };
+    alt: string;
+  } | null;
   topics: { _id: string; title: string; slug: string }[];
 }
 
@@ -171,7 +175,11 @@ export function MostPopularHero({ posts, className = "" }: MostPopularHeroProps)
                     <img
                       src={post.featuredImage.asset.url}
                       alt=""
-                      className="h-full w-full object-cover"
+                      className={
+                        featuredImageIsPortrait(post.featuredImage)
+                          ? "h-full w-full bg-brand-50 object-contain"
+                          : "h-full w-full object-cover"
+                      }
                     />
                   </div>
                 )}

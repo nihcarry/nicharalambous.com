@@ -300,7 +300,7 @@ export const mostPopularPostsQuery = `*[_type == "post" && contentStatus == "pub
   featuredLabel,
   videoEmbed,
   "featuredImage": featuredImage{
-    asset->{url},
+    asset->{url, "width": metadata.dimensions.width, "height": metadata.dimensions.height},
     alt
   },
   "topics": topics[]->{
@@ -321,7 +321,7 @@ export const featuredPostsQuery = `*[_type == "post" && contentStatus == "publis
   featuredLabel,
   videoEmbed,
   "featuredImage": featuredImage{
-    asset->{url},
+    asset->{url, "width": metadata.dimensions.width, "height": metadata.dimensions.height},
     alt
   },
   "topics": topics[]->{
@@ -340,7 +340,7 @@ export const blogPostsListQuery = `*[_type == "post" && contentStatus == "publis
   publishedAt,
   estimatedReadTime,
   "featuredImage": featuredImage{
-    asset->{url},
+    asset->{url, "width": metadata.dimensions.width, "height": metadata.dimensions.height},
     alt
   },
   "topics": topics[]->{
@@ -722,7 +722,10 @@ export interface BlogPostListItem {
   excerpt: string | null;
   publishedAt: string;
   estimatedReadTime: number | null;
-  featuredImage: { asset: { url: string }; alt: string } | null;
+  featuredImage: {
+    asset: { url: string; width?: number | null; height?: number | null };
+    alt: string;
+  } | null;
   topics: TopicReference[];
   seo: SeoData | null;
 }
@@ -737,7 +740,10 @@ export interface FeaturedPostItem {
   estimatedReadTime: number | null;
   featuredLabel: string | null;
   videoEmbed: string | null;
-  featuredImage: { asset: { url: string }; alt: string } | null;
+  featuredImage: {
+    asset: { url: string; width?: number | null; height?: number | null };
+    alt: string;
+  } | null;
   topics: TopicReference[];
 }
 
