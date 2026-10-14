@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
 
 /**
  * Native newsletter form. The site is a static export with no server
@@ -23,11 +23,12 @@ type NewsletterSignupProps = {
   variant?: "section" | "compact";
 };
 
+/* 16px text and a 44px minimum box: iOS zooms focused fields under 16px. */
 const inputClassName =
-  "mt-1 block w-full border border-brand-300 bg-white px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
+  "mt-1 block min-h-11 w-full border border-brand-300 bg-white px-4 py-3 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 max-md:scroll-mb-28";
 
 const buttonClassName =
-  "inline-flex items-center justify-center rounded-none bg-accent-600 px-6 py-3 text-base font-semibold text-white shadow-[var(--shadow-cta)] transition-colors duration-200 hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex min-h-11 items-center justify-center rounded-none bg-accent-600 px-6 py-3 text-base font-semibold text-white shadow-[var(--shadow-cta)] transition-colors duration-200 hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:cursor-not-allowed disabled:opacity-60 max-md:scroll-mb-28";
 
 export function NewsletterSignup({ variant = "section" }: NewsletterSignupProps) {
   const reactId = useId();
@@ -41,6 +42,51 @@ export function NewsletterSignup({ variant = "section" }: NewsletterSignupProps)
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [succeeded, setSucceeded] = useState(false);
+
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 767px)");
+    let locked = false;
+
+    function nudge(target: EventTarget | null) {
+      if (locked || !mobile.matches) return;
+      if (!(target instanceof HTMLElement)) return;
+      const field = target.closest("[data-newsletter] input, [data-newsletter] button");
+      if (!(field instanceof HTMLElement)) return;
+
+      const nav = document.querySelector("nav[aria-label='Mobile navigation']");
+      const navTop = nav?.getBoundingClientRect().top ?? window.innerHeight;
+      const viewport = window.visualViewport;
+      const visibleBottom = Math.min(
+        navTop,
+        viewport ? viewport.offsetTop + viewport.height : window.innerHeight,
+      );
+      const overlap = field.getBoundingClientRect().bottom - (visibleBottom - 16);
+      if (overlap > 1) {
+        locked = true;
+        window.scrollBy({ top: overlap, left: 0, behavior: "instant" });
+        locked = false;
+      }
+    }
+
+    function onFocusIn(event: FocusEvent) {
+      nudge(event.target);
+    }
+
+    function onViewportChange() {
+      nudge(document.activeElement);
+    }
+
+    document.addEventListener("focusin", onFocusIn);
+    window.addEventListener("resize", onViewportChange);
+    window.visualViewport?.addEventListener("resize", onViewportChange);
+    window.visualViewport?.addEventListener("scroll", onViewportChange);
+    return () => {
+      document.removeEventListener("focusin", onFocusIn);
+      window.removeEventListener("resize", onViewportChange);
+      window.visualViewport?.removeEventListener("resize", onViewportChange);
+      window.visualViewport?.removeEventListener("scroll", onViewportChange);
+    };
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
