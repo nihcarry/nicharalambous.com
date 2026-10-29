@@ -16,7 +16,11 @@ var redirects = {
   '/contact-me': '/contact',
   '/its-not-over': '/media',
   '/side-hustle-course': '/books/how-to-start-a-side-hustle',
-  '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams'
+  '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams',
+  // Typo without the trailing "s". Exact-match runs before trailing-slash
+  // stripping, so the slash form has to be listed separately.
+  '/keynotes/output-paradox-reengage-team': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/output-paradox-reengage-team/': '/keynotes/output-paradox-reengage-teams'
 };
 
 function handler(event) {
