@@ -6,14 +6,16 @@
 # 3. Repository dispatch (for Sanity webhook-triggered rebuilds)
 #
 # Required GitHub Secrets:
-# - AWS_ACCESS_KEY_ID
-# - AWS_SECRET_ACCESS_KEY
 # - AWS_REGION (e.g. us-east-1)
 # - S3_BUCKET_NAME (e.g. nicharalambous.com)
 # - CLOUDFRONT_DISTRIBUTION_ID
 # - NEXT_PUBLIC_SANITY_PROJECT_ID
 # - NEXT_PUBLIC_SANITY_DATASET (e.g. production)
 # - NTFY_TOPIC_URL (e.g. https://ntfy.sh/your-topic)
+#
+# AWS auth uses GitHub OIDC (id-token: write) to assume
+# arn:aws:iam::962990061157:role/nicharalambous-com-github-deploy.
+# That role trusts only refs/heads/main. No static access keys.
 
 name: Build & Deploy
 
@@ -26,6 +28,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 # Prevent webhook storms (e.g. bulk Sanity imports) from running hundreds of
 # overlapping deploys. New dispatches queue instead of running in parallel.
@@ -99,8 +102,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::962990061157:role/nicharalambous-com-github-deploy
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
