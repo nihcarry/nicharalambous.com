@@ -25,6 +25,26 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+
+  // Production serves this path via the CloudFront viewer-request rewrite
+  // (extensionless → .html) and, once that function is published, a 301.
+  // Dev has neither, so map the public URL onto the static redirect file.
+  ...(process.env.NODE_ENV === "production"
+    ? {}
+    : {
+        async rewrites() {
+          return [
+            {
+              source: "/decision-trackr/privacy",
+              destination: "/decision-trackr/privacy.html",
+            },
+            {
+              source: "/decision-trackr/privacy/",
+              destination: "/decision-trackr/privacy.html",
+            },
+          ];
+        },
+      }),
 };
 
 export default nextConfig;

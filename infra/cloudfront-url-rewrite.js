@@ -16,7 +16,14 @@ var redirects = {
   '/contact-me': '/contact',
   '/its-not-over': '/media',
   '/side-hustle-course': '/books/how-to-start-a-side-hustle',
-  '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams'
+  '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams',
+  // Decision Trackr moved to its own site. Exact match runs before the
+  // trailing-slash strip, so both forms are listed. Absolute URL is required
+  // for a cross-origin 301. deploy.yml does not publish this function; the
+  // static file public/decision-trackr/privacy.html is what the site deploy
+  // serves until this function is published.
+  '/decision-trackr/privacy': 'https://decisiontrackr.com/privacy/',
+  '/decision-trackr/privacy/': 'https://decisiontrackr.com/privacy/'
 };
 
 function handler(event) {
