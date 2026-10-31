@@ -22,6 +22,10 @@ var redirects = {
   // for a cross-origin 301. deploy.yml does not publish this function; the
   // static file public/decision-trackr/privacy.html is what the site deploy
   // serves until this function is published.
+  // /decision-trackr itself is not listed here on purpose: this map drops the
+  // query string, and the pricing link must keep UTMs. The static files
+  // public/decision-trackr.html and public/decision-trackr/index.html redirect
+  // to https://decisiontrackr.com/pricing/ with the query kept.
   '/decision-trackr/privacy': 'https://decisiontrackr.com/privacy/',
   '/decision-trackr/privacy/': 'https://decisiontrackr.com/privacy/'
 };

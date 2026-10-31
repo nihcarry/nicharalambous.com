@@ -42,6 +42,14 @@ const nextConfig: NextConfig = {
               source: "/decision-trackr/privacy/",
               destination: "/decision-trackr/privacy.html",
             },
+            {
+              source: "/decision-trackr",
+              destination: "/decision-trackr.html",
+            },
+            {
+              source: "/decision-trackr/",
+              destination: "/decision-trackr.html",
+            },
           ];
         },
       }),
