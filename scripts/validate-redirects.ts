@@ -34,6 +34,16 @@ const DECISION_TRACKR_SOURCES = ["/decision-trackr/privacy", "/decision-trackr/p
 const REDIRECT_HTML = join(process.cwd(), "public", "decision-trackr", "privacy.html");
 const RETIRED_PAGE = join(process.cwd(), "app", "decision-trackr", "privacy", "page.tsx");
 
+// /decision-trackr and /decision-trackr/ are rewritten to /decision-trackr.html by the
+// CloudFront function. /decision-trackr/index.html is served as is. Both static files
+// send visitors to the pricing page and keep the query string so UTMs survive.
+const DECISION_TRACKR_PRICING = "https://decisiontrackr.com/pricing/";
+const PRICING_REDIRECT_HTML = [
+  join(process.cwd(), "public", "decision-trackr.html"),
+  join(process.cwd(), "public", "decision-trackr", "index.html"),
+] as const;
+const RETIRED_LANDING_PAGE = join(process.cwd(), "app", "decision-trackr", "page.tsx");
+
 function extractRedirects(content: string): Map<string, string> {
   const match = content.match(/var redirects = \{([^}]+)\}/s);
   const redirects = new Map<string, string>();
@@ -93,6 +103,31 @@ function main() {
     }
   }
 
+  if (existsSync(RETIRED_LANDING_PAGE)) {
+    errors.push(
+      "app/decision-trackr/page.tsx must not exist so the static export does not overwrite the pricing redirect."
+    );
+  }
+
+  for (const file of PRICING_REDIRECT_HTML) {
+    const label = file.slice(process.cwd().length + 1);
+    if (!existsSync(file)) {
+      errors.push(`Missing ${label} (the object the site deploy uploads for the pricing redirect).`);
+      continue;
+    }
+    const html = readFileSync(file, "utf-8");
+    const required = [
+      `<link rel="canonical" href="${DECISION_TRACKR_PRICING}"`,
+      `<meta http-equiv="refresh" content="0; url=${DECISION_TRACKR_PRICING}"`,
+      `location.replace("${DECISION_TRACKR_PRICING}" + location.search)`,
+    ];
+    for (const snippet of required) {
+      if (!html.includes(snippet)) {
+        errors.push(`${label} is missing: ${snippet}`);
+      }
+    }
+  }
+
   if (errors.length > 0) {
     console.error("ERROR:");
     errors.forEach((error) => console.error(error));
@@ -101,6 +136,7 @@ function main() {
 
   console.log("OK: No redirect conflicts with live routes.");
   console.log(`OK: /decision-trackr/privacy redirects to ${DECISION_TRACKR_PRIVACY}`);
+  console.log(`OK: /decision-trackr redirects to ${DECISION_TRACKR_PRICING} with the query string`);
 }
 
 main();
