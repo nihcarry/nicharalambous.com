@@ -315,17 +315,26 @@ raw = result.get("FunctionOutput")
 if not raw:
     sys.exit("TestFunction returned no FunctionOutput")
 body = json.loads(raw)
-if isinstance(body, dict) and isinstance(body.get("response"), dict) and "statusCode" not in body and "uri" not in body:
+if not isinstance(body, dict):
+    sys.exit("FunctionOutput was not a JSON object")
+# Viewer-request rewrites (/about, /decision-trackr, /_next on publish,
+# and /about on rollback) come back as {"request": {"uri": "..."}}.
+# Read that before the "response" unwrap used for generated redirects.
+# A bare object is used when "request" is absent.
+request = body["request"] if isinstance(body.get("request"), dict) else None
+if isinstance(body.get("response"), dict) and "statusCode" not in body and "uri" not in body:
     body = body["response"]
 if kind == "redirect":
     location = ((body.get("headers") or {}).get("location") or {}).get("value")
     if body.get("statusCode") != 301 or location != expect:
         sys.exit("Expected 301 %s, got %s %s" % (expect, body.get("statusCode"), location))
 elif kind == "rewrite":
-    if body.get("statusCode"):
-        sys.exit("Expected a rewrite to %s, got status %s" % (expect, body.get("statusCode")))
-    if body.get("uri") != expect:
-        sys.exit("Expected uri %s, got %s" % (expect, body.get("uri")))
+    if request is None:
+        request = body
+    if request.get("statusCode"):
+        sys.exit("Expected a rewrite to %s, got status %s" % (expect, request.get("statusCode")))
+    if request.get("uri") != expect:
+        sys.exit("Expected uri %s, got %s" % (expect, request.get("uri")))
 else:
     sys.exit("Unknown test kind " + kind)
 print("ok utilization=%s" % util)
