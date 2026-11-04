@@ -40,9 +40,20 @@ import { IncredibleClients } from "@/components/incredible-clients";
 import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
 import { HOME_URL } from "@/lib/metadata";
 import { ArrowRight, Crosshair } from "lucide-react";
+import { DecorativePicture } from "@/components/decorative-picture";
+import { LoadWhenNear } from "@/components/load-when-near";
 
 /** Flagship keynote the hero slide sells. */
 const OUTPUT_PARADOX_SLUG = "output-paradox-reengage-teams";
+
+/** Portraits sit in a six-column row, so each one is a sixth of the viewport. */
+const HERO_PORTRAIT_SIZES = "16.67vw";
+const DESKTOP_MEDIA = "(min-width: 768px)";
+
+function heroPortraitSrcSet(n: number, ext: "avif" | "webp" | "png"): string {
+  if (ext === "png") return `/slides/nic-hero-${n}.png 682w`;
+  return `/slides/hero/nic-hero-${n}-480.${ext} 480w, /slides/hero/nic-hero-${n}-682.${ext} 682w`;
+}
 
 /**
  * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
@@ -99,20 +110,62 @@ export default async function HomePage() {
         background="bg-beard-pattern"
         className="md:!pt-[10.5rem] md:!justify-start"
         image={
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden grid-cols-6 items-end md:grid"
-          >
+          <>
+            {/* The faint beard tile is the mobile LCP image. Preload it so it
+                is not stuck behind decorative art. */}
+            <link
+              rel="preload"
+              as="image"
+              href="/slides/beard-pattern-tile.png"
+              fetchPriority="high"
+            />
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
+              <link
                 key={n}
-                src={`/slides/nic-hero-${n}.png`}
-                alt=""
-                className="max-h-[42vh] w-full select-none object-contain object-bottom"
+                rel="preload"
+                as="image"
+                type="image/avif"
+                media={DESKTOP_MEDIA}
+                href={`/slides/hero/nic-hero-${n}-480.avif`}
+                imageSrcSet={heroPortraitSrcSet(n, "avif")}
+                imageSizes={HERO_PORTRAIT_SIZES}
               />
             ))}
-          </div>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden grid-cols-6 items-end md:grid"
+            >
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <DecorativePicture
+                  key={n}
+                  className="block w-full min-w-0"
+                  width={682}
+                  height={1024}
+                  imgClassName="h-auto max-h-[42vh] w-full select-none object-contain object-bottom"
+                  sources={[
+                    {
+                      type: "image/avif",
+                      media: DESKTOP_MEDIA,
+                      srcSet: heroPortraitSrcSet(n, "avif"),
+                      sizes: HERO_PORTRAIT_SIZES,
+                    },
+                    {
+                      type: "image/webp",
+                      media: DESKTOP_MEDIA,
+                      srcSet: heroPortraitSrcSet(n, "webp"),
+                      sizes: HERO_PORTRAIT_SIZES,
+                    },
+                    {
+                      type: "image/png",
+                      media: DESKTOP_MEDIA,
+                      srcSet: heroPortraitSrcSet(n, "png"),
+                      sizes: HERO_PORTRAIT_SIZES,
+                    },
+                  ]}
+                />
+              ))}
+            </div>
+          </>
         }
       >
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
@@ -184,12 +237,18 @@ export default async function HomePage() {
         background="bg-mic-pattern"
         id="keynotes"
         image={
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src="/slides/Nic_16_bit_slide_2_Landing.png"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-0 z-[1] hidden h-[58.5vh] w-auto select-none object-contain object-bottom md:block"
+          <DecorativePicture
+            className="pointer-events-none absolute bottom-0 left-0 z-[1] hidden h-[58.5vh] w-auto md:block"
+            width={521}
+            height={1410}
+            loading="lazy"
+            imgClassName="h-full w-auto select-none object-contain object-bottom"
+            sources={[
+              {
+                media: DESKTOP_MEDIA,
+                srcSet: "/slides/Nic_16_bit_slide_2_Landing.png",
+              },
+            ]}
           />
         }
       >
@@ -273,12 +332,18 @@ export default async function HomePage() {
           id="thinking"
           background="bg-pen-pattern"
           image={
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src="/slides/Nic_soap_16bit.png"
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute right-3 bottom-8 z-[1] hidden h-[180px] w-auto select-none object-contain object-bottom lg:h-[220px] xl:h-[260px] 2xl:h-[300px] md:block"
+            <DecorativePicture
+              className="pointer-events-none absolute right-3 bottom-8 z-[1] hidden h-[180px] w-auto md:block lg:h-[220px] xl:h-[260px] 2xl:h-[300px]"
+              width={832}
+              height={1248}
+              loading="lazy"
+              imgClassName="h-full w-auto select-none object-contain object-bottom"
+              sources={[
+                {
+                  media: DESKTOP_MEDIA,
+                  srcSet: "/slides/Nic_soap_16bit.png",
+                },
+              ]}
             />
           }
         >
@@ -344,44 +409,55 @@ export default async function HomePage() {
               </h2>
             </div>
             {/* Top-right card */}
-            <div className="relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/slides/Nic_archeo_16bit.png"
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute bottom-full right-4 z-50 h-24 w-auto select-none object-contain object-bottom"
+            <LoadWhenNear
+              className="relative"
+              hold={
+                <a
+                  href={TOPIC_PREVIEWS[0].href}
+                  className="group flex flex-col border border-brand-900 bg-white p-6"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_01</span>
+                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
+                  </div>
+                  <div className="my-3 border-t border-brand-200" />
+                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
+                    {TOPIC_PREVIEWS[0].title}
+                  </h3>
+                  <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
+                    {TOPIC_PREVIEWS[0].description}
+                  </p>
+                  <div className="mt-auto pt-6 flex justify-end">
+                    <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </div>
+                </a>
+              }
+            >
+              <DecorativePicture
+                className="pointer-events-none absolute bottom-full right-4 z-50"
+                width={278}
+                height={318}
+                loading="lazy"
+                imgClassName="h-24 w-auto select-none object-contain object-bottom"
+                sources={[{ srcSet: "/slides/Nic_archeo_16bit.png" }]}
               />
-              <a
-                href={TOPIC_PREVIEWS[0].href}
-                className="group flex flex-col border border-brand-900 bg-white p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_01</span>
-                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                </div>
-                <div className="my-3 border-t border-brand-200" />
-                <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
-                  {TOPIC_PREVIEWS[0].title}
-                </h3>
-                <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                  {TOPIC_PREVIEWS[0].description}
-                </p>
-                <div className="mt-auto pt-6 flex justify-end">
-                  <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </div>
-              </a>
-            </div>
+            </LoadWhenNear>
             {/* Bottom row — 3 cards */}
             {TOPIC_PREVIEWS.slice(1).map((topic, i) => (
               i === 0 ? (
                 <div key={topic.href} className="relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/slides/Nic_Hunting_Pickaxe.png"
-                    alt=""
-                    aria-hidden="true"
-                    className="pointer-events-none absolute bottom-full left-4 z-50 hidden h-36 w-auto select-none object-contain object-bottom md:block"
+                  <DecorativePicture
+                    className="pointer-events-none absolute bottom-full left-4 z-50 hidden h-36 md:block"
+                    width={408}
+                    height={612}
+                    loading="lazy"
+                    imgClassName="h-full w-auto select-none object-contain object-bottom"
+                    sources={[
+                      {
+                        media: DESKTOP_MEDIA,
+                        srcSet: "/slides/Nic_Hunting_Pickaxe.png",
+                      },
+                    ]}
                   />
                   <a
                     href={topic.href}
