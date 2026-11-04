@@ -1,7 +1,7 @@
 import { type DocumentActionComponent } from "sanity";
 import { EarthGlobeIcon } from "@sanity/icons";
 
-const SITE_URL = "https://nicharalambous.com";
+const SITE_URL = "https://www.nicharalambous.com";
 
 const SLUG_ROUTES: Record<string, string> = {
   post: "/blog",

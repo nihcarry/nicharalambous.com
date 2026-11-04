@@ -13,7 +13,7 @@ import { SmartHeadingManager } from "@/components/smart-heading-manager";
 import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
 import { GoogleAnalytics } from "@/components/google-analytics";
-import { personJsonLd, websiteJsonLd } from "@/lib/metadata";
+import { DEFAULT_DESCRIPTION, personJsonLd, websiteJsonLd } from "@/lib/metadata";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,8 +28,7 @@ export const metadata: Metadata = {
     default: "Nic Haralambous | Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
     template: "%s | Nic Haralambous",
   },
-  description:
-    "Nic Haralambous is a global keynote speaker, entrepreneur and AI product builder with 3 business exits, 2 best-selling books, and 20+ years building technology businesses.",
+  description: DEFAULT_DESCRIPTION,
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "48x48" },

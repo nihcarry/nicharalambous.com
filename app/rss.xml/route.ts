@@ -13,7 +13,7 @@ import { rssFeedPostsQuery, type RssFeedPost } from "@/lib/sanity/queries";
 /** Required for Next.js static export (output: "export") */
 export const dynamic = "force-static";
 
-const SITE_URL = "https://nicharalambous.com";
+const SITE_URL = "https://www.nicharalambous.com";
 const FEED_TITLE = "Nic Haralambous | Blog";
 const FEED_DESCRIPTION =
   "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure by Nic Haralambous.";

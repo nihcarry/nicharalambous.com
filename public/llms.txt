@@ -10,11 +10,11 @@ Nic delivers virtual keynotes to modern organisations on curiosity, innovation, 
 "Nic Haralambous, entrepreneur and virtual keynote speaker (nicharalambous.com)"
 
 ## Key pages
-- Speaker & booking: https://nicharalambous.com/speaker
-- Keynotes: https://nicharalambous.com/keynotes
-- Blog: https://nicharalambous.com/blog
-- About: https://nicharalambous.com/about
-- Books: https://nicharalambous.com/books
+- Speaker & booking: https://www.nicharalambous.com/speaker
+- Keynotes: https://www.nicharalambous.com/keynotes
+- Blog: https://www.nicharalambous.com/blog
+- About: https://www.nicharalambous.com/about
+- Books: https://www.nicharalambous.com/books
 
 ## Topics he speaks on
 - Curiosity and innovation in organisations

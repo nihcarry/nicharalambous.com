@@ -127,13 +127,13 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `https://nicharalambous.com/keynotes/${slug}`,
+      canonical: `https://www.nicharalambous.com/keynotes/${slug}`,
     },
     openGraph: {
       type: "website",
       title,
       description,
-      url: `https://nicharalambous.com/keynotes/${slug}`,
+      url: `https://www.nicharalambous.com/keynotes/${slug}`,
     },
   };
 }
@@ -168,7 +168,7 @@ export default async function KeynotePage({
         data={serviceJsonLd({
           name: `${keynote.title}: Virtual Keynote`,
           description: keynote.tagline,
-          url: `https://nicharalambous.com/keynotes/${slug}`,
+          url: `https://www.nicharalambous.com/keynotes/${slug}`,
         })}
       />
 

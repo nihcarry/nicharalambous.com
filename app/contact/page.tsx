@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Book Nic Haralambous for your next virtual keynote. Enquire about speaking engagements for conferences, corporate events, team offsites, and webinars.",
-  alternates: { canonical: "https://nicharalambous.com/contact" },
+  alternates: { canonical: "https://www.nicharalambous.com/contact" },
   openGraph: {
     type: "website",
     title: "Book Nic Haralambous | Contact",
     description:
       "Enquire about virtual keynote speaking for your next event.",
-    url: "https://nicharalambous.com/contact",
+    url: "https://www.nicharalambous.com/contact",
   },
 };
 

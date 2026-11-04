@@ -22,7 +22,10 @@ export const metadata: Metadata = {
   title: "Flagship Keynotes",
   description:
     "Nic Haralambous's flagship virtual keynotes on curiosity, innovation, AI, entrepreneurship, focus, and building breakthrough teams. Designed for remote teams.",
-  alternates: { canonical: "https://nicharalambous.com/keynotes" },
+  alternates: { canonical: "https://www.nicharalambous.com/keynotes" },
+  openGraph: {
+    url: "https://www.nicharalambous.com/keynotes",
+  },
 };
 
 /* ---------- Helpers ---------- */

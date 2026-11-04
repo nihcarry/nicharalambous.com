@@ -38,6 +38,7 @@ import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { WhatClientsSay } from "@/components/what-clients-say";
 import { IncredibleClients } from "@/components/incredible-clients";
 import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
+import { HOME_URL } from "@/lib/metadata";
 import { ArrowRight, Crosshair } from "lucide-react";
 
 /** Flagship keynote the hero slide sells. */
@@ -84,6 +85,11 @@ export default async function HomePage() {
   const displayAsSeenAt = cmsAsSeenAt || FALLBACK_AS_SEEN_AT;
 
   return (
+    <>
+      {/* Next's metadata resolver drops a trailing slash on the site root.
+          These two tags are the home canonical and og:url. */}
+      <link rel="canonical" href={HOME_URL} />
+      <meta property="og:url" content={HOME_URL} />
     <SlideDeck>
       <NextSlideIndicator />
       {/* Slide 1: Hero — big headline over portrait */}
@@ -499,6 +505,7 @@ export default async function HomePage() {
       </Slide>
       <NextSlideIndicator />
     </SlideDeck>
+    </>
   );
 }
 

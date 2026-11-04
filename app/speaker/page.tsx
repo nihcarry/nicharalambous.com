@@ -175,13 +175,13 @@ export const metadata: Metadata = {
   title: "Virtual Keynote Speaker",
   description:
     "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses. Keynotes on curiosity, innovation, AI, and entrepreneurship.",
-  alternates: { canonical: "https://nicharalambous.com/speaker" },
+  alternates: { canonical: "https://www.nicharalambous.com/speaker" },
   openGraph: {
     type: "website",
     title: "Virtual Keynote Speaker | Nic Haralambous",
     description:
       "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses.",
-    url: "https://nicharalambous.com/speaker",
+    url: "https://www.nicharalambous.com/speaker",
   },
 };
 
@@ -211,7 +211,7 @@ export default async function SpeakerPage() {
           name: "Virtual Keynote Speaking by Nic Haralambous",
           description:
             "Book Nic Haralambous as your virtual keynote speaker. Keynotes on curiosity, innovation, AI, entrepreneurship, and building breakthrough teams.",
-          url: "https://nicharalambous.com/speaker",
+          url: "https://www.nicharalambous.com/speaker",
         })}
       />
       <JsonLd data={faqJsonLd(faqs)} />
