@@ -16,6 +16,15 @@
 # AWS auth uses GitHub OIDC (id-token: write) to assume
 # arn:aws:iam::962990061157:role/nicharalambous-com-github-deploy.
 # That role trusts only refs/heads/main. No static access keys.
+#
+# The CloudFront URL rewrite function is not part of the S3 sync. Publishing
+# it needs cloudfront:GetDistributionConfig, DescribeFunction, GetFunction,
+# UpdateFunction, TestFunction, and PublishFunction. Those actions are not
+# used by the site deploy. The publish job below stays skipped until the
+# repository variable CLOUDFRONT_PUBLISH_FUNCTION is the string true. Set
+# that only after the role has been granted those actions. Until then, run
+# infra/publish-cloudfront-function.sh with an operator profile.
+# See infra/README.md. Do not add cloudfront:UpdateDistribution here.
 
 name: Build & Deploy
 
@@ -23,6 +32,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      publish_cloudfront_function:
+        description: Publish the CloudFront URL rewrite function
+        type: boolean
+        default: false
   repository_dispatch:
     types: [sanity-content-update]
 
@@ -160,3 +174,57 @@ jobs:
           Trigger: ${{ github.event_name }}
           Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             "${{ secrets.NTFY_TOPIC_URL }}" || true
+
+  # Separate from the site deploy so a missing IAM action cannot fail the
+  # upload. This job still waits until that deploy has succeeded, because
+  # validate:redirects runs there. It does not roll back the site.
+  publish-cloudfront-function:
+    needs: build-and-deploy
+    if: >-
+      vars.CLOUDFRONT_PUBLISH_FUNCTION == 'true' &&
+      github.event_name != 'repository_dispatch' &&
+      needs.build-and-deploy.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decide whether the function file changed
+        id: gate
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.publish_cloudfront_function }}" = "true" ]; then
+              echo "run=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "Manual run did not ask to publish the function."
+              echo "run=false" >> "$GITHUB_OUTPUT"
+            fi
+            exit 0
+          fi
+          BEFORE="${{ github.event.before }}"
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git diff --name-only "$BEFORE" "${{ github.sha }}" | grep -qx "infra/cloudfront-url-rewrite.js"; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "infra/cloudfront-url-rewrite.js did not change."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure AWS credentials
+        if: steps.gate.outputs.run == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::962990061157:role/nicharalambous-com-github-deploy
+          aws-region: us-east-1
+
+      - name: Publish CloudFront function
+        if: steps.gate.outputs.run == 'true'
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: bash infra/publish-cloudfront-function.sh --publish
