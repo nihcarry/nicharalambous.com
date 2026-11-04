@@ -19,9 +19,9 @@ var redirects = {
   '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams',
   // Decision Trackr moved to its own site. Exact match runs before the
   // trailing-slash strip, so both forms are listed. Absolute URL is required
-  // for a cross-origin 301. deploy.yml does not publish this function; the
-  // static file public/decision-trackr/privacy.html is what the site deploy
-  // serves until this function is published.
+  // for a cross-origin 301. The site deploy does not publish this function.
+  // Publish it with infra/publish-cloudfront-function.sh (see infra/README.md).
+  // Until that publish, public/decision-trackr/privacy.html is what visitors get.
   // /decision-trackr itself is not listed here on purpose: this map drops the
   // query string, and the pricing link must keep UTMs. The static files
   // public/decision-trackr.html and public/decision-trackr/index.html redirect

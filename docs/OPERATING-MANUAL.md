@@ -30,7 +30,7 @@
 | Update a topic hub | Studio → Topic Hubs → select it | Edit fields, Publish |
 | Update a book | Studio → Books → select it | Edit fields, Publish |
 | Update the homepage, about, or contact page | Edit code in `app/page.tsx`, `app/about/page.tsx`, or `app/contact/page.tsx` | Push to `main` |
-| Add a legacy redirect | Edit `infra/cloudfront-url-rewrite.js` | Push to `main` (needs a CloudFront deploy) |
+| Add a legacy redirect | Edit `infra/cloudfront-url-rewrite.js` | Push to `main`, then publish the function (`infra/README.md`) |
 | Check if a deploy is running | Studio → open any doc → "View build status" action | Opens GitHub Actions |
 | Jump to the live page for a doc | Studio → open the doc → "View on site" action | Doc must be published with a slug |
 | Manually trigger a rebuild | GitHub → Actions → Build & Deploy → Run workflow | GitHub access |
@@ -87,9 +87,10 @@
 
 ### Adding a legacy redirect
 
-1. Edit `infra/cloudfront-url-rewrite.js` — add the redirect rule to the function.
-2. Commit and push to `main`.
-3. This requires a separate CloudFront Function deploy (not just the site deploy).
+1. Edit `infra/cloudfront-url-rewrite.js`. Add the old path and its target. Do not change existing targets.
+2. Run `npm run validate:redirects`.
+3. Commit and push to `main`. The site deploy uploads HTML. It does not publish this function.
+4. Publish the function with `infra/publish-cloudfront-function.sh`. The first run writes a backup and prints the diff. Add `--publish` only after you have read that diff. IAM, the exact commands, and rollback are in `infra/README.md`.
 
 ### Updating the homepage, about page, or contact page
 

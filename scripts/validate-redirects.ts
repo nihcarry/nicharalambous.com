@@ -9,6 +9,7 @@
  */
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
+import { Script } from "node:vm";
 
 const INFRA_PATH = join(process.cwd(), "infra", "cloudfront-url-rewrite.js");
 
@@ -53,6 +54,127 @@ function extractRedirects(content: string): Map<string, string> {
     if (m) redirects.set(m[1], m[2]);
   }
   return redirects;
+}
+
+const FUNCTION_BYTE_LIMIT = 10 * 1024;
+
+type CfHeaders = { location?: { value?: string } };
+type CfResult = { statusCode?: number; headers?: CfHeaders; uri?: string };
+type Handler = (event: {
+  request: {
+    uri: string;
+    querystring: Record<string, { value: string }>;
+    headers: Record<string, { value: string }>;
+  };
+}) => CfResult;
+
+function loadHandler(source: string): Handler {
+  const script = new Script(`${source}\n;handler`, {
+    filename: "infra/cloudfront-url-rewrite.js",
+  });
+  const handler = script.runInNewContext({});
+  if (typeof handler !== "function") {
+    throw new Error("cloudfront-url-rewrite.js does not define handler");
+  }
+  return handler as Handler;
+}
+
+function runHandler(handler: Handler, uri: string, host = "www.nicharalambous.com", accept = "text/html"): CfResult {
+  return handler({
+    request: {
+      uri,
+      querystring: {},
+      headers: {
+        host: { value: host },
+        accept: { value: accept },
+      },
+    },
+  });
+}
+
+/**
+ * Executes the function the way CloudFront would, in a plain JS sandbox.
+ * This does not publish anything. It catches a bad map before an operator runs
+ * infra/publish-cloudfront-function.sh.
+ */
+function assertHandler(source: string, redirects: Map<string, string>, errors: string[]) {
+  const bytes = Buffer.byteLength(source);
+  if (bytes > FUNCTION_BYTE_LIMIT) {
+    errors.push(
+      `infra/cloudfront-url-rewrite.js is ${bytes} bytes. CloudFront Functions must stay at or under ${FUNCTION_BYTE_LIMIT} bytes.`
+    );
+  }
+  if (source.includes("?.")) {
+    errors.push(
+      "infra/cloudfront-url-rewrite.js contains optional chaining. The published runtime rejected that syntax (see commit ee4e5f4)."
+    );
+  }
+
+  let handler: Handler;
+  try {
+    handler = loadHandler(source);
+  } catch (error) {
+    errors.push(`Could not run the CloudFront function locally: ${error instanceof Error ? error.message : String(error)}`);
+    return;
+  }
+
+  for (const [sourcePath, destination] of redirects) {
+    const result = runHandler(handler, sourcePath);
+    const location = result.headers?.location?.value;
+    if (result.statusCode !== 301 || location !== destination) {
+      errors.push(
+        `handler ${sourcePath} expected 301 ${destination}, got ${result.statusCode ?? "(no status)"} ${location ?? "(no location)"}`
+      );
+    }
+  }
+
+  const dated = runHandler(handler, "/blog/2020/01/15/the-brutality-of-burnout");
+  if (dated.statusCode !== 301 || dated.headers?.location?.value !== "/blog/the-brutality-of-burnout") {
+    errors.push("Dated blog URLs must 301 to /blog/<slug>.");
+  }
+
+  const apex = runHandler(handler, "/", "nicharalambous.com");
+  if (apex.statusCode !== 301 || apex.headers?.location?.value !== "https://www.nicharalambous.com") {
+    errors.push(
+      `Apex host must 301 to https://www.nicharalambous.com, got ${apex.statusCode} ${apex.headers?.location?.value}`
+    );
+  }
+
+  const about = runHandler(handler, "/about");
+  if (about.statusCode || about.uri !== "/about.html") {
+    errors.push(`Expected /about to rewrite to /about.html, got ${JSON.stringify(about)}`);
+  }
+
+  const aboutSlash = runHandler(handler, "/about/");
+  if (aboutSlash.statusCode || aboutSlash.uri !== "/about.html") {
+    errors.push(`Expected /about/ to rewrite to /about.html, got ${JSON.stringify(aboutSlash)}`);
+  }
+
+  const asset = runHandler(handler, "/_next/static/chunks/example.js");
+  if (asset.statusCode || asset.uri !== "/_next/static/chunks/example.js") {
+    errors.push("Paths under /_next must be left unchanged.");
+  }
+
+  const pricing = runHandler(handler, "/decision-trackr");
+  if (pricing.statusCode || pricing.uri !== "/decision-trackr.html") {
+    errors.push(
+      "/decision-trackr must stay a rewrite to /decision-trackr.html so the static file can keep the query string. Do not add it to the redirect map."
+    );
+  }
+
+  // Exact match runs before the slash strip, and this source is not listed with
+  // a trailing slash. Publishing the file will not turn this into a 301.
+  const apathySlash = runHandler(handler, "/keynotes/escaping-the-apathy-trap/");
+  if (apathySlash.statusCode || apathySlash.uri !== "/keynotes/escaping-the-apathy-trap.html") {
+    errors.push(
+      "Trailing-slash form of /keynotes/escaping-the-apathy-trap is not a redirect in this file. Leave that behaviour unless the map gains an explicit entry."
+    );
+  }
+
+  const rsc = runHandler(handler, "/about", "www.nicharalambous.com", "text/x-component");
+  if (rsc.statusCode || rsc.uri !== "/about.txt") {
+    errors.push("Accept: text/x-component must rewrite extensionless paths to .txt.");
+  }
 }
 
 function main() {
@@ -128,6 +250,8 @@ function main() {
     }
   }
 
+  assertHandler(content, redirects, errors);
+
   if (errors.length > 0) {
     console.error("ERROR:");
     errors.forEach((error) => console.error(error));
@@ -135,6 +259,7 @@ function main() {
   }
 
   console.log("OK: No redirect conflicts with live routes.");
+  console.log("OK: Handler simulation matches the redirect map.");
   console.log(`OK: /decision-trackr/privacy redirects to ${DECISION_TRACKR_PRIVACY}`);
   console.log(`OK: /decision-trackr redirects to ${DECISION_TRACKR_PRICING} with the query string`);
 }
