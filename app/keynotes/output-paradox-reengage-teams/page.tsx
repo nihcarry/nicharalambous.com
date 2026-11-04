@@ -173,7 +173,7 @@ export default function OutputParadoxPage() {
           name: "The Output Paradox: How to Reengage Teams in the Age of AI",
           description:
             "Your teams are shipping more. They're also checking out. A keynote on how to reengage teams in the age of AI — when productivity is up, activity is up, and engagement is down.",
-          url: "https://nicharalambous.com/keynotes/output-paradox-reengage-teams",
+          url: "https://www.nicharalambous.com/keynotes/output-paradox-reengage-teams",
         })}
       />
 

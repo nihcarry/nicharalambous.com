@@ -42,13 +42,13 @@ export const metadata: Metadata = {
   title: "Topics",
   description:
     "Explore Nic Haralambous's core topics: curiosity, innovation, entrepreneurship, focus, AI, agency, and failure. Each topic bridges blog content to keynotes.",
-  alternates: { canonical: "https://nicharalambous.com/topics" },
+  alternates: { canonical: "https://www.nicharalambous.com/topics" },
   openGraph: {
     type: "website",
     title: "Topics | Nic Haralambous",
     description:
       "Explore core topics: curiosity, innovation, AI, entrepreneurship, focus, agency, and failure.",
-    url: "https://nicharalambous.com/topics",
+    url: "https://www.nicharalambous.com/topics",
   },
 };
 
@@ -128,7 +128,7 @@ export default async function TopicsPage() {
           name: "Topics — Nic Haralambous",
           description:
             "Explore core topics: curiosity, innovation, AI, entrepreneurship, focus, agency, and failure.",
-          url: "https://nicharalambous.com/topics",
+          url: "https://www.nicharalambous.com/topics",
         })}
       />
 

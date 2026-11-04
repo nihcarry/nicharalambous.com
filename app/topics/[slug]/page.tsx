@@ -84,13 +84,13 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `https://nicharalambous.com/topics/${slug}`,
+      canonical: `https://www.nicharalambous.com/topics/${slug}`,
     },
     openGraph: {
       type: "website",
       title: `${topic.title} | Topics | Nic Haralambous`,
       description,
-      url: `https://nicharalambous.com/topics/${slug}`,
+      url: `https://www.nicharalambous.com/topics/${slug}`,
     },
   };
 }
@@ -123,7 +123,7 @@ export default async function TopicHubPage({
         data={collectionPageJsonLd({
           name: `${topic.title} | Nic Haralambous`,
           description: topic.oneSentenceSummary,
-          url: `https://nicharalambous.com/topics/${slug}`,
+          url: `https://www.nicharalambous.com/topics/${slug}`,
         })}
       />
 

@@ -113,12 +113,12 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `https://nicharalambous.com/blog/${slug}`,
+      canonical: `https://www.nicharalambous.com/blog/${slug}`,
     },
     openGraph: {
       title: `${title} | Nic Haralambous`,
       description,
-      url: `https://nicharalambous.com/blog/${slug}`,
+      url: `https://www.nicharalambous.com/blog/${slug}`,
       type: "article",
       publishedTime: post.publishedAt,
       ...(post.updatedAt && { modifiedTime: post.updatedAt }),
@@ -166,7 +166,7 @@ export default async function BlogPostPage({
         data={articleJsonLd({
           title: post.title,
           description: post.excerpt || `${post.title} by Nic Haralambous`,
-          url: `https://nicharalambous.com/blog/${slug}`,
+          url: `https://www.nicharalambous.com/blog/${slug}`,
           publishedAt: post.publishedAt,
           updatedAt: post.updatedAt || undefined,
           image: post.featuredImage?.asset?.url,

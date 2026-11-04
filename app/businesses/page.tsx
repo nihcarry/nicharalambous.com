@@ -108,13 +108,13 @@ export const metadata: Metadata = {
   title: "Businesses",
   description:
     "Every business Nic Haralambous has started, sold, or shut down, from his first venture at 16 to building products today. Two decades of entrepreneurship.",
-  alternates: { canonical: "https://nicharalambous.com/businesses" },
+  alternates: { canonical: "https://www.nicharalambous.com/businesses" },
   openGraph: {
     type: "website",
     title: "Businesses | Nic Haralambous",
     description:
       "Every business Nic Haralambous has started, sold, or shut down. Two decades of building, selling, and learning.",
-    url: "https://nicharalambous.com/businesses",
+    url: "https://www.nicharalambous.com/businesses",
   },
 };
 
@@ -132,7 +132,7 @@ export default async function BusinessesPage() {
           name: "Businesses by Nic Haralambous",
           description:
             "Every business Nic Haralambous has started, sold, or shut down: 20+ ventures across two decades.",
-          url: "https://nicharalambous.com/businesses",
+          url: "https://www.nicharalambous.com/businesses",
         })}
       />
 

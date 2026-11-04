@@ -30,14 +30,14 @@ import { ArrowRight, Crosshair } from "lucide-react";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Nic Haralambous is an entrepreneur, product builder, keynote speaker, and author with 3 business exits, 3 books, and 20+ years building technology businesses.",
-  alternates: { canonical: "https://nicharalambous.com/about" },
+    "Nic Haralambous is an entrepreneur, product builder, keynote speaker, and author with 4 exits, 3 books, and 20+ years building technology businesses.",
+  alternates: { canonical: "https://www.nicharalambous.com/about" },
   openGraph: {
     type: "website",
     title: "About Nic Haralambous",
     description:
-      "Entrepreneur, product builder, keynote speaker, and author. 3 business exits, 3 books, 20+ years building tech businesses.",
-    url: "https://nicharalambous.com/about",
+      "Entrepreneur, product builder, keynote speaker, and author. 4 exits, 3 books, 20+ years building tech businesses.",
+    url: "https://www.nicharalambous.com/about",
   },
 };
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
             </h1>
             <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
               <p>
-                I am a keynote speaker, entrepreneur, product builder, and best-selling author. I&rsquo;ve been building businesses since I was 16, sold three of them, and spent more than 20 years learning lessons through failure and success.
+                I am a keynote speaker, entrepreneur, product builder, and best-selling author. I have been building businesses since I was 16. I have had 4 exits, and I have spent more than 20 years learning lessons through failure and success.
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -259,7 +259,7 @@ export default function AboutPage() {
 /* ---------- Static data ---------- */
 
 const KEY_STATS = [
-  { value: "3", label: "Business Exits" },
+  { value: "4", label: "Business Exits" },
   { value: "3", label: "Books Published" },
   { value: "20+", label: "Years Building" },
   { value: "16+", label: "Years Speaking" },

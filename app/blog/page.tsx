@@ -67,13 +67,13 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure by Nic Haralambous. Real stories and actionable frameworks from 20+ years of building businesses.",
-  alternates: { canonical: "https://nicharalambous.com/blog" },
+  alternates: { canonical: "https://www.nicharalambous.com/blog" },
   openGraph: {
     type: "website",
     title: "Blog | Nic Haralambous",
     description:
       "Articles on curiosity, innovation, AI, entrepreneurship, and building businesses.",
-    url: "https://nicharalambous.com/blog",
+    url: "https://www.nicharalambous.com/blog",
   },
 };
 
@@ -97,7 +97,7 @@ export default async function BlogPage() {
           name: "Blog | Nic Haralambous",
           description:
             "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure.",
-          url: "https://nicharalambous.com/blog",
+          url: "https://www.nicharalambous.com/blog",
         })}
       />
 

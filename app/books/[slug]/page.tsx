@@ -99,13 +99,13 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `https://nicharalambous.com/books/${slug}`,
+      canonical: `https://www.nicharalambous.com/books/${slug}`,
     },
     openGraph: {
       type: "website",
       title,
       description,
-      url: `https://nicharalambous.com/books/${slug}`,
+      url: `https://www.nicharalambous.com/books/${slug}`,
     },
   };
 }
@@ -139,7 +139,7 @@ export default async function BookPage({
         data={bookJsonLd({
           title: book.title,
           description: book.subtitle || `${book.title} by Nic Haralambous`,
-          url: `https://nicharalambous.com/books/${slug}`,
+          url: `https://www.nicharalambous.com/books/${slug}`,
           isbn: book.isbn || undefined,
           image: coverUrl,
           publishedYear: book.publishedYear || undefined,

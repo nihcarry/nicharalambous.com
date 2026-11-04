@@ -7,9 +7,25 @@
 import type { Metadata } from "next";
 
 const SITE_URL = "https://www.nicharalambous.com";
+/**
+ * Canonical home URL. The site root keeps a trailing slash. Every other
+ * canonical path does not, matching `trailingSlash: false` in next.config.
+ *
+ * Next's metadata resolver turns a root URL into the origin and drops the
+ * slash, so the home page emits this href in a link tag instead of via
+ * `alternates.canonical`.
+ */
+export const HOME_URL = `${SITE_URL}/`;
 const SITE_NAME = "Nic Haralambous - Keynote Speaker";
-const DEFAULT_DESCRIPTION =
-  "Nic Haralambous is a global keynote speaker, entrepreneur and AI product builder with 3 business exits, 2 best-selling books, and 20+ years building technology businesses.";
+export const DEFAULT_DESCRIPTION =
+  "Nic Haralambous is a global keynote speaker, entrepreneur and AI product builder with 4 exits, 3 books, and 20+ years building technology businesses.";
+
+/** Absolute canonical URL for a site path. */
+export function canonicalUrl(path = "/"): string {
+  if (!path || path === "/") return HOME_URL;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${SITE_URL}${normalized.replace(/\/+$/, "")}`;
+}
 
 interface PageMetadataOptions {
   title: string;
@@ -30,7 +46,7 @@ export function generatePageMetadata({
   ogImage,
   noIndex = false,
 }: PageMetadataOptions): Metadata {
-  const url = `${SITE_URL}${path}`;
+  const url = canonicalUrl(path);
 
   return {
     title: `${title} | ${SITE_NAME}`,
@@ -63,7 +79,7 @@ export function personJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Nic Haralambous",
-    url: SITE_URL,
+    url: HOME_URL,
     jobTitle: "Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
     description: DEFAULT_DESCRIPTION,
     image: `${SITE_URL}/images/nic-haralambous.jpg`,
@@ -81,7 +97,7 @@ export function websiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    url: SITE_URL,
+    url: HOME_URL,
   };
 }
 
@@ -130,7 +146,7 @@ export function articleJsonLd({
     publisher: {
       "@type": "Person",
       name: "Nic Haralambous",
-      url: SITE_URL,
+      url: HOME_URL,
     },
   };
 }

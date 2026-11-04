@@ -25,3 +25,7 @@ The function is associated with the **viewer-request** event. After editing `clo
 
 1. Run `npm run validate:redirects` — fails if any redirect source is a live app route
 2. Copy the contents into the CloudFront console and publish
+
+## Missing URLs (403 from S3)
+
+A path that is not in the bucket comes back as S3 `403 AccessDenied`. The site 404 page is `404.html`, but CloudFront does not serve it for that error until the distribution has a custom error response. Steps, checks, and rollback: `cloudfront-404-custom-error.md`. Do not fold that change into the GitHub deploy.

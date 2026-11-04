@@ -26,13 +26,13 @@ export const metadata: Metadata = {
   title: "Book a Session",
   description:
     "Book coaching or a one-off Brain Picking session with Nic Haralambous, or apply for pay-what-you-can-afford coaching.",
-  alternates: { canonical: "https://nicharalambous.com/session" },
+  alternates: { canonical: "https://www.nicharalambous.com/session" },
   openGraph: {
     type: "website",
     title: "Book a Session | Nic Haralambous",
     description:
       "Coaching, Brain Picking, or pay-what-you-can-afford work with Nic Haralambous.",
-    url: "https://nicharalambous.com/session",
+    url: "https://www.nicharalambous.com/session",
   },
 };
 
@@ -50,11 +50,11 @@ function sessionOffersJsonLd() {
           name: "Coaching with Nic Haralambous",
           description:
             "Longer-term coaching partnership covering definition of success, business model, life design, mental models, and mental fitness.",
-          url: "https://nicharalambous.com/session",
+          url: "https://www.nicharalambous.com/session",
           brand: {
             "@type": "Person",
             name: "Nic Haralambous",
-            url: "https://nicharalambous.com",
+            url: "https://www.nicharalambous.com/",
           },
           offers: [
             {
@@ -84,11 +84,11 @@ function sessionOffersJsonLd() {
           name: "Pick Nic's Brain",
           description:
             "A one-off session for a short-term fix, perspective shift, or jarring help with a specific problem.",
-          url: "https://nicharalambous.com/session",
+          url: "https://www.nicharalambous.com/session",
           brand: {
             "@type": "Person",
             name: "Nic Haralambous",
-            url: "https://nicharalambous.com",
+            url: "https://www.nicharalambous.com/",
           },
           offers: {
             "@type": "Offer",

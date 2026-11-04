@@ -65,7 +65,10 @@ export async function generateMetadata({
     description: `Archived post: ${post.title} by Nic Haralambous`,
     robots: { index: false, follow: true },
     alternates: {
-      canonical: `https://nicharalambous.com/archive/${slug}`,
+      canonical: `https://www.nicharalambous.com/archive/${slug}`,
+    },
+    openGraph: {
+      url: `https://www.nicharalambous.com/archive/${slug}`,
     },
   };
 }

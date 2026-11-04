@@ -71,13 +71,13 @@ export const metadata: Metadata = {
   title: "Books",
   description:
     "Books by Nic Haralambous on entrepreneurship, resilience, side hustles, and building businesses. 3 published books from 20+ years of real experience.",
-  alternates: { canonical: "https://nicharalambous.com/books" },
+  alternates: { canonical: "https://www.nicharalambous.com/books" },
   openGraph: {
     type: "website",
     title: "Books by Nic Haralambous",
     description:
       "3 published books on entrepreneurship, resilience, and building businesses.",
-    url: "https://nicharalambous.com/books",
+    url: "https://www.nicharalambous.com/books",
   },
 };
 
@@ -94,7 +94,7 @@ export default async function BooksPage() {
           name: "Books by Nic Haralambous",
           description:
             "Books on entrepreneurship, resilience, side hustles, and building businesses.",
-          url: "https://nicharalambous.com/books",
+          url: "https://www.nicharalambous.com/books",
         })}
       />
 

@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description:
     "Search blog posts, keynotes, and topics on nicharalambous.com.",
   robots: { index: false },
+  alternates: { canonical: "https://www.nicharalambous.com/search" },
+  openGraph: { url: "https://www.nicharalambous.com/search" },
 };
 
 export default function SearchPage() {
