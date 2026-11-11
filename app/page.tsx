@@ -171,10 +171,16 @@ export default async function HomePage() {
         {/* Hero copy not wrapped in SlideContent so it’s always visible */}
         <div className="text-center">
           <h1
+            data-no-orphan-opt-out="true"
+            className="mx-auto mb-4 max-w-3xl text-balance text-lg font-semibold leading-snug text-brand-900 md:mb-6 md:text-2xl"
+          >
+            Nic Haralambous, keynote speaker on team performance in the age of AI
+          </h1>
+          <h2
             className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
           >
             THE OUTPUT PARADOX
-          </h1>
+          </h2>
           {/* Body + CTAs — centered below the headline */}
           <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
             <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">

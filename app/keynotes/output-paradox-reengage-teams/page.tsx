@@ -26,12 +26,28 @@ const PREVIEW_VIDEO_URL = "https://youtu.be/U0xubG3VP2w";
 
 /* ---------- Metadata ---------- */
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "The Output Paradox — Keynote",
+const PAGE_TITLE = "The Output Paradox: How to make busy teams brilliant";
+
+const pageMetadata = generatePageMetadata({
+  title: PAGE_TITLE,
   description:
     "Your teams are shipping more. They're also checking out. A keynote on how to reengage teams in the age of AI — when productivity is up, activity is up, and engagement is down.",
   path: "/keynotes/output-paradox-reengage-teams",
 });
+
+export const metadata: Metadata = {
+  ...pageMetadata,
+  // Absolute so the root "%s | Nic Haralambous" template does not alter the approved title.
+  title: { absolute: PAGE_TITLE },
+  openGraph: {
+    ...pageMetadata.openGraph,
+    title: PAGE_TITLE,
+  },
+  twitter: {
+    ...pageMetadata.twitter,
+    title: PAGE_TITLE,
+  },
+};
 
 /* ---------- Data ---------- */
 
