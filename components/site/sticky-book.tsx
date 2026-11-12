@@ -15,7 +15,7 @@ export function StickyBookBar() {
       ([entry]) => {
         setVisible(mobile.matches && !entry.isIntersecting);
       },
-      { threshold: 0.15 },
+      { threshold: 0 },
     );
     observer.observe(card);
     function onChange() {

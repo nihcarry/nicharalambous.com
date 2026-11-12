@@ -94,7 +94,7 @@ function EnquiryFields() {
   }
 
   return (
-    <form className="q" onSubmit={onSubmit} noValidate>
+    <form className="enquiry" onSubmit={onSubmit} noValidate>
       <div className="hp" aria-hidden="true">
         <label htmlFor="company-website">Company website</label>
         <input id="company-website" name="_honey" tabIndex={-1} autoComplete="off" />
@@ -284,7 +284,7 @@ function EnquiryFields() {
         </button>
       </div>
       {payOnline ? null : (
-        <p className="hint">Online payment is not open yet. Send the enquiry and I will reply by email.</p>
+        <p className="micro">Online payment is not open yet. Send the enquiry and I will reply by email.</p>
       )}
     </form>
   );

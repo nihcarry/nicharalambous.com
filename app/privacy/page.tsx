@@ -2,25 +2,28 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { breadcrumbJsonLd } from "@/lib/metadata";
-import { ENQUIRY_EMAIL, KIT_FORM_ID } from "@/lib/site";
+import { ENQUIRY_EMAIL, KIT_FORM_ID, PRIVACY_NOINDEX } from "@/lib/site";
 
 const URL = "https://www.nicharalambous.com/privacy";
 
 export const metadata: Metadata = {
   title: { absolute: "Privacy policy | Nic Haralambous" },
   description:
-    "What Nic Haralambous collects on this website, why, and how to ask for it to be deleted. Draft wording, pending Nic's approval.",
+    "What Nic Haralambous collects on this website, why, and how to ask for it to be deleted. Wording still to be confirmed.",
+  robots: PRIVACY_NOINDEX
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
   alternates: { canonical: URL },
   openGraph: {
     title: "Privacy policy | Nic Haralambous",
-    description: "What this site collects, why, and how to get it deleted. Draft, pending approval.",
+    description: "What this site collects, why, and how to get it deleted. Wording still to be confirmed.",
     url: URL,
     images: [{ url: "/og/privacy.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Privacy policy | Nic Haralambous",
-    description: "Draft privacy policy. Wording pending Nic's approval.",
+    description: "What this site collects, why, and how to get it deleted.",
     images: ["/og/privacy.png"],
   },
 };
@@ -69,7 +72,9 @@ export default function PrivacyPage() {
           <p className="mono" style={{ color: "#9AA0AE", marginTop: 18 }}>
             Last updated 12/11/2026
           </p>
-          <p className="draft-note">Draft. Pending Nic&apos;s wording. Not a final privacy policy.</p>
+          <p className="micro" style={{ color: "#c9cdd6", marginTop: 18, maxWidth: 640 }}>
+            The wording on this page is not final. It will be replaced when Nic confirms it.
+          </p>
         </div>
       </section>
       <section className="p-bookmark">
@@ -77,11 +82,7 @@ export default function PrivacyPage() {
           {SECTIONS.map((section) => (
             <article key={section.heading}>
               <h2>{section.heading}</h2>
-              <div className="draft-body">
-                <p>
-                  <strong>Draft, pending Nic&apos;s wording.</strong> {section.body}
-                </p>
-              </div>
+              <p>{section.body}</p>
             </article>
           ))}
         </div>

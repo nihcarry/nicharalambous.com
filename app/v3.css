@@ -1,6 +1,7 @@
 @import "./patterns.css";
 
 .v3,
+.v3-legacy,
 .site-nav,
 .site-footer,
 .sticky-book {
@@ -344,11 +345,39 @@ em.hl {
 }
 
 .site-nav .burger span {
+  position: relative;
   width: 18px;
   height: 2px;
   background: currentColor;
   display: block;
   box-shadow: 0 6px 0 currentColor, 0 -6px 0 currentColor;
+}
+
+.site-nav.is-open .burger span {
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.site-nav.is-open .burger span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  transform: rotate(90deg);
+}
+
+.site-nav .acc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-nav .acc .caret {
+  font-size: 12px;
+  opacity: 0.7;
 }
 
 .site-nav .menu-panel {
@@ -456,9 +485,14 @@ em.hl {
   color: #e3eaff;
 }
 
+.v3 h2 {
+  max-width: 900px;
+}
+
 .v3 .news h2 {
   font-size: 64px;
   margin: 20px 0 22px;
+  max-width: 9em;
 }
 
 .v3 .news .grid {
@@ -504,7 +538,10 @@ em.hl {
 
 .v3 .news .micro,
 .v3 .micro {
+  font-family: var(--sans);
+  font-weight: 400;
   font-size: 13.5px;
+  line-height: 1.45;
   color: var(--muted);
 }
 
@@ -805,8 +842,14 @@ em.hl {
   border-top: 1px solid #e2dccd;
 }
 
-.v3 .pl .go {
+.v3 .pl .card-links {
   margin-top: auto;
+  display: grid;
+  gap: 12px;
+}
+
+.v3 .pl .go {
+  margin-top: 0;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
@@ -1286,11 +1329,21 @@ em.hl {
   border-top: 1px solid #232733;
 }
 
+.v3 .talk.solo {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+
 .v3 .quotes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   margin-top: 48px;
+}
+
+.v3 .quotes-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 860px;
 }
 
 .v3 .q {
@@ -1437,7 +1490,7 @@ em.hl {
 .v3 .top h1 {
   font-size: clamp(46px, 6vw, 80px);
   margin: 22px 0;
-  max-width: 900px;
+  max-width: 12em;
 }
 
 .v3 .top .lead {
@@ -1531,7 +1584,7 @@ em.hl {
   color: var(--blue);
 }
 
-.v3 form.q {
+.v3 form.enquiry {
   background: #fbf9f4;
   border: 1px solid #d8d1c2;
   padding: 48px;
@@ -1732,7 +1785,15 @@ em.hl {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  align-items: center;
   margin-top: 28px;
+}
+
+.v3 .not-found .quiet-link {
+  display: inline-block;
+  line-height: 1.2;
+  padding-bottom: 1px;
+  border-bottom-width: 1px;
 }
 
 @media (max-width: 1100px) and (min-width: 601px) {
@@ -2051,9 +2112,12 @@ em.hl {
     font-size: 40px;
   }
 
-  .v3 .pxf {
-    height: 96px;
-    right: 16px;
+  .v3 .pxf,
+  .v3 .pxf.op {
+    height: 72px;
+    right: auto;
+    left: 16px;
+    bottom: 12px;
   }
 
   .v3 .book {
@@ -2133,8 +2197,8 @@ em.hl {
   }
 
   .v3 .pxf.op {
-    height: 84px;
-    bottom: -72px;
+    height: 72px;
+    bottom: 12px;
   }
 
   .v3 .shifts .n {
@@ -2158,7 +2222,7 @@ em.hl {
     order: 2;
   }
 
-  .v3 form.q {
+  .v3 form.enquiry {
     padding: 24px 20px;
     gap: 26px;
   }
@@ -2168,7 +2232,29 @@ em.hl {
   }
 
   .has-sticky {
-    padding-bottom: 88px;
+    padding-bottom: 8px;
+  }
+
+  body:has(.has-sticky) .site-footer {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .v3 .final .acts {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .v3 .final .acts .btn {
+    width: 100%;
+  }
+
+  .v3 .final .acts .quiet-link {
+    align-self: center;
+  }
+
+  .v3 .final {
+    padding-bottom: 120px;
   }
 
   .sticky-book {
@@ -2229,4 +2315,39 @@ em.hl {
   .v3 .logos .wmk {
     font-size: 16px;
   }
+}
+
+/* Older pages (about, session) on the v3 type and colour tokens. */
+.v3-legacy {
+  --shadow-cta: none;
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+.v3-legacy h1,
+.v3-legacy h2,
+.v3-legacy h3,
+.v3-legacy .heading-stroke,
+.v3-legacy .heading-display,
+.v3-legacy .heading-display-stroke-sm,
+.v3-legacy .heading-stroke-white,
+.v3-legacy .uppercase {
+  font-family: var(--serif);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -0.03em;
+  -webkit-text-stroke: 0;
+  color: var(--text);
+}
+
+.v3-legacy .shadow-cta,
+.v3-legacy a[class*="shadow"],
+.v3-legacy button[class*="shadow"] {
+  box-shadow: none;
+}
+
+.v3-legacy p,
+.v3-legacy li,
+.v3-legacy .font-mono {
+  font-family: var(--sans);
 }

@@ -162,13 +162,21 @@ function assertHandler(source: string, redirects: Map<string, string>, errors: s
     );
   }
 
-  // Exact match runs before the slash strip, and this source is not listed with
-  // a trailing slash. Publishing the file will not turn this into a 301.
+  // After the trailing slash is stripped, the path is looked up again so
+  // /old-slug and /old-slug/ share one map entry.
   const apathySlash = runHandler(handler, "/keynotes/escaping-the-apathy-trap/");
-  if (apathySlash.statusCode || apathySlash.uri !== "/keynotes/escaping-the-apathy-trap.html") {
+  if (
+    apathySlash.statusCode !== 301 ||
+    apathySlash.headers?.location?.value !== "/keynotes/output-paradox-reengage-teams"
+  ) {
     errors.push(
-      "Trailing-slash form of /keynotes/escaping-the-apathy-trap is not a redirect in this file. Leave that behaviour unless the map gains an explicit entry."
+      "Trailing-slash form of /keynotes/escaping-the-apathy-trap must 301 to the Output Paradox page."
     );
+  }
+
+  const oldPost = runHandler(handler, "/despair-or-euphoria/");
+  if (oldPost.statusCode !== 301 || oldPost.headers?.location?.value !== "/blog/despair-or-euphoria") {
+    errors.push("Trailing-slash WordPress slugs must 301 to the current blog post.");
   }
 
   const rsc = runHandler(handler, "/about", "www.nicharalambous.com", "text/x-component");

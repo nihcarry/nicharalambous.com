@@ -20,8 +20,19 @@ module.exports = {
     };
   },
 
-  // Studio, search and archived drafts stay out. /session stays in.
-  exclude: ["/studio", "/studio/*", "/archive/*", "/search", "/api", "/api/**"],
+  // Studio, search, archived drafts, the RSS file, and privacy (until Nic
+  // supplies wording; keep in sync with PRIVACY_NOINDEX in lib/site.ts).
+  // /session stays in.
+  exclude: [
+    "/studio",
+    "/studio/*",
+    "/archive/*",
+    "/search",
+    "/api",
+    "/api/**",
+    "/rss.xml",
+    "/privacy",
+  ],
 
   // Allow major crawlers, including AI crawlers, across the public site.
   robotsTxtOptions: {

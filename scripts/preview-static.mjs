@@ -1,7 +1,9 @@
 /**
  * Build the static export and serve it the way CloudFront does:
- * extensionless paths map to .html, and a real HTML file wins over a
- * directory that only holds images.
+ * extensionless paths map to .html, a real HTML file wins over a
+ * directory that only holds images, and the CloudFront redirect map
+ * in infra/cloudfront-url-rewrite.js is applied (including a second
+ * lookup after the trailing slash is stripped).
  *
  *   npm run preview:static
  *   npm run preview:static -- --port 4173
@@ -11,7 +13,7 @@
  */
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
-import { existsSync, statSync, createReadStream } from "node:fs";
+import { existsSync, readFileSync, statSync, createReadStream } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -85,8 +87,47 @@ function resolveFile(urlPath) {
   return null;
 }
 
+function loadRedirects() {
+  const source = readFileSync(path.join(root, "infra/cloudfront-url-rewrite.js"), "utf8");
+  const match = source.match(/var redirects = \{([^}]+)\}/s);
+  const redirects = new Map();
+  if (!match) return redirects;
+  for (const line of match[1].split("\n")) {
+    const entry = line.match(/^\s*'([^']+)':\s*'([^']*)'/);
+    if (entry) redirects.set(entry[1].replace(/\\\\/g, "\\"), entry[2]);
+  }
+  return redirects;
+}
+
+const redirects = loadRedirects();
+
+function redirectTarget(urlPath) {
+  const raw = urlPath.split("?")[0];
+  const candidates = [raw];
+  try {
+    const decoded = decodeURIComponent(raw);
+    if (decoded !== raw) candidates.push(decoded);
+  } catch {
+    // Keep the raw path when the percent-encoding is not valid.
+  }
+  for (const candidate of candidates) {
+    if (redirects.has(candidate)) return redirects.get(candidate);
+    if (candidate.length > 1 && candidate.endsWith("/")) {
+      const stripped = candidate.slice(0, -1);
+      if (redirects.has(stripped)) return redirects.get(stripped);
+    }
+  }
+  return null;
+}
+
 function serve() {
   const server = createServer((req, res) => {
+    const target = redirectTarget(req.url || "/");
+    if (target) {
+      res.writeHead(301, { location: target, "cache-control": "public, max-age=86400" });
+      res.end();
+      return;
+    }
     const file = resolveFile(req.url || "/");
     if (!file) {
       const missing = path.join(outDir, "404.html");

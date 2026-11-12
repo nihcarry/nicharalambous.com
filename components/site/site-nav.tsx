@@ -242,6 +242,7 @@ export function SiteNav() {
           onClick={() => setMobileGroup((current) => (current === "keynotes" ? null : "keynotes"))}
         >
           Keynotes
+          <span className="caret" aria-hidden="true">{mobileGroup === "keynotes" ? "▴" : "▾"}</span>
         </button>
         {mobileGroup === "keynotes" ? (
           <div className="sub">
@@ -259,6 +260,7 @@ export function SiteNav() {
           onClick={() => setMobileGroup((current) => (current === "coaching" ? null : "coaching"))}
         >
           Coaching
+          <span className="caret" aria-hidden="true">{mobileGroup === "coaching" ? "▴" : "▾"}</span>
         </button>
         {mobileGroup === "coaching" ? (
           <div className="sub">
@@ -283,6 +285,7 @@ export function SiteNav() {
           onClick={() => setMobileGroup((current) => (current === "content" ? null : "content"))}
         >
           Content
+          <span className="caret" aria-hidden="true">{mobileGroup === "content" ? "▴" : "▾"}</span>
         </button>
         {mobileGroup === "content" ? (
           <div className="sub">

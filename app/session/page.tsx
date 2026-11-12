@@ -159,7 +159,7 @@ function OfferCard({
 
 export default function SessionPage() {
   return (
-    <div className="page-bg">
+    <div className="page-bg v3-legacy">
       <JsonLd data={sessionOffersJsonLd()} />
 
       <Section width="wide">
@@ -176,7 +176,7 @@ export default function SessionPage() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             <OfferCard
-              label="COACHING"
+              label="Coaching"
               icon={
                 <Crosshair
                   className="h-4 w-4 text-accent-600"
@@ -238,7 +238,7 @@ export default function SessionPage() {
             </OfferCard>
 
             <OfferCard
-              label="BRAIN_PICK"
+              label="Brain pick"
               icon={
                 <Crosshair
                   className="h-4 w-4 text-accent-600"

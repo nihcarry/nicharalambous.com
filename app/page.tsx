@@ -9,7 +9,7 @@ import { latestYouTubeVideo, v3ContentSettings } from "@/lib/v3-content";
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
   description:
-    "Nic Haralambous speaks to teams about the Output Paradox, in person or on Zoom, Teams or Meet. Virtual lunch and learn €999 ex VAT. In-person keynotes from €4,500, excluding travel and VAT.",
+    "Nic Haralambous speaks to teams about the Output Paradox, in person or on Zoom, Teams or Meet. Virtual lunch and learn €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person keynotes from €4,500, excluding travel and VAT.",
   alternates: { canonical: HOME_URL },
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
@@ -160,9 +160,11 @@ export default async function HomePage() {
                 <li>Virtual keynotes from €1,500 ex VAT</li>
                 <li>In-person keynotes from €4,500</li>
               </ul>
+              <div className="card-links">
               <a className="go" href="/keynotes/output-paradox-reengage-teams">
                 See the Output Paradox <span>→</span>
               </a>
+              </div>
             </div>
             <div className="pl">
               <img
@@ -187,12 +189,14 @@ export default async function HomePage() {
                 <i />
                 No Bull Ship Academy · nobullship.co
               </span>
+              <div className="card-links">
               <a className="go" href="https://nobullship.co">
                 Go to nobullship.co <span>↗</span>
               </a>
               <a className="session-link" href="/session">
                 Or book a 1:1 session
               </a>
+              </div>
             </div>
             <div className="pl">
               <img
@@ -213,16 +217,18 @@ export default async function HomePage() {
                 <li>YouTube</li>
                 <li>The blog and three books</li>
               </ul>
+              <div className="card-links">
               <a className="go" href="#newsletter">
                 Get the newsletter <span>↓</span>
               </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section className="dark pd-speech">
-        <div className="wrap talk">
+        <div className={settings.stageClipUrl ? "wrap talk" : "wrap talk solo"}>
           <div>
             <div className="eyebrow">The keynote</div>
             <h2 style={{ margin: "20px 0 22px" }}>

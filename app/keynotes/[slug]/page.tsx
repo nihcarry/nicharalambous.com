@@ -139,6 +139,20 @@ export async function generateMetadata({
   };
 }
 
+function isNamedTestimonial(t: {
+  authorName?: string | null;
+  authorTitle?: string | null;
+  company?: string | null;
+}) {
+  const name = t.authorName?.trim() ?? "";
+  const role = t.authorTitle?.trim() ?? "";
+  const company = t.company?.trim() ?? "";
+  const fake = /placeholder|^company name$|^name$|^tbd$|^n\/a$|^test$/i;
+  if (!name || !role || !company) return false;
+  if (fake.test(name) || fake.test(role) || fake.test(company)) return false;
+  return true;
+}
+
 /* ---------- Page ---------- */
 
 export default async function KeynotePage({
@@ -157,8 +171,8 @@ export default async function KeynotePage({
     keynote.description && keynote.description.length > 0;
   const hasOutcomes = keynote.outcomes && keynote.outcomes.length > 0;
   const hasAudiences = keynote.audiences && keynote.audiences.length > 0;
-  const hasTestimonials =
-    keynote.testimonials && keynote.testimonials.length > 0;
+  const testimonials = (keynote.testimonials ?? []).filter(isNamedTestimonial);
+  const hasTestimonials = testimonials.length > 0;
   const hasTopics = keynote.topics && keynote.topics.length > 0;
   const hasVideo = !!keynote.videoEmbed;
 
@@ -256,7 +270,7 @@ export default async function KeynotePage({
             What People Say
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {keynote.testimonials!.map((t, i) => (
+            {testimonials.map((t, i) => (
               <blockquote
                 key={t._id}
                 className="flex flex-col border border-brand-900 bg-white p-6"

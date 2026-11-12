@@ -12,7 +12,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 20 to 60 minutes, in person or on Zoom, Teams or Meet. Lunch and learn €999 ex VAT. In-person from €4,500, excluding travel and VAT.",
+    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 20 to 60 minutes, in person or on Zoom, Teams or Meet. Lunch and learn €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
@@ -368,7 +368,7 @@ export default async function OutputParadoxPage() {
             <div className="eyebrow">What clients say</div>
             <h2 style={{ margin: "20px 0 0" }}>From the people who booked it</h2>
           </div>
-          <div className="quotes">
+          <div className={QUOTES.length + (settings.testimonial ? 1 : 0) === 2 ? "quotes quotes-2" : "quotes"}>
             {QUOTES.map((quote) => (
               <blockquote className="q" key={quote.who}>
                 <p>&ldquo;{quote.quote}&rdquo;</p>

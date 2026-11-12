@@ -7,11 +7,17 @@ export const SITE_URL = "https://www.nicharalambous.com";
 
 export const OUTPUT_PARADOX_PATH = "/keynotes/output-paradox-reengage-teams";
 
+/**
+ * Privacy stays out of the index and the sitemap until Nic supplies the wording.
+ * Flip this to false when the page is ready to be indexed.
+ */
+export const PRIVACY_NOINDEX = true;
+
 export const SOCIAL = {
   linkedin: "https://www.linkedin.com/in/nicharalambous/",
-  youtube: "https://www.youtube.com/@nharalambous",
-  x: "https://twitter.com/nicharry",
-  substack: "https://nichasgottago.substack.com/",
+  youtube: "https://www.youtube.com/@nicharrynobull",
+  x: "https://x.com/nicharry",
+  substack: "https://substack.com/@nicharalambous",
   nobullship: "https://nobullship.co",
 } as const;
 

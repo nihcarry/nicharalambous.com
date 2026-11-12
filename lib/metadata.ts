@@ -5,6 +5,7 @@
  * and JSON-LD structured data across all page templates.
  */
 import type { Metadata } from "next";
+import { lunchLearnCheckoutUrl } from "@/lib/site";
 
 const SITE_URL = "https://www.nicharalambous.com";
 /**
@@ -85,9 +86,9 @@ export function personJsonLd() {
     image: `${SITE_URL}/images/nic-haralambous.jpg`,
     sameAs: [
       "https://www.linkedin.com/in/nicharalambous/",
-      "https://www.youtube.com/@nharalambous",
-      "https://twitter.com/nicharry",
-      "https://nichasgottago.substack.com/",
+      "https://www.youtube.com/@nicharrynobull",
+      "https://x.com/nicharry",
+      "https://substack.com/@nicharalambous",
     ],
   };
 }
@@ -171,7 +172,6 @@ export function serviceJsonLd({
     url,
     provider: personJsonLd(),
     serviceType: "Keynote speaking, in person or virtual",
-    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     areaServed: "Worldwide",
   };
 }
@@ -280,7 +280,6 @@ export function outputParadoxServiceJsonLd() {
       url: HOME_URL,
       jobTitle: "Keynote speaker",
     },
-    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     areaServed: "Worldwide",
     offers: [
       {
@@ -290,7 +289,9 @@ export function outputParadoxServiceJsonLd() {
         priceCurrency: "EUR",
         description: "€999 excluding VAT. 20 minutes, live on Zoom, Teams or Meet.",
         url: `${url}#book`,
-        availability: "https://schema.org/InStock",
+        ...(lunchLearnCheckoutUrl()
+          ? { availability: "https://schema.org/InStock" }
+          : {}),
       },
       {
         "@type": "Offer",

@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="page-bg bg-person-pattern">
+    <div className="page-bg bg-person-pattern v3-legacy">
       <JsonLd data={aboutPageJsonLd()} />
 
       {/* Hero — identity-first heading with photo */}

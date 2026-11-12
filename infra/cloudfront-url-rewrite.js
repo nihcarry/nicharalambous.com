@@ -15,7 +15,21 @@ var redirects = {
   '/virtual-keynote-speaker': '/speaker',
   '/contact-me': '/contact',
   '/its-not-over': '/media',
+  '/newsletter': '/#newsletter',
+  '/start-something-newsletter': '/#newsletter',
+  '/business-coach': '/session',
+  '/side-hustle': '/books/how-to-start-a-side-hustle',
   '/side-hustle-course': '/books/how-to-start-a-side-hustle',
+  '/ebook-how-to-start-a-side-hustle%5C': '/books/how-to-start-a-side-hustle',
+  '/despair-or-euphoria': '/blog/despair-or-euphoria',
+  '/selling-vs-assisting': '/blog/selling-vs-assisting',
+  '/showing-isnt-enough': '/blog/showing-up-isn-t-enough',
+  '/relationships-matter-more-than-product': '/blog/relationships-matter-more-than-product',
+  '/saying-thank-you': '/blog/saying-thank-you-is-easier-than-you-think',
+  '/negotiation-lessons-front-line': '/blog/negotiation-lessons-from-the-front-line',
+  '/friends-pay-full-price-fpfp': '/blog/friends-pay-full-price-fpfp',
+  '/confidence-easy-project-hard-live': '/blog/confidence-easy-to-project-hard-to-live',
+  '/slowly-and-then-quickly': '/blog/slowly-and-then-quickly',
   '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams',
   // Decision Trackr moved to its own site. Exact match runs before the
   // trailing-slash strip, so both forms are listed. Absolute URL is required
@@ -81,9 +95,20 @@ function handler(event) {
     };
   }
 
-  // 3. Strip trailing slash (except root)
+  // 3. Strip trailing slash (except root), then look the path up again so
+  // /old-slug/ and /old-slug share one redirect entry.
   if (uri.length > 1 && uri.endsWith('/')) {
     uri = uri.slice(0, -1);
+  }
+  if (redirects[uri]) {
+    return {
+      statusCode: 301,
+      statusDescription: 'Moved Permanently',
+      headers: {
+        'location': { value: redirects[uri] },
+        'cache-control': { value: 'public, max-age=86400' }
+      }
+    };
   }
 
   // 4. Append correct extension for extensionless paths (skip root, files with extensions, _next assets)
