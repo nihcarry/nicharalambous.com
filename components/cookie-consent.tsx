@@ -5,6 +5,7 @@ import { GA_MEASUREMENT_ID } from "@/components/google-analytics";
 import {
   CONSENT_DENIED,
   CONSENT_GRANTED,
+  clearAnalyticsCookies,
   type ConsentChoice,
   readConsent,
   writeConsent,
@@ -34,6 +35,10 @@ function ensureGtagStub() {
 function loadGtag(choice: ConsentChoice) {
   ensureGtagStub();
   window.gtag!("consent", "update", choice === "accepted" ? CONSENT_GRANTED : CONSENT_DENIED);
+  if (choice === "rejected") {
+    clearAnalyticsCookies(GA_MEASUREMENT_ID);
+    window.setTimeout(() => clearAnalyticsCookies(GA_MEASUREMENT_ID), 400);
+  }
   if (choice !== "accepted" || gtagRequested) return;
   gtagRequested = true;
   window.gtag!("js", new Date());
@@ -90,13 +95,12 @@ function playTestimonial(button: HTMLButtonElement) {
 }
 
 const consentButton: CSSProperties = {
-  flex: 1,
   font: "inherit",
   fontWeight: 600,
   fontSize: 14,
-  padding: "10px 12px",
+  padding: "8px 14px",
   borderRadius: 2,
-  border: "1px solid #232733",
+  border: "1px solid #8b93a7",
   background: "transparent",
   color: "#fff",
   cursor: "pointer",
@@ -116,14 +120,16 @@ export function CookieSettingsButton() {
 
 export function CookieConsent() {
   const [open, setOpen] = useState(true);
-  const [pinTop, setPinTop] = useState(false);
 
   useEffect(() => {
     const saved = readConsent();
     if (saved === "accepted") afterFirstPaint(() => loadGtag("accepted"));
     if (saved) setOpen(false);
 
-    const openBanner = () => setOpen(true);
+    const openBanner = () => {
+      document.documentElement.removeAttribute("data-nh-consent");
+      setOpen(true);
+    };
     const onClick = (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
@@ -143,56 +149,10 @@ export function CookieConsent() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-    const place = () => {
-      const bar = document.querySelector(".sticky-book");
-      const barBox = bar?.getBoundingClientRect();
-      const barVisible =
-        !!bar &&
-        !bar.hasAttribute("hidden") &&
-        getComputedStyle(bar).display !== "none" &&
-        !!barBox &&
-        barBox.height > 0 &&
-        barBox.top < window.innerHeight;
-      const lift = barVisible ? Math.round(barBox.height) + 12 : 16;
-      const banner = {
-        top: window.innerHeight - lift - 132,
-        bottom: window.innerHeight - lift,
-        left: 16,
-        right: Math.min(356, window.innerWidth - 16),
-      };
-      const hits = (el: Element | null) => {
-        if (!el) return false;
-        const box = el.getBoundingClientRect();
-        if (box.width < 2 || box.height < 2) return false;
-        return !(
-          box.right < banner.left ||
-          box.left > banner.right ||
-          box.bottom < banner.top ||
-          box.top > banner.bottom
-        );
-      };
-      const blocked =
-        hits(document.getElementById("book")) ||
-        hits(document.querySelector(".hero .acts")) ||
-        hits(document.querySelector(".sticky-book:not([hidden])"));
-      setPinTop(blocked);
-    };
-    place();
-    window.addEventListener("scroll", place, { passive: true });
-    window.addEventListener("resize", place);
-    const timer = window.setInterval(place, 400);
-    return () => {
-      window.removeEventListener("scroll", place);
-      window.removeEventListener("resize", place);
-      window.clearInterval(timer);
-    };
-  }, [open]);
-
   function choose(choice: ConsentChoice) {
     writeConsent(choice);
     loadGtag(choice);
+    document.documentElement.setAttribute("data-nh-consent", choice);
     setOpen(false);
   }
 
@@ -200,21 +160,29 @@ export function CookieConsent() {
 
   return (
     <div
-      className={pinTop ? "consent is-top" : "consent"}
+      className="consent"
       role="region"
       aria-label="Cookies"
       style={{
-        position: "fixed",
         zIndex: 44,
+        display: "grid",
+        gridTemplateColumns: "minmax(0, 1fr) auto",
+        alignItems: "center",
+        gap: 12,
         background: "#0A0C10",
         color: "#EDEEF2",
-        border: "1px solid #232733",
-        padding: "14px 16px",
+        borderTop: "1px solid #8b93a7",
+        padding: "8px 16px",
         fontSize: 14,
-        lineHeight: 1.4,
+        lineHeight: 1.35,
       }}
     >
-      <p style={{ margin: "0 0 12px" }}>Analytics cookies stay off unless you accept.</p>
+      <p style={{ margin: 0 }}>
+        Analytics cookies stay off unless you accept.{" "}
+        <a href="/privacy" style={{ color: "#c5cad6", textDecoration: "underline" }}>
+          Privacy policy
+        </a>
+      </p>
       <div className="consent-actions" style={{ display: "flex", gap: 8 }}>
         <button type="button" style={consentButton} onClick={() => choose("rejected")}>
           Reject

@@ -1,3 +1,5 @@
+import { youtubePosterSrc } from "@/lib/v3-content";
+
 function esc(value: string) {
   return value
     .replace(/&/g, "&amp;")
@@ -18,10 +20,12 @@ export function gateThirdPartyEmbeds(html: string): string {
     );
     if (youtube) {
       const label = title ? `Play video: ${title}` : "Play video";
-      return `<div class="yt-facade"><button type="button" data-yt-play="${youtube[1]}" aria-label="${esc(label)}"><span class="yt-play" aria-hidden="true"></span></button></div>`;
+      const poster = youtubePosterSrc(youtube[1]);
+      const image = poster ? `<img src="${esc(poster)}" alt="" width="640" height="360" />` : "";
+      return `<div class="yt-facade">${image}<button type="button" data-yt-play="${youtube[1]}" aria-label="${esc(label)}"><span class="yt-play" aria-hidden="true"></span></button></div>`;
     }
     if (/testimonial\.to/i.test(src)) {
-      return `<div class="tt-facade"><button type="button" data-tt-play="${esc(src)}" aria-label="Load testimonials">Show testimonials</button></div>`;
+      return `<div class="tt-facade"><p class="tt-note">These load from Testimonial.to when you open them.</p><button type="button" class="btn" data-tt-play="${esc(src)}">Show testimonials</button></div>`;
     }
     return tag;
   });

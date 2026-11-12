@@ -11,6 +11,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ClickToLoadYouTube, youtubeIdFromUrl } from "@/components/click-to-load-youtube";
+import { youtubePosterSrc } from "@/lib/v3-content";
 import { client } from "@/lib/sanity/client";
 import {
   keynoteBySlugQuery,
@@ -313,6 +314,7 @@ export default async function KeynotePage({
             <ClickToLoadYouTube
               videoId={youtubeIdFromUrl(keynote.videoEmbed!)!}
               title={`${keynote.title} preview`}
+              poster={youtubePosterSrc(youtubeIdFromUrl(keynote.videoEmbed!)!)}
             />
           </div>
         </Section>

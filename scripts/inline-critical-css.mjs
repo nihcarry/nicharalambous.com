@@ -141,6 +141,35 @@ function deferPayload(html) {
   return html;
 }
 
+function uniqueFontNames(css) {
+  return css
+    .replaceAll("Bricolage Grotesque Fallback", "NH Bricolage Fallback")
+    .replaceAll("Bricolage Grotesque", "NH Bricolage")
+    .replaceAll("Geist Mono Fallback", "NH Geist Mono Fallback")
+    .replaceAll("Geist Mono", "NH Geist Mono")
+    .replaceAll("Geist Fallback", "NH Geist Fallback")
+    .replaceAll('"Geist"', '"NH Geist"')
+    .replaceAll("font-family:Geist", "font-family:NH Geist")
+    .replaceAll("font-family: Geist", "font-family:NH Geist");
+}
+
+async function cssFiles(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...(await cssFiles(full)));
+    else if (entry.name.endsWith(".css")) files.push(full);
+  }
+  return files;
+}
+
+for (const file of await cssFiles(root)) {
+  const original = await readFile(file, "utf8");
+  const renamed = uniqueFontNames(original);
+  if (renamed !== original) await writeFile(file, renamed);
+}
+
 let done = 0;
 for (const file of await htmlFiles(root)) {
   const original = await readFile(file, "utf8");

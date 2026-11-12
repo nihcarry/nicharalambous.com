@@ -20,6 +20,7 @@ import {
   type KeynoteListItem,
 } from "@/lib/sanity/queries";
 import { ClickToLoadYouTube } from "@/components/click-to-load-youtube";
+import { youtubePosterSrc } from "@/lib/v3-content";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { Slide } from "@/components/slide";
@@ -226,7 +227,7 @@ export default async function SpeakerPage() {
             {subheadline}
           </p>
           <div className="mt-4 overflow-hidden border-4 border-accent-600">
-            <ClickToLoadYouTube videoId="yxg_qMH-s-Y" title="Keynote speaker video" />
+            <ClickToLoadYouTube videoId="yxg_qMH-s-Y" title="Keynote speaker video" poster={youtubePosterSrc("yxg_qMH-s-Y")} />
           </div>
           <div className="mt-4">
             <CTAButton href="/contact">{ctaText}</CTAButton>
@@ -250,7 +251,7 @@ export default async function SpeakerPage() {
         <div className="mt-8">
           <div className="float-right ml-8 mb-6 flex min-h-[50vh] w-full max-w-md shrink-0 items-start md:min-h-[55vh] md:max-w-lg">
             <div className="w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
-              <ClickToLoadYouTube videoId="XBFqWl2Rv1I" title="Why book Nic as a keynote speaker" />
+              <ClickToLoadYouTube videoId="XBFqWl2Rv1I" title="Why book Nic as a keynote speaker" poster={youtubePosterSrc("XBFqWl2Rv1I")} />
             </div>
           </div>
           <div className="space-y-4 text-lg leading-relaxed text-brand-700">
@@ -315,7 +316,7 @@ export default async function SpeakerPage() {
           </div>
         </div>
         <div className="mt-8 mx-auto w-full max-w-2xl">
-          <ClickToLoadYouTube videoId="Yv1k_db7uwc" title="Keynote topics" />
+          <ClickToLoadYouTube videoId="Yv1k_db7uwc" title="Keynote topics" poster={youtubePosterSrc("Yv1k_db7uwc")} />
         </div>
         <div className="mt-8 text-center">
           <CTAButton href="/keynotes" variant="secondary">

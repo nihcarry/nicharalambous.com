@@ -15,13 +15,16 @@ export function ClickToLoadFrame({
 }) {
   const [play, setPlay] = useState(false);
   return (
-    <div className="tt-facade" style={style}>
+    <div className="tt-facade" style={play ? style : undefined}>
       {play ? (
         <iframe src={src} title={title} scrolling="no" />
       ) : (
-        <button type="button" onClick={() => setPlay(true)} aria-label={label}>
-          {label}
-        </button>
+        <>
+          <p className="tt-note">These load from Testimonial.to when you open them.</p>
+          <button type="button" className="btn" onClick={() => setPlay(true)}>
+            {label}
+          </button>
+        </>
       )}
     </div>
   );

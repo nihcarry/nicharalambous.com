@@ -11,6 +11,7 @@ import {
   type PortableTextBlock as PTBlock,
 } from "@portabletext/react";
 import { ClickToLoadYouTube, youtubeIdFromUrl } from "@/components/click-to-load-youtube";
+import { youtubePosterSrc } from "@/lib/v3-content";
 import { urlFor } from "@/lib/sanity/image";
 import { withoutEmDash } from "@/lib/site";
 
@@ -114,7 +115,11 @@ const components: PortableTextComponents = {
       if (!videoId) return null;
       return (
         <figure className="mt-8">
-          <ClickToLoadYouTube videoId={videoId} title={value.caption || "Video"} />
+          <ClickToLoadYouTube
+            videoId={videoId}
+            title={value.caption || "Video"}
+            poster={youtubePosterSrc(videoId)}
+          />
           {value.caption && (
             <figcaption className="mt-2 text-center text-sm text-brand-500">
               {value.caption}

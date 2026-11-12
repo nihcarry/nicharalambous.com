@@ -45,10 +45,10 @@
   --spacing-section-sm: 4rem;
 
   /* Typography scale — use next/font variable when present (layout sets --font-inter on html) */
-  --font-family-sans: var(--font-geist, ui-sans-serif, system-ui, sans-serif);
-  --font-family-heading: var(--font-bricolage, ui-sans-serif, system-ui, sans-serif);
-  --font-family-mono: var(--font-geist-mono, ui-monospace, monospace);
-  --font-family-bebas: var(--font-bricolage, ui-sans-serif, system-ui, sans-serif);
+  --font-family-sans: var(--font-geist, "NH Geist Fallback"), ui-sans-serif, system-ui, sans-serif;
+  --font-family-heading: var(--font-bricolage, "NH Bricolage Fallback"), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-geist-mono, "NH Geist Mono Fallback"), ui-monospace, monospace;
+  --font-family-bebas: var(--font-bricolage, "NH Bricolage Fallback"), ui-sans-serif, system-ui, sans-serif;
   --radius-sm: 2px;
   --radius-md: 0px;
   --radius-lg: 0px;

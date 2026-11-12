@@ -46,10 +46,13 @@ const geistMono = Geist_Mono({
  * Sans where Arial is not installed.
  */
 const FONT_FALLBACK = `
-@font-face{font-family:"Bricolage Grotesque Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:88.21%;descent-override:25.61%;line-gap-override:0%;size-adjust:91%}
-@font-face{font-family:"Geist Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0%;size-adjust:104%}
-@font-face{font-family:"Geist Mono Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:74.67%;descent-override:21.92%;line-gap-override:0%;size-adjust:134.59%}
+@font-face{font-family:"NH Bricolage Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:88.21%;descent-override:25.61%;line-gap-override:0%;size-adjust:91%}
+@font-face{font-family:"NH Geist Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0%;size-adjust:104%}
+@font-face{font-family:"NH Geist Mono Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:74.67%;descent-override:21.92%;line-gap-override:0%;size-adjust:134.59%}
 `;
+
+/** Hides the banner before first paint when a choice is already stored. */
+const CONSENT_BOOT = `(function(){try{var raw=localStorage.getItem("nh-consent");if(!raw)return;var stored=JSON.parse(raw);if((stored.choice==="accepted"||stored.choice==="rejected")&&typeof stored.expiresAt==="number"&&stored.expiresAt>Date.now()){document.documentElement.setAttribute("data-nh-consent",stored.choice);}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nicharalambous.com"),
@@ -103,13 +106,14 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
+        <script dangerouslySetInnerHTML={{ __html: CONSENT_BOOT }} />
         <style dangerouslySetInnerHTML={{ __html: FONT_FALLBACK }} />
         <ThemeProvider>
           <SmartHeadingManager />
-          <CookieConsent />
           <JsonLd data={personJsonLd()} />
           <JsonLd data={websiteJsonLd()} />
           <SiteNav />
+          <CookieConsent />
           <main id="content" className="flex-1">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>

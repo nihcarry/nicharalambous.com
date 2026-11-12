@@ -5,9 +5,11 @@ import { useState } from "react";
 export function ClickToLoadYouTube({
   videoId,
   title,
+  poster,
 }: {
   videoId: string;
   title: string;
+  poster?: string | null;
 }) {
   const [play, setPlay] = useState(false);
   return (
@@ -25,6 +27,7 @@ export function ClickToLoadYouTube({
           aria-label={`Play video: ${title}`}
           onClick={() => setPlay(true)}
         >
+          {poster ? <img src={poster} alt="" width={640} height={360} /> : null}
           <span className="yt-play" aria-hidden="true" />
         </button>
       )}
