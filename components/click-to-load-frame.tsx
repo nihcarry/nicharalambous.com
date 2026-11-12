@@ -8,12 +8,14 @@ export function ClickToLoadFrame({
   label,
   style,
   centered = false,
+  onPlay,
 }: {
   src: string;
   title: string;
   label: string;
   style?: CSSProperties;
   centered?: boolean;
+  onPlay?: () => void;
 }) {
   const [play, setPlay] = useState(false);
   return (
@@ -23,7 +25,14 @@ export function ClickToLoadFrame({
       ) : (
         <>
           <p className="tt-note">These load from Testimonial.to when you open them.</p>
-          <button type="button" className="btn" onClick={() => setPlay(true)}>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              setPlay(true);
+              onPlay?.();
+            }}
+          >
             {label}
           </button>
         </>

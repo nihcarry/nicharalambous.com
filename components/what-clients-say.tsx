@@ -1,9 +1,12 @@
+"use client";
+
 /**
  * What Clients Say — reusable testimonials slide content.
  * Displays the Testimonial.to embed with the 16bit character image.
- * Used on both homepage and speaker page for consistent social proof.
+ * Used on the speaker page for consistent social proof.
  */
 
+import { useState } from "react";
 import { ClickToLoadFrame } from "@/components/click-to-load-frame";
 import { DecorativePicture } from "@/components/decorative-picture";
 import { LoadWhenNear } from "@/components/load-when-near";
@@ -17,24 +20,33 @@ interface WhatClientsSayProps {
 }
 
 export function WhatClientsSay({ headingAlign = "left" }: WhatClientsSayProps) {
+  const centered = headingAlign === "center";
+  const [open, setOpen] = useState(false);
   return (
     <div className="relative">
       <h2
         className={`heading-stroke font-extrabold tracking-tight pt-2 text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl ${
-          headingAlign === "center" ? "text-center" : "text-left"
+          centered ? "text-center" : "text-left"
         }`}
       >
         What Clients Say
       </h2>
-      {/* Testimonial box — in normal flow; leaves room for 16bit on right (md+) */}
-      <div className="mt-6 overflow-hidden px-2 md:max-w-[calc(100%-440px)]">
-        <LoadWhenNear minHeight={800}>
+      {/* Closed prompt spans the page container. The embed, once open, stays left of the character. */}
+      <div
+        className={
+          centered && !open
+            ? "mt-6 px-2"
+            : "mt-6 overflow-hidden px-2 md:max-w-[calc(100%-440px)]"
+        }
+      >
+        <LoadWhenNear minHeight={centered && !open ? 140 : 800}>
           <ClickToLoadFrame
             src={TESTIMONIAL_EMBED_SRC}
             title="What clients say about Nic Haralambous"
             label="Show testimonials"
             style={{ height: 800 }}
-            centered={headingAlign === "center"}
+            centered={centered && !open}
+            onPlay={() => setOpen(true)}
           />
         </LoadWhenNear>
       </div>
