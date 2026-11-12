@@ -37,7 +37,16 @@ export function NewsletterBlock({
       <div className="wrap grid">
         <div>
           <div className="eyebrow">The newsletter</div>
-          <h2>{heading}</h2>
+          <h2>
+            {heading === "I write to you every Thursday" ? (
+              <>
+                I write to you every <br className="h-break" />
+                Thursday
+              </>
+            ) : (
+              heading
+            )}
+          </h2>
           <p className="lead">
             Every Thursday I send one email with the three things I liked that week, and a little thinking on business and work.
           </p>

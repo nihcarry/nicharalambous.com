@@ -137,8 +137,9 @@ export default async function HomePage() {
       <section className="p-mic">
         <div className="wrap">
           <div className="eyebrow">Three ways I can help</div>
-          <h2 style={{ margin: "20px 0 0", maxWidth: 900 }}>
-            I speak, I coach and I write. Pick the one you came for.
+          <h2 className="h-pillars">
+            I speak, I coach and I write. Pick the one you <br className="h-break" />
+            came for.
           </h2>
           <div className="pillars">
             <div className="pl k">
