@@ -98,7 +98,7 @@ const consentButton: CSSProperties = {
   font: "inherit",
   fontWeight: 600,
   fontSize: 14,
-  padding: "8px 14px",
+  padding: "8px 10px",
   borderRadius: 2,
   border: "1px solid #8b93a7",
   background: "transparent",
@@ -120,6 +120,7 @@ export function CookieSettingsButton() {
 
 export function CookieConsent() {
   const [open, setOpen] = useState(true);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
     const saved = readConsent();
@@ -128,6 +129,7 @@ export function CookieConsent() {
 
     const openBanner = () => {
       document.documentElement.removeAttribute("data-nh-consent");
+      setClosing(false);
       setOpen(true);
     };
     const onClick = (event: MouseEvent) => {
@@ -150,46 +152,47 @@ export function CookieConsent() {
   }, []);
 
   function choose(choice: ConsentChoice) {
+    if (closing) return;
     writeConsent(choice);
     loadGtag(choice);
-    document.documentElement.setAttribute("data-nh-consent", choice);
-    setOpen(false);
+    setClosing(true);
+    window.setTimeout(() => {
+      document.documentElement.setAttribute("data-nh-consent", choice);
+      setOpen(false);
+    }, 150);
   }
 
   if (!open) return null;
 
   return (
     <div
-      className="consent"
+      className={closing ? "consent is-closing" : "consent"}
       role="region"
       aria-label="Cookies"
       style={{
         zIndex: 44,
-        display: "grid",
-        gridTemplateColumns: "minmax(0, 1fr) auto",
-        alignItems: "center",
-        gap: 12,
-        background: "#0A0C10",
+        background: "#12151c",
         color: "#EDEEF2",
         borderTop: "1px solid #8b93a7",
-        padding: "8px 16px",
         fontSize: 14,
         lineHeight: 1.35,
       }}
     >
-      <p style={{ margin: 0 }}>
-        Analytics cookies stay off unless you accept.{" "}
-        <a href="/privacy" style={{ color: "#c5cad6", textDecoration: "underline" }}>
-          Privacy policy
-        </a>
-      </p>
-      <div className="consent-actions" style={{ display: "flex", gap: 8 }}>
-        <button type="button" style={consentButton} onClick={() => choose("rejected")}>
-          Reject
-        </button>
-        <button type="button" style={consentButton} onClick={() => choose("accepted")}>
-          Accept
-        </button>
+      <div className="wrap">
+        <p style={{ margin: 0 }}>
+          Analytics off unless you accept.{" "}
+          <a href="/privacy" style={{ color: "#c5cad6", textDecoration: "underline", whiteSpace: "nowrap" }}>
+            Privacy policy
+          </a>
+        </p>
+        <div className="consent-actions" style={{ display: "flex", gap: 8 }}>
+          <button type="button" style={consentButton} onClick={() => choose("rejected")}>
+            Reject
+          </button>
+          <button type="button" style={consentButton} onClick={() => choose("accepted")}>
+            Accept
+          </button>
+        </div>
       </div>
     </div>
   );

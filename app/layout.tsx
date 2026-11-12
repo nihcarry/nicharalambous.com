@@ -49,6 +49,7 @@ const FONT_FALLBACK = `
 @font-face{font-family:"NH Bricolage Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:88.21%;descent-override:25.61%;line-gap-override:0%;size-adjust:91%}
 @font-face{font-family:"NH Geist Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0%;size-adjust:104%}
 @font-face{font-family:"NH Geist Mono Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:74.67%;descent-override:21.92%;line-gap-override:0%;size-adjust:134.59%}
+html[data-nh-consent] .consent{display:none!important}
 `;
 
 /** Hides the banner before first paint when a choice is already stored. */

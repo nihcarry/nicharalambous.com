@@ -34,6 +34,7 @@ export function WhatClientsSay({ headingAlign = "left" }: WhatClientsSayProps) {
             title="What clients say about Nic Haralambous"
             label="Show testimonials"
             style={{ height: 800 }}
+            centered={headingAlign === "center"}
           />
         </LoadWhenNear>
       </div>

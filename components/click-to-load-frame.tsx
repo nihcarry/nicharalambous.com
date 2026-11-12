@@ -7,17 +7,19 @@ export function ClickToLoadFrame({
   title,
   label,
   style,
+  centered = false,
 }: {
   src: string;
   title: string;
   label: string;
   style?: CSSProperties;
+  centered?: boolean;
 }) {
   const [play, setPlay] = useState(false);
   return (
-    <div className="tt-facade" style={play ? style : undefined}>
+    <div className={centered ? "tt-facade is-center" : "tt-facade"} style={play ? style : undefined}>
       {play ? (
-        <iframe src={src} title={title} scrolling="no" />
+        <iframe src={src} title={title} scrolling="no" style={{ height: "100%" }} />
       ) : (
         <>
           <p className="tt-note">These load from Testimonial.to when you open them.</p>
