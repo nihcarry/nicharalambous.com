@@ -38,6 +38,19 @@ const geistMono = Geist_Mono({
   preload: false,
 });
 
+/**
+ * The web-font rules live in the deferred stylesheet, so the first paint uses
+ * these local faces. The size-adjust values are tuned so the home intro,
+ * the headings, and the contact form keep the same line breaks when Geist
+ * and Bricolage replace them. Arial on macOS and Windows, Arimo or Liberation
+ * Sans where Arial is not installed.
+ */
+const FONT_FALLBACK = `
+@font-face{font-family:"Bricolage Grotesque Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:88.21%;descent-override:25.61%;line-gap-override:0%;size-adjust:91%}
+@font-face{font-family:"Geist Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0%;size-adjust:104%}
+@font-face{font-family:"Geist Mono Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:74.67%;descent-override:21.92%;line-gap-override:0%;size-adjust:134.59%}
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nicharalambous.com"),
   title: {
@@ -90,6 +103,7 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
+        <style dangerouslySetInnerHTML={{ __html: FONT_FALLBACK }} />
         <ThemeProvider>
           <SmartHeadingManager />
           <CookieConsent />

@@ -1,9 +1,18 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { client } from "@/lib/sanity/client";
 
 const YOUTUBE_FEED =
   "https://www.youtube.com/feeds/videos.xml?channel_id=UCTMwZmHH1VNLA2viHKwbvoA";
 
 export type YouTubeVideo = { id: string; title: string };
+
+/** Same-origin poster. Never falls back to i.ytimg.com. */
+export function youtubePosterSrc(id: string): string | null {
+  if (!/^[\w-]{6,16}$/.test(id)) return null;
+  const file = path.join(process.cwd(), "public", "v3", "youtube", `${id}.webp`);
+  return existsSync(file) ? `/v3/youtube/${id}.webp` : null;
+}
 
 export async function latestYouTubeVideo(): Promise<YouTubeVideo | null> {
   try {

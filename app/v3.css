@@ -1041,12 +1041,18 @@ em.hl {
   margin-top: 16px;
 }
 
-.v3 .yt-card img {
+.v3 .yt-card img,
+.v3 .yt-still {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: 0;
+}
+
+.v3 .yt-still {
+  display: block;
+  background: #12151c;
 }
 
 .v3 .posts {
@@ -2425,6 +2431,13 @@ em.hl {
   .site-nav .mb,
   .sticky-book {
     display: none;
+  }
+}
+
+/* Holds the mobile enquiry form at its laid-out height so the font swap cannot grow it. */
+@media (max-width: 412px) {
+  .v3 form.enquiry {
+    min-height: 2134px;
   }
 }
 

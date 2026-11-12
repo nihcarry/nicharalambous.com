@@ -4,7 +4,7 @@ import { LogoStrip } from "@/components/site/logo-strip";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
 import { bookOfferHref } from "@/lib/site";
-import { latestYouTubeVideo, v3ContentSettings } from "@/lib/v3-content";
+import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
 
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
@@ -78,6 +78,7 @@ const BOOKS = [
 export default async function HomePage() {
   const [video, settings] = await Promise.all([latestYouTubeVideo(), v3ContentSettings()]);
   const offer = bookOfferHref();
+  const poster = video ? youtubePosterSrc(video.id) : null;
 
   return (
     <div className="v3" data-no-orphan-opt-out="true">
@@ -282,13 +283,11 @@ export default async function HomePage() {
               <div>
                 <span className="mono section-kicker">On YouTube</span>
                 <a className="yt-card" href={`https://www.youtube.com/watch?v=${video.id}`}>
-                  <img
-                    src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
-                    alt=""
-                    width={480}
-                    height={360}
-                    loading="lazy"
-                  />
+                  {poster ? (
+                    <img src={poster} alt="" width={640} height={360} loading="lazy" />
+                  ) : (
+                    <span className="yt-still" />
+                  )}
                   <span>{video.title}</span>
                 </a>
               </div>
