@@ -48,7 +48,6 @@ export const siteSettings = defineType({
       fields: [
         defineField({ name: "linkedin", title: "LinkedIn URL", type: "url" }),
         defineField({ name: "twitter", title: "X (Twitter) URL", type: "url" }),
-        defineField({ name: "substack", title: "Substack URL", type: "url" }),
         defineField({ name: "youtube", title: "YouTube URL", type: "url" }),
       ],
     }),

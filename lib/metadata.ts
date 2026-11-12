@@ -88,7 +88,6 @@ export function personJsonLd() {
       "https://www.linkedin.com/in/nicharalambous/",
       "https://www.youtube.com/@nicharrynobull",
       "https://x.com/nicharry",
-      "https://substack.com/@nicharalambous",
     ],
   };
 }

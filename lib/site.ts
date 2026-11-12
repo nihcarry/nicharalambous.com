@@ -17,7 +17,6 @@ export const SOCIAL = {
   linkedin: "https://www.linkedin.com/in/nicharalambous/",
   youtube: "https://www.youtube.com/@nicharrynobull",
   x: "https://x.com/nicharry",
-  substack: "https://substack.com/@nicharalambous",
   nobullship: "https://nobullship.co",
 } as const;
 

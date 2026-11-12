@@ -4,7 +4,7 @@
  * Full article template for published blog posts. Supports two content
  * rendering modes:
  *   1. Portable Text (`body`) — for manually written or AI-optimized posts
- *   2. Raw HTML (`rawHtmlBody`) — for as-is Medium/Substack imports
+ *   2. Raw HTML (`rawHtmlBody`) — for as-is imported articles
  *
  * Sections (per SEO strategy):
  *   1. TL;DR / excerpt (when present)

@@ -625,7 +625,6 @@ export interface SiteSettingsData {
   socialLinks: {
     linkedin?: string;
     twitter?: string;
-    substack?: string;
     youtube?: string;
   } | null;
   footerText: string | null;

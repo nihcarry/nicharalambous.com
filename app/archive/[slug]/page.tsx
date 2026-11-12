@@ -2,7 +2,7 @@
  * Archive Post Page — /archive/{slug}
  *
  * Minimal template for unoptimized legacy content imported from
- * Squarespace, Medium, or Substack. Renders raw HTML with a
+ * Squarespace or Medium. Renders raw HTML with a
  * "From the archive" banner and link back to /blog.
  *
  * Per SEO strategy: no structured data beyond basic WebPage.

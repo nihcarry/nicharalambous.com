@@ -72,9 +72,6 @@ export function SiteFooter() {
               <li>
                 <a href={SOCIAL.x}>X</a>
               </li>
-              <li>
-                <a href={SOCIAL.substack}>Substack</a>
-              </li>
             </ul>
           </div>
         </div>
