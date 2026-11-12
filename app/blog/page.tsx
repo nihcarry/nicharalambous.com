@@ -156,7 +156,7 @@ export default async function BlogPage() {
       {/* CTA */}
       <FinalCta
         heading="Want These Ideas as a Keynote?"
-        description="The ideas on this blog come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
+        description="The ideas on this blog come alive in Nic's keynotes, in person or virtually. Real stories, actionable frameworks, tailored to your team."
         primaryHref="/speaker"
         primaryLabel="About Nic as a Speaker"
         secondaryHref="/topics"

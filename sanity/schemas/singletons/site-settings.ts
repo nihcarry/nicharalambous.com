@@ -23,7 +23,7 @@ export const siteSettings = defineType({
       type: "text",
       rows: 3,
       initialValue:
-        "Nic Haralambous is an entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+        "Nic Haralambous is an entrepreneur, AI product builder, and keynote speaker. He speaks in person or virtually. 4 startup exits, 3 books, and 20+ years building technology businesses.",
     }),
     defineField({
       name: "oneLinerBio",
@@ -32,7 +32,7 @@ export const siteSettings = defineType({
       description:
         "Used everywhere: homepage H1, JSON-LD, llms.txt, social bios. Keep consistent.",
       initialValue:
-        "Entrepreneur, AI product builder, and virtual keynote speaker",
+        "Entrepreneur, AI product builder, and keynote speaker",
     }),
     defineField({
       name: "ogImage",

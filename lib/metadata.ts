@@ -80,7 +80,7 @@ export function personJsonLd() {
     "@type": "Person",
     name: "Nic Haralambous",
     url: HOME_URL,
-    jobTitle: "Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
+    jobTitle: "Entrepreneur, AI Product Builder, Keynote Speaker",
     description: DEFAULT_DESCRIPTION,
     image: `${SITE_URL}/images/nic-haralambous.jpg`,
     sameAs: [
@@ -168,7 +168,8 @@ export function serviceJsonLd({
     description,
     url,
     provider: personJsonLd(),
-    serviceType: "Virtual Keynote Speaking",
+    serviceType: "Keynote speaking, in person or virtual",
+    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     areaServed: "Worldwide",
   };
 }
@@ -229,7 +230,7 @@ export function contactPageJsonLd() {
     "@type": "ContactPage",
     name: "Contact Nic Haralambous",
     description:
-      "Book Nic Haralambous for your next virtual keynote. Enquire about speaking engagements, conferences, and corporate events.",
+      "Book Nic Haralambous for your next keynote, in person or virtually. Enquire about speaking engagements, conferences, and corporate events.",
     url: `${SITE_URL}/contact`,
     mainEntity: personJsonLd(),
   };
@@ -242,7 +243,7 @@ export function aboutPageJsonLd() {
     "@type": "AboutPage",
     name: "About Nic Haralambous",
     description:
-      "Entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+      "Entrepreneur, AI product builder, and keynote speaker, in person or virtually, with 4 startup exits, 3 books, and 20+ years building technology businesses.",
     url: `${SITE_URL}/about`,
     mainEntity: personJsonLd(),
   };

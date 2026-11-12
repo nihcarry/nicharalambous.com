@@ -212,8 +212,8 @@ export default function OutputParadoxPage() {
 
         <div className="container-landing relative z-10">
           <p className="font-mono text-xs tracking-widest text-accent-400">
-            KEYNOTE_01 &nbsp;//&nbsp; 45-60 MIN &nbsp;//&nbsp; VIRTUAL OR
-            IN-PERSON
+            KEYNOTE_01 &nbsp;//&nbsp; 45-60 MIN &nbsp;//&nbsp; IN PERSON OR
+            VIRTUAL
           </p>
 
           <h1 className="mt-6 max-w-3xl font-extrabold uppercase leading-[0.85] tracking-tight text-[clamp(2.75rem,12vw,7.5rem)]">

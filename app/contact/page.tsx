@@ -1,7 +1,7 @@
 /**
  * Contact / Booking Page — /contact
  *
- * Structured inquiry form for booking Nic as a virtual keynote speaker.
+ * Structured inquiry form for booking Nic as a keynote speaker, in person or virtually.
  * Server component wrapper that exports metadata; the form is a
  * client component imported below.
  *
@@ -18,13 +18,13 @@ import { ContactForm } from "./contact-form";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book Nic Haralambous for your next virtual keynote. Enquire about speaking engagements for conferences, corporate events, team offsites, and webinars.",
+    "Book Nic Haralambous for your next keynote, in person or virtually. Enquire about speaking engagements for conferences, corporate events, team offsites, and webinars.",
   alternates: { canonical: "https://www.nicharalambous.com/contact" },
   openGraph: {
     type: "website",
     title: "Book Nic Haralambous | Contact",
     description:
-      "Enquire about virtual keynote speaking for your next event.",
+      "Enquire about a keynote, in person or virtually, for your next event.",
     url: "https://www.nicharalambous.com/contact",
   },
 };
@@ -43,9 +43,9 @@ export default function ContactPage() {
             Book Nic for Your Event
           </h1>
           <p className="mt-4 text-lg text-brand-600">
-            Virtual keynotes for conferences, corporate events, team offsites,
-            and webinars. Fill out the form below and Nic will get back to you
-            within 48 hours.
+            Keynotes for conferences, corporate events, team offsites, and
+            webinars, in person or virtually. Fill out the form below and Nic
+            will get back to you within 48 hours.
           </p>
         </div>
 

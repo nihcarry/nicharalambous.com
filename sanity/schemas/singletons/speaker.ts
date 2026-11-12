@@ -2,7 +2,7 @@
  * Speaker page singleton.
  *
  * THE money page — `/speaker`. Contains all content sections for the
- * primary conversion page targeting "virtual keynote speaker".
+ * primary conversion page for booking a keynote, in person or virtually.
  */
 import { defineField, defineType } from "sanity";
 
@@ -15,8 +15,8 @@ export const speaker = defineType({
       name: "headline",
       title: "H1 Headline",
       type: "string",
-      description: "Primary heading. Must include 'virtual keynote speaker'.",
-      initialValue: "Virtual keynote speaker for curious, modern teams",
+      description: "Primary heading.",
+      initialValue: "Keynote speaker for curious, modern teams",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -34,9 +34,10 @@ export const speaker = defineType({
     }),
     defineField({
       name: "howVirtualWorks",
-      title: "How Virtual Delivery Works",
+      title: "How Delivery Works",
       type: "portableTextBody",
-      description: "Explain the virtual keynote experience.",
+      description:
+        "Explain the keynote in person or virtually. The field name stays howVirtualWorks so existing content still loads.",
     }),
     defineField({
       name: "clientLogos",
@@ -94,7 +95,7 @@ export const speaker = defineType({
       name: "ctaText",
       title: "CTA Button Text",
       type: "string",
-      initialValue: "Book Nic for Your Next Virtual Event",
+      initialValue: "Book Nic for Your Next Event",
     }),
     defineField({
       name: "seo",

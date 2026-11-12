@@ -11,7 +11,7 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 
 const footerLinks = {
   speaking: [
-    { href: "/speaker", label: "Virtual Keynote Speaker" },
+    { href: "/speaker", label: "Keynote Speaker" },
     { href: "/keynotes", label: "Keynote Topics" },
     { href: "/contact", label: "Book a Talk" },
     { href: "/session", label: "Consulting Session" },
@@ -60,7 +60,8 @@ export function FooterContent() {
             Nic Haralambous
           </a>
           <p className="mt-3 text-sm leading-relaxed text-brand-600">
-            Entrepreneur, AI product builder, and virtual keynote speaker.
+            Entrepreneur, AI product builder, and keynote speaker.
+            In person or virtually.
             4 startup exits, 3 books, 20+ years building technology businesses.
           </p>
         </div>

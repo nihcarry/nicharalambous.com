@@ -164,7 +164,7 @@ export default async function TopicHubPage({
       {topic.relatedKeynotes && topic.relatedKeynotes.length > 0 && (
         <Section width="wide" className="bg-brand-50">
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            Explore This Topic as a Virtual Keynote
+            Explore This Topic as a Keynote
           </h2>
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             {topic.relatedKeynotes.map((keynote, i) => (
@@ -323,7 +323,7 @@ export default async function TopicHubPage({
       {/* CTA */}
       <FinalCta
         heading={`Book a Keynote on ${topic.title}`}
-        description="Virtual delivery worldwide. Customized for your audience."
+        description="Available in person or virtually. Customized for your audience."
         primaryHref="/contact"
         primaryLabel="Enquire Now"
         secondaryHref="/speaker"
