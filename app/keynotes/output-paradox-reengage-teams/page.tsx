@@ -171,7 +171,7 @@ export default async function OutputParadoxPage() {
               <p className="lead">
                 You can&apos;t see it clearly because AI is masking the signal. More documents, bigger roadmaps and more meetings about work nobody reads. Everything looks busy, and something still feels off.
               </p>
-              <p className="mono" style={{ color: "#6F7584", marginTop: 18 }}>
+              <p className="mono" style={{ color: "#737a89", marginTop: 18 }}>
                 Source: ActivTrak State of the Workplace
               </p>
             </div>

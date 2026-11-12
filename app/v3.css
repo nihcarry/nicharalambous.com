@@ -394,7 +394,7 @@ em.hl {
   font-weight: 400;
   font-size: 12px;
   letter-spacing: 0.02em;
-  color: #6f7584;
+  color: #737a89;
   margin: 0 0 16px;
 }
 
@@ -431,7 +431,7 @@ em.hl {
   justify-content: space-between;
   gap: 16px;
   font-size: 13px;
-  color: #6f7584;
+  color: #737a89;
 }
 
 .site-footer .legal nav {
@@ -1101,7 +1101,7 @@ em.hl {
 }
 
 .v3 .signals .mono {
-  color: #6f7584;
+  color: #737a89;
 }
 
 .v3 .signals h3 {

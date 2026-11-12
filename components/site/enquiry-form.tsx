@@ -1,7 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState, type FormEvent } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState, type FormEvent } from "react";
 import { ENQUIRY_ENDPOINT, bookNowHref, checkoutIsLive } from "@/lib/site";
 import {
   BUDGET_BANDS,
@@ -15,9 +14,11 @@ import {
 } from "@/lib/enquiry";
 
 function EnquiryFields() {
-  const params = useSearchParams();
-  const initialFormat = useMemo(() => formatFromQuery(params.get("format")), [params]);
-  const [format, setFormat] = useState(initialFormat);
+  const [format, setFormat] = useState("");
+  useEffect(() => {
+    const next = formatFromQuery(new URLSearchParams(window.location.search).get("format"));
+    if (next) setFormat(next);
+  }, []);
   const [budget, setBudget] = useState("");
   const [decision, setDecision] = useState("");
   const [errors, setErrors] = useState<EnquiryErrors>({});
@@ -330,11 +331,7 @@ function DateField({ name, label, error }: { name: string; label: string; error?
 }
 
 export function EnquiryForm() {
-  return (
-    <Suspense fallback={<p className="hint">Loading the form.</p>}>
-      <EnquiryFields />
-    </Suspense>
-  );
+  return <EnquiryFields />;
 }
 
 export function QuickBookCard() {
