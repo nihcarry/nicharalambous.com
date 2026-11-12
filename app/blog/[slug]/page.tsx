@@ -42,6 +42,7 @@ import { FaqSection } from "@/components/faq-section";
 import { RelatedPosts } from "@/components/related-posts";
 import { ContextualCta } from "@/components/contextual-cta";
 import { VideoReadAlong } from "@/components/video-read-along";
+import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
 import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
 import {
   rawHtmlToPlainText,
@@ -307,7 +308,7 @@ export default async function BlogPostPage({
               "[&_s]:text-brand-400",
             ].join(" ")}
             dangerouslySetInnerHTML={{
-              __html: rawHtmlSplit.bodyHtml || post.rawHtmlBody!,
+              __html: gateThirdPartyEmbeds(rawHtmlSplit.bodyHtml || post.rawHtmlBody!),
             }}
           />
         ) : (

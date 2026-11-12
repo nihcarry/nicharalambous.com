@@ -10,6 +10,7 @@ import {
   type PortableTextComponents,
   type PortableTextBlock as PTBlock,
 } from "@portabletext/react";
+import { ClickToLoadYouTube, youtubeIdFromUrl } from "@/components/click-to-load-youtube";
 import { urlFor } from "@/lib/sanity/image";
 import { withoutEmDash } from "@/lib/site";
 
@@ -109,19 +110,11 @@ const components: PortableTextComponents = {
     },
     videoEmbed: ({ value }) => {
       if (!value?.url) return null;
-      const embedUrl = getVideoEmbedUrl(value.url);
-      if (!embedUrl) return null;
+      const videoId = youtubeIdFromUrl(value.url);
+      if (!videoId) return null;
       return (
         <figure className="mt-8">
-          <div className="aspect-video overflow-hidden rounded-lg">
-            <iframe
-              src={embedUrl}
-              title={value.caption || "Video"}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          <ClickToLoadYouTube videoId={videoId} title={value.caption || "Video"} />
           {value.caption && (
             <figcaption className="mt-2 text-center text-sm text-brand-500">
               {value.caption}
@@ -157,21 +150,6 @@ const components: PortableTextComponents = {
     },
   },
 };
-
-/** Convert a YouTube or Vimeo URL to an embeddable URL */
-function getVideoEmbedUrl(url: string): string | null {
-  // YouTube
-  const ytMatch = url.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
-  );
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
-
-  // Vimeo
-  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
-
-  return null;
-}
 
 /* ---------- Public API ---------- */
 

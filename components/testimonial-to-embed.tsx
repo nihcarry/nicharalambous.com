@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import { ClickToLoadFrame } from "@/components/click-to-load-frame";
 import { useSlideDeck } from "@/components/slide-deck";
 
 const IFRAME_SRC =
@@ -31,14 +32,10 @@ export function TestimonialToEmbed() {
       className="origin-center"
       style={prefersReducedMotion ? undefined : { scale }}
     >
-      <iframe
-        id="testimonialto-5b8610ee-6b4a-4779-9503-cddbd8c5ac26"
+      <ClickToLoadFrame
         src={IFRAME_SRC}
-        frameBorder={0}
-        scrolling="no"
-        width="100%"
         title="Client testimonials"
-        className="block w-full"
+        label="Show testimonials"
         style={{ height: "clamp(240px, 46vh, 384px)" }}
       />
     </motion.div>

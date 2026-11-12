@@ -4,6 +4,7 @@
  * Used on both homepage and speaker page for consistent social proof.
  */
 
+import { ClickToLoadFrame } from "@/components/click-to-load-frame";
 import { DecorativePicture } from "@/components/decorative-picture";
 import { LoadWhenNear } from "@/components/load-when-near";
 
@@ -28,27 +29,13 @@ export function WhatClientsSay({ headingAlign = "left" }: WhatClientsSayProps) {
       {/* Testimonial box — in normal flow; leaves room for 16bit on right (md+) */}
       <div className="mt-6 overflow-hidden px-2 md:max-w-[calc(100%-440px)]">
         <LoadWhenNear minHeight={800}>
-          <iframe
-            id="testimonialto-5b8610ee-6b4a-4779-9503-cddbd8c5ac26"
+          <ClickToLoadFrame
             src={TESTIMONIAL_EMBED_SRC}
-            frameBorder="0"
-            scrolling="no"
-            width="100%"
-            height="800px"
-            loading="lazy"
             title="What clients say about Nic Haralambous"
+            label="Show testimonials"
+            style={{ height: 800 }}
           />
         </LoadWhenNear>
-        <noscript>
-          <iframe
-            src={TESTIMONIAL_EMBED_SRC}
-            frameBorder="0"
-            scrolling="no"
-            width="100%"
-            height="800px"
-            title="What clients say about Nic Haralambous"
-          />
-        </noscript>
       </div>
       {/* 16bit desktop — absolute, out of flow, no empty space */}
       <div

@@ -19,6 +19,7 @@ import {
   type SpeakerPageData,
   type KeynoteListItem,
 } from "@/lib/sanity/queries";
+import { ClickToLoadYouTube } from "@/components/click-to-load-youtube";
 import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
 import { Slide } from "@/components/slide";
@@ -224,14 +225,8 @@ export default async function SpeakerPage() {
           <p className="mt-4 text-lg font-semibold leading-relaxed text-brand-700 sm:text-xl">
             {subheadline}
           </p>
-          <div className="mt-4 aspect-video w-full overflow-hidden border-4 border-accent-600">
-            <iframe
-              src="https://www.youtube.com/embed/yxg_qMH-s-Y"
-              title="Keynote speaker video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="h-full w-full border-0"
-            />
+          <div className="mt-4 overflow-hidden border-4 border-accent-600">
+            <ClickToLoadYouTube videoId="yxg_qMH-s-Y" title="Keynote speaker video" />
           </div>
           <div className="mt-4">
             <CTAButton href="/contact">{ctaText}</CTAButton>
@@ -254,14 +249,8 @@ export default async function SpeakerPage() {
         </p>
         <div className="mt-8">
           <div className="float-right ml-8 mb-6 flex min-h-[50vh] w-full max-w-md shrink-0 items-start md:min-h-[55vh] md:max-w-lg">
-            <div className="aspect-video w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
-              <iframe
-                src="https://www.youtube.com/embed/XBFqWl2Rv1I"
-                title="Why book Nic as a keynote speaker"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="h-full w-full border-0"
-              />
+            <div className="w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
+              <ClickToLoadYouTube videoId="XBFqWl2Rv1I" title="Why book Nic as a keynote speaker" />
             </div>
           </div>
           <div className="space-y-4 text-lg leading-relaxed text-brand-700">
@@ -325,14 +314,8 @@ export default async function SpeakerPage() {
             </p>
           </div>
         </div>
-        <div className="mt-8 aspect-video mx-auto w-full max-w-2xl">
-          <iframe
-            src="https://www.youtube.com/embed/Yv1k_db7uwc"
-            title="Keynote topics"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="h-full w-full rounded border-0"
-          />
+        <div className="mt-8 mx-auto w-full max-w-2xl">
+          <ClickToLoadYouTube videoId="Yv1k_db7uwc" title="Keynote topics" />
         </div>
         <div className="mt-8 text-center">
           <CTAButton href="/keynotes" variant="secondary">

@@ -10,6 +10,7 @@
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ClickToLoadYouTube, youtubeIdFromUrl } from "@/components/click-to-load-youtube";
 import { client } from "@/lib/sanity/client";
 import {
   keynoteBySlugQuery,
@@ -303,20 +304,15 @@ export default async function KeynotePage({
       )}
 
       {/* Video embed */}
-      {hasVideo && (
+      {hasVideo && youtubeIdFromUrl(keynote.videoEmbed!) && (
         <Section width="landing">
           <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Watch a Preview
           </h2>
-          <div className="mt-6 aspect-video overflow-hidden border-4 border-accent-600">
-            <iframe
-              src={
-                getVideoEmbedUrl(keynote.videoEmbed!) || keynote.videoEmbed!
-              }
+          <div className="mt-6 overflow-hidden border-4 border-accent-600">
+            <ClickToLoadYouTube
+              videoId={youtubeIdFromUrl(keynote.videoEmbed!)!}
               title={`${keynote.title} preview`}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
             />
           </div>
         </Section>
@@ -362,14 +358,3 @@ export default async function KeynotePage({
 
 /* ---------- Utilities ---------- */
 
-function getVideoEmbedUrl(url: string): string | null {
-  const ytMatch = url.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
-  );
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
-
-  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
-
-  return null;
-}

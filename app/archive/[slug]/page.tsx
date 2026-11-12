@@ -19,6 +19,7 @@ import {
   type ArchivePostData,
 } from "@/lib/sanity/queries";
 import { Section } from "@/components/section";
+import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
 import { CTAButton } from "@/components/cta-button";
 
 /* ---------- Data fetching ---------- */
@@ -149,7 +150,7 @@ export default async function ArchivePostPage({
         {post.rawHtmlBody ? (
           <div
             className="mt-8 [&>p]:mt-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700 [&>h2]:mt-10 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900 [&>h3]:mt-8 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900 [&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700 [&>ol]:mt-4 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700 [&>blockquote]:mt-6 [&>blockquote]:border-l-4 [&>blockquote]:border-brand-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-brand-600 [&>img]:my-6 [&>img]:w-full [&>img]:rounded-lg [&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500"
-            dangerouslySetInnerHTML={{ __html: post.rawHtmlBody }}
+            dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(post.rawHtmlBody) }}
           />
         ) : (
           <p className="mt-8 text-brand-500 italic">

@@ -1,3 +1,4 @@
+import { CookieSettingsButton } from "@/components/cookie-consent";
 import { OUTPUT_PARADOX_PATH, SOCIAL } from "@/lib/site";
 
 export function SiteFooter() {
@@ -79,6 +80,7 @@ export function SiteFooter() {
           <span>© 2026 Nic Haralambous</span>
           <nav aria-label="Legal">
             <a href="/privacy">Privacy policy</a>
+            <CookieSettingsButton />
             <a href="/rss.xml">RSS</a>
             <a href="/sitemap.xml">Sitemap</a>
           </nav>

@@ -12,7 +12,7 @@ import { ConditionalFooter } from "@/components/conditional-footer";
 import { SmartHeadingManager } from "@/components/smart-heading-manager";
 import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
-import { GoogleAnalytics } from "@/components/google-analytics";
+import { CookieConsent } from "@/components/cookie-consent";
 import { DEFAULT_DESCRIPTION, personJsonLd, websiteJsonLd } from "@/lib/metadata";
 import "./globals.css";
 import "./v3.css";
@@ -92,7 +92,7 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col overflow-x-hidden">
         <ThemeProvider>
           <SmartHeadingManager />
-          <GoogleAnalytics />
+          <CookieConsent />
           <JsonLd data={personJsonLd()} />
           <JsonLd data={websiteJsonLd()} />
           <SiteNav />
