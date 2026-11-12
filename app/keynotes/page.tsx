@@ -2,7 +2,7 @@
  * Keynotes Listing Page — /keynotes
  *
  * Slide deck layout matching homepage/speaker. Each keynote topic is a
- * full-viewport slide; hero matches the "Virtual Keynote Topics" style.
+ * full-viewport slide.
  *
  * Keynote slides use curated copy for maximum impact.
  */
@@ -14,28 +14,19 @@ import { SlideContent } from "@/components/slide-animations";
 import { FooterContent } from "@/components/footer-content";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 
-import { KEYNOTE_SLIDES, type KeynoteSlideData } from "@/lib/keynotes-data";
+import { KEYNOTE_SLIDES, deliveryFormatLabel } from "@/lib/keynotes-data";
 
 /* ---------- Metadata ---------- */
 
 export const metadata: Metadata = {
   title: "Flagship Keynotes",
   description:
-    "Nic Haralambous's flagship virtual keynotes on curiosity, innovation, AI, entrepreneurship, focus, and building breakthrough teams. Designed for remote teams.",
+    "Nic Haralambous's flagship keynotes on curiosity, innovation, AI, entrepreneurship, focus, and building breakthrough teams. Available in person or virtually.",
   alternates: { canonical: "https://www.nicharalambous.com/keynotes" },
   openGraph: {
     url: "https://www.nicharalambous.com/keynotes",
   },
 };
-
-/* ---------- Helpers ---------- */
-
-function formatLabel(keynote: KeynoteSlideData): string {
-  if (keynote.deliveryFormat === "virtual") return "Virtual";
-  if (keynote.deliveryFormat === "hybrid") return "Hybrid";
-  if (keynote.deliveryFormat === "in-person") return "In-Person";
-  return "Virtual";
-}
 
 /* ---------- Page ---------- */
 
@@ -163,7 +154,7 @@ export default function KeynotesPage() {
               <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-brand-500">
                 <span>
                   <span className="font-medium text-brand-700">Format:</span>{" "}
-                  {formatLabel(keynote)}
+                  {deliveryFormatLabel()}
                 </span>
                 <span>
                   <span className="font-medium text-brand-700">Duration:</span>{" "}
@@ -195,7 +186,7 @@ export default function KeynotesPage() {
             Want Nic at Your Event?
           </h2>
           <p className="mt-4 text-lg text-brand-700">
-            Every keynote is customized for your audience. Virtual delivery worldwide.
+            Every keynote is customized for your audience. Available in person or virtually.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <CTAButton

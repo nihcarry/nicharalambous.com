@@ -207,7 +207,7 @@ export default async function BooksPage() {
       {/* Final CTA */}
       <FinalCta
         heading="Want Nic at Your Next Event?"
-        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
+        description="Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide."
         primaryHref="/speaker"
         primaryLabel="About Nic as a Speaker"
         secondaryHref="/contact"

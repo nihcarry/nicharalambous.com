@@ -1,21 +1,13 @@
 /**
  * Speaker Page — /speaker
  *
- * THE money page. Primary target: "virtual keynote speaker" keyword.
+ * THE money page. Keynotes are offered in person or virtually.
  * This page must be the most internally-linked page on the site.
  *
- * Content is fetched from the Sanity "speaker" singleton at build time.
- * Falls back to hardcoded defaults if Sanity data is not yet published.
- *
- * Sections per SEO strategy:
- * 1. Hero with H1 containing "virtual keynote speaker"
- * 2. Why book Nic (differentiators)
- * 3. Keynote topics (links to individual keynote pages)
- * 4. How virtual delivery works
- * 5. Client logos / "As seen at"
- * 6. Testimonials (attributed)
- * 7. FAQ (structured for AI readability and featured snippets)
- * 8. Booking CTA → /contact
+ * Client logos are fetched from the Sanity "speaker" singleton at build time.
+ * Hero, FAQ, delivery steps, and the booking button stay in this file.
+ * The published singleton still describes virtual-only delivery, so those
+ * fields are not rendered until Sanity is updated.
  *
  * JSON-LD: Person + Service + FAQPage
  */
@@ -38,7 +30,6 @@ import { IncredibleClients } from "@/components/incredible-clients";
 import { NextSlideIndicator } from "@/components/next-slide-indicator";
 import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
-import { PortableText } from "@/components/portable-text";
 import { FaqSection } from "@/components/faq-section";
 import {
   serviceJsonLd,
@@ -50,18 +41,18 @@ import {
 
 const DEFAULT_HEADLINE = "Keynote Speaker";
 const DEFAULT_SUBHEADLINE =
-  "High‑energy, impactful keynotes designed for remote teams, not repurposed for them.";
+  "High‑energy, impactful keynotes, in person or virtually.";
 
 const DEFAULT_FAQS = [
   {
     question: "What topics does Nic speak about?",
     answer:
-      "Nic delivers virtual keynotes on curiosity and innovation, AI and product building, entrepreneurship and resilience, focus and agency, and building breakthrough teams. Each keynote draws from 20+ years of real entrepreneurial experience.",
+      "Nic delivers keynotes, in person or virtually, on curiosity and innovation, AI and product building, entrepreneurship and resilience, focus and agency, and building breakthrough teams. Each keynote draws from 20+ years of real entrepreneurial experience.",
   },
   {
-    question: "How does a virtual keynote work?",
+    question: "How does a keynote work, in person or virtually?",
     answer:
-      "Nic delivers high-energy keynotes via Zoom, Teams, or any video platform your team uses. Sessions are typically 45-60 minutes with optional Q&A. He uses professional studio equipment for broadcast-quality audio and video, with interactive elements to keep remote audiences engaged.",
+      "Nic delivers the same high-energy keynote in the room or on screen. On screen, that is Zoom, Teams, or any video platform your team uses, with professional studio equipment and interactive elements. In the room, he is on your stage. Sessions are typically 45-60 minutes with optional Q&A.",
   },
   {
     question: "What makes Nic different from other keynote speakers?",
@@ -101,9 +92,9 @@ const DEFAULT_WHY_BOOK = [
       "The DIAL method for focus, the Innovation Flywheel, the Do/Fail/Learn/Repeat cycle: actionable tools your team can use Monday morning.",
   },
   {
-    title: "Virtual-Native Delivery",
+    title: "In the Room or on Screen",
     description:
-      "Professional studio setup, broadcast-quality audio/video, and interactive elements designed for remote audiences.",
+      "The same talk, in person or on a call. Professional studio setup when you are on screen. Interactive either way.",
   },
   {
     title: "20+ Years of Stories",
@@ -116,13 +107,13 @@ const DEFAULT_WHY_BOOK = [
       "Every keynote is customized. Nic works with organizers to adapt frameworks, stories, and takeaways to your team.",
   },
   {
-    title: "Global Reach, Zero Travel",
+    title: "In Person or Virtual",
     description:
-      "Virtual delivery means no flights, no scheduling conflicts, and worldwide availability for your event.",
+      "Every keynote is available in the room or on screen.",
   },
 ];
 
-const DEFAULT_VIRTUAL_STEPS = [
+const DEFAULT_DELIVERY_STEPS = [
   {
     step: "1",
     title: "Discovery Call",
@@ -137,9 +128,9 @@ const DEFAULT_VIRTUAL_STEPS = [
   },
   {
     step: "3",
-    title: "Live Virtual Delivery",
+    title: "Live Delivery",
     description:
-      "45-60 minute keynote via Zoom, Teams, or your preferred platform. Professional studio quality with interactive elements.",
+      "A 45-60 minute keynote, in the room or on Zoom, Teams, or your platform. Studio quality on screen. Interactive either way.",
   },
   {
     step: "4",
@@ -172,15 +163,15 @@ async function getKeynotes() {
 /* ---------- Metadata ---------- */
 
 export const metadata: Metadata = {
-  title: "Virtual Keynote Speaker",
+  title: "Keynote Speaker",
   description:
-    "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses. Keynotes on curiosity, innovation, AI, and entrepreneurship.",
+    "Book Nic Haralambous for a keynote, in person or virtually. 4 startup exits, 3 books, 20+ years building tech businesses. Keynotes on curiosity, innovation, AI, and entrepreneurship.",
   alternates: { canonical: "https://www.nicharalambous.com/speaker" },
   openGraph: {
     type: "website",
-    title: "Virtual Keynote Speaker | Nic Haralambous",
+    title: "Keynote Speaker | Nic Haralambous",
     description:
-      "Book Nic Haralambous as your virtual keynote speaker. 4 startup exits, 3 books, 20+ years building tech businesses.",
+      "Book Nic Haralambous for a keynote, in person or virtually. 4 startup exits, 3 books, 20+ years building tech businesses.",
     url: "https://www.nicharalambous.com/speaker",
   },
 };
@@ -193,14 +184,15 @@ export default async function SpeakerPage() {
     getKeynotes(),
   ]);
 
-  /* Hero copy: always use this copy; do not override from CMS */
+  /* Hero, FAQ, and the booking button stay in code. The published speaker
+     singleton still says virtual-only (headline, subheadline, faq, ctaText). */
   const headline = DEFAULT_HEADLINE;
   const subheadline = DEFAULT_SUBHEADLINE;
-  const faqs = speakerData?.faq?.length ? speakerData.faq : DEFAULT_FAQS;
+  const faqs = DEFAULT_FAQS;
   const asSeenAt = speakerData?.asSeenAt?.length
     ? speakerData.asSeenAt
     : DEFAULT_AS_SEEN_AT;
-  const ctaText = speakerData?.ctaText || "Book Nic for Your Next Virtual Event";
+  const ctaText = "Book Nic for Your Next Event";
 
   return (
     <SlideDeck>
@@ -208,9 +200,9 @@ export default async function SpeakerPage() {
       <JsonLd data={personJsonLd()} />
       <JsonLd
         data={serviceJsonLd({
-          name: "Virtual Keynote Speaking by Nic Haralambous",
+          name: "Keynote Speaking by Nic Haralambous",
           description:
-            "Book Nic Haralambous as your virtual keynote speaker. Keynotes on curiosity, innovation, AI, entrepreneurship, and building breakthrough teams.",
+            "Book Nic Haralambous for a keynote, in person or virtually. Keynotes on curiosity, innovation, AI, entrepreneurship, and building breakthrough teams.",
           url: "https://www.nicharalambous.com/speaker",
         })}
       />
@@ -218,7 +210,7 @@ export default async function SpeakerPage() {
 
       <NextSlideIndicator />
 
-      {/* Slide 1: Hero — H1 must include "virtual keynote speaker" per SEO strategy. Full-width slide so headline can use wide container and wrap to 2 lines only. */}
+      {/* Slide 1: Hero. Full-width slide so the headline can use a wide container and wrap to 2 lines only. */}
       <Slide
         id="hero"
         variant="full"
@@ -235,7 +227,7 @@ export default async function SpeakerPage() {
           <div className="mt-4 aspect-video w-full overflow-hidden border-4 border-accent-600">
             <iframe
               src="https://www.youtube.com/embed/yxg_qMH-s-Y"
-              title="Virtual keynote speaker video"
+              title="Keynote speaker video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="h-full w-full border-0"
@@ -255,17 +247,17 @@ export default async function SpeakerPage() {
       >
         <Section width="wide">
         <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-          Why My Virtual Audiences Stay Engaged
+          Why Audiences Stay Engaged
         </h2>
         <p className="mt-4 text-center text-lg font-medium leading-relaxed text-brand-700">
-          Remote teams can be distracted, over&#x2011;scheduled, and exhausted by back&#x2011;to&#x2011;back calls. Attention is fragile. Energy leaks fast and keynotes are often not a team priority. So I design talks that earn attention, not assume it.
+          In the room or on a call, people are distracted, over&#x2011;scheduled, and exhausted. Attention is fragile. Energy leaks fast and keynotes are often not a team priority. So I design talks that earn attention, not assume it.
         </p>
         <div className="mt-8">
           <div className="float-right ml-8 mb-6 flex min-h-[50vh] w-full max-w-md shrink-0 items-start md:min-h-[55vh] md:max-w-lg">
             <div className="aspect-video w-full overflow-hidden rounded border-4 border-accent-600 bg-brand-100">
               <iframe
                 src="https://www.youtube.com/embed/XBFqWl2Rv1I"
-                title="Why book Nic: virtual keynote speaker"
+                title="Why book Nic as a keynote speaker"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="h-full w-full border-0"
@@ -277,13 +269,13 @@ export default async function SpeakerPage() {
               What makes these keynotes different:
             </p>
             <ul className="list-disc space-y-2 pl-5">
-              <li><strong>Built for the medium</strong>: every talk is designed for live delivery on Zoom, Teams, or Meet</li>
+              <li><strong>Built for the room and the screen</strong>: every talk is designed for a live stage, or for Zoom, Teams, or Meet</li>
               <li><strong>Audience participation</strong>: not just a Q&amp;A at the end</li>
               <li><strong>Fast&#x2011;paced, visual, and interactive</strong>: people don&apos;t just watch, they take part</li>
-              <li><strong>Designed for distributed teams</strong>: remote, hybrid, and global by default</li>
+              <li><strong>Designed for the people in front of you</strong>: in the room, remote, hybrid, or spread across the world</li>
             </ul>
             <p>
-              The result? People stay present. Ideas land. And teams are still talking about it long after the call ends.
+              The result? People stay present. Ideas land. And teams are still talking about it long after the session ends.
             </p>
           </div>
           <div className="clear-both" />
@@ -317,7 +309,7 @@ export default async function SpeakerPage() {
               After experiencing my own corporate burnout, I deeply understand how leaders quietly burn out while nobody notices. I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.
             </p>
             <p>
-              These aren&apos;t abstract ideas. They&apos;re delivered through stories, research, case studies, and shared moments that translate powerfully in virtual rooms.
+              These aren&apos;t abstract ideas. They&apos;re delivered through stories, research, case studies, and shared moments that translate in the room and on screen.
             </p>
           </div>
           <div>
@@ -336,7 +328,7 @@ export default async function SpeakerPage() {
         <div className="mt-8 aspect-video mx-auto w-full max-w-2xl">
           <iframe
             src="https://www.youtube.com/embed/Yv1k_db7uwc"
-            title="Keynote topics: virtual keynote speaker"
+            title="Keynote topics"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="h-full w-full rounded border-0"
@@ -350,7 +342,8 @@ export default async function SpeakerPage() {
         </Section>
       </Slide>
 
-      {/* Slide 4: How Virtual Delivery Works */}
+      {/* Slide 4: How delivery works. id stays how-virtual so existing links keep working.
+          The published howVirtualWorks field still describes virtual-only delivery, so it is not rendered. */}
       <Slide
         id="how-virtual"
         variant="centered"
@@ -358,16 +351,10 @@ export default async function SpeakerPage() {
       >
         <Section width="content">
         <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-          How Virtual Delivery Works
+          How Delivery Works
         </h2>
-        {speakerData?.howVirtualWorks ? (
-          <PortableText
-            value={speakerData.howVirtualWorks}
-            className="mt-8"
-          />
-        ) : (
           <div className="mt-12 grid gap-8 sm:grid-cols-2">
-            {DEFAULT_VIRTUAL_STEPS.map((item) => (
+            {DEFAULT_DELIVERY_STEPS.map((item) => (
               <div key={item.step} className="flex gap-4">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-accent-600 font-extrabold text-lg text-white">
                   {item.step}
@@ -383,7 +370,6 @@ export default async function SpeakerPage() {
               </div>
             ))}
           </div>
-        )}
         </Section>
       </Slide>
 
@@ -434,7 +420,7 @@ export default async function SpeakerPage() {
       >
         <FinalCta
           heading="Ready to Inspire Your Team?"
-          description="Book Nic for your next conference, corporate event, team offsite, or webinar. Virtual delivery worldwide."
+          description="Book Nic for your next conference, corporate event, team offsite, or webinar. In person or virtually."
           primaryHref="/contact"
           primaryLabel="Book Nic for Your Event"
           headingClassName="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-accent-600 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl"

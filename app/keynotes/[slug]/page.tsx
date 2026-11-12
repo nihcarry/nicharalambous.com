@@ -20,6 +20,7 @@ import {
   KEYNOTE_SLIDES,
   getKeynoteBySlug,
   getKeynoteBookingUrl,
+  deliveryFormatLabel,
 } from "@/lib/keynotes-data";
 
 /**
@@ -120,7 +121,7 @@ export async function generateMetadata({
   const keynote = await getKeynote(slug);
   if (!keynote) return { title: "Keynote Not Found" };
 
-  const title = `${keynote.title} | Virtual Keynote by Nic Haralambous`;
+  const title = `${keynote.title} | In Person or Virtual Keynote`;
   const description = keynote.tagline;
 
   return {
@@ -166,7 +167,7 @@ export default async function KeynotePage({
       {/* Structured data */}
       <JsonLd
         data={serviceJsonLd({
-          name: `${keynote.title}: Virtual Keynote`,
+          name: `${keynote.title}: In Person or Virtual Keynote`,
           description: keynote.tagline,
           url: `https://www.nicharalambous.com/keynotes/${slug}`,
         })}
@@ -175,7 +176,7 @@ export default async function KeynotePage({
       {/* Hero */}
       <Section width="landing" className="text-center">
         <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
-          Virtual Keynote
+          In person or virtual
         </p>
         <h1 className="heading-display-stroke-sm mt-3 text-4xl text-brand-900 sm:text-5xl md:text-6xl">
           {keynote.title}
@@ -186,14 +187,7 @@ export default async function KeynotePage({
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-brand-400">
           <span>
-            Format:{" "}
-            {keynote.deliveryFormat === "virtual"
-              ? "Virtual"
-              : keynote.deliveryFormat === "hybrid"
-                ? "Hybrid"
-                : keynote.deliveryFormat === "in-person"
-                  ? "In-Person"
-                  : "Virtual"}
+            Format: {deliveryFormatLabel()}
           </span>
           <span>Duration: {keynote.duration || "45-60 minutes"}</span>
         </div>
@@ -341,7 +335,7 @@ export default async function KeynotePage({
       {/* CTA */}
       <FinalCta
         heading="Book This Keynote"
-        description="Virtual delivery worldwide. Customized for your audience."
+        description="Available in person or virtually. Customized for your audience."
         primaryHref={getKeynoteBookingUrl(slug)}
         primaryLabel="Enquire Now"
         secondaryHref="/speaker"

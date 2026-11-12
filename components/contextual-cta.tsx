@@ -59,11 +59,11 @@ export function ContextualCta({
         Want the Keynote Version?
       </p>
       <h3 className="mt-2 heading-display text-2xl text-brand-900">
-        These ideas come alive in Nic&rsquo;s virtual keynotes
+        These ideas come alive in Nic&rsquo;s keynotes
       </h3>
       <p className="mt-2 text-base text-brand-600">
         Real stories, actionable frameworks, tailored to your audience.
-        Worldwide virtual delivery.
+        In person or virtually.
       </p>
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
         <CTAButton href="/speaker">About Nic as a Speaker</CTAButton>

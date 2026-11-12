@@ -172,7 +172,7 @@ export default async function MediaPage() {
       {/* CTA */}
       <FinalCta
         heading="Book Nic for Your Event"
-        description="Virtual keynotes for conferences, corporate events, and webinars. Worldwide delivery."
+        description="Keynotes for conferences, corporate events, and webinars, in person or virtually. Worldwide."
         primaryHref="/contact"
         primaryLabel="Enquire Now"
         secondaryHref="/speaker"

@@ -547,8 +547,8 @@ export default async function HomePage() {
             Want Nic at Your Next Event?
           </h2>
           <p className="mt-4 text-lg text-brand-700">
-            Virtual keynotes for conferences, corporate events, team offsites, and
-            webinars. Worldwide delivery.
+            Keynotes for conferences, corporate events, team offsites, and
+            webinars, in person or virtually. Worldwide.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <CTAButton

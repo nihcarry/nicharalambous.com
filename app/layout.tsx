@@ -25,7 +25,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nicharalambous.com"),
   title: {
-    default: "Nic Haralambous | Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
+    default: "Nic Haralambous | Entrepreneur, AI Product Builder, Keynote Speaker",
     template: "%s | Nic Haralambous",
   },
   description: DEFAULT_DESCRIPTION,

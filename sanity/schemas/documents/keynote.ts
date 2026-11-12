@@ -40,14 +40,17 @@ export const keynote = defineType({
       name: "deliveryFormat",
       title: "Delivery Format",
       type: "string",
+      description:
+        "Every keynote is offered in person or virtually. Older documents may still store virtual, hybrid, or in-person. The site shows all of them as in person or virtual.",
       options: {
         list: [
-          { title: "Virtual", value: "virtual" },
-          { title: "Hybrid", value: "hybrid" },
-          { title: "In-Person", value: "in-person" },
+          { title: "In person or virtual", value: "in-person-or-virtual" },
+          { title: "In person or virtual (stored as virtual)", value: "virtual" },
+          { title: "In person or virtual (stored as hybrid)", value: "hybrid" },
+          { title: "In person or virtual (stored as in-person)", value: "in-person" },
         ],
       },
-      initialValue: "virtual",
+      initialValue: "in-person-or-virtual",
     }),
     defineField({
       name: "duration",
