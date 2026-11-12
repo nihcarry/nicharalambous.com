@@ -6,8 +6,8 @@
  * Font loading uses next/font for optimal performance.
  */
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { Header } from "@/components/header";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { SiteNav } from "@/components/site/site-nav";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { SmartHeadingManager } from "@/components/smart-heading-manager";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -15,17 +15,31 @@ import { JsonLd } from "@/components/json-ld";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { DEFAULT_DESCRIPTION, personJsonLd, websiteJsonLd } from "@/lib/metadata";
 import "./globals.css";
+import "./v3.css";
 
-const inter = Inter({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-bricolage",
+  axes: ["opsz", "wdth"],
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nicharalambous.com"),
   title: {
-    default: "Nic Haralambous | Entrepreneur, AI Product Builder, Keynote Speaker",
+    default: "Nic Haralambous | Keynote speaker",
     template: "%s | Nic Haralambous",
   },
   description: DEFAULT_DESCRIPTION,
@@ -42,7 +56,8 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_GB",
+    images: [{ url: "/og/home.png", width: 1200, height: 630 }],
     siteName: "Nic Haralambous - Keynote Speaker",
   },
   twitter: {
@@ -61,7 +76,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F172A",
+  themeColor: "#0A0C10",
   viewportFit: "cover",
 };
 
@@ -71,16 +86,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
         <ThemeProvider>
           <SmartHeadingManager />
           <GoogleAnalytics />
-          {/* Sitewide structured data */}
           <JsonLd data={personJsonLd()} />
           <JsonLd data={websiteJsonLd()} />
-          <Header />
-          <main className="flex-1 pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))] md:pb-0 md:pt-[var(--header-clearance)]">{children}</main>
+          <SiteNav />
+          <main id="content" className="flex-1">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>
       </body>

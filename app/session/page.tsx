@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   title: "Book a Session",
   description:
     "Book coaching or a one-off Brain Picking session with Nic Haralambous, or apply for pay-what-you-can-afford coaching.",
+  robots: { index: true, follow: true },
   alternates: { canonical: "https://www.nicharalambous.com/session" },
   openGraph: {
     type: "website",

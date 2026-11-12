@@ -29,6 +29,7 @@ export const portableTextBody = defineType({
         decorators: [
           { title: "Bold", value: "strong" },
           { title: "Italic", value: "em" },
+          { title: "Highlight", value: "highlight" },
           { title: "Code", value: "code" },
           { title: "Strikethrough", value: "strike-through" },
         ],

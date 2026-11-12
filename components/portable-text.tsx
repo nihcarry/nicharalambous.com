@@ -11,6 +11,7 @@ import {
   type PortableTextBlock as PTBlock,
 } from "@portabletext/react";
 import { urlFor } from "@/lib/sanity/image";
+import { withoutEmDash } from "@/lib/site";
 
 /** Custom component map for Portable Text rendering */
 const components: PortableTextComponents = {
@@ -62,6 +63,7 @@ const components: PortableTextComponents = {
       <strong className="font-semibold text-brand-900">{children}</strong>
     ),
     em: ({ children }) => <em>{children}</em>,
+    highlight: ({ children }) => <em className="hl">{children}</em>,
     code: ({ children }) => (
       <code className="rounded bg-brand-100 px-1.5 py-0.5 text-sm font-mono text-brand-800">
         {children}
@@ -183,12 +185,25 @@ interface PortableTextProps {
  * Render Sanity Portable Text content with consistent styling.
  * Returns null if no content is provided.
  */
+function stripRenderedDashes<T>(value: T): T {
+  if (typeof value === "string") return withoutEmDash(value) as T;
+  if (Array.isArray(value)) return value.map((item) => stripRenderedDashes(item)) as T;
+  if (value && typeof value === "object") {
+    const copy: Record<string, unknown> = {};
+    for (const [key, child] of Object.entries(value)) {
+      copy[key] = stripRenderedDashes(child);
+    }
+    return copy as T;
+  }
+  return value;
+}
+
 export function PortableText({ value, className = "" }: PortableTextProps) {
   if (!value || value.length === 0) return null;
   return (
     <div className={className}>
       <PortableTextRenderer
-        value={value as PTBlock[]}
+        value={stripRenderedDashes(value) as PTBlock[]}
         components={components}
       />
     </div>

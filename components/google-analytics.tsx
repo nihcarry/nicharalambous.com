@@ -21,7 +21,7 @@ export function GoogleAnalytics() {
     <>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         onError={(e) => {
           // Script load failures (e.g. ad blocker) pass an Event; swallowing here
           // prevents "[object Event]" from bubbling to Next.js error overlay.
@@ -30,7 +30,7 @@ export function GoogleAnalytics() {
           }
         }}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

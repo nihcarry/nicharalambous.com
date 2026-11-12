@@ -1,626 +1,326 @@
-/**
- * Homepage — nicharalambous.com
- *
- * Keynote-style slide deck layout. Each section is a full-viewport slide
- * that snaps into view on desktop, creating a presentation feel.
- * Mobile reverts to standard vertical scroll.
- *
- * The authority hub page. Primary goal: drive visitors to /speaker and /contact.
- *
- * Slides:
- * 1. Hero with core positioning
- * 2. Featured keynote topics (CMS-driven)
- * 3. Recent blog posts (CMS-driven, conditional)
- * 4. Explore Topics
- * 5. What Clients Say (testimonials)
- * 6. Incredible Clients (logos)
- * 7. Final CTA → /speaker
- * 8. Newsletter signup
- * 9. Footer
- *
- * Content is fetched from Sanity at build time. Falls back to hardcoded
- * defaults if Sanity data is not yet published.
- */
-import { client } from "@/lib/sanity/client";
-import {
-  homepageRecentPostsQuery,
-  speakerPageQuery,
-  type HomepagePost,
-  type SpeakerPageData,
-} from "@/lib/sanity/queries";
-import { CTAButton } from "@/components/cta-button";
-import { Slide } from "@/components/slide";
-import { SlideDeck } from "@/components/slide-deck";
-import { SlideContent } from "@/components/slide-animations";
-import { FooterContent } from "@/components/footer-content";
-import { NewsletterSignup } from "@/components/newsletter-signup";
-import { NextSlideIndicator } from "@/components/next-slide-indicator";
-import { WhatClientsSay } from "@/components/what-clients-say";
-import { IncredibleClients } from "@/components/incredible-clients";
-import { getKeynoteBookingUrl } from "@/lib/keynotes-data";
-import { HOME_URL } from "@/lib/metadata";
-import { ArrowRight, Crosshair } from "lucide-react";
-import { DecorativePicture } from "@/components/decorative-picture";
-import { LoadWhenNear } from "@/components/load-when-near";
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { LogoStrip } from "@/components/site/logo-strip";
+import { NewsletterBlock } from "@/components/site/newsletter-block";
+import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
+import { bookOfferHref } from "@/lib/site";
+import { latestYouTubeVideo, v3ContentSettings } from "@/lib/v3-content";
 
-/** Flagship keynote the hero slide sells. */
-const OUTPUT_PARADOX_SLUG = "output-paradox-reengage-teams";
+export const metadata: Metadata = {
+  title: { absolute: "Nic Haralambous | Keynote speaker" },
+  description:
+    "Nic Haralambous speaks to teams about the Output Paradox, in person or on Zoom, Teams or Meet. Virtual lunch and learn €999 ex VAT. In-person keynotes from €4,500, excluding travel and VAT.",
+  alternates: { canonical: HOME_URL },
+  openGraph: {
+    title: "Nic Haralambous | Keynote speaker",
+    description:
+      "Your teams are shipping more, and checking out faster. Book a 20-minute virtual lunch and learn for €999 ex VAT, or an in-person keynote from €4,500.",
+    url: HOME_URL,
+    images: [{ url: "/og/home.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nic Haralambous | Keynote speaker",
+    description:
+      "Keynotes on the Output Paradox, in person or virtually. Lunch and learn €999 ex VAT.",
+    images: ["/og/home.png"],
+  },
+};
 
-/** Portraits sit in a six-column row, so each one is a sixth of the viewport. */
-const HERO_PORTRAIT_SIZES = "16.67vw";
-const DESKTOP_MEDIA = "(min-width: 768px)";
+const POSTS = [
+  {
+    href: "/blog/canva-creates-1271-entrepreneurs",
+    meta: "6 Nov 2026 · 4 min",
+    title: "Canva creates 1271 entrepreneurs",
+    excerpt:
+      "Canva's layoff package gives departing staff six months' salary, MacBooks, coaching and a $10,000 grant to start their own business.",
+  },
+  {
+    href: "/blog/building-software-is-a-solved-problem-what-next",
+    meta: "14 Oct 2026 · 4 min",
+    title: "Building software is a solved problem. What next?",
+    excerpt:
+      "Anyone can build any software now. But building software is not the same as building a business.",
+  },
+  {
+    href: "/blog/hell-yeah-you-can-be-employed-an-entrepreneur",
+    meta: "23 Sep 2026 · 5 min",
+    title: "Hell yeah you can be employed and an entrepreneur",
+    excerpt:
+      "Figure out what success looks like for your business, match it to the time you can realistically spend, and build both.",
+  },
+];
 
-function heroPortraitSrcSet(n: number, ext: "avif" | "webp" | "png"): string {
-  if (ext === "png") return `/slides/nic-hero-${n}.png 682w`;
-  return `/slides/hero/nic-hero-${n}-480.${ext} 480w, /slides/hero/nic-hero-${n}-682.${ext} 682w`;
-}
-
-/**
- * Deterministic pseudo-random tilt between -maxDeg and +maxDeg.
- * Uses a simple hash so each (slide, card) pair gets a unique but
- * stable rotation that doesn't repeat in an obvious pattern.
- */
-function tilt(index: number, seed: number, maxDeg = 1.8): number {
-  const hash = Math.sin(index * 127.1 + seed * 311.7) * 43758.5453;
-  return +((hash - Math.floor(hash)) * maxDeg * 2 - maxDeg).toFixed(2);
-}
-
-/* ---------- Data fetching ---------- */
-
-async function getRecentPosts(): Promise<HomepagePost[] | null> {
-  try {
-    const data = await client.fetch<HomepagePost[]>(homepageRecentPostsQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
-async function getAsSeenAt(): Promise<string[] | null> {
-  try {
-    const data = await client.fetch<SpeakerPageData | null>(speakerPageQuery);
-    return data?.asSeenAt && data.asSeenAt.length > 0 ? data.asSeenAt : null;
-  } catch {
-    return null;
-  }
-}
-
-/* ---------- Page ---------- */
+const BOOKS = [
+  {
+    href: "/books/do-fail-learn-repeat",
+    src: "/v3/books/Do_Fail_Learn_repeate.jpg",
+    alt: "Cover of Do. Fail. Learn. Repeat. by Nic Haralambous",
+    width: 304,
+    height: 466,
+  },
+  {
+    href: "/books/the-business-builders-toolkit",
+    src: "/v3/books/Business_Builders_Toolkit.jpg",
+    alt: "Cover of The Business Builder's Toolkit by Nic Haralambous",
+    width: 326,
+    height: 522,
+  },
+  {
+    href: "/books/how-to-start-a-side-hustle",
+    src: "/v3/books/How_to_start_a_side_Hustle.jpg",
+    alt: "Cover of How to Start a Side Hustle by Nic Haralambous",
+    width: 279,
+    height: 445,
+  },
+];
 
 export default async function HomePage() {
-  const [posts, cmsAsSeenAt] = await Promise.all([
-    getRecentPosts(),
-    getAsSeenAt(),
-  ]);
-
-  const displayAsSeenAt = cmsAsSeenAt || FALLBACK_AS_SEEN_AT;
+  const [video, settings] = await Promise.all([latestYouTubeVideo(), v3ContentSettings()]);
+  const offer = bookOfferHref();
 
   return (
-    <>
-      {/* Next's metadata resolver drops a trailing slash on the site root.
-          These two tags are the home canonical and og:url. */}
-      <link rel="canonical" href={HOME_URL} />
-      <meta property="og:url" content={HOME_URL} />
-    <SlideDeck>
-      <NextSlideIndicator />
-      {/* Slide 1: Hero — big headline over portrait */}
-      <Slide
-        variant="hero"
-        id="hero"
-        background="bg-beard-pattern"
-        className="md:!pt-[10.5rem] md:!justify-start"
-        image={
-          <>
-            {/* The faint beard tile is the mobile LCP image. Preload it so it
-                is not stuck behind decorative art. */}
-            <link
-              rel="preload"
-              as="image"
-              href="/slides/beard-pattern-tile.png"
+    <div className="v3" data-no-orphan-opt-out="true">
+      <link rel="preload" as="image" href="/v3/nic-hero-4.webp" fetchPriority="high" />
+      <JsonLd data={organizationJsonLd()} />
+      <section className="hero home pd-beard">
+        <div className="glow" aria-hidden="true" />
+        <div className="wrap">
+          <div className="copy">
+            <div className="eyebrow">Keynote speaker · Virtual and in-person</div>
+            <h1>
+              Your teams are shipping more, and <em>checking out</em> faster
+            </h1>
+            <p className="say">
+              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room.
+            </p>
+            <div className="acts">
+              <a className="btn" href={offer}>
+                Book a lunch and learn <span className="p">€999</span>
+              </a>
+              <a className="quiet-link" href="/keynotes/output-paradox-reengage-teams">
+                See the keynote
+              </a>
+            </div>
+          </div>
+          <div className="photo">
+            <img
+              src="/v3/nic-hero-4.webp"
+              alt="Nic Haralambous speaking, hands open, in a white shirt"
+              width={560}
+              height={841}
               fetchPriority="high"
+              decoding="sync"
             />
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <link
-                key={n}
-                rel="preload"
-                as="image"
-                type="image/avif"
-                media={DESKTOP_MEDIA}
-                href={`/slides/hero/nic-hero-${n}-480.avif`}
-                imageSrcSet={heroPortraitSrcSet(n, "avif")}
-                imageSizes={HERO_PORTRAIT_SIZES}
-              />
-            ))}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] hidden grid-cols-6 items-end md:grid"
-            >
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <DecorativePicture
-                  key={n}
-                  className="block w-full min-w-0"
-                  width={682}
-                  height={1024}
-                  imgClassName="h-auto max-h-[42vh] w-full select-none object-contain object-bottom"
-                  sources={[
-                    {
-                      type: "image/avif",
-                      media: DESKTOP_MEDIA,
-                      srcSet: heroPortraitSrcSet(n, "avif"),
-                      sizes: HERO_PORTRAIT_SIZES,
-                    },
-                    {
-                      type: "image/webp",
-                      media: DESKTOP_MEDIA,
-                      srcSet: heroPortraitSrcSet(n, "webp"),
-                      sizes: HERO_PORTRAIT_SIZES,
-                    },
-                    {
-                      type: "image/png",
-                      media: DESKTOP_MEDIA,
-                      srcSet: heroPortraitSrcSet(n, "png"),
-                      sizes: HERO_PORTRAIT_SIZES,
-                    },
-                  ]}
-                />
-              ))}
-            </div>
-          </>
-        }
-      >
-        {/* Hero copy not wrapped in SlideContent so it’s always visible */}
-        <div className="text-center">
-          <h1
-            data-no-orphan-opt-out="true"
-            className="mx-auto mb-4 max-w-3xl text-balance text-lg font-semibold leading-snug text-brand-900 md:mb-6 md:text-2xl"
-          >
-            Nic Haralambous, keynote speaker on team performance in the age of AI
-          </h1>
-          <h2
-            className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,6vw,5.5rem)] uppercase leading-[0.95] text-accent-600"
-          >
-            THE OUTPUT PARADOX
+          </div>
+        </div>
+      </section>
+
+      <div className="ip pd-calendar">
+        <div className="wrap">
+          <span>
+            <b>In-person keynotes from €4,500</b>, excluding travel and VAT.
+          </span>
+          <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
+            Enquire about a date
+          </a>
+        </div>
+      </div>
+
+      <div className="proof p-broadcast">
+        <div className="wrap">
+          <span className="mono">Teams and stages I have spoken to</span>
+          <LogoStrip />
+        </div>
+      </div>
+
+      <section className="p-mic">
+        <div className="wrap">
+          <div className="eyebrow">Three ways I can help</div>
+          <h2 style={{ margin: "20px 0 0", maxWidth: 900 }}>
+            I speak, I coach and I write. Pick the one you came for.
           </h2>
-          {/* Body + CTAs — centered below the headline */}
-          <div className="mx-auto mt-4 flex max-w-2xl flex-col items-center md:mt-6">
-            <div className="flex flex-col gap-6 text-center [text-shadow:0_1px_2px_rgba(247,247,245,0.9)]">
-              {/* Hook — the thesis, largest and boldest.
-                  Non-breaking spaces keep trailing words from wrapping alone. */}
-              <p className="text-balance text-xl font-bold leading-tight text-brand-900 md:text-3xl">
-                Your teams are shipping more, but they&apos;re
-                checking&nbsp;out.
-                <br />
-                Productivity is up. Activity is&nbsp;up.
-                <br />
-                But&nbsp;
-                <span className="text-accent-600">
-                  engagement is&nbsp;down.
-                </span>
+          <div className="pillars">
+            <div className="pl k">
+              <img
+                className="px pxi s"
+                src="/v3/px/Nic_soap_16bit.png"
+                alt="Pixel drawing of Nic with a megaphone"
+                width={115}
+                height={240}
+                loading="lazy"
+              />
+              <span className="mono">01 · Keynotes</span>
+              <h3>For your team or your stage</h3>
+              <p>
+                For People, L&amp;D and Talent leads at remote and hybrid companies, and for the organisers of conferences and leadership events.
               </p>
-              {/* Symptoms — the problem, medium weight */}
-              <p className="text-balance text-base leading-relaxed text-brand-700 md:text-xl">
-                It&apos;s not Artificial Intelligence you need to
-                worry&nbsp;about.
-                <br />
-                It&apos;s&nbsp;
-                <span className="font-semibold text-brand-900">
-                  Apathy and&nbsp;Indifference.
-                </span>
-              </p>
-              {/* Offer — set apart with a mono kicker */}
-              <div>
-                <span className="font-mono text-sm font-semibold tracking-widest text-accent-600">
-                  THE KEYNOTE
-                </span>
-                <p className="mt-2 text-base font-medium leading-relaxed text-brand-900 md:text-lg">
-                  The Output Paradox &mdash; How to reengage teams in the age of
-                  AI.
-                </p>
-              </div>
+              <ul>
+                <li>20-minute virtual lunch and learn, €999</li>
+                <li>Virtual keynotes from €1,500 ex VAT</li>
+                <li>In-person keynotes from €4,500</li>
+              </ul>
+              <a className="go" href="/keynotes/output-paradox-reengage-teams">
+                See the Output Paradox <span>→</span>
+              </a>
             </div>
-            <div className="mt-4 flex flex-col gap-4 sm:flex-row md:mt-6">
-              <CTAButton
-                href={getKeynoteBookingUrl(OUTPUT_PARADOX_SLUG)}
-                className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-              >
-                Book This Talk
-              </CTAButton>
-              <CTAButton
-                href={`/keynotes/${OUTPUT_PARADOX_SLUG}`}
-                variant="secondary"
-                className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-              >
-                See The Keynote
-              </CTAButton>
+            <div className="pl">
+              <img
+                className="px pxi"
+                src="/v3/px/Nic_Hunting_Pickaxe.png"
+                alt="Pixel drawing of Nic with a pickaxe"
+                width={170}
+                height={288}
+                loading="lazy"
+              />
+              <span className="mono">02 · Coaching</span>
+              <h3>No Bull Ship</h3>
+              <p>
+                An 8-week build sprint for people 40 and older who want to ship their first real product, with ruthless scope, clarity and weekly delivery.
+              </p>
+              <ul>
+                <li>8 weeks, one real product shipped</li>
+                <li>Ruthless scope and weekly delivery</li>
+                <li>Built for experienced professionals</li>
+              </ul>
+              <span className="nbs">
+                <i />
+                No Bull Ship Academy · nobullship.co
+              </span>
+              <a className="go" href="https://nobullship.co">
+                Go to nobullship.co <span>↗</span>
+              </a>
+              <a className="session-link" href="/session">
+                Or book a 1:1 session
+              </a>
+            </div>
+            <div className="pl">
+              <img
+                className="px pxi k"
+                src="/v3/px/Nic_archeo_16bit.png"
+                alt="Pixel drawing of Nic digging"
+                width={182}
+                height={220}
+                loading="lazy"
+              />
+              <span className="mono">03 · Content</span>
+              <h3>Read, watch, subscribe</h3>
+              <p>
+                I write to you every Thursday, I make videos on YouTube and I&apos;ve been writing on this site since 2013.
+              </p>
+              <ul>
+                <li>The weekly newsletter</li>
+                <li>YouTube</li>
+                <li>The blog and three books</li>
+              </ul>
+              <a className="go" href="#newsletter">
+                Get the newsletter <span>↓</span>
+              </a>
             </div>
           </div>
         </div>
-      </Slide>
+      </section>
 
-      {/* Slide 2: What Nic speaks about — three topic pillars */}
-      <Slide
-        variant="grid-3"
-        background="bg-mic-pattern"
-        id="keynotes"
-        image={
-          <DecorativePicture
-            className="pointer-events-none absolute bottom-0 left-0 z-[1] hidden h-[58.5vh] w-auto md:block"
-            width={521}
-            height={1410}
-            loading="lazy"
-            imgClassName="h-full w-auto select-none object-contain object-bottom"
-            sources={[
-              {
-                media: DESKTOP_MEDIA,
-                srcSet: "/slides/Nic_16_bit_slide_2_Landing.png",
-              },
-            ]}
-          />
-        }
-      >
-        <SlideContent>
-          <h2 className="heading-stroke font-extrabold tracking-tight pt-[22px] pb-[22px] text-center text-[clamp(1.75rem,8vw,2.25rem)] uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-            What Nic Speaks About
-          </h2>
-          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                label: "TOPIC_01",
-                title: "Activating Human Agency",
-                body: "I help people and teams move from passive compliance to ownership and initiative, even inside large organisations.",
-                output: "OWNERSHIP",
-                href: `/keynotes/${OUTPUT_PARADOX_SLUG}`,
-              },
-              {
-                label: "TOPIC_02",
-                title: "Staying Connected Without Becoming Consumed",
-                body: "I help teams protect focus, energy, and mental health while working digitally, without disconnecting from what matters.",
-                output: "FOCUS",
-                href: "/keynotes/connected-not-consumed",
-              },
-              {
-                label: "TOPIC_03",
-                title: "Curiosity, Action and Failure",
-                body: "I help organisations build entrepreneurial teams that learn fast, act with agency, and turn failure into progress, especially in the AI era.",
-                output: "PROGRESS",
-                href: "/keynotes/innovation-starts-at-home",
-              },
-            ].map((pillar) => (
-              <div
-                key={pillar.label}
-                className="flex flex-col border border-brand-900 bg-white p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">
-                    {pillar.label}
-                  </span>
-                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                </div>
-                <div className="my-3 border-t border-brand-200" />
-                <a href={pillar.href} className="group">
-                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
-                    {pillar.title}
-                  </h3>
-                </a>
-                <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                  {pillar.body}
-                </p>
-                <div className="mt-auto pt-6">
-                  <div className="border-t border-brand-200 pt-4">
-                    <a href={pillar.href} className="group flex items-center justify-between">
-                      <span className="font-mono text-xs tracking-widest text-accent-600">
-                        OUTPUT: {pillar.output}
-                      </span>
-                      <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <CTAButton
-              href="/keynotes"
-              variant="secondary"
-              icon={<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />}
-              className="!rounded-none !border-accent-600 !text-accent-600 font-mono font-semibold tracking-[0.05em] text-base uppercase hover:!bg-accent-50"
-            >
-              View All Keynotes
-            </CTAButton>
-          </div>
-        </SlideContent>
-      </Slide>
-
-      {/* Slide 3: Recent blog posts — CMS-driven, conditional */}
-      {posts && posts.length > 0 && (
-        <Slide
-          variant="grid-3"
-          id="thinking"
-          background="bg-pen-pattern"
-          image={
-            <DecorativePicture
-              className="pointer-events-none absolute right-3 bottom-8 z-[1] hidden h-[180px] w-auto md:block lg:h-[220px] xl:h-[260px] 2xl:h-[300px]"
-              width={832}
-              height={1248}
-              loading="lazy"
-              imgClassName="h-full w-auto select-none object-contain object-bottom"
-              sources={[
-                {
-                  media: DESKTOP_MEDIA,
-                  srcSet: "/slides/Nic_soap_16bit.png",
-                },
-              ]}
-            />
-          }
-        >
-          <SlideContent>
-            <h2 className="heading-stroke font-extrabold tracking-tight pt-2 pb-3 text-center text-[clamp(1.9rem,4.5vw,3.6rem)] uppercase leading-[0.95] text-brand-900">
-              Latest Thinking
+      <section className="dark pd-speech">
+        <div className="wrap talk">
+          <div>
+            <div className="eyebrow">The keynote</div>
+            <h2 style={{ margin: "20px 0 22px" }}>
+              Artificial Intelligence won&apos;t kill your business. <em>Apathy and Indifference</em> might.
             </h2>
-            <div className="mt-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post, i) => (
-                <a
-                  key={post._id}
-                  href={`/blog/${post.slug}`}
-                  className="group flex flex-col border border-brand-900 bg-white p-6"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-widest text-accent-600">
-                      POST_{String(i + 1).padStart(2, "0")}
-                    </span>
-                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                  </div>
-                  <div className="my-3 border-t border-brand-200" />
-                  <h3 className="text-xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 [overflow-wrap:anywhere] md:text-2xl">
-                    {post.title}
-                  </h3>
-                  <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-auto pt-6">
-                    <div className="border-t border-brand-200 pt-4">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-brand-500">
-                          {post.publishedAt && new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                          {post.estimatedReadTime && ` · ${post.estimatedReadTime} min`}
-                        </span>
-                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              ))}
+            <p className="lead">
+              Nearly one in four of your employees is disengaged right now, and AI is masking the signal. The Output Paradox gives your leaders three shifts and gives your team one change they can make before they leave the room.
+            </p>
+            <div className="acts2">
+              <a className="btn" href={offer}>
+                Book a lunch and learn <span className="p">€999</span>
+              </a>
+              <a className="quiet-link" href="/keynotes/output-paradox-reengage-teams">
+                Read about the talk
+              </a>
             </div>
-            <div className="mt-4 text-center">
-              <CTAButton href="/blog" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-                Read the Blog
-              </CTAButton>
-            </div>
-          </SlideContent>
-        </Slide>
-      )}
+          </div>
+          {settings.stageClipUrl ? (
+            <a className="clip-frame" href={settings.stageClipUrl}>
+              Watch the stage clip
+            </a>
+          ) : null}
+        </div>
+      </section>
 
-      {/* Slide 4: Topics preview — heading occupies top-left 2 cells of the 3-col grid */}
-      <Slide
-        variant="grid-6"
-        background="bg-lightbulb-pattern"
-        id="topics"
-      >
-        <SlideContent>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Heading in place of first two cards */}
-            <div className="flex items-center sm:col-span-2">
-              <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-[85px]">
-                Explore Topics
-              </h2>
+      <NewsletterBlock />
+
+      <section className="p-quill">
+        <div className="wrap">
+          <div className="section-head">
+            <div>
+              <div className="eyebrow">Latest thinking</div>
+              <h2 style={{ margin: "20px 0 0" }}>From the blog</h2>
             </div>
-            {/* Top-right card */}
-            <LoadWhenNear
-              className="relative"
-              hold={
-                <a
-                  href={TOPIC_PREVIEWS[0].href}
-                  className="group flex flex-col border border-brand-900 bg-white p-6"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_01</span>
-                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                  </div>
-                  <div className="my-3 border-t border-brand-200" />
-                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
-                    {TOPIC_PREVIEWS[0].title}
-                  </h3>
-                  <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                    {TOPIC_PREVIEWS[0].description}
-                  </p>
-                  <div className="mt-auto pt-6 flex justify-end">
-                    <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                  </div>
-                </a>
-              }
-            >
-              <DecorativePicture
-                className="pointer-events-none absolute bottom-full right-4 z-50"
-                width={278}
-                height={318}
-                loading="lazy"
-                imgClassName="h-24 w-auto select-none object-contain object-bottom"
-                sources={[{ srcSet: "/slides/Nic_archeo_16bit.png" }]}
-              />
-            </LoadWhenNear>
-            {/* Bottom row — 3 cards */}
-            {TOPIC_PREVIEWS.slice(1).map((topic, i) => (
-              i === 0 ? (
-                <div key={topic.href} className="relative">
-                  <DecorativePicture
-                    className="pointer-events-none absolute bottom-full left-4 z-50 hidden h-36 md:block"
-                    width={408}
-                    height={612}
-                    loading="lazy"
-                    imgClassName="h-full w-auto select-none object-contain object-bottom"
-                    sources={[
-                      {
-                        media: DESKTOP_MEDIA,
-                        srcSet: "/slides/Nic_Hunting_Pickaxe.png",
-                      },
-                    ]}
-                  />
-                  <a
-                    href={topic.href}
-                    className="group flex flex-col border border-brand-900 bg-white p-6"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_{String(i + 2).padStart(2, "0")}</span>
-                      <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                    </div>
-                    <div className="my-3 border-t border-brand-200" />
-                    <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
-                      {topic.title}
-                    </h3>
-                    <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                      {topic.description}
-                    </p>
-                    <div className="mt-auto pt-6 flex justify-end">
-                      <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                    </div>
-                  </a>
-                </div>
-              ) : (
-                <a
-                  key={topic.href}
-                  href={topic.href}
-                  className="group flex flex-col border border-brand-900 bg-white p-6"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-widest text-accent-600">TOPIC_{String(i + 2).padStart(2, "0")}</span>
-                    <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                  </div>
-                  <div className="my-3 border-t border-brand-200" />
-                  <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-3xl">
-                    {topic.title}
-                  </h3>
-                  <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                    {topic.description}
-                  </p>
-                  <div className="mt-auto pt-6 flex justify-end">
-                    <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                  </div>
-                </a>
-              )
+            <a className="link" href="/blog">
+              Read the blog
+            </a>
+          </div>
+          <div className="posts">
+            {POSTS.map((post) => (
+              <a className="post" href={post.href} key={post.href}>
+                <span className="mono">{post.meta}</span>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+              </a>
             ))}
           </div>
-          <div className="mt-6 text-right">
-            <CTAButton href="/topics" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-              All Topics
-            </CTAButton>
+          <div className="content-row">
+            {video ? (
+              <div>
+                <span className="mono section-kicker">On YouTube</span>
+                <a className="yt-card" href={`https://www.youtube.com/watch?v=${video.id}`}>
+                  <img
+                    src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                    alt=""
+                    width={480}
+                    height={360}
+                    loading="lazy"
+                  />
+                  <span>{video.title}</span>
+                </a>
+              </div>
+            ) : null}
+            <div>
+              <span className="mono section-kicker">The books</span>
+              <div className="books">
+                {BOOKS.map((book) => (
+                  <a href={book.href} key={book.href}>
+                    <img src={book.src} alt={book.alt} width={book.width} height={book.height} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
-        </SlideContent>
-      </Slide>
+        </div>
+      </section>
 
-      {/* Slide 5: Social proof — Testimonial.to embed */}
-      <Slide
-        variant="full"
-        id="testimonials"
-        background="bg-speech-pattern"
-      >
-        <SlideContent className="relative">
-          <WhatClientsSay headingAlign="left" />
-        </SlideContent>
-      </Slide>
-
-      {/* Slide 6: Incredible Clients logos */}
-      <Slide variant="logos" background="bg-broadcast-pattern" id="logos">
-        <SlideContent>
-          <IncredibleClients names={displayAsSeenAt} />
-        </SlideContent>
-      </Slide>
-
-      {/* Slide 7: Final CTA */}
-      <Slide
-        variant="cta"
-        background="bg-calendar-pattern"
-        className="text-center"
-        id="cta"
-      >
-        <SlideContent>
-          <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl">
-            Want Nic at Your Next Event?
-          </h2>
-          <p className="mt-4 text-lg text-brand-700">
-            Keynotes for conferences, corporate events, team offsites, and
-            webinars, in person or virtually. Worldwide.
-          </p>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <CTAButton
-              href="/contact"
-              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-            >
-              Book Nic for Your Event
-            </CTAButton>
-            <CTAButton
-              href="/speaker"
-              variant="secondary"
-              className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase"
-            >
-              About Nic as a Speaker
-            </CTAButton>
+      <section className="dark pd-cta" style={{ position: "relative" }}>
+        <img
+          className="px pxf"
+          src="/v3/px/Nic_Ancient_greece_16bit.png"
+          alt="Pixel drawing of Nic as a Greek orator"
+          width={226}
+          height={280}
+          loading="lazy"
+        />
+        <div className="wrap final">
+          <h2>If your team is doing more and feeling less, let&apos;s talk</h2>
+          <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
+            <a className="btn" href={offer}>
+              Book a lunch and learn <span className="p">€999</span>
+            </a>
+            <a className="quiet-link" href="/contact">
+              Talk to me first
+            </a>
           </div>
-        </SlideContent>
-      </Slide>
-
-      {/* Slide 8: Newsletter. After the booking ask so the speaking
-          funnel stays first, and before the footer so it is its own slide. */}
-      <Slide
-        variant="cta"
-        background="bg-envelope-pattern"
-        className="text-center"
-        id="newsletter"
-      >
-        <SlideContent>
-          <NewsletterSignup variant="section" />
-        </SlideContent>
-      </Slide>
-
-      {/* Slide 9: Footer */}
-      <Slide variant="footer" background="bg-foot-pattern" id="footer">
-        <FooterContent />
-      </Slide>
-      <NextSlideIndicator />
-    </SlideDeck>
-    </>
+        </div>
+      </section>
+    </div>
   );
 }
-
-/* ---------- Fallback data ---------- */
-
-const FALLBACK_AS_SEEN_AT = [
-  "SXSW",
-  "Standard Bank",
-  "Vodacom",
-  "BBC",
-  "Fast Company",
-  "CNBC Africa",
-];
-
-const TOPIC_PREVIEWS = [
-  {
-    title: "Curiosity & Innovation",
-    description: "Why curiosity is the god particle of innovation, and how to build teams that never stop experimenting.",
-    href: "/topics/curiosity",
-  },
-  {
-    title: "Building Breakthrough Products",
-    description: "High agency, selective curiosity, and the innovation flywheel.",
-    href: "/topics/innovation",
-  },
-  {
-    title: "Focus & Agency",
-    description: "Reclaiming attention in a world that profits from your distraction.",
-    href: "/topics/focus",
-  },
-  {
-    title: "AI & Product Building",
-    description: "How to use AI as a tool without losing your mind, or your team's creative edge.",
-    href: "/topics/ai",
-  },
-];

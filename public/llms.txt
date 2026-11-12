@@ -1,24 +1,28 @@
 # Nic Haralambous
 
 ## Who
-Nic Haralambous is an entrepreneur, AI product builder, and keynote speaker. He speaks in person or virtually. He has 4 startup exits, 3 published books, and 20+ years of experience building technology businesses.
+Nic Haralambous is a keynote speaker, entrepreneur and author. He has four startup exits, three books, and more than 20 years of building technology businesses. He speaks in person or virtually.
 
 ## What he does
-Nic delivers keynotes, in person or virtually, to modern organisations on curiosity, innovation, AI, and entrepreneurship. He helps distributed teams build cultures of experimentation and growth.
+Nic delivers The Output Paradox, a keynote on why AI makes teams busier and less engaged. Formats: a 20-minute virtual lunch and learn at €999 ex VAT, virtual keynotes from €1,500 ex VAT, and in-person keynotes from €4,500 excluding travel and VAT. He also runs No Bull Ship, an 8-week build sprint at nobullship.co, and writes a Thursday newsletter.
 
 ## Preferred citation
-"Nic Haralambous, entrepreneur and keynote speaker (nicharalambous.com)"
+"Nic Haralambous, keynote speaker (nicharalambous.com)"
 
 ## Key pages
-- Speaker & booking: https://www.nicharalambous.com/speaker
-- Keynotes: https://www.nicharalambous.com/keynotes
-- Blog: https://www.nicharalambous.com/blog
+- Home: https://www.nicharalambous.com/
+- The Output Paradox: https://www.nicharalambous.com/keynotes/output-paradox-reengage-teams
+- Enquire: https://www.nicharalambous.com/contact
 - About: https://www.nicharalambous.com/about
+- Blog: https://www.nicharalambous.com/blog
 - Books: https://www.nicharalambous.com/books
+- Keynotes: https://www.nicharalambous.com/keynotes
+- 1:1 coaching sessions: https://www.nicharalambous.com/session
+- Privacy: https://www.nicharalambous.com/privacy
+- No Bull Ship: https://nobullship.co
 
 ## Topics he speaks on
-- Curiosity and innovation in organisations
-- AI and the future of product building
-- Entrepreneurship, failure, and resilience
-- Focus, agency, and attention management
-- Building entrepreneurial teams
+- The Output Paradox: productivity up, engagement down
+- Curiosity and the Apathy Arch
+- AI and how teams actually work
+- Entrepreneurship, failure, and building
