@@ -1,7 +1,8 @@
 /**
- * Article close. Points at the current keynote and the newsletter.
+ * Article close. Retired keynotes are not promoted. The button goes to
+ * the Output Paradox page unless the related keynote is still live.
  */
-import { OUTPUT_PARADOX_PATH } from "@/lib/site";
+import { OUTPUT_PARADOX_PATH, isRetiredKeynote } from "@/lib/site";
 
 interface RelatedKeynote {
   title: string;
@@ -15,17 +16,19 @@ interface ContextualCtaProps {
 }
 
 export function ContextualCta({ relatedKeynote }: ContextualCtaProps) {
-  const title = relatedKeynote?.title || "These ideas come alive in Nic's keynotes";
+  const live = relatedKeynote && !isRetiredKeynote(relatedKeynote.slug) ? relatedKeynote : null;
+  const title = live?.title || "These ideas come alive in Nic's keynotes";
   const detail =
-    relatedKeynote?.tagline ||
+    live?.tagline ||
     "Real stories, actionable frameworks, tailored to your audience. In person or virtually.";
+  const href = live ? `/keynotes/${live.slug}` : OUTPUT_PARADOX_PATH;
 
   return (
     <div className="plain-card closing-card">
       <h2>{title}</h2>
       <p>{detail}</p>
       <div className="acts">
-        <a className="btn" href={OUTPUT_PARADOX_PATH}>
+        <a className="btn" href={href}>
           See the keynote
         </a>
         <a className="quiet-link" href="/#newsletter">

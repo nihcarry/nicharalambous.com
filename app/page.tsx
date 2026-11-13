@@ -275,7 +275,7 @@ export default async function HomePage() {
               <div>
                 <a className="yt-card" href={`https://www.youtube.com/watch?v=${video.id}`}>
                   {poster ? (
-                    <img src={poster} alt="" width={640} height={360} loading="lazy" />
+                    <img src={poster} alt="" width={640} height={360} />
                   ) : (
                     <span className="yt-still" />
                   )}
@@ -287,7 +287,7 @@ export default async function HomePage() {
               <div className="books">
                 {BOOKS.map((book) => (
                   <a href={book.href} key={book.href}>
-                    <img src={book.src} alt={book.alt} width={book.width} height={book.height} loading="lazy" />
+                    <img src={book.src} alt={book.alt} width={book.width} height={book.height} />
                   </a>
                 ))}
               </div>

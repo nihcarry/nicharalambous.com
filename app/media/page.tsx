@@ -10,27 +10,52 @@ import { collectionPageJsonLd } from "@/lib/metadata";
 import { ClosingCta } from "@/components/site/closing-cta";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
-async function getMediaAppearances(): Promise<MediaAppearanceData[] | null> {
+/**
+ * Unverified appearances. They stay in Sanity and in the fallback below.
+ * Remove an entry here to show that item again.
+ */
+const HIDDEN_MEDIA: { id: string; title: string }[] = [
+  { id: "fm-1", title: "The Future of Work and Curiosity" },
+  { id: "fm-2", title: "South African Entrepreneur on Building with AI" },
+  { id: "fm-3", title: "Entrepreneurship in Africa" },
+];
+
+const HOLDING_COPY = "Press and podcast appearances are coming soon.";
+
+function isHiddenMedia(item: MediaAppearanceData): boolean {
+  return HIDDEN_MEDIA.some((hidden) => hidden.id === item._id || hidden.title === item.title);
+}
+
+async function getMediaAppearances(): Promise<MediaAppearanceData[]> {
   try {
-    const data = await client.fetch<MediaAppearanceData[]>(mediaAppearancesQuery);
-    return data && data.length > 0 ? data : null;
+    const data = await client.fetch<MediaAppearanceData[]>(mediaAppearancesQuery, {
+      hiddenTitles: HIDDEN_MEDIA.map((item) => item.title),
+    });
+    const items = data && data.length > 0 ? data : FALLBACK_APPEARANCES;
+    return items.filter((item) => !isHiddenMedia(item));
   } catch {
-    return null;
+    return FALLBACK_APPEARANCES.filter((item) => !isHiddenMedia(item));
   }
 }
 
-export const metadata: Metadata = {
-  title: "Media",
-  description:
-    "Nic Haralambous in the media, including press features, podcast appearances, TV/radio broadcasts, and video interviews.",
-  alternates: { canonical: "https://www.nicharalambous.com/media" },
-  openGraph: {
-    type: "website",
-    title: "Media | Nic Haralambous",
-    description: "Press features, podcast appearances, and media coverage of Nic Haralambous.",
-    url: "https://www.nicharalambous.com/media",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const appearances = await getMediaAppearances();
+  const description =
+    appearances.length === 0
+      ? HOLDING_COPY
+      : "Nic Haralambous in the media, including press features, podcast appearances, TV/radio broadcasts, and video interviews.";
+  return {
+    title: "Media",
+    description,
+    alternates: { canonical: "https://www.nicharalambous.com/media" },
+    openGraph: {
+      type: "website",
+      title: "Media | Nic Haralambous",
+      description,
+      url: "https://www.nicharalambous.com/media",
+    },
+  };
+}
 
 function formatDate(value: string | null): string | null {
   if (!value) return null;
@@ -40,7 +65,7 @@ function formatDate(value: string | null): string | null {
 }
 
 export default async function MediaPage() {
-  const appearances = (await getMediaAppearances()) || FALLBACK_APPEARANCES;
+  const appearances = await getMediaAppearances();
   const grouped = groupByType(appearances);
 
   return (
@@ -48,17 +73,18 @@ export default async function MediaPage() {
       <JsonLd
         data={collectionPageJsonLd({
           name: "Media Appearances | Nic Haralambous",
-          description: "Press features, podcast appearances, TV/radio broadcasts, and video interviews.",
+          description: appearances.length === 0 ? HOLDING_COPY : "Press features, podcast appearances, TV/radio broadcasts, and video interviews.",
           url: "https://www.nicharalambous.com/media",
         })}
       />
       <section>
         <div className="wrap">
           <h1>Media &amp; Press</h1>
-          <p className="lead">Podcasts, press features, TV appearances, and video interviews.</p>
-          <p className="meta" style={{ marginTop: 28 }}>
-            {MEDIA_OUTLETS.join(" · ")}
-          </p>
+          {appearances.length === 0 ? (
+            <p className="lead">{HOLDING_COPY}</p>
+          ) : (
+            <p className="lead">Podcasts, press features, TV appearances, and video interviews.</p>
+          )}
         </div>
       </section>
       {APPEARANCE_TYPES.map(({ key, label }) => {
@@ -128,8 +154,6 @@ function groupByType(items: MediaAppearanceData[]): Record<string, MediaAppearan
   }
   return groups;
 }
-
-const MEDIA_OUTLETS = ["BBC", "Fast Company", "CNBC Africa", "SXSW", "Forbes"];
 
 const FALLBACK_APPEARANCES: MediaAppearanceData[] = [
   {

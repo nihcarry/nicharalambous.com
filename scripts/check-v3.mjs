@@ -15,7 +15,11 @@ const CODE_PATTERNS = [
   ["centred CTA", /bg-cta-pattern/],
   ["60 minutes", /60 minutes|45 to 60|45-60 minutes/i],
   ["US spelling", /\bcustomized\b|\borganization\b|\bfavorite\b/i],
+  ["topic hub eyebrow", /\bTopic Hub\b/],
 ];
+
+const RETIRED_KEYNOTE =
+  /\/keynotes\/(?:curiosity-catalyst|breakthrough-product-teams|breakthrough-teams|reclaiming-focus)\b|The Curiosity Catalyst|How to Build Breakthrough Product Teams|Reclaiming Focus in a World That Profits From Your Distraction/;
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -34,10 +38,14 @@ function routeOf(file) {
   return rel || "/";
 }
 
-function visible(html) {
+function markup(html) {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ");
+}
+
+function visible(html) {
+  return markup(html)
     .replace(/<[^>]+>/g, " ")
     .replace(/&[a-z#0-9]+;/gi, " ");
 }
@@ -57,11 +65,22 @@ for (const file of walk(OUT)) {
   const route = routeOf(file);
   const html = readFileSync(file, "utf8");
   const text = visible(html);
+  const body = markup(html);
   const bucket = sanityRoute(route) ? contentHits : codeHits;
   for (const [name, pattern] of CODE_PATTERNS) {
+    if (name === "topic hub eyebrow") {
+      if (pattern.test(text)) codeHits.push(`${route}: ${name}`);
+      continue;
+    }
     const source = name === "US spelling" || name === "60 minutes" ? text : html;
     if (pattern.test(source)) bucket.push(`${route}: ${name}`);
   }
+  const promo = body.match(/class="plain-card closing-card"[\s\S]{0,900}/);
+  if (promo && RETIRED_KEYNOTE.test(promo[0])) codeHits.push(`${route}: retired keynote promo`);
+  if (/href="\/keynotes\/(?:curiosity-catalyst|breakthrough-product-teams|breakthrough-teams|reclaiming-focus)"/.test(body)) {
+    codeHits.push(`${route}: retired keynote link`);
+  }
+  if (RETIRED_KEYNOTE.test(text)) bucket.push(`${route}: retired keynote`);
   if (!sanityRoute(route) && html.includes('class="v3') && !/class="v3[^"]*\sp-/.test(html) && !html.includes("pd-")) {
     codeHits.push(`${route}: cream page missing a wallpaper class`);
   }

@@ -7,6 +7,18 @@ export const SITE_URL = "https://www.nicharalambous.com";
 
 export const OUTPUT_PARADOX_PATH = "/keynotes/output-paradox-reengage-teams";
 
+/** Keynotes that 301 to the Output Paradox page. Never render these as promos. */
+const RETIRED_KEYNOTE_SLUGS = new Set([
+  "curiosity-catalyst",
+  "breakthrough-product-teams",
+  "breakthrough-teams",
+  "reclaiming-focus",
+]);
+
+export function isRetiredKeynote(slug: string | null | undefined): boolean {
+  return Boolean(slug && RETIRED_KEYNOTE_SLUGS.has(slug));
+}
+
 /**
  * Privacy stays out of the index and the sitemap until Nic supplies the wording.
  * Flip this to false when the page is ready to be indexed.

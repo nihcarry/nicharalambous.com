@@ -218,8 +218,11 @@ export const bookSlugListQuery = `*[_type == "book" && defined(slug.current)]{
 
 /* ---------- Media Appearances ---------- */
 
-/** All media appearances for the /media page, newest first */
-export const mediaAppearancesQuery = `*[_type == "mediaAppearance"] | order(date desc){
+/**
+ * Media appearances for /media, newest first.
+ * Pass hiddenTitles to leave unverified items in Sanity but out of the build.
+ */
+export const mediaAppearancesQuery = `*[_type == "mediaAppearance" && !(title in $hiddenTitles)] | order(date desc){
   _id,
   title,
   type,

@@ -191,13 +191,9 @@ export default async function BusinessesPage() {
 
       {exits.length > 0 && (
         <Section id="past-startups" width="wide" className="relative z-10">
-          <div className="mb-8 text-center">
-            <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-              Past Startups
-            </h2>
-            <p className="mt-2 text-base text-brand-500">
-              Businesses I co-founded and have exited.
-            </p>
+          <div className="mb-8">
+            <h2>Past Startups</h2>
+            <p className="lead">Businesses I co-founded and have exited.</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {exits.map((business, cardIndex) => (
@@ -213,15 +209,11 @@ export default async function BusinessesPage() {
 
       {deadpool.length > 0 && (
         <Section id="deadpool" width="wide" className="relative z-10">
-          <div className="mb-8 text-center">
-            <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-              Deadpool
-            </h2>
-            <p className="mt-2 text-base text-brand-500">
-              Businesses that didn&apos;t make it.
-            </p>
+          <div className="mb-8">
+            <h2>Deadpool</h2>
+            <p className="lead">Businesses that didn&apos;t make it.</p>
           </div>
-          <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {deadpool.map((business, cardIndex) => (
               <BusinessCard
                 key={business._id || `deadpool-${cardIndex}`}

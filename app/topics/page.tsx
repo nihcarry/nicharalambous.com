@@ -151,10 +151,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "curiosity",
     oneSentenceSummary:
       "Curiosity is the god particle of innovation — the fundamental force that drives experimentation, learning, and breakthrough thinking.",
-    relatedKeynotes: [
-      { _id: "k1", title: "The Curiosity Catalyst", slug: "curiosity-catalyst" },
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -163,10 +160,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "innovation",
     oneSentenceSummary:
       "Innovation is an outcome, not an action. It requires curiosity, experimentation, and the courage to act on incomplete information.",
-    relatedKeynotes: [
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-      { _id: "k1", title: "The Curiosity Catalyst", slug: "curiosity-catalyst" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -184,9 +178,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "focus",
     oneSentenceSummary:
       "In an attention economy, focus is your most valuable resource. The DIAL framework helps teams reclaim deep work.",
-    relatedKeynotes: [
-      { _id: "k3", title: "Reclaiming Focus", slug: "reclaiming-focus" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -195,9 +187,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "ai",
     oneSentenceSummary:
       "AI as a tool, not a replacement. How to integrate AI into your product workflow without losing your team's creative edge.",
-    relatedKeynotes: [
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -206,10 +196,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "agency",
     oneSentenceSummary:
       "High agency — the belief that you can influence outcomes — separates breakthrough teams from stagnant ones.",
-    relatedKeynotes: [
-      { _id: "k3", title: "Reclaiming Focus", slug: "reclaiming-focus" },
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
