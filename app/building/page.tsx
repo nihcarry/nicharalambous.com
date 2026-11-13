@@ -174,10 +174,10 @@ export default async function BusinessesPage() {
                 <h3 className="text-base font-extrabold leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-lg">
                   {build.name}
                 </h3>
-                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-brand-500">
+                <p className="mt-1 font-mono text-sm uppercase tracking-[0.16em] text-brand-500">
                   {getHostname(build.url)}
                 </p>
-                <p className="mt-2 flex-1 font-mono text-xs leading-snug text-brand-600">
+                <p className="mt-2 flex-1 font-mono text-sm leading-snug text-brand-600">
                   {build.summary}
                 </p>
                 <div className="mt-3 flex justify-end">
@@ -255,11 +255,11 @@ function BusinessCard({ business, variant }: BusinessCardProps) {
     : "flex h-full flex-col overflow-hidden border border-[#d8d1c2] bg-[#fbf9f4]";
 
   const statusBadge = active ? (
-    <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-600">Active</span>
+    <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-sm font-semibold text-accent-600">Active</span>
   ) : exit ? (
-    <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">{formatOutcome(business.outcome || "exit-sold")}</span>
+    <span className="shrink-0 bg-green-100 px-2.5 py-0.5 text-sm font-semibold text-green-700">{formatOutcome(business.outcome || "exit-sold")}</span>
   ) : deadpool ? (
-    <span className="shrink-0 bg-brand-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-brand-600">Archived</span>
+    <span className="shrink-0 bg-brand-200 px-2.5 py-0.5 text-sm font-semibold uppercase tracking-wider text-brand-600">Archived</span>
   ) : null;
 
   const content = (
@@ -276,7 +276,7 @@ function BusinessCard({ business, variant }: BusinessCardProps) {
           ) : (
             <div className="flex h-full items-center justify-center bg-brand-100 text-center">
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-brand-400">
+                <p className="font-mono text-sm uppercase tracking-[0.2em] text-brand-400">
                   Visual Coming Soon
                 </p>
               </div>
@@ -292,7 +292,7 @@ function BusinessCard({ business, variant }: BusinessCardProps) {
         </h3>
 
         {business.role && (
-          <p className="mt-1 font-mono text-xs text-brand-500">{business.role}</p>
+          <p className="mt-1 font-mono text-sm text-brand-500">{business.role}</p>
         )}
         {business.description && (
           <p className="mt-3 flex-1 font-mono text-sm leading-relaxed text-brand-600">
@@ -300,7 +300,7 @@ function BusinessCard({ business, variant }: BusinessCardProps) {
           </p>
         )}
         {dateLabel && (
-          <p className="mt-4 font-mono text-xs text-brand-400">{dateLabel}</p>
+          <p className="mt-4 font-mono text-sm text-brand-400">{dateLabel}</p>
         )}
         {canLink && (
           <div className="mt-auto pt-4 flex justify-end">

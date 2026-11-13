@@ -50,6 +50,18 @@ export async function generateMetadata({
   };
 }
 
+/** Turn double breaks in legacy HTML into paragraphs. Does not change the stored source. */
+function paragraphiseArchiveHtml(html: string): string {
+  const withBreaks = html.replace(/(?:<br\s*\/?>\s*){2,}/gi, "</p><p>");
+  if (/<p[\s>]/i.test(withBreaks)) return withBreaks;
+  const parts = withBreaks
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  if (parts.length < 2) return withBreaks;
+  return parts.map((part) => `<p>${part}</p>`).join("");
+}
+
 function formatDate(value: string | null): string | null {
   if (!value) return null;
   const date = new Date(value);
@@ -73,32 +85,34 @@ export default async function ArchivePostPage({
       <article>
         <section>
           <div className="wrap">
-            <p className="prose-col">
+            <header>
+              <h1>{post.title}</h1>
+              <div className="article-meta">
+                <p className="meta">
+                  By Nic Haralambous
+                  {published ? ` · Originally published ${published}` : ""}
+                </p>
+                {post.topics && post.topics.length > 0
+                  ? post.topics.map((topic) => (
+                      <a className="tag" key={topic._id} href={`/topics/${topic.slug}`}>
+                        {topic.title}
+                      </a>
+                    ))
+                  : null}
+              </div>
+            </header>
+            <aside className="archive-note prose-col">
               This post is from the archive and may not reflect Nic&apos;s current thinking. For the latest articles and insights, visit the{" "}
               <a className="link" href="/blog">
                 blog
               </a>
               .
-            </p>
-            <h1>{post.title}</h1>
-            <p className="meta">
-              By Nic Haralambous
-              {published ? ` · Originally published ${published}` : ""}
-            </p>
-            {post.topics && post.topics.length > 0 ? (
-              <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                {post.topics.map((topic) => (
-                  <a className="tag" key={topic._id} href={`/topics/${topic.slug}`}>
-                    {topic.title}
-                  </a>
-                ))}
-              </p>
-            ) : null}
+            </aside>
             {post.rawHtmlBody ? (
               <div
                 className="archive-body prose-col"
                 data-no-orphan-opt-out="true"
-                dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(post.rawHtmlBody) }}
+                dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(paragraphiseArchiveHtml(post.rawHtmlBody)) }}
               />
             ) : (
               <p className="prose-col">Archive content is not available for this post.</p>

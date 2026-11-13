@@ -181,27 +181,11 @@ export default async function BlogPostPage({
       <section>
         <div className="wrap">
         <header>
-          {/* Topic tags */}
-          {hasTopics && (
-            <div className="flex flex-wrap gap-2">
-              {post.topics.map((topic) => (
-                <a
-                  key={topic._id}
-                  href={`/topics/${topic.slug}`}
-                  className="tag"
-                >
-                  {topic.title}
-                </a>
-              ))}
-            </div>
-          )}
-
-          <h1 className="mt-4">
+          <h1>
             {post.title}
           </h1>
 
-          {/* Meta: date + read time */}
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-brand-500">
+          <div className="article-meta">
             <span>By Nic Haralambous</span>
             {post.publishedAt && (
               <time dateTime={post.publishedAt}>
@@ -225,6 +209,12 @@ export default async function BlogPostPage({
             {post.estimatedReadTime && (
               <span>{post.estimatedReadTime} min read</span>
             )}
+            {hasTopics &&
+              post.topics.map((topic) => (
+                <a key={topic._id} href={`/topics/${topic.slug}`} className="tag">
+                  {topic.title}
+                </a>
+              ))}
           </div>
         </header>
 
