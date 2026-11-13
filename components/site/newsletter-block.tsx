@@ -4,7 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import { subscribeToKit } from "@/lib/kit";
 
 export function NewsletterBlock({
-  heading = "I write to you every Thursday",
+  heading = "I write to you every week",
 }: {
   heading?: string;
 }) {
@@ -31,24 +31,11 @@ export function NewsletterBlock({
 
   return (
     <section className="news pd-envelope" id="newsletter">
-      <div className="big-t" aria-hidden="true">
-        Thursday
-      </div>
       <div className="wrap grid">
         <div>
-          <div className="eyebrow">The newsletter</div>
-          <h2>
-            {heading === "I write to you every Thursday" ? (
-              <>
-                I write to you every <br className="h-break" />
-                Thursday
-              </>
-            ) : (
-              heading
-            )}
-          </h2>
+          <h2>{heading}</h2>
           <p className="lead">
-            Every Thursday I send one email with the three things I liked that week, and a little thinking on business and work.
+            Every week I&apos;ll send you my three favourite things from the week and at least one idea that I can&apos;t stop thinking about.
           </p>
           <img
             className="px typer"
@@ -61,7 +48,7 @@ export function NewsletterBlock({
         </div>
         {done ? (
           <div className="success" role="status">
-            <p>Thanks, you are in. Look for me on Thursday.</p>
+            <p>Thanks, you are in.</p>
             <a href="/keynotes/output-paradox-reengage-teams">See the keynote</a>
             <a href="/blog">Read the blog</a>
           </div>

@@ -59,7 +59,7 @@ export default async function MediaPage() {
   const grouped = groupByType(appearances);
 
   return (
-    <>
+    <div className="v3">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -175,10 +175,10 @@ export default async function MediaPage() {
         description="Keynotes for conferences, corporate events, and webinars, in person or virtually. Worldwide."
         primaryHref="/contact"
         primaryLabel="Enquire Now"
-        secondaryHref="/speaker"
-        secondaryLabel="About Nic as a Speaker"
+        secondaryHref="/keynotes/output-paradox-reengage-teams"
+        secondaryLabel="See the keynote"
       />
-    </>
+    </div>
   );
 }
 

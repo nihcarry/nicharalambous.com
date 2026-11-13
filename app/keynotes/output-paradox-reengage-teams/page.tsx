@@ -12,7 +12,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 20 to 60 minutes, in person or on Zoom, Teams or Meet. Lunch and learn €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
+    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 45 minutes, in person or on Zoom, Teams or Meet. Lunch and learn is 20 minutes, €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
@@ -55,7 +55,7 @@ export default async function OutputParadoxPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Keynotes", path: "/keynotes" },
+          { name: "Keynotes", path: "/keynotes/output-paradox-reengage-teams" },
           { name: "The Output Paradox", path: PATH },
         ])}
       />
@@ -64,7 +64,6 @@ export default async function OutputParadoxPage() {
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <div className="eyebrow">Keynote · Virtual or in-person · 20 to 60 minutes</div>
             <h1>
               The Output <em>Paradox</em>
             </h1>
@@ -74,9 +73,6 @@ export default async function OutputParadoxPage() {
             <div className="book" id="book">
               <div className="row">
                 <div>
-                  <div className="mono" style={{ color: "var(--blue2)", marginBottom: 10 }}>
-                    Start here
-                  </div>
                   <h2>20-minute virtual lunch and learn</h2>
                   <p>
                     A short, live version of the talk for your team on Zoom, Teams or Meet. You pick the date, I tailor it to your people.
@@ -127,7 +123,7 @@ export default async function OutputParadoxPage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>In-person keynotes from €4,500</b>, excluding travel and VAT. Full 45 to 60 minute talk, in your room.
+            <b>In-person keynotes from €4,500</b>, excluding travel and VAT. Full 45 minute talk, in your room.
           </span>
           <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
             Enquire about a date
@@ -146,7 +142,6 @@ export default async function OutputParadoxPage() {
         <section className="p-mic">
           <div className="wrap clip">
             <div>
-              <div className="eyebrow">See it on stage</div>
               <h2 style={{ margin: "20px 0" }}>Ninety seconds of the real thing</h2>
               <p className="lead">
                 Watch how I open the talk and how a room responds when you name the thing everyone can feel but nobody has said out loud.
@@ -164,7 +159,6 @@ export default async function OutputParadoxPage() {
           <div className="stat">
             <div className="big">1 in 4</div>
             <div>
-              <div className="eyebrow">The problem</div>
               <h2 style={{ margin: "20px 0 22px", fontSize: 48 }}>
                 Nearly one in four of your employees is disengaged right now
               </h2>
@@ -212,7 +206,6 @@ export default async function OutputParadoxPage() {
 
       <section className="p-pen">
         <div className="wrap">
-          <div className="eyebrow">The Apathy Arch</div>
           <h2 style={{ margin: "20px 0", maxWidth: 860 }}>
             Curiosity doesn&apos;t vanish overnight. It erodes because it gets ignored.
           </h2>
@@ -245,7 +238,6 @@ export default async function OutputParadoxPage() {
 
       <section className="p-lightbulb" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
         <div className="wrap">
-          <div className="eyebrow">Where the fix starts</div>
           <h2 style={{ margin: "20px 0 0" }}>Three shifts. Not eight action items.</h2>
           <div className="shifts">
             <article>
@@ -288,7 +280,6 @@ export default async function OutputParadoxPage() {
 
       <section className="dark pd-calendar" id="formats">
         <div className="wrap">
-          <div className="eyebrow">Ways to book</div>
           <h2 style={{ margin: "20px 0 18px" }}>Pick the format that fits your team</h2>
           <p className="lead">
             Most teams start with the lunch and learn. If you want the full keynote for an all-hands, an offsite or a conference, talk to me first and I&apos;ll shape it around your event.
@@ -318,7 +309,7 @@ export default async function OutputParadoxPage() {
               <span className="mono">Virtual</span>
               <h3>Virtual keynote</h3>
               <p>
-                The full 45 to 60 minute talk, built for remote and hybrid teams, with audience participation instead of a Q&amp;A tacked on at the end.
+                The full 45 minute talk, built for remote and hybrid teams, with audience participation instead of a Q&amp;A tacked on at the end.
               </p>
               <ul>
                 <li>All-hands, offsites, webinars</li>
@@ -339,7 +330,7 @@ export default async function OutputParadoxPage() {
                 For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast.
               </p>
               <ul>
-                <li>45 to 60 minutes</li>
+                <li>45 minutes</li>
                 <li>Extended Q&amp;A available</li>
                 <li>Full day with delegates available</li>
               </ul>
@@ -365,7 +356,6 @@ export default async function OutputParadoxPage() {
               height={280}
               loading="lazy"
             />
-            <div className="eyebrow">What clients say</div>
             <h2 style={{ margin: "20px 0 0" }}>From the people who booked it</h2>
           </div>
           <div className={QUOTES.length + (settings.testimonial ? 1 : 0) === 2 ? "quotes quotes-2" : "quotes"}>
@@ -408,7 +398,6 @@ export default async function OutputParadoxPage() {
             />
           </div>
           <div>
-            <div className="eyebrow">Who you&apos;re booking</div>
             <h2 style={{ margin: "20px 0 22px" }}>I&apos;ve been building businesses since I was 16</h2>
             <p className="lead" style={{ color: "#4b4f5a" }}>
               I&apos;ve sold four of them, written three books and spent more than 20 years learning through failure and success. I&apos;ve spoken at SXSW and for teams at Standard Bank, Vodacom, Old Mutual and Nedbank. Everything I&apos;ve seen comes back to one thing: culture creates change.
@@ -437,7 +426,6 @@ export default async function OutputParadoxPage() {
 
       <section className="dark pd-cta">
         <div className="wrap">
-          <div className="eyebrow">How it works</div>
           <h2 style={{ margin: "20px 0 0" }}>From booking to the room in three steps</h2>
           <div className="steps">
             <div>

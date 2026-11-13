@@ -20,6 +20,7 @@ export const BUDGET_BANDS = [
 ] as const;
 
 export const FORMATS = [
+  { value: "lunch-and-learn", title: "Lunch and learn", detail: "20 minutes" },
   { value: "virtual", title: "Virtual keynote", detail: "Zoom, Teams or Meet" },
   { value: "in-person", title: "In-person keynote", detail: "At your venue" },
   { value: "unsure", title: "Not sure yet", detail: "Help me choose" },
@@ -73,6 +74,13 @@ export function parseDmy(value: string): string | null {
 export function formatFromQuery(value: string | null | undefined): string {
   if (!value) return "";
   const normalised = value.toLowerCase().replace(/[_\s]+/g, "-");
+  if (
+    normalised === "lunch" ||
+    normalised === "lunch-and-learn" ||
+    normalised === "lunch-and-learn-20"
+  ) {
+    return "lunch-and-learn";
+  }
   if (normalised === "virtual" || normalised === "online") return "virtual";
   if (normalised === "in-person" || normalised === "inperson") return "in-person";
   if (normalised === "unsure" || normalised === "not-sure" || normalised === "not-sure-yet") {

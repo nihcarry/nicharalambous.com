@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { ENQUIRY_ENDPOINT, bookNowHref, checkoutIsLive } from "@/lib/site";
+import { ENQUIRY_ENDPOINT, checkoutIsLive } from "@/lib/site";
 import {
   BUDGET_BANDS,
   DECISION_MAKERS,
@@ -153,7 +153,6 @@ function EnquiryFields() {
               </option>
             ))}
           </select>
-          <span className="hint">Under 50 · 50 to 200 · 200 to 1,000 · 1,000 to 5,000 · 5,000+</span>
         </div>
       </div>
 
@@ -332,22 +331,4 @@ function DateField({ name, label, error }: { name: string; label: string; error?
 
 export function EnquiryForm() {
   return <EnquiryFields />;
-}
-
-export function QuickBookCard() {
-  const live = checkoutIsLive();
-  return (
-    <div className="card dk">
-      <span className="mono">Want the quick version?</span>
-      <h2>Book the 20-minute lunch and learn</h2>
-      <p>
-        {live
-          ? "No form needed. Pick a date, pay online and I will be in touch to tailor it to your team."
-          : "Tell me it is the lunch and learn. I will reply by email to tailor the 20 minutes to your team."}
-      </p>
-      <a className="btn" href={bookNowHref()} style={{ marginTop: 20 }}>
-        Book now <span className="p">€999</span>
-      </a>
-    </div>
-  );
 }

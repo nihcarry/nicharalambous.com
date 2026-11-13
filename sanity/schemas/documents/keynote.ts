@@ -56,7 +56,7 @@ export const keynote = defineType({
       name: "duration",
       title: "Duration",
       type: "string",
-      description: "e.g. '45-60 minutes'",
+      description: "e.g. '45 minutes'",
     }),
     defineField({
       name: "audiences",

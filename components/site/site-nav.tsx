@@ -132,7 +132,7 @@ export function SiteNav() {
       </a>
       <div className="wrap">
         <a className="wm" href="/">
-          <i>N</i>
+          <img src="/favicon.svg" alt="" width={30} height={30} />
           Nic Haralambous
         </a>
         <ul className="links">

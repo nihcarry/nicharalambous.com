@@ -12,7 +12,6 @@ export default function NotFound() {
     <div className="v3" data-no-orphan-opt-out="true">
       <section className="top pd-person not-found" style={{ paddingBottom: 120 }}>
         <div className="wrap">
-          <div className="eyebrow">404</div>
           <h1>That page is not here</h1>
           <p className="lead">
             The link may be old, or the page may have moved. Here are the places people usually want.

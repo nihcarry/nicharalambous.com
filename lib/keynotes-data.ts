@@ -45,7 +45,7 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
     closingLine:
       "You can't outsource curiosity to a tool. The fix is structural: incentives, trust, and room to think.",
     deliveryFormat: "in-person-or-virtual",
-    duration: "45-60 minutes",
+    duration: "45 minutes",
     audiences: [
       "HR leaders and executive teams",
       "Innovation and transformation leaders",
@@ -70,7 +70,7 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
       "How to build team norms that protect deep work time",
     ],
     deliveryFormat: "in-person-or-virtual",
-    duration: "45-60 minutes",
+    duration: "45 minutes",
     audiences: [
       "Corporate teams struggling with digital overload",
       "Leadership groups building remote/hybrid work culture",
@@ -99,7 +99,7 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
     closingLine:
       "In person or virtually. Highly interactive. Built to spark action, not just ideas.",
     deliveryFormat: "in-person-or-virtual",
-    duration: "45-60 minutes",
+    duration: "45 minutes",
     audiences: [
       "Conferences and leadership summits",
       "C-suite retreats and strategy sessions",

@@ -20,15 +20,17 @@ const LIVE_ROUTES = [
   "/archive",
   "/blog",
   "/books",
-  "/businesses",
+  "/building",
   "/contact",
-  "/keynotes",
   "/media",
   "/search",
-  "/speaker",
   "/studio",
   "/topics",
 ] as const;
+
+const RETIRED_SPEAKER = join(process.cwd(), "app", "speaker", "page.tsx");
+const RETIRED_KEYNOTES = join(process.cwd(), "app", "keynotes", "page.tsx");
+const RETIRED_BUSINESSES = join(process.cwd(), "app", "businesses", "page.tsx");
 
 const DECISION_TRACKR_PRIVACY = "https://decisiontrackr.com/privacy/";
 const DECISION_TRACKR_SOURCES = ["/decision-trackr/privacy", "/decision-trackr/privacy/"] as const;
@@ -231,6 +233,12 @@ function main() {
         errors.push(`public/decision-trackr/privacy.html is missing: ${snippet}`);
       }
     }
+  }
+
+  if (existsSync(RETIRED_SPEAKER) || existsSync(RETIRED_KEYNOTES) || existsSync(RETIRED_BUSINESSES)) {
+    errors.push(
+      "app/speaker/page.tsx, app/keynotes/page.tsx and app/businesses/page.tsx must stay deleted. Those URLs 301 in the CloudFront function."
+    );
   }
 
   if (existsSync(RETIRED_LANDING_PAGE)) {

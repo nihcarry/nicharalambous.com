@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { EnquiryForm, QuickBookCard } from "@/components/site/enquiry-form";
+import { EnquiryForm } from "@/components/site/enquiry-form";
 import { breadcrumbJsonLd } from "@/lib/metadata";
 
 const URL = "https://www.nicharalambous.com/contact";
@@ -36,7 +36,6 @@ export default function ContactPage() {
       />
       <section className="top pd-envelope">
         <div className="wrap">
-          <div className="eyebrow">Enquire</div>
           <h1>
             Tell me about your team and your <em>event</em>
           </h1>
@@ -48,7 +47,6 @@ export default function ContactPage() {
       <section className="main">
         <div className="wrap">
           <aside className="side">
-            <QuickBookCard />
             <div className="card">
               <span className="mono">What happens next</span>
               <ol className="next">
@@ -58,7 +56,7 @@ export default function ContactPage() {
                 </li>
                 <li>
                   <span className="mono">02</span>
-                  We have a short call about your audience and what you want them to change.
+                  We have a short call about the audience and the goals for our session.
                 </li>
                 <li>
                   <span className="mono">03</span>
@@ -75,7 +73,7 @@ export default function ContactPage() {
                 </li>
                 <li>
                   <span className="mono">€</span>
-                  Virtual keynotes, 45 to 60 minutes: from €1,500 ex VAT
+                  Virtual keynotes, 45 minutes: from €1,500 ex VAT
                 </li>
                 <li>
                   <span className="mono">€</span>

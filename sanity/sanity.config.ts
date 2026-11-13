@@ -64,7 +64,7 @@ const presentation = isDev
           speaker: {
             select: { title: "title" },
             resolve: (doc) => ({
-              locations: [{ title: doc?.title || "Speaker Page", href: "/speaker" }],
+              locations: [{ title: doc?.title || "Keynote", href: "/keynotes/output-paradox-reengage-teams" }],
             }),
           },
         },

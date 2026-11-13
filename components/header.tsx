@@ -16,10 +16,9 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const navLinks = [
   { href: "/", label: "Home", icon: "home", showChevron: false },
-  { href: "/speaker", label: "Speaker", icon: "mic", showChevron: true },
-  { href: "/keynotes", label: "Keynotes", icon: "play", showChevron: true },
+  { href: "/keynotes/output-paradox-reengage-teams", label: "Keynotes", icon: "play", showChevron: true },
   { href: "/topics", label: "Topics", icon: "tag", showChevron: true },
-  { href: "/businesses", label: "Building", icon: "rocket", showChevron: true },
+  { href: "/building", label: "Building", icon: "rocket", showChevron: true },
   { href: "/blog", label: "Blog", icon: "document", showChevron: true },
   { href: "/books", label: "Books", icon: "book", showChevron: true },
 ];
@@ -159,7 +158,7 @@ function isNavLinkActive(pathname: string, href: string): boolean {
 }
 
 /** Routes that live inside the More overflow menu. Used to highlight More when active. */
-const moreMenuRoutes = ["/businesses", "/topics", "/blog", "/books", "/contact", "/session", "/about"];
+const moreMenuRoutes = ["/building", "/topics", "/blog", "/books", "/contact", "/session", "/about"];
 
 function isMoreMenuActive(pathname: string): boolean {
   return moreMenuRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
@@ -168,8 +167,7 @@ function isMoreMenuActive(pathname: string): boolean {
 /** Mobile bottom nav — 4 items: Home, Speaker, Keynotes, More. Zoom-style: icon above label. */
 const mobileNavLinks = [
   { href: "/", label: "Home", icon: "home" },
-  { href: "/speaker", label: "Speaker", icon: "mic" },
-  { href: "/keynotes", label: "Keynotes", icon: "play" },
+  { href: "/keynotes/output-paradox-reengage-teams", label: "Keynotes", icon: "play" },
   { href: "more", label: "More", icon: "more", isButton: true },
 ];
 
@@ -380,7 +378,7 @@ function NavBarContent({ onNavClick }: { onNavClick?: () => void }) {
 /** Links shown in the More overflow menu. */
 const moreMenuLinks = [
   { href: "/topics", label: "Topics", icon: "tag" },
-  { href: "/businesses", label: "Building", icon: "rocket" },
+  { href: "/building", label: "Building", icon: "rocket" },
   { href: "/blog", label: "Blog", icon: "document" },
   { href: "/books", label: "Books", icon: "book" },
 ];

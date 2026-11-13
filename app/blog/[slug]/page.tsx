@@ -35,8 +35,8 @@ const postBySlugQuery =
 const postSlugListQuery =
   process.env.NODE_ENV === "development" ? blogPostSlugListDevQuery : blogPostSlugListQuery;
 import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
+import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { PortableText } from "@/components/portable-text";
 import { FaqSection } from "@/components/faq-section";
 import { RelatedPosts } from "@/components/related-posts";
@@ -161,7 +161,7 @@ export default async function BlogPostPage({
   const hasVideo = post.videoEmbed && post.videoEmbed.trim().length > 0;
 
   return (
-    <>
+    <div className="v3">
       {/* Article JSON-LD */}
       <JsonLd
         data={articleJsonLd({
@@ -187,7 +187,7 @@ export default async function BlogPostPage({
                 <a
                   key={topic._id}
                   href={`/topics/${topic.slug}`}
-                  className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
+                  className="tag"
                 >
                   {topic.title}
                 </a>
@@ -195,7 +195,7 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          <h1 className="mt-4 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
+          <h1 className="mt-4">
             {post.title}
           </h1>
 
@@ -336,7 +336,7 @@ export default async function BlogPostPage({
               <a
                 key={topic._id}
                 href={`/topics/${topic.slug}`}
-                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="tag"
               >
                 {topic.title}
               </a>
@@ -345,28 +345,22 @@ export default async function BlogPostPage({
         </Section>
       )}
 
-      {/* Related posts */}
       {relatedPosts.length > 0 && (
-        <Section width="wide" className="bg-brand-50">
-          <RelatedPosts posts={relatedPosts} />
-        </Section>
+        <section>
+          <div className="wrap">
+            <RelatedPosts posts={relatedPosts} />
+          </div>
+        </section>
       )}
 
-      {/* Contextual CTA — related keynote or generic */}
-      <Section width="content">
-        <ContextualCta relatedKeynote={post.relatedKeynote} />
-      </Section>
+      <section>
+        <div className="wrap" style={{ maxWidth: 820 }}>
+          <ContextualCta relatedKeynote={post.relatedKeynote} />
+        </div>
+      </section>
 
-      {/* Final soft CTA → /speaker (always present per SEO strategy) */}
-      <FinalCta
-        heading="Want Nic at Your Next Event?"
-        description="Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/contact"
-        secondaryLabel="Book Nic for Your Event"
-      />
-    </>
+      <NewsletterBlock />
+    </div>
   );
 }
 

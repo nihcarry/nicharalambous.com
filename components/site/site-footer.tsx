@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="cols">
           <div>
             <a className="wm" href="/">
-              <i>N</i>
+              <img src="/favicon.svg" alt="" width={30} height={30} />
               Nic Haralambous
             </a>
             <p className="blurb">

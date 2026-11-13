@@ -117,7 +117,7 @@ export default async function TopicHubPage({
     topic.whyItMatters && topic.whyItMatters.length > 0;
 
   return (
-    <>
+    <div className="v3">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -195,8 +195,8 @@ export default async function TopicHubPage({
             ))}
           </div>
           <div className="mt-6 text-center">
-            <CTAButton href="/speaker" variant="secondary">
-              About Nic as a Speaker
+            <CTAButton href="/keynotes/output-paradox-reengage-teams" variant="secondary">
+              See the keynote
             </CTAButton>
           </div>
         </Section>
@@ -312,7 +312,7 @@ export default async function TopicHubPage({
             <a
               key={t.slug}
               href={`/topics/${t.slug}`}
-              className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+              className="tag"
             >
               {t.title}
             </a>
@@ -326,10 +326,10 @@ export default async function TopicHubPage({
         description="Available in person or virtually. Customized for your audience."
         primaryHref="/contact"
         primaryLabel="Enquire Now"
-        secondaryHref="/speaker"
-        secondaryLabel="About Nic as a Speaker"
+        secondaryHref="/keynotes/output-paradox-reengage-teams"
+        secondaryLabel="See the keynote"
       />
-    </>
+    </div>
   );
 }
 

@@ -88,7 +88,6 @@ export default async function HomePage() {
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <div className="eyebrow">Keynote speaker · Virtual and in-person</div>
             <h1>
               Your teams are shipping more, and <em>checking out</em> faster
             </h1>
@@ -137,7 +136,6 @@ export default async function HomePage() {
 
       <section className="p-mic">
         <div className="wrap">
-          <div className="eyebrow">Three ways I can help</div>
           <h2 className="h-pillars">
             I speak, I coach and I write. Pick the one you <br className="h-break" />
             came for.
@@ -232,8 +230,7 @@ export default async function HomePage() {
       <section className="dark pd-speech">
         <div className={settings.stageClipUrl ? "wrap talk" : "wrap talk solo"}>
           <div>
-            <div className="eyebrow">The keynote</div>
-            <h2 style={{ margin: "20px 0 22px" }}>
+            <h2 style={{ margin: "0 0 22px" }}>
               Artificial Intelligence won&apos;t kill your business. <em>Apathy and Indifference</em> might.
             </h2>
             <p className="lead">
@@ -262,8 +259,7 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="section-head">
             <div>
-              <div className="eyebrow">Latest thinking</div>
-              <h2 style={{ margin: "20px 0 0" }}>From the blog</h2>
+              <h2 style={{ margin: 0 }}>From the blog</h2>
             </div>
             <a className="link" href="/blog">
               Read the blog

@@ -1,262 +1,147 @@
 /**
- * About Page — /about
- *
- * Personal bio page merging the warm first-person tone from the old
- * Squarespace site with LinkedIn-verified career data. Career is
- * organized around identity pillars (Entrepreneur, Speaker & Coach,
- * Product Builder, Writer) rather than a chronological timeline.
- *
- * Sections:
- * 1. Hero — identity-first heading, photo, bio, inline stats
- * 2. Story — personal narrative + famous quote pullquote
- * 3. Career pillars — 4 thematic blocks with LinkedIn-verified positions
- * 4. Media logos — "As Featured In"
- * 5. Books teaser
- * 6. Final CTA with quote
- *
- * JSON-LD: AboutPage + Person (sitewide)
+ * About — /about
+ * Existing biography, career and current builds, in the v3 layout.
  */
 import type { Metadata } from "next";
-import Image from "next/image";
-import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
-import { aboutPageJsonLd } from "@/lib/metadata";
-import { ArrowRight, Crosshair } from "lucide-react";
-
-/* ---------- Metadata ---------- */
+import { personJsonLd } from "@/lib/metadata";
+import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Nic Haralambous is an entrepreneur, product builder, keynote speaker, and author with 4 exits, 3 books, and 20+ years building technology businesses.",
+    "Nic Haralambous is a keynote speaker, entrepreneur, product builder and best-selling author. Four exits, three books and more than 20 years of building businesses.",
   alternates: { canonical: "https://www.nicharalambous.com/about" },
   openGraph: {
-    type: "website",
+    type: "profile",
     title: "About Nic Haralambous",
     description:
-      "Entrepreneur, product builder, keynote speaker, and author. 4 exits, 3 books, 20+ years building tech businesses.",
+      "Keynote speaker, entrepreneur, product builder and best-selling author. Four exits and three books.",
     url: "https://www.nicharalambous.com/about",
   },
 };
 
-/* ---------- Page ---------- */
-
 export default function AboutPage() {
   return (
-    <div className="page-bg bg-person-pattern v3-legacy">
-      <JsonLd data={aboutPageJsonLd()} />
-
-      {/* Hero — identity-first heading with photo */}
-      <Section width="wide">
-        <div className="grid items-center gap-12 md:grid-cols-2">
+    <div className="v3">
+      <JsonLd data={personJsonLd()} />
+      <section className="p-person">
+        <div className="wrap about-hero">
           <div>
-            <h1 className="heading-stroke font-extrabold tracking-tight text-[clamp(2rem,10vw,3.75rem)] uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl relative z-20">
-              I Am Nic Haralambous
-            </h1>
-            <div className="mt-8 space-y-4 text-base leading-relaxed text-brand-700">
-              <p>
-                I am a keynote speaker, entrepreneur, product builder, and best-selling author. I have been building businesses since I was 16. I have had 4 exits, and I have spent more than 20 years learning lessons through failure and success.
-              </p>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {KEY_STATS.map((stat) => (
-                <span
-                  key={stat.label}
-                  className="border-2 border-accent-600 px-3 py-1.5"
-                >
-                  <span className="heading-display text-lg text-accent-600">
-                    {stat.value}
-                  </span>
-                  <span className="ml-1.5 text-xs font-medium text-brand-600">
-                    {stat.label}
-                  </span>
-                </span>
-              ))}
-            </div>
+            <h1>I am Nic Haralambous</h1>
+            <p className="lead">
+              I am a keynote speaker, entrepreneur, product builder, and best-selling author. I have been building businesses since I was 16. I have had 4 exits, and I have spent more than 20 years learning lessons through failure and success.
+            </p>
+            <p className="meta" style={{ marginTop: 18 }}>
+              {KEY_STATS.map((stat) => `${stat.value} ${stat.label}`).join(" · ")}
+            </p>
           </div>
-          <div className="flex justify-center">
-            <div className="relative">
-              <Image
-                src="/slides/Nic_Speaker_Photo.jpg"
-                alt="Nic Haralambous"
-                width={480}
-                height={800}
-                className="relative z-0 h-auto w-full max-w-[16rem] max-h-[24rem] object-cover md:max-w-[18.75rem] md:max-h-[28rem]"
-                priority
-              />
-            </div>
-          </div>
+          <img
+            src="/slides/Nic_Speaker_Photo.jpg"
+            alt="Nic Haralambous"
+            width={480}
+            height={640}
+            style={{ width: "min(100%, 320px)", height: "auto" }}
+          />
         </div>
-      </Section>
-
-      {/* Personal story + famous quote */}
-      <Section width="content">
-        <div className="space-y-4 text-base leading-relaxed text-brand-700">
+      </section>
+      <section>
+        <div className="wrap" style={{ maxWidth: 820 }}>
           <p>
-            I built my first website when I was 11 years old, my first business
-            at 16, and a band that didn&rsquo;t go as far as I wanted.
+            I built my first website when I was 11 years old, my first business at 16, and a band that didn&apos;t go as far as I wanted.
           </p>
           <p>
-            My career has taken me from student journalism to mobile product
-            management at Vodacom, to co-founding and selling Motribe to Mxit,
-            launching a sock brand with R5,000 that grew into five retail stores,
-            and eventually to keynote stages around the world, including SXSW, Standard
-            Bank, Vodacom, Old Mutual, and Nedbank.
+            My career has taken me from student journalism to mobile product management at Vodacom, to co-founding and selling Motribe to Mxit, launching a sock brand with R5,000 that grew into five retail stores, and eventually to keynote stages around the world, including SXSW, Standard Bank, Vodacom, Old Mutual, and Nedbank.
           </p>
           <p>
-            Through it all, I&rsquo;ve learned that above all else, culture
-            creates change. My work today focuses on helping businesses build
-            more curious, entrepreneurial cultures, whether through{" "}
-            <a href="/keynotes" className="text-accent-600 hover:underline">
+            Through it all, I&apos;ve learned that above all else, culture creates change. My work today focuses on helping businesses build more curious, entrepreneurial cultures, whether through{" "}
+            <a className="link" href={OUTPUT_PARADOX_PATH}>
               keynotes
             </a>
             , coaching, or building products.
           </p>
+          <blockquote style={{ margin: "36px 0", paddingLeft: 18, borderLeft: "4px solid var(--blue)" }}>
+            <p style={{ fontFamily: "var(--serif)", fontSize: 32, lineHeight: 1.15, color: "var(--text)" }}>
+              &ldquo;Plan in decades. Think in years. Work in months. Live in days.&rdquo;
+            </p>
+            <p className="meta">Nic Haralambous</p>
+          </blockquote>
         </div>
-
-        <blockquote className="my-16 border-l-[6px] border-accent-600 py-4 pl-8">
-          <p className="heading-display-stroke-sm text-2xl leading-snug text-brand-900 sm:text-3xl md:text-4xl">
-            &ldquo;Plan in decades. Think in years. Work in months. Live in
-            days.&rdquo;
-          </p>
-          <cite className="mt-4 block text-sm font-medium not-italic text-brand-500">
-            - Nic Haralambous
-          </cite>
-        </blockquote>
-      </Section>
-
-      {/* Career pillars — LinkedIn-verified positions grouped by identity */}
-      <Section width="wide">
-        <h2 className="heading-stroke font-extrabold tracking-tight text-center text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
-          Career
-        </h2>
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {CAREER_PILLARS.map((pillar, i) => (
-            <div
-              key={pillar.title}
-              className="flex flex-col border border-brand-900 bg-white p-6 md:p-8"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs tracking-widest text-accent-600">
-                  PILLAR_{String(i + 1).padStart(2, "0")}
-                </span>
-                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-              </div>
-              <div className="my-3 border-t border-brand-200" />
-              <h3 className="text-2xl font-extrabold uppercase leading-tight tracking-tight text-brand-900">
-                {pillar.title}
-              </h3>
-              <div className="mt-6 space-y-4">
+      </section>
+      <section className="dark">
+        <div className="wrap">
+          <h2>Career</h2>
+          <div className="career" style={{ marginTop: 28 }}>
+            {CAREER_PILLARS.map((pillar) => (
+              <article className="plain-card" key={pillar.title} style={{ background: "#12151c", borderColor: "#2e3442", color: "#edeef2" }}>
+                <h3 style={{ color: "#fff" }}>{pillar.title}</h3>
                 {pillar.items.map((item) => (
-                  <div
-                    key={`${item.company}-${item.role}`}
-                    className="border-b border-brand-100 pb-3 last:border-0 last:pb-0"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="font-semibold text-brand-900">
-                        {item.company}
-                      </span>
-                      {item.outcome && (
-                        <span className="shrink-0 bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                          {item.outcome}
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 text-sm">
-                      <span className="text-brand-600">{item.role}</span>
-                    </div>
-                  </div>
+                  <p key={`${item.company}-${item.role}`} style={{ color: "#c9cdd6" }}>
+                    <b style={{ color: "#fff" }}>{item.company}</b>
+                    {item.outcome ? ` · ${item.outcome}` : ""}
+                    <br />
+                    {item.role}
+                    {item.dates ? ` · ${item.dates}` : ""}
+                  </p>
                 ))}
-              </div>
-            </div>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
-      </Section>
-
-      {/* Businesses preview */}
-      <Section width="wide">
-        <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
-          Businesses
-        </h2>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
-          What I&apos;m building now.
-        </p>
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {CURRENT_BUILDS_PREVIEW.map((business, i) => (
-            <a
-              key={business.name}
-              href={business.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col border border-brand-900 bg-white p-6"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs tracking-widest text-accent-600">
-                  BUILD_{String(i + 1).padStart(2, "0")}
-                </span>
-                <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-              </div>
-              <div className="my-3 border-t border-brand-200" />
-              <p className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
-                {business.name}
-              </p>
-              <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600">
-                {business.summary}
-              </p>
-              <div className="mt-auto pt-4 flex justify-end">
-                <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </div>
+      </section>
+      <section>
+        <div className="wrap">
+          <h2>Businesses</h2>
+          <p className="lead">What I&apos;m building now.</p>
+          <div className="offer-grid" style={{ marginTop: 24 }}>
+            {CURRENT_BUILDS_PREVIEW.map((business) => (
+              <a className="plain-card" key={business.name} href={business.url} target="_blank" rel="noopener noreferrer">
+                <h3>{business.name}</h3>
+                <p>{business.summary}</p>
+              </a>
+            ))}
+          </div>
+          <p style={{ marginTop: 24 }}>
+            <a className="link" href="/building">
+              View all businesses
             </a>
-          ))}
+          </p>
         </div>
-        <div className="mt-6 text-center">
-          <CTAButton href="/businesses" variant="secondary">
-            View All Businesses
-          </CTAButton>
+      </section>
+      <section>
+        <div className="wrap">
+          <h2>Books</h2>
+          <div className="offer-grid" style={{ marginTop: 24, gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
+            {BOOK_COVER_IMAGES.map((book) => (
+              <img key={book.src} src={book.src} alt={book.alt} width={320} height={480} />
+            ))}
+          </div>
+          <p style={{ marginTop: 24 }}>
+            <a className="link" href="/books">
+              View all books
+            </a>
+          </p>
         </div>
-      </Section>
-
-      {/* Books teaser */}
-      <Section width="content">
-        <h2 className="heading-stroke font-extrabold tracking-tight text-4xl uppercase text-brand-900 sm:text-5xl md:text-6xl">
-          Books
-        </h2>
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {BOOK_COVER_IMAGES.map((book) => (
-            <div key={book.src} className="mx-auto w-full max-w-[13rem]">
-              <Image
-                src={book.src}
-                alt={book.alt}
-                width={320}
-                height={480}
-                className="h-auto w-full object-contain"
-              />
-            </div>
-          ))}
+      </section>
+      <section className="dark pd-spotlight">
+        <div className="wrap" style={{ textAlign: "center" }}>
+          <h2>Want Nic at your next event?</h2>
+          <p className="lead" style={{ margin: "16px auto 0", color: "#c9cdd6" }}>
+            Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide.
+          </p>
+          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
+            <a className="btn" href={OUTPUT_PARADOX_PATH}>
+              See the keynote
+            </a>
+            <a className="quiet-link" href="/contact">
+              Book Nic
+            </a>
+          </div>
         </div>
-        <div className="mt-6 text-center">
-          <CTAButton href="/books" variant="secondary">
-            View All Books
-          </CTAButton>
-        </div>
-      </Section>
-
-      {/* Final CTA with famous quote */}
-      <FinalCta
-        heading="Want Nic at Your Next Event?"
-        description="Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/contact"
-        secondaryLabel="Book Nic"
-      />
+      </section>
     </div>
   );
 }
-
-/* ---------- Static data ---------- */
 
 const KEY_STATS = [
   { value: "4", label: "Business Exits" },
@@ -266,18 +151,9 @@ const KEY_STATS = [
 ];
 
 const BOOK_COVER_IMAGES = [
-  {
-    src: "/slides/Do_Fail_Learn_repeate.jpg",
-    alt: "Do. Fail. Learn. Repeat. book cover",
-  },
-  {
-    src: "/slides/How_to_start_a_side_Hustle.jpg",
-    alt: "How to Start a Side Hustle book cover",
-  },
-  {
-    src: "/slides/Business_Builders_Toolkit.jpg",
-    alt: "The Business Builder's Toolkit book cover",
-  },
+  { src: "/slides/Do_Fail_Learn_repeate.jpg", alt: "Do. Fail. Learn. Repeat. book cover" },
+  { src: "/slides/How_to_start_a_side_Hustle.jpg", alt: "How to Start a Side Hustle book cover" },
+  { src: "/slides/Business_Builders_Toolkit.jpg", alt: "The Business Builder's Toolkit book cover" },
 ];
 
 const CURRENT_BUILDS_PREVIEW = [
@@ -307,19 +183,7 @@ const CURRENT_BUILDS_PREVIEW = [
   },
 ];
 
-interface CareerItem {
-  company: string;
-  role: string;
-  dates: string;
-  outcome?: string;
-}
-
-interface CareerPillar {
-  title: string;
-  items: CareerItem[];
-}
-
-const CAREER_PILLARS: CareerPillar[] = [
+const CAREER_PILLARS = [
   {
     title: "The Entrepreneur",
     items: [

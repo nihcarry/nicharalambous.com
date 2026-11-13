@@ -66,7 +66,6 @@ export default function PrivacyPage() {
       />
       <section className="top pd-person" style={{ paddingBottom: 88 }}>
         <div className="wrap">
-          <div className="eyebrow">Privacy</div>
           <h1>Privacy policy</h1>
           <p className="lead">What I collect, why, and how to get it deleted.</p>
           <p className="mono" style={{ color: "#9AA0AE", marginTop: 18 }}>

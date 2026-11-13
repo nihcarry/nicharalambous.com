@@ -11,8 +11,16 @@
 
 var redirects = {
   '/meet-nic-haralambous': '/about',
-  '/the-speaker': '/speaker',
-  '/virtual-keynote-speaker': '/speaker',
+  '/the-speaker': '/keynotes/output-paradox-reengage-teams',
+  '/virtual-keynote-speaker': '/keynotes/output-paradox-reengage-teams',
+  '/speaker': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/connected-not-consumed': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/creating-a-curious-company': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/breakthrough-product-teams': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/curiosity-catalyst': '/keynotes/output-paradox-reengage-teams',
+  '/keynotes/reclaiming-focus': '/keynotes/output-paradox-reengage-teams',
+  '/businesses': '/building',
   '/contact-me': '/contact',
   '/its-not-over': '/media',
   '/newsletter': '/#newsletter',

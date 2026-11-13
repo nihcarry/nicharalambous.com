@@ -89,7 +89,7 @@ export default async function ArchivePostPage({
   }
 
   return (
-    <>
+    <div className="v3">
       {/* Archive banner */}
       <Section width="content">
         <div className="border-2 border-brand-300 bg-brand-50 p-6 text-center">
@@ -187,12 +187,12 @@ export default async function ArchivePostPage({
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
           <CTAButton href="/blog">Visit the Blog</CTAButton>
-          <CTAButton href="/speaker" variant="secondary">
-            About Nic as a Speaker
+          <CTAButton href="/keynotes/output-paradox-reengage-teams" variant="secondary">
+            See the keynote
           </CTAButton>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
 

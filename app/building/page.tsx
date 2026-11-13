@@ -1,5 +1,5 @@
 /**
- * Businesses Page — /businesses
+ * Building — /building. /businesses 301s here.
  *
  * Single-page entrepreneurial history:
  * 1. Hero narrative
@@ -108,13 +108,13 @@ export const metadata: Metadata = {
   title: "Businesses",
   description:
     "Every business Nic Haralambous has started, sold, or shut down, from his first venture at 16 to building products today. Two decades of entrepreneurship.",
-  alternates: { canonical: "https://www.nicharalambous.com/businesses" },
+  alternates: { canonical: "https://www.nicharalambous.com/building" },
   openGraph: {
     type: "website",
     title: "Businesses | Nic Haralambous",
     description:
       "Every business Nic Haralambous has started, sold, or shut down. Two decades of building, selling, and learning.",
-    url: "https://www.nicharalambous.com/businesses",
+    url: "https://www.nicharalambous.com/building",
   },
 };
 
@@ -126,40 +126,27 @@ export default async function BusinessesPage() {
   const { exits, deadpool } = partitionBusinesses(all);
 
   return (
-    <div className="page-bg bg-gear-pattern">
+    <div className="v3">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Businesses by Nic Haralambous",
           description:
             "Every business Nic Haralambous has started, sold, or shut down: 20+ ventures across two decades.",
-          url: "https://www.nicharalambous.com/businesses",
+          url: "https://www.nicharalambous.com/building",
         })}
       />
 
-      {/* Fixed decorative image — bottom-right, content scrolls over it */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/slides/Nic_Building_1.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none fixed bottom-0 right-0 z-[1] hidden h-[40vh] w-auto select-none object-contain object-bottom md:block"
-      />
-
-      <Section id="hero" width="wide" className="relative z-10 text-center">
-        <h1 className="heading-stroke font-extrabold tracking-tight text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
-          Building
-        </h1>
-        <p className="mx-auto mt-6 max-w-3xl text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
-          I started my first business at school at the age of 16. Since then
-          I haven&apos;t gone a year in my life without a business being
-          built.
-        </p>
-        <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
-          Below you&apos;ll find my current projects, past exits, and a list
-          of dead startups that I tried to get off the ground but didn&apos;t
-          work for one reason or another.
-        </p>
-      </Section>
+      <section className="p-gear" id="hero">
+        <div className="wrap">
+          <h1>Building</h1>
+          <p className="lead">
+            I started my first business at school at the age of 16. Since then I haven&apos;t gone a year in my life without a business being built.
+          </p>
+          <p className="lead">
+            Below you&apos;ll find my current projects, past exits, and a list of dead startups that I tried to get off the ground but didn&apos;t work for one reason or another.
+          </p>
+        </div>
+      </section>
 
       <Section id="active" width="wide" className="relative z-10">
         <div className="mb-8 text-center md:mb-10">
@@ -171,7 +158,7 @@ export default async function BusinessesPage() {
           </p>
         </div>
         <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2">
-          {CURRENT_BUILDS.map((build, cardIndex) => (
+          {CURRENT_BUILDS.map((build) => (
             <a
               key={build.url}
               href={build.url}
@@ -188,16 +175,7 @@ export default async function BusinessesPage() {
                 />
               </div>
               <div className="flex flex-1 flex-col p-5">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">
-                    BUILD_{String(cardIndex + 1).padStart(2, "0")}
-                  </span>
-                  <span className="shrink-0 bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-700">
-                    Live
-                  </span>
-                </div>
-                <div className="my-3 border-t border-brand-200" />
-                <h3 className="text-base font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-lg">
+                <h3 className="text-base font-extrabold leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 md:text-lg">
                   {build.name}
                 </h3>
                 <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-brand-500">
@@ -206,10 +184,7 @@ export default async function BusinessesPage() {
                 <p className="mt-2 flex-1 font-mono text-xs leading-snug text-brand-600">
                   {build.summary}
                 </p>
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">
-                    Open project
-                  </span>
+                <div className="mt-3 flex justify-end">
                   <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </div>
               </div>
@@ -233,8 +208,6 @@ export default async function BusinessesPage() {
               <BusinessCard
                 key={business._id || `exit-${cardIndex}`}
                 business={business}
-                cardIndex={cardIndex}
-                seed={120 + cardIndex}
                 variant="exit"
               />
             ))}
@@ -257,8 +230,6 @@ export default async function BusinessesPage() {
               <BusinessCard
                 key={business._id || `deadpool-${cardIndex}`}
                 business={business}
-                cardIndex={cardIndex}
-                seed={130 + cardIndex}
                 variant="deadpool"
               />
             ))}
@@ -271,8 +242,6 @@ export default async function BusinessesPage() {
 
 interface BusinessCardProps {
   business: BusinessData;
-  cardIndex: number;
-  seed: number;
   variant: "active" | "exit" | "deadpool";
 }
 
@@ -283,7 +252,7 @@ interface CurrentBuild {
   screenshotSrc: string;
 }
 
-function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps) {
+function BusinessCard({ business, variant }: BusinessCardProps) {
   const visualUrl = getBusinessVisualUrl(business);
   const active = variant === "active";
   const deadpool = variant === "deadpool";
@@ -329,13 +298,7 @@ function BusinessCard({ business, cardIndex, seed, variant }: BusinessCardProps)
       )}
 
       <div className={deadpool ? "pt-4" : "flex flex-1 flex-col p-5"}>
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs tracking-widest text-accent-600">
-            {deadpool ? "ARCHIVED" : active ? "ACTIVE" : "EXIT"}
-          </span>
-          {statusBadge}
-        </div>
-        <div className="my-3 border-t border-brand-200" />
+        <div className="flex justify-end">{statusBadge}</div>
         <h3 className={titleClassName}>
           {business.name}
         </h3>
@@ -393,7 +356,7 @@ const FALLBACK_BUSINESSES: BusinessData[] = [
     startYear: 2010,
     endYear: null,
     outcome: "active",
-    url: "/speaker",
+    url: "/keynotes/output-paradox-reengage-teams",
     logo: null,
     screenshot: null,
     order: 1,

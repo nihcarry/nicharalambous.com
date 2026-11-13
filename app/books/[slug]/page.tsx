@@ -133,7 +133,7 @@ export default async function BookPage({
   const buyUrl = getPrimaryBuyUrl(slug, book.buyLinks);
 
   return (
-    <div className="page-bg bg-openbook-pattern">
+    <div className="v3">
       {/* Structured data */}
       <JsonLd
         data={bookJsonLd({
@@ -215,7 +215,7 @@ export default async function BookPage({
               <a
                 key={topic.slug}
                 href={`/topics/${topic.slug}`}
-                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="tag"
               >
                 {topic.title}
               </a>
@@ -226,10 +226,10 @@ export default async function BookPage({
 
       {/* CTA */}
       <FinalCta
-        heading="Want the Keynote Version?"
-        description="The ideas in this book come alive in Nic's keynotes, in person or virtually. Real stories, actionable frameworks, tailored to your team."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
+        heading="The ideas in this book come alive in Nic's keynotes"
+        description="Real stories, actionable frameworks, tailored to your team. In person or virtually."
+        primaryHref="/keynotes/output-paradox-reengage-teams"
+        primaryLabel="See the keynote"
         secondaryHref="/books"
         secondaryLabel="View All Books"
       />
