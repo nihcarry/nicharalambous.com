@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CONSENT_EVENT, readConsent, type ConsentChoice } from "@/lib/consent";
+import testimonials from "@/data/testimonials.json";
 
 /** Wall of Love id from the embed that was on the site before the v3 redesign. */
 export const TESTIMONIAL_WALL_ID = "5b8610ee-6b4a-4779-9503-cddbd8c5ac26";
@@ -36,8 +37,19 @@ export function WhatPeopleSay() {
     <section className="p-speaker what-people-say" id="what-people-say">
       <div className="wrap">
         <h2>What people say</h2>
-        <div className="tt-wall">
-          {choice === "accepted" ? (
+        <ul className="say-cards">
+          {testimonials.map((item) => (
+            <li className="say-card" key={item.name}>
+              <p>&ldquo;{item.quote}&rdquo;</p>
+              <p className="who">
+                <b>{item.name}</b>
+                <span>{item.role}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+        {choice === "accepted" ? (
+          <div className="tt-wall">
             <iframe
               id={TESTIMONIAL_IFRAME_ID}
               src={TESTIMONIAL_EMBED_SRC}
@@ -46,21 +58,19 @@ export function WhatPeopleSay() {
               scrolling="auto"
               referrerPolicy="strict-origin-when-cross-origin"
             />
-          ) : (
-            <div className="tt-hold">
-              <p>
-                These testimonials load from Testimonial.to. They stay off until you accept cookies.
-              </p>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => window.dispatchEvent(new Event("nh-consent-open"))}
-              >
-                Cookie settings
-              </button>
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="tt-more">
+            <p>See more reviews</p>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => window.dispatchEvent(new Event("nh-consent-open"))}
+            >
+              Cookie settings
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
