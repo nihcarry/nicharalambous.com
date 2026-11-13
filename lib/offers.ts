@@ -10,15 +10,12 @@ export const INTRO_CALL_URL = "https://calendly.com/nharry/output-paradox-intro"
 
 export const INTRO_CALL_LABEL = "Not sure yet? Book a free 20-minute intro call";
 
-/** Exact checkout placeholder from the Content Studio copy doc. */
-export const CHECKOUT_PLACEHOLDER = "[TBC: checkout link]";
-
 export const PATHS = {
   workshops: "/workshops",
   team: "/workshops/team-workflow-upgrade",
   executive: "/workshops/executive-workflow-upgrade",
   grokWeek: "/workshops/my-week-with-grok-bot",
-  coaching: "/session",
+  coaching: "/coaching",
 } as const;
 
 /**

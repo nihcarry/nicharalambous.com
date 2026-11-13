@@ -336,31 +336,42 @@ export default async function OutputParadoxPage() {
         </div>
       </section>
 
-      <section className="p-mic" id="after-the-talk">
-        <div className="wrap story">
-          <h2>Your team heard why they&apos;re busy and checking out. This is where you fix the work.</h2>
-          <p>
-            The talk explains the Output Paradox to the whole room. If you want your people to see what working with Grok Bot looks like, or your senior people to go back to their desks with their own work running differently, I run three sessions, after the talk or on their own. All three are virtual by default, and in person is possible, with travel extra.
-          </p>
-          <ul>
-            <li>
-              <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
-            </li>
-            <li>
-              <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders from one company, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Each person builds their own workflow in Grok Bot. The lunch and learn is a 20-minute talk for everyone; this is two hours of building for your senior team.
-            </li>
-            <li>
-              <b>Executive Workflow Upgrade Session.</b> 2 hours, one to one, €1,499, ex VAT. For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.
-            </li>
-          </ul>
-          <p>
-            Prefer ongoing support for yourself? Accountability business coaching is €399 a month, ex VAT. [TBC: keep this line, or leave coaching off the keynote page]
-          </p>
-          <div className="offer-ctas">
-            <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
-            <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Buy the team session" />
-            <CheckoutButton id="buy-executive-workflow-upgrade-op" offer="executive-workflow-upgrade" label="Buy your executive session" />
-            <IntroCallLink />
+      <section className="p-mic op-next" id="after-the-talk">
+        <div className="wrap">
+          <div className="next-band">
+            <div>
+              <h2>Your team heard why they&apos;re busy and checking out. This is where you fix the work.</h2>
+              <p className="body">
+                The talk explains the Output Paradox to the whole room. If you want your people to see what working with Grok Bot looks like, or your senior people to go back to their desks with their own work running differently, I run three sessions, after the talk or on their own. All three are virtual by default, and in person is possible, with travel extra.
+              </p>
+              <div className="op-photo">
+                <img src="/v3/new/op-14.jpg" alt="Nic Haralambous on stage, arms open" width={1200} height={800} />
+              </div>
+            </div>
+            <div className="next-list buy">
+              <div>
+                <p>
+                  <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
+                </p>
+                <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+              </div>
+              <div>
+                <p>
+                  <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders from one company, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Each person builds their own workflow in Grok Bot. The lunch and learn is a 20-minute talk for everyone; this is two hours of building for your senior team.
+                </p>
+                <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Buy the team session" />
+              </div>
+              <div>
+                <p>
+                  <b>Executive Workflow Upgrade Session.</b> 2 hours, one to one, €1,499, ex VAT. For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.
+                </p>
+                <CheckoutButton id="buy-executive-workflow-upgrade-op" offer="executive-workflow-upgrade" label="Buy your executive session" />
+              </div>
+              <p className="coach-line">
+                Prefer ongoing support for yourself? Accountability business coaching is €399 a month, ex VAT.
+              </p>
+              <IntroCallLink />
+            </div>
           </div>
         </div>
       </section>

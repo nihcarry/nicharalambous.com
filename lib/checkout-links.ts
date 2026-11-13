@@ -5,8 +5,8 @@
  * URL. Do not reuse a No Bull Ship price or payment link. Accountability
  * business coaching is a different product.
  *
- * When a value is empty, the buy button stays on the page and shows the
- * copy placeholder "[TBC: checkout link]". It is not clickable.
+ * When a value is empty, the buy button is still a real link to #checkout.
+ * Do not print a placeholder on the page.
  *
  * Tax on every link, once created: exclusive of VAT.
  *
@@ -16,7 +16,7 @@
  * - my-week-with-grok-bot: €2,999, one payment, one session, up to 20 people.
  * - accountability-coaching: €399 every month, a recurring price. Not the
  *   No Bull Ship Private Accountabull Coach.
- * - team-workflow-upgrade: still TBC. Do not create this link in code.
+ * - team-workflow-upgrade: no URL yet. Do not create this link in code.
  *   When it is created: a €4,999 base (up to 8 people) plus an optional
  *   €499 extra-seat line with quantity 0 to 2, so the room can reach 10.
  *   Tax exclusive. One company per booking. No discount or promo code.

@@ -22,8 +22,9 @@ module.exports = {
 
   // Studio, search, archived drafts, the RSS file, and privacy (until Nic
   // supplies wording; keep in sync with PRIVACY_NOINDEX in lib/site.ts).
-  // /session stays in.
+  // /session is a meta refresh to /coaching. Index the coaching URL.
   exclude: [
+    "/session",
     "/studio",
     "/studio/*",
     "/archive/*",

@@ -14,7 +14,7 @@ const KEYNOTE_LINKS = [
 
 const COACHING_LINKS = [
   { href: SOCIAL.nobullship, label: "No Bull Ship (8 weeks)", external: true },
-  { href: "/session", label: "Accountability business coaching" },
+  { href: "/coaching", label: "Accountability business coaching" },
 ];
 
 const CONTENT_LINKS = [
@@ -40,7 +40,7 @@ function isContent(pathname: string) {
 }
 
 function isCoaching(pathname: string) {
-  return pathname === "/session";
+  return pathname === "/session" || pathname === "/coaching";
 }
 
 function isAbout(pathname: string) {

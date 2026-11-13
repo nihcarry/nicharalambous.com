@@ -140,7 +140,7 @@ export default async function HomePage() {
             I speak, I run workshops, I coach and I write. Pick the one you <br className="h-break" />
             came for.
           </h2>
-          <div className="pillars">
+          <div className="pillars six">
             <div className="pl k">
               <img
                 className="px pxi s"
@@ -166,42 +166,50 @@ export default async function HomePage() {
               </a>
               </div>
             </div>
-            <div className="pl">
-              <img
-                className="px pxi"
-                src="/v3/px/Nic_Ancient_greece_16bit.png"
-                alt="Pixel drawing of Nic as a Greek orator"
-                width={226}
-                height={280}
-                loading="lazy"
-              />
-              <h3>For your leadership team</h3>
-              <p>
-                Grok Bot workshops, virtual by default. Watch how I work with it, build your own workflows with me as a team, or upgrade your own week one to one.
-              </p>
+            <div className="pl gb">
+              <img className="pxi stk-card" src="/v3/new/sticker-laptop.png" alt="Emoji-style Nic with a laptop" width={160} height={160} />
+              <h3>My week with Grok Bot</h3>
+              <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
-                <li>My week with Grok Bot: a 90-minute show-and-tell for up to 20 people, €2,999, ex VAT</li>
-                <li>Team Workflow Upgrade Session: 2 hours, hands-on, up to 8 senior leaders from one company, €4,999, ex VAT (extra seats €499 each, up to 10)</li>
-                <li>Executive Workflow Upgrade Session: 2 hours, one to one, for CEOs, €1,499, ex VAT</li>
+                <li>90 minutes, up to 20 people</li>
+                <li>€2,999 per session, ex VAT</li>
+                <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy now" />
-                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy now" />
-                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy now" />
-                <a className="go" href="/workshops">
-                  See all workshops <span>→</span>
-                </a>
+                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+                <a className="session-link" href="/workshops/my-week-with-grok-bot">See the session</a>
               </div>
             </div>
             <div className="pl">
-              <img
-                className="px pxi"
-                src="/v3/px/Nic_Hunting_Pickaxe.png"
-                alt="Pixel drawing of Nic with a pickaxe"
-                width={170}
-                height={288}
-                loading="lazy"
-              />
+              <img className="px pxi" src="/v3/px/Nic_Hunting_Pickaxe.png" alt="Pixel drawing of Nic with a pickaxe" width={170} height={288} />
+              <h3>Team Workflow Upgrade Session</h3>
+              <p>A hands-on workshop for up to 8 senior leaders from one company. Each person builds their own workflow in Grok Bot.</p>
+              <ul>
+                <li>2 hours, hands-on</li>
+                <li>€4,999 for up to 8 people, ex VAT</li>
+                <li>€499 per extra seat, up to 10</li>
+              </ul>
+              <div className="card-links">
+                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy the team session" />
+                <a className="session-link" href="/workshops/team-workflow-upgrade">See the session</a>
+              </div>
+            </div>
+            <div className="pl">
+              <img className="px pxi" src="/v3/px/Nic_Ancient_greece_16bit.png" alt="Pixel drawing of Nic as a Greek orator" width={226} height={280} />
+              <h3>Executive Workflow Upgrade Session</h3>
+              <p>For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.</p>
+              <ul>
+                <li>2 hours, one to one</li>
+                <li>€1,499, ex VAT</li>
+                <li>Virtual by default</li>
+              </ul>
+              <div className="card-links">
+                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy your session" />
+                <a className="session-link" href="/workshops/executive-workflow-upgrade">See the session</a>
+              </div>
+            </div>
+            <div className="pl coach">
+              <img className="pxi photo-cut" src="/v3/new/card-coach-08.png" alt="Nic Haralambous" width={280} height={360} />
               <h3>For founders and CEOs</h3>
               <p>
                 Accountability business coaching. Two 60-minute calls a month with me, plus ongoing accountability and chat support in between, from someone who has built and sold four companies.
@@ -217,9 +225,7 @@ export default async function HomePage() {
                   offer="accountability-coaching"
                   label="Start coaching, €399 a month"
                 />
-                <a className="go" href="/session">
-                  See coaching <span>→</span>
-                </a>
+                <a className="session-link" href="/coaching">See coaching</a>
               </div>
             </div>
             <div className="pl">
@@ -348,7 +354,7 @@ export default async function HomePage() {
               Talk to me first
             </a>
             <span>
-              Or see the <a className="link" href="/workshops">workshops</a> and <a className="link" href="/session">coaching</a>
+              Or see the <a className="link" href="/workshops">workshops</a> and <a className="link" href="/coaching">coaching</a>
             </span>
           </div>
         </div>

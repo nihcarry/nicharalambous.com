@@ -158,6 +158,7 @@ function pages() {
     ["book", "/books/do-fail-learn-repeat"],
     ["output-paradox", "/keynotes/output-paradox-reengage-teams"],
     ["session", "/session"],
+    ["coaching", "/coaching"],
     ["workshops", "/workshops"],
     ["team-workshop", "/workshops/team-workflow-upgrade"],
     ["executive-workshop", "/workshops/executive-workflow-upgrade"],
