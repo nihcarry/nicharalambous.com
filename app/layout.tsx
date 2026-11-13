@@ -6,7 +6,8 @@
  * Font loading uses next/font for optimal performance.
  */
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist, Geist_Mono } from "next/font/google";
 import { SiteNav } from "@/components/site/site-nav";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { SmartHeadingManager } from "@/components/smart-heading-manager";
@@ -17,11 +18,22 @@ import { DEFAULT_DESCRIPTION, personJsonLd, websiteJsonLd } from "@/lib/metadata
 import "./globals.css";
 import "./v3.css";
 
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
+/**
+ * Unbounded (OFL) self-hosted as static woff2, latin, weights 600–800.
+ * Next preloads every file in the family. The postbuild step keeps only the
+ * hero weight (800) preload and drops 600 and 700.
+ */
+const unbounded = localFont({
+  src: [
+    { path: "./fonts/unbounded-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/unbounded-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/unbounded-800.woff2", weight: "800", style: "normal" },
+  ],
   display: "swap",
-  variable: "--font-bricolage",
-  axes: ["opsz", "wdth"],
+  variable: "--font-unbounded",
+  adjustFontFallback: false,
+  fallback: ['"NH Unbounded Fallback"'],
+  preload: true,
 });
 
 const geist = Geist({
@@ -40,13 +52,12 @@ const geistMono = Geist_Mono({
 
 /**
  * The web-font rules live in the deferred stylesheet, so the first paint uses
- * these local faces. The size-adjust values are tuned so the home intro,
- * the headings, and the contact form keep the same line breaks when Geist
- * and Bricolage replace them. Arial on macOS and Windows, Arimo or Liberation
- * Sans where Arial is not installed.
+ * these local faces. Unbounded metrics are for weight 800, the hero weight,
+ * so the home H1 keeps its line breaks when the woff2 replaces Arial.
+ * Arial on macOS and Windows, Arimo or Liberation Sans where Arial is not installed.
  */
 const FONT_FALLBACK = `
-@font-face{font-family:"NH Bricolage Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:88.21%;descent-override:25.61%;line-gap-override:0%;size-adjust:91%}
+@font-face{font-family:"NH Unbounded Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:68.08%;descent-override:16.76%;line-gap-override:0%;size-adjust:146.16%}
 @font-face{font-family:"NH Geist Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0%;size-adjust:104%}
 @font-face{font-family:"NH Geist Mono Fallback";src:local("Arial"),local("Arimo"),local("Liberation Sans");ascent-override:74.67%;descent-override:21.92%;line-gap-override:0%;size-adjust:134.59%}
 html[data-nh-consent] .consent{display:none!important}
@@ -105,7 +116,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-GB" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`}>
+    <html lang="en-GB" className={`${unbounded.variable} ${geist.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
         <script dangerouslySetInnerHTML={{ __html: CONSENT_BOOT }} />
         <style dangerouslySetInnerHTML={{ __html: FONT_FALLBACK }} />

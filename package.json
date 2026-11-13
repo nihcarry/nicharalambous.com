@@ -11,6 +11,7 @@
     "postbuild": "node scripts/check-no-eyebrows.mjs && node scripts/inline-critical-css.mjs && node scripts/strip-emdash-html.mjs && next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"{blog.html,blog/**/*.html,archive/**/*.html}\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\" && rm -rf public/pagefind && cp -r out/pagefind public/pagefind && node scripts/check-v3.mjs",
     "check:v3": "node scripts/check-v3.mjs",
     "check:eyebrows": "node scripts/check-no-eyebrows.mjs",
+    "check:overflow": "node scripts/check-heading-overflow.mjs",
     "parse:medium": "tsx scripts/parse-medium.ts",
     "parse:substack": "tsx scripts/parse-substack.ts",
     "parse:all": "tsx scripts/parse-medium.ts && tsx scripts/parse-substack.ts",

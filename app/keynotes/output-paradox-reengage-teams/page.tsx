@@ -158,7 +158,7 @@ export default async function OutputParadoxPage() {
           <div className="stat">
             <div className="big">1 in 4</div>
             <div>
-              <h2 style={{ margin: "20px 0 22px", fontSize: 48 }}>
+              <h2 style={{ margin: "20px 0 22px" }}>
                 Nearly one in four of your employees is disengaged right now
               </h2>
               <p className="lead">
@@ -252,7 +252,7 @@ export default async function OutputParadoxPage() {
               <p>Small bets, short cycles and permission to be wrong.</p>
             </article>
           </div>
-          <h3 style={{ marginTop: 88, fontSize: 36 }}>What your team leaves with</h3>
+          <h3 className="h-sub">What your team leaves with</h3>
           <div className="leaves">
             <div>
               <span className="mono">01</span>

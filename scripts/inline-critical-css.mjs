@@ -141,16 +141,77 @@ function deferPayload(html) {
   return html;
 }
 
+function fontFaceBlocks(css) {
+  const blocks = [];
+  let i = 0;
+  while (i < css.length) {
+    const at = css.indexOf("@font-face", i);
+    if (at === -1) break;
+    const brace = css.indexOf("{", at);
+    if (brace === -1) break;
+    let depth = 0;
+    let j = brace;
+    for (; j < css.length; j++) {
+      if (css[j] === "{") depth += 1;
+      else if (css[j] === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          j += 1;
+          break;
+        }
+      }
+    }
+    blocks.push(css.slice(brace + 1, j - 1));
+    i = j;
+  }
+  return blocks;
+}
+
+/** URLs for weight 800, or a variable file whose axis includes 800. */
+function heroWeightFontUrls(css) {
+  const urls = new Set();
+  for (const block of fontFaceBlocks(css)) {
+    const weight = block.match(/font-weight:\s*([^;}]+)/);
+    if (!weight) continue;
+    const value = weight[1].trim();
+    const range = value.match(/^(\d+)\s+(\d+)$/);
+    const keep =
+      value === "800" ||
+      (range &&
+        Number(range[1]) !== Number(range[2]) &&
+        Number(range[1]) <= 800 &&
+        Number(range[2]) >= 800);
+    if (!keep) continue;
+    for (const match of block.matchAll(/url\(([^)]+)\)/g)) {
+      const url = match[1].replace(/["']/g, "").trim().split("?")[0];
+      if (url.includes(".woff2")) urls.add(url);
+    }
+  }
+  return urls;
+}
+
+function keepHeroFontPreload(html, heroUrls) {
+  if (heroUrls.size === 0) return html;
+  return html.replace(/<link\b[^>]*>/g, (tag) => {
+    if (!/rel="preload"/.test(tag) || !/as="font"/.test(tag)) return tag;
+    const href = tag.match(/\bhref="([^"]+)"/);
+    if (!href) return tag;
+    const path = href[1].split("?")[0];
+    for (const url of heroUrls) {
+      if (path === url || path.endsWith(url) || url.endsWith(path)) return tag;
+    }
+    return "";
+  });
+}
+
 function uniqueFontNames(css) {
   return css
-    .replaceAll("Bricolage Grotesque Fallback", "NH Bricolage Fallback")
-    .replaceAll("Bricolage Grotesque", "NH Bricolage")
-    .replaceAll("Geist Mono Fallback", "NH Geist Mono Fallback")
-    .replaceAll("Geist Mono", "NH Geist Mono")
-    .replaceAll("Geist Fallback", "NH Geist Fallback")
-    .replaceAll('"Geist"', '"NH Geist"')
-    .replaceAll("font-family:Geist", "font-family:NH Geist")
-    .replaceAll("font-family: Geist", "font-family:NH Geist");
+    .replaceAll(/(?<!NH )Geist Mono Fallback/g, "NH Geist Mono Fallback")
+    .replaceAll(/(?<!NH )Geist Mono/g, "NH Geist Mono")
+    .replaceAll(/(?<!NH )Geist Fallback/g, "NH Geist Fallback")
+    .replaceAll(/(?<!NH )"Geist"/g, '"NH Geist"')
+    .replaceAll(/(?<!NH )font-family:Geist/g, "font-family:NH Geist")
+    .replaceAll(/(?<!NH )font-family: Geist/g, "font-family:NH Geist");
 }
 
 async function cssFiles(dir) {
@@ -164,17 +225,19 @@ async function cssFiles(dir) {
   return files;
 }
 
+const heroFontUrls = new Set();
 for (const file of await cssFiles(root)) {
   const original = await readFile(file, "utf8");
   const renamed = uniqueFontNames(original);
   if (renamed !== original) await writeFile(file, renamed);
+  for (const url of heroWeightFontUrls(renamed)) heroFontUrls.add(url);
 }
 
 let done = 0;
 for (const file of await htmlFiles(root)) {
   const original = await readFile(file, "utf8");
   const inlined = await critters.process(original);
-  const next = await withMobileLayout(deferPayload(inlined));
+  const next = keepHeroFontPreload(await withMobileLayout(deferPayload(inlined)), heroFontUrls);
   if (next !== original) {
     await writeFile(file, next);
     done += 1;
