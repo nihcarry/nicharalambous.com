@@ -735,6 +735,95 @@ html[data-nh-consent] .consent {
   cursor: pointer;
 }
 
+/* Testimonial cards are always on the page. The wall mounts under them only after consent. */
+.v3 section.what-people-say {
+  background-color: var(--paper);
+}
+
+.what-people-say h2 {
+  margin: 0 0 28px;
+}
+
+.what-people-say .say-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.what-people-say .say-card {
+  min-width: 0;
+  background: #fbf9f4;
+  border: 1px solid #d8d1c2;
+  padding: 28px;
+}
+
+.what-people-say .say-card p,
+.what-people-say .say-card .who {
+  font-family: var(--sans);
+  overflow-wrap: break-word;
+}
+
+.what-people-say .say-card p {
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.what-people-say .say-card .who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.what-people-say .say-card .who b {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.what-people-say .tt-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin-top: 28px;
+}
+
+.what-people-say .tt-more p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.what-people-say .tt-more .btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.what-people-say .tt-wall {
+  height: 640px;
+  min-height: 640px;
+  margin-top: 28px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.what-people-say .tt-wall iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color-scheme: light;
+}
+
 .yt-play {
   position: absolute;
   left: 50%;
@@ -2310,7 +2399,8 @@ html[data-nh-consent] .consent {
   .v3 .bio,
   .v3 .content-row,
   .v3 .main .wrap,
-  .v3 .news .grid {
+  .v3 .news .grid,
+  .v3 .formats {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
@@ -2320,7 +2410,6 @@ html[data-nh-consent] .consent {
   .v3 .leaves,
   .v3 .posts,
   .v3 .pillars,
-  .v3 .formats,
   .v3 .signals,
   .v3 .quotes,
   .site-footer .cols {
@@ -3357,7 +3446,18 @@ html[data-nh-consent] .consent {
   }
 }
 
+@media (max-width: 900px) {
+  .what-people-say .say-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (min-width: 800px) {
+  .what-people-say .tt-wall {
+    height: 800px;
+    min-height: 800px;
+  }
+
   .v3 .related,
   .v3 .offer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -25,7 +25,7 @@ export function gateThirdPartyEmbeds(html: string): string {
       return `<div class="yt-facade">${image}<button type="button" data-yt-play="${youtube[1]}" aria-label="${esc(label)}"><span class="yt-play" aria-hidden="true"></span></button></div>`;
     }
     if (/testimonial\.to/i.test(src)) {
-      return `<div class="tt-facade"><p class="tt-note">These load from Testimonial.to when you open them.</p><button type="button" class="btn" data-tt-play="${esc(src)}">Show testimonials</button></div>`;
+      return `<div class="tt-facade"><p class="tt-note">These testimonials load from Testimonial.to. They stay off until you accept cookies.</p><button type="button" class="btn" data-tt-play="${esc(src)}">Cookie settings</button></div>`;
     }
     return tag;
   });

@@ -4,6 +4,8 @@
  * five lines at 360px, and that Unbounded is self-hosted as woff2 with
  * only the hero weight (800) preloaded.
  *
+ * Widths: 360, 390, 768 and 1440.
+ *
  *   npm run build
  *   npm run check:overflow
  */
@@ -275,7 +277,7 @@ const summary = [];
 try {
   for (const [name, route] of routes) {
     if (!route) continue;
-    for (const width of [360, 1440]) {
+    for (const width of [360, 390, 768, 1440]) {
       await page.setViewportSize({ width, height: width === 360 ? 800 : 900 });
       const response = await page.goto(base + route, { waitUntil: "networkidle" });
       const status = response?.status() ?? 0;

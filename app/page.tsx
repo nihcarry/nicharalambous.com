@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { LogoStrip } from "@/components/site/logo-strip";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
+import { WhatPeopleSay } from "@/components/what-people-say";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
 import { bookOfferHref } from "@/lib/site";
 import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
@@ -248,6 +249,8 @@ export default async function HomePage() {
           ) : null}
         </div>
       </section>
+
+      <WhatPeopleSay />
 
       <NewsletterBlock />
 
