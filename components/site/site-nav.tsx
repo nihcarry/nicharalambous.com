@@ -8,12 +8,13 @@ const KEYNOTE_LINKS = [
   { href: OUTPUT_PARADOX_PATH, label: "The Output Paradox" },
   { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "Virtual lunch and learn" },
   { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "In-person keynotes" },
+  { href: "/workshops", label: "Workshops" },
   { href: "/contact", label: "Enquire" },
 ];
 
 const COACHING_LINKS = [
   { href: SOCIAL.nobullship, label: "No Bull Ship (8 weeks)", external: true },
-  { href: "/session", label: "1:1 coaching sessions" },
+  { href: "/session", label: "Accountability coaching" },
 ];
 
 const CONTENT_LINKS = [
@@ -31,7 +32,7 @@ const ABOUT_LINKS = [
 type DropName = "keynotes" | "coaching" | "content" | "about";
 
 function isKeynotes(pathname: string) {
-  return pathname.startsWith("/keynotes") || pathname === "/contact";
+  return pathname.startsWith("/keynotes") || pathname.startsWith("/workshops") || pathname === "/contact";
 }
 
 function isContent(pathname: string) {

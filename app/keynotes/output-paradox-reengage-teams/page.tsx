@@ -4,7 +4,9 @@ import { LogoStrip } from "@/components/site/logo-strip";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
-import { bookNowHref, bookOfferHref, checkoutIsLive } from "@/lib/site";
+import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { checkoutIsLive } from "@/lib/site";
+import { followOnSessionsJsonLd } from "@/lib/offers";
 import { v3ContentSettings } from "@/lib/v3-content";
 
 const PATH = "/keynotes/output-paradox-reengage-teams";
@@ -13,7 +15,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 45 minutes, in person or on Zoom, Teams or Meet. Lunch and learn is 20 minutes, €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
+    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 45 minutes, in person or on Zoom, Teams or Meet. Lunch and learn is 20 minutes, €999 ex VAT. Virtual keynotes from €2,000 ex VAT. In-person from €4,500 ex VAT. Q&A, travel, podcasts and other extras can be bundled on.",
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
@@ -45,14 +47,13 @@ const QUOTES = [
 
 export default async function OutputParadoxPage() {
   const settings = await v3ContentSettings();
-  const bookNow = bookNowHref();
-  const offer = bookOfferHref();
   const paidOnline = checkoutIsLive();
 
   return (
     <div className="v3 has-sticky" data-no-orphan-opt-out="true">
       <link rel="preload" as="image" href="/v3/nic-hero-3.webp" fetchPriority="high" />
       <JsonLd data={outputParadoxServiceJsonLd()} />
+      <JsonLd data={followOnSessionsJsonLd()} />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -85,9 +86,8 @@ export default async function OutputParadoxPage() {
                 </div>
               </div>
               <div className="acts">
-                <a className="btn" href={bookNow}>
-                  Book now
-                </a>
+                <CheckoutButton id="buy-lunch-and-learn" offer="lunch-and-learn" label="Buy now" />
+                <IntroCallLink />
                 <a className="quiet-link" href="/contact">
                   Planning something bigger? Talk to me first
                 </a>
@@ -124,7 +124,7 @@ export default async function OutputParadoxPage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>In-person keynotes from €4,500</b>, excluding travel and VAT. Full 45 minute talk, in your room.
+            <b>In-person keynotes from €4,500 ex VAT</b>. 45 minutes. Q&A, travel, podcasts and other extras can be bundled on.
           </span>
           <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
             Enquire about a date
@@ -295,9 +295,8 @@ export default async function OutputParadoxPage() {
               <div className="price">
                 €999<span>ex VAT</span>
               </div>
-              <a className="btn" href={bookNow}>
-                Book now
-              </a>
+              <CheckoutButton id="buy-lunch-and-learn-formats" offer="lunch-and-learn" label="Buy now" />
+              <IntroCallLink />
             </div>
             <div className="fmt">
               <h3>Virtual keynote</h3>
@@ -310,7 +309,7 @@ export default async function OutputParadoxPage() {
                 <li>Frameworks your team keeps</li>
               </ul>
               <div className="price">
-                <small className="from">from</small>€1,500<span>ex VAT</span>
+                <small className="from">from</small>€2,000<span>ex VAT</span>
               </div>
               <a className="btn ghost" href="/contact?format=virtual">
                 Talk to me first
@@ -319,7 +318,7 @@ export default async function OutputParadoxPage() {
             <div className="fmt">
               <h3>In-person keynote</h3>
               <p>
-                For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast.
+                For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast. 45 minutes. Q&amp;A, travel, podcasts and other extras can be bundled on.
               </p>
               <ul>
                 <li>45 minutes</li>
@@ -327,12 +326,42 @@ export default async function OutputParadoxPage() {
                 <li>Full day with delegates available</li>
               </ul>
               <div className="price">
-                <small className="from">from</small>€4,500<span>ex travel and VAT</span>
+                <small className="from">from</small>€4,500<span>ex VAT</span>
               </div>
               <a className="btn ghost" href="/contact?format=in-person">
                 Enquire about a date
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="p-mic" id="after-the-talk">
+        <div className="wrap story">
+          <p>[TBC: Design and Nic to confirm placement]</p>
+          <h2>Your team heard why they&apos;re busy and checking out. This is where you fix the work.</h2>
+          <p>
+            The talk explains the Output Paradox to the whole room. If you want your people to see what working with Grok Bot looks like, or your senior people to go back to their desks with their own work running differently, I run three sessions, after the talk or on their own. All three are virtual by default, and in person is possible, with travel extra.
+          </p>
+          <ul>
+            <li>
+              <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
+            </li>
+            <li>
+              <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders from one company, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Each person builds their own workflow in Grok Bot. The lunch and learn is a 20-minute talk for everyone; this is two hours of building for your senior team. Book it within 60 days of a My week with Grok Bot session and it&apos;s €1,000 off.
+            </li>
+            <li>
+              <b>Executive Workflow Upgrade Session.</b> 2 hours, one to one, €1,499, ex VAT. For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.
+            </li>
+          </ul>
+          <p>
+            Prefer ongoing support for yourself? Accountability business coaching is €399 a month, ex VAT. [TBC: keep this line, or leave coaching off the keynote page]
+          </p>
+          <div className="offer-ctas">
+            <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+            <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Buy the team session" />
+            <CheckoutButton id="buy-executive-workflow-upgrade-op" offer="executive-workflow-upgrade" label="Buy your executive session" />
+            <IntroCallLink />
           </div>
         </div>
       </section>
@@ -449,9 +478,9 @@ export default async function OutputParadoxPage() {
             />
             <h2>If your team is doing more and feeling less, this is the conversation they need next</h2>
             <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-              <a className="btn" href={offer}>
-                Book a lunch and learn <span className="p">€999</span>
-              </a>
+              <CheckoutButton id="buy-lunch-and-learn-close" offer="lunch-and-learn" label="Buy now" />
+              <span>€999, ex VAT</span>
+              <IntroCallLink />
               <a className="quiet-link" href="/contact">
                 Talk to me first
               </a>

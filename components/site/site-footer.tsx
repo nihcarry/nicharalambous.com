@@ -28,6 +28,9 @@ export function SiteFooter() {
                 <a href={`${OUTPUT_PARADOX_PATH}#formats`}>In-person keynotes</a>
               </li>
               <li>
+                <a href="/workshops">Workshops</a>
+              </li>
+              <li>
                 <a href="/contact">Enquire</a>
               </li>
             </ul>
@@ -42,7 +45,7 @@ export function SiteFooter() {
                 <a href={SOCIAL.nobullship}>nobullship.co</a>
               </li>
               <li>
-                <a href="/session">1:1 coaching sessions</a>
+                <a href="/session">Accountability coaching</a>
               </li>
             </ul>
             <h2 className="later">Content</h2>

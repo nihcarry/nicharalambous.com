@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { bookNowHref } from "@/lib/site";
+import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
 
 /** Mobile bar on the Output Paradox page. Hidden until the hero has left the viewport. */
 export function StickyBookBar() {
@@ -32,11 +32,12 @@ export function StickyBookBar() {
     <div className="sticky-book" hidden={!visible}>
       <span className="t">
         <b>Lunch and learn</b>
-        20 minutes, live, ex VAT
+        €999, ex VAT
       </span>
-      <a className="btn" href={bookNowHref()}>
-        Book now, €999
-      </a>
+      <span className="sticky-acts">
+        <CheckoutButton id="buy-lunch-and-learn-sticky" offer="lunch-and-learn" label="Buy now" />
+        <IntroCallLink />
+      </span>
     </div>
   );
 }

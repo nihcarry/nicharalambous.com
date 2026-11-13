@@ -1,213 +1,107 @@
-/**
- * Sessions Page (/session)
- *
- * Three offers: Coaching, Brain Picking, and Pay What You Can Afford.
- * Paid offers link out to Stripe Payment Links. PWYCA uses an application form.
- *
- * JSON-LD: Product offers for paid sessions
- */
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import { JsonLd } from "@/components/json-ld";
-import { WhatPeopleSay } from "@/components/what-people-say";
+import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { breadcrumbJsonLd } from "@/lib/metadata";
+import { PATHS, coachingJsonLd } from "@/lib/offers";
 import { PwycaForm } from "./pwyca-form";
 
-const STRIPE_BRAIN_PICK =
-  "https://buy.stripe.com/9B64gzfjI2Bwd187e22wU05";
-const STRIPE_COACHING_ONE =
-  "https://book.stripe.com/4gM7sL9Zocc6aT02XM2wU06";
-const STRIPE_COACHING_FIVE =
-  "https://book.stripe.com/eVq28r8Vk4JE6CKbui2wU07";
-const INTRO_CALL_LINK = "https://calendar.app.google/EC4CkCZMFhh83b6z6";
+const URL = "https://www.nicharalambous.com/session";
 
 export const metadata: Metadata = {
-  title: "Book a Session",
+  title: "Accountability business coaching",
   description:
-    "Book coaching or a one-off Brain Picking session with Nic Haralambous, or apply for pay-what-you-can-afford coaching.",
+    "Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT. Pay-what-you-can-afford coaching stays open as an application.",
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://www.nicharalambous.com/session" },
+  alternates: { canonical: URL },
   openGraph: {
     type: "website",
-    title: "Book a Session | Nic Haralambous",
+    title: "Accountability business coaching | Nic Haralambous",
     description:
-      "Coaching, Brain Picking, or pay-what-you-can-afford work with Nic Haralambous.",
-    url: "https://www.nicharalambous.com/session",
+      "Business coaching that holds you to what you said you'd do. €399 a month, ex VAT.",
+    url: URL,
   },
 };
-
-function sessionOffersJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Sessions with Nic Haralambous",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        item: {
-          "@type": "Product",
-          name: "Coaching with Nic Haralambous",
-          description:
-            "Longer-term coaching partnership covering definition of success, business model, life design, mental models, and mental fitness.",
-          url: "https://www.nicharalambous.com/session",
-          brand: {
-            "@type": "Person",
-            name: "Nic Haralambous",
-            url: "https://www.nicharalambous.com/",
-          },
-          offers: [
-            {
-              "@type": "Offer",
-              name: "One coaching session",
-              url: STRIPE_COACHING_ONE,
-              price: "200",
-              priceCurrency: "EUR",
-              availability: "https://schema.org/InStock",
-            },
-            {
-              "@type": "Offer",
-              name: "Five coaching sessions",
-              url: STRIPE_COACHING_FIVE,
-              price: "900",
-              priceCurrency: "EUR",
-              availability: "https://schema.org/InStock",
-            },
-          ],
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        item: {
-          "@type": "Product",
-          name: "Pick Nic's Brain",
-          description:
-            "A one-off session for a short-term fix, perspective shift, or jarring help with a specific problem.",
-          url: "https://www.nicharalambous.com/session",
-          brand: {
-            "@type": "Person",
-            name: "Nic Haralambous",
-            url: "https://www.nicharalambous.com/",
-          },
-          offers: {
-            "@type": "Offer",
-            url: STRIPE_BRAIN_PICK,
-            price: "99",
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-          },
-        },
-      },
-    ],
-  };
-}
-
-function OfferCard({
-  title,
-  price,
-  description,
-  bullets,
-  children,
-}: {
-  title: string;
-  price: string;
-  description: string;
-  bullets: string[];
-  children: ReactNode;
-}) {
-  return (
-    <article className="plain-card">
-      <h2>{title}</h2>
-      <p>{price}</p>
-      <p>{description}</p>
-      <ul>
-        {bullets.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-      <div style={{ marginTop: 20 }}>{children}</div>
-    </article>
-  );
-}
 
 export default function SessionPage() {
   return (
     <div className="v3 p-person">
-      <JsonLd data={sessionOffersJsonLd()} />
-
+      <JsonLd data={coachingJsonLd()} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Accountability business coaching", path: PATHS.coaching },
+        ])}
+      />
       <section>
-        <div className="wrap">
-          <h1>Work with Nic</h1>
+        <div className="wrap story">
+          <p>[TBC: replaces the €200 and €900 coaching on /session, so either /session or a new URL]</p>
+          <h1>Business coaching that holds you to what you said you&apos;d do</h1>
           <p className="lead">
-            Longer-term coaching, a one-off Brain Pick for a specific problem, or apply for pay-what-you-can-afford coaching.
+            Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT.
           </p>
-          <div className="offer-grid" style={{ marginTop: 36 }}>
-            <OfferCard
-              title="Coaching"
-              price="€200 per session"
-              description="A longer-term partnership. Holistic deep dives into your definition of success, the business you're building, the life you're living, and how they fit together: mental models, mental fitness, lifestyle and business overlap."
-              bullets={[
-                "One session or five upfront for an ongoing commitment",
-                "Business, life and how they come together",
-                "Mental models, mental fitness, and how you approach the world",
-                "For people who are curious, take action and in the market for a new perspective.",
-              ]}
-            >
-              <div>
-                <p>
-                  <a className="btn" href={STRIPE_COACHING_ONE} target="_blank" rel="noopener noreferrer">
-                    Book Nic Now (€200)
-                  </a>
-                </p>
-                <p style={{ marginTop: 12 }}>
-                  <a className="btn ghost" href={STRIPE_COACHING_FIVE} target="_blank" rel="noopener noreferrer">
-                    Book 5 sessions (10% off)
-                  </a>
-                </p>
-                <p>
-                  Five sessions: €900 total <s>€1,000</s>. Secure checkout via Stripe.
-                </p>
-                <p>
-                  Not sure yet? Book a free 20-minute intro call.{" "}
-                  <a className="link" href={INTRO_CALL_LINK} target="_blank" rel="noopener noreferrer">
-                    Intro Call (20 min)
-                  </a>
-                </p>
-              </div>
-            </OfferCard>
+          <p>
+            I think the hard part of running a business is rarely knowing what to do next. It&apos;s doing it, week after week, when nobody is checking and the urgent stuff keeps pushing the important stuff to next month.
+          </p>
+          <p>
+            Twice a month we get on a call for an hour and I&apos;m your sounding board. We look at the business you&apos;re building, the decisions in front of you and how it all fits with the life you want to live. You leave each call with the things you&apos;ve committed to. Between calls I hold you to them, and when something comes up you can message me instead of sitting on it for two weeks.
+          </p>
+          <p>
+            I&apos;ve been building businesses since I was 16. I&apos;ve sold four of them, written three books and spent more than 20 years learning through failure and success. I&apos;ll tell you what I think, and I&apos;ll ask whether you did what you said you would.
+          </p>
+          <p>
+            If €399 a month isn&apos;t possible right now, you can apply for pay-what-you-can-afford coaching instead. I keep that to 5 clients a month, and paying €0 is totally fine.
+          </p>
 
-            <OfferCard
-              title="Brain Picking"
-              price="€99 per session"
-              description="A one-off session, not meant to repeat. Short-term fix, perspective shift, or oblique/jarring help on a specific problem in business, your startup, or life."
-              bullets={[
-                "60-minute video call with Nic",
-                "One-off: designed for a single sharp intervention",
-                "Perspective shift or actionable takeaways you can use immediately",
-                "Want more? Continue with one or five coaching sessions",
-              ]}
-            >
-              <div>
-                <p>
-                  <a className="btn" href={STRIPE_BRAIN_PICK} target="_blank" rel="noopener noreferrer">
-                    Book Your Session (€99)
-                  </a>
-                </p>
-                <p>Secure checkout via Stripe. You&apos;ll receive booking confirmation and scheduling details by email.</p>
-              </div>
-            </OfferCard>
+          <h2>What&apos;s included</h2>
+          <ul>
+            <li>Two 60-minute calls a month with me [TBC: video platform and how calls are booked]</li>
+            <li>Ongoing accountability between calls [TBC: what this looks like in practice, for example a weekly check-in]</li>
+            <li>Chat support [TBC: which app it runs on, and expected reply times]</li>
+            <li>€399 a month, ex VAT [TBC: minimum term or cancel any time]</li>
+          </ul>
+
+          <h2>Who it&apos;s for</h2>
+          <p>
+            Founders, CEOs and entrepreneurs who want a sounding board and accountability from an experienced business builder. You make the decisions in your business, and you want someone outside it to think them through with you and hold you to what you decide.
+          </p>
+
+          <h2>FAQ</h2>
+          <div className="faq">
+            <h3>What do we talk about on the calls?</h3>
+            <p>
+              Your business, the decisions you&apos;re stuck on, what you said you&apos;d do last time and whether you did it. Business and life overlap, so we can talk about both.
+            </p>
+            <h3>Is there a minimum commitment?</h3>
+            <p>[TBC]</p>
+            <h3>What happens if I miss a call?</h3>
+            <p>[TBC]</p>
+            <h3>Can I just book one session?</h3>
+            <p>
+              [TBC: the single €200 session and five-pack are being removed. Confirm whether there is any one-off option, or only the monthly coaching and the free intro call]
+            </p>
+            <h3>What if I can&apos;t afford €399 a month?</h3>
+            <p>Apply for pay-what-you-can-afford coaching. I take up to 5 people a month, and paying €0 is fine.</p>
+          </div>
+
+          <div className="offer-ctas">
+            <CheckoutButton
+              id="buy-accountability-coaching"
+              offer="accountability-coaching"
+              label="Start coaching, €399 a month"
+            />
+            <IntroCallLink />
+            <p>
+              <a className="link" href="#pwyca">
+                Apply for pay-what-you-can-afford coaching
+              </a>
+            </p>
           </div>
         </div>
       </section>
-      <WhatPeopleSay />
-      <section>
+      <section id="pwyca">
         <div className="wrap">
           <article className="plain-card">
-            <h2>Pay What You Can Afford</h2>
-            <p>Application-based coaching</p>
-            <p>
-              Same coaching intent: holistic, longer-term work on the life and business you want, at a price you can actually afford. Paying €0 is totally fine. Nic limits this to <b>5 clients per month</b>, which is why there&apos;s an application.
-            </p>
+            <h2>Apply for pay-what-you-can-afford coaching</h2>
             <PwycaForm />
           </article>
         </div>

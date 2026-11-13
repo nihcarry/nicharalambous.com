@@ -286,6 +286,7 @@ export function outputParadoxServiceJsonLd() {
         name: "20-minute virtual lunch and learn",
         price: "999",
         priceCurrency: "EUR",
+        valueAddedTaxIncluded: false,
         description: "€999 excluding VAT. 20 minutes, live on Zoom, Teams or Meet.",
         url: `${url}#book`,
         ...(lunchLearnCheckoutUrl()
@@ -295,9 +296,10 @@ export function outputParadoxServiceJsonLd() {
       {
         "@type": "Offer",
         name: "Virtual keynote",
-        price: "1500",
+        price: "2000",
         priceCurrency: "EUR",
-        description: "From €1,500 excluding VAT. 45 minutes.",
+        valueAddedTaxIncluded: false,
+        description: "From €2,000 excluding VAT. 45 minutes.",
         url: `${url}#formats`,
         availability: "https://schema.org/InStock",
       },
@@ -306,7 +308,9 @@ export function outputParadoxServiceJsonLd() {
         name: "In-person keynote",
         price: "4500",
         priceCurrency: "EUR",
-        description: "From €4,500 excluding travel and VAT. 45 minutes.",
+        valueAddedTaxIncluded: false,
+        description:
+          "From €4,500 excluding VAT. 45 minutes. Q&A, travel, podcasts and other extras can be bundled on.",
         url: `${url}#formats`,
         availability: "https://schema.org/InStock",
       },

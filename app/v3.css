@@ -205,6 +205,73 @@ em.hl {
   position: relative;
 }
 
+.v3 .buy-slot {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.v3 .tbc-line,
+.sticky-book .tbc-line {
+  display: block;
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.v3 .btn.wrap,
+.sticky-book .btn.wrap {
+  white-space: normal;
+  text-align: center;
+  max-width: 100%;
+}
+
+.v3 .btn.static {
+  cursor: default;
+}
+
+.v3 .offer-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.v3 .faq h3 {
+  font-size: 22px;
+  margin: 22px 0 8px;
+}
+
+.v3 .compare-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.v3 table.compare {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.v3 table.compare th,
+.v3 table.compare td {
+  border: 1px solid #d8d1c2;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.v3 table.compare th {
+  font-family: var(--sans);
+  font-weight: 650;
+}
+
 .v3 .btn,
 .site-nav .btn,
 .site-footer .btn,
@@ -1186,8 +1253,8 @@ html[data-nh-consent] .consent {
 
 .v3 .pillars {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 56px;
 }
 
@@ -1200,6 +1267,7 @@ html[data-nh-consent] .consent {
   flex-direction: column;
   gap: 16px;
   min-height: 460px;
+  min-width: 0;
   border-radius: 0;
 }
 
@@ -2332,6 +2400,30 @@ html[data-nh-consent] .consent {
   border-bottom-width: 1px;
 }
 
+@media (min-width: 1101px) {
+  .v3 .pl {
+    padding: 22px 16px;
+    min-height: 0;
+  }
+
+  .v3 .pl h3 {
+    font-size: 20px;
+    padding-right: 44px;
+  }
+
+  .v3 .pl .pxi,
+  .v3 .pl .pxi.s,
+  .v3 .pl .pxi.k {
+    height: 52px;
+    top: 16px;
+    right: 10px;
+  }
+
+  .v3 .pl .btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1100px) and (min-width: 601px) {
   .site-nav .wrap {
     gap: 12px;
@@ -2844,6 +2936,7 @@ html[data-nh-consent] .consent {
 
   .sticky-book {
     display: flex;
+    flex-wrap: wrap;
     position: fixed;
     left: 0;
     right: 0;
@@ -2881,6 +2974,15 @@ html[data-nh-consent] .consent {
   .sticky-book .btn {
     padding: 13px 16px;
     font-size: 15px;
+    white-space: normal;
+  }
+
+  .sticky-book .sticky-acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    max-width: 100%;
   }
 }
 
