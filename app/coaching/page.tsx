@@ -148,6 +148,22 @@ export default function CoachingPage() {
           </div>
         </div>
       </section>
+      <section className="p-pen" id="pwyca" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
+        <div className="wrap">
+          <article className="plain-card">
+            <h2 style={{ fontSize: 22 }}>Pay What You Can Afford</h2>
+            <p>Application-based coaching</p>
+            <p>
+              Same coaching intent, at a price you can actually afford. Paying €0 is totally fine. I limit this to <b>5 clients per month</b>, which is why there&apos;s an application.
+            </p>
+            <p style={{ marginTop: 20 }}>
+              <a className="btn ghost" href="/coaching/apply">
+                Apply for pay-what-you-can-afford coaching
+              </a>
+            </p>
+          </article>
+        </div>
+      </section>
       <section className="p-person">
         <div className="wrap bio">
           <div className="pic">
@@ -180,25 +196,10 @@ export default function CoachingPage() {
           </div>
         </div>
       </section>
-      <section className="p-pen" id="pwyca">
-        <div className="wrap">
-          <article className="plain-card">
-            <h2 style={{ fontSize: 22 }}>Pay What You Can Afford</h2>
-            <p>Application-based coaching</p>
-            <p>
-              Same coaching intent, at a price you can actually afford. Paying €0 is totally fine. I limit this to <b>5 clients per month</b>, which is why there&apos;s an application.
-            </p>
-            <p style={{ marginTop: 20 }}>
-              <a className="btn ghost" href="/coaching/apply">
-                Apply for pay-what-you-can-afford coaching
-              </a>
-            </p>
-          </article>
-        </div>
-      </section>
       <section className="dark pd-cta">
         <div className="wrap">
           <div className="final op">
+            <img className="px pxf op" src="/v3/px/Nic_Ancient_greece_16bit.png" alt="" width={226} height={280} />
             <h2>Accountability business coaching</h2>
             <p className="final-sub">€399 a month, ex VAT.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>

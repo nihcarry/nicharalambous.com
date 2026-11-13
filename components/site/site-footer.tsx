@@ -28,10 +28,24 @@ export function SiteFooter() {
                 <a href={`${OUTPUT_PARADOX_PATH}#formats`}>In-person keynotes</a>
               </li>
               <li>
-                <a href="/workshops">Workshops</a>
+                <a href="/contact">Enquire</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Workshops</h2>
+            <ul>
+              <li>
+                <a href="/workshops/my-week-with-grok-bot">My week</a>
               </li>
               <li>
-                <a href="/contact">Enquire</a>
+                <a href="/workshops/team-workflow-upgrade">Team</a>
+              </li>
+              <li>
+                <a href="/workshops/executive-workflow-upgrade">Exec</a>
+              </li>
+              <li>
+                <a href="/workshops">All workshops</a>
               </li>
             </ul>
           </div>

@@ -160,7 +160,7 @@ export default async function HomePage() {
                 <li>In-person keynotes from €4,500, ex VAT, travel extra</li>
               </ul>
               <div className="card-links">
-              <CheckoutButton id="buy-lunch-and-learn-speak" offer="lunch-and-learn" label="Buy the lunch and learn" />
+              <CheckoutButton id="buy-lunch-and-learn-speak" offer="lunch-and-learn" label="Buy the lunch and learn" variant="link" />
               <a className="go" href="/keynotes/output-paradox-reengage-teams">
                 See the Output Paradox <span>→</span>
               </a>
@@ -176,7 +176,7 @@ export default async function HomePage() {
                 <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" variant="link" />
                 <a className="session-link" href="/workshops/my-week-with-grok-bot">See the session</a>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default async function HomePage() {
                 <li>€499 per extra seat, up to 10</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy the team session" />
+                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy the team session" variant="link" />
                 <a className="session-link" href="/workshops/team-workflow-upgrade">See the session</a>
               </div>
             </div>
@@ -204,7 +204,7 @@ export default async function HomePage() {
                 <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy your session" />
+                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy your session" variant="link" />
                 <a className="session-link" href="/workshops/executive-workflow-upgrade">See the session</a>
               </div>
             </div>
@@ -224,6 +224,7 @@ export default async function HomePage() {
                   id="buy-accountability-coaching-home"
                   offer="accountability-coaching"
                   label="Start coaching, €399 a month"
+                  variant="link"
                 />
                 <a className="session-link" href="/coaching">See coaching</a>
               </div>

@@ -5,12 +5,21 @@ export function CheckoutButton({
   id,
   offer,
   label,
+  variant = "button",
 }: {
   id: string;
   offer: CheckoutOffer;
   label: string;
+  variant?: "button" | "link";
 }) {
   const href = checkoutHref(offer) || "#checkout";
+  if (variant === "link") {
+    return (
+      <a id={id} className="go buy" data-offer={offer} href={href}>
+        {label} <span>→</span>
+      </a>
+    );
+  }
   return (
     <a id={id} className="btn btn-wrap" data-offer={offer} href={href}>
       {label}

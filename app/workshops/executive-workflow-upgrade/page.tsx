@@ -52,7 +52,7 @@ export default function ExecutiveWorkshopPage() {
                   <small>one to one, ex VAT</small>
                 </div>
               </div>
-              <div className="acts">
+              <div className="acts side">
                 <CheckoutButton id="buy-executive-workflow-upgrade" offer="executive-workflow-upgrade" label="Buy your executive session" />
                 <IntroCallLink />
               </div>
@@ -166,6 +166,11 @@ export default function ExecutiveWorkshopPage() {
             <div className="fmt">
               <h3>My week with Grok Bot</h3>
               <p>A show-and-tell of my own setup, for up to 20 people.</p>
+              <ul>
+                <li>90 minutes</li>
+                <li>Up to 20 people, one organisation</li>
+                <li>Virtual by default</li>
+              </ul>
               <div className="price">
                 €2,999<span>per session, ex VAT</span>
               </div>
@@ -177,6 +182,11 @@ export default function ExecutiveWorkshopPage() {
             <div className="fmt">
               <h3>Team Workflow Upgrade Session</h3>
               <p>Up to 8 senior leaders build their own workflows.</p>
+              <ul>
+                <li>2 hours, hands-on</li>
+                <li>Up to 8 senior leaders from one company</li>
+                <li>€499 per extra seat, up to 10</li>
+              </ul>
               <div className="price">
                 €4,999<span>per session, up to 8 people, ex VAT</span>
               </div>
@@ -188,6 +198,11 @@ export default function ExecutiveWorkshopPage() {
             <div className="fmt lead1">
               <h3>Executive Workflow Upgrade Session</h3>
               <p>For the CEO: introduction, review and an upgrade.</p>
+              <ul>
+                <li>2 hours</li>
+                <li>One to one</li>
+                <li>Virtual by default</li>
+              </ul>
               <div className="price">
                 €1,499<span>one to one, ex VAT</span>
               </div>
@@ -200,6 +215,7 @@ export default function ExecutiveWorkshopPage() {
         <div className="wrap bio">
           <div className="pic">
             <img src="/v3/new/bio-exec-07.jpg" alt="Nic Haralambous, portrait" width={1000} height={1250} />
+            <img className="px pxb" src="/v3/px/Nic_archeo_16bit.png" alt="" width={182} height={220} />
           </div>
           <div>
             <h2 style={{ margin: "20px 0 22px" }}>I&apos;ve been building businesses since I was 16</h2>
@@ -230,6 +246,7 @@ export default function ExecutiveWorkshopPage() {
       <section className="dark pd-cta">
         <div className="wrap">
           <div className="final op">
+            <img className="px pxf op" src="/v3/px/Nic_Hunting_Pickaxe.png" alt="" width={170} height={288} />
             <h2>Executive Workflow Upgrade Session</h2>
             <p className="final-sub">2 hours, one to one, €1,499, ex VAT.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>

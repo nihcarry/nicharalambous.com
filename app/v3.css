@@ -580,7 +580,7 @@ em.hl {
 
 .site-footer .cols {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr));
   gap: 40px;
 }
 
@@ -2411,19 +2411,19 @@ html[data-nh-consent] .consent {
 }
 
 @media (min-width: 1101px) {
-  .v3 .pl {
+  .v3 .pillars:not(.six) .pl {
     padding: 24px 16px;
     min-height: 0;
   }
 
-  .v3 .pl h3 {
+  .v3 .pillars:not(.six) .pl h3 {
     font-size: 22px;
     padding-right: 52px;
   }
 
-  .v3 .pl .pxi,
-  .v3 .pl .pxi.s,
-  .v3 .pl .pxi.k {
+  .v3 .pillars:not(.six) .pl .pxi,
+  .v3 .pillars:not(.six) .pl .pxi.s,
+  .v3 .pillars:not(.six) .pl .pxi.k {
     height: 56px;
     top: 16px;
     right: 12px;
@@ -3765,5 +3765,9 @@ html.fullshot .sticky-book{display:none!important}
 .v3 .pillars.six .pl.coach,.v3 .pillars.six .pl.gb{border-color:#d8d1c2;box-shadow:none}
 @media (max-width:700px){.v3 .pillars.six .pl h3{min-height:92px}}
 .v3 .p-pen .quiet-link,.v3 .next-list .quiet-link{color:var(--text)}
+@media (min-width:391px){
+  .v3 .book .acts.side{flex-direction:row;flex-wrap:nowrap;align-items:center}
+  .v3 .book .acts.side .btn{width:auto}
+}
 .v3.has-sticky section:not(.hero){padding:96px 0}
 @media (max-width:700px){.v3.has-sticky section:not(.hero){padding:56px 0}}
