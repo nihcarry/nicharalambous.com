@@ -13,14 +13,14 @@ export function CheckoutButton({
   const href = checkoutHref(offer);
   if (href) {
     return (
-      <a id={id} className="btn wrap" data-offer={offer} href={href}>
+      <a id={id} className="btn btn-wrap" data-offer={offer} href={href}>
         {label}
       </a>
     );
   }
   return (
     <span className="buy-slot">
-      <span id={id} className="btn wrap static" data-offer={offer} data-checkout="tbc">
+      <span id={id} className="btn btn-wrap static" data-offer={offer} data-checkout="tbc">
         {label}
       </span>
       <span className="tbc-line">{CHECKOUT_PLACEHOLDER}</span>

@@ -223,8 +223,8 @@ em.hl {
   white-space: normal;
 }
 
-.v3 .btn.wrap,
-.sticky-book .btn.wrap {
+.v3 .btn.btn-wrap,
+.sticky-book .btn.btn-wrap {
   white-space: normal;
   text-align: center;
   max-width: 100%;

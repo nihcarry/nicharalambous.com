@@ -164,7 +164,7 @@ export default function GrokWeekPage() {
             If your senior people want to go from watching to building, the next step is the Team Workflow Upgrade Session: two hands-on hours where up to 8 of them build their own workflows with me. It&apos;s €4,999 for up to 8 people, ex VAT, with extra seats at €499 each up to 10.
           </p>
           <p>
-            <a className="btn wrap" href="/workshops/team-workflow-upgrade">See the team session</a>
+            <a className="btn btn-wrap" href="/workshops/team-workflow-upgrade">See the team session</a>
           </p>
         </div>
       </section>
