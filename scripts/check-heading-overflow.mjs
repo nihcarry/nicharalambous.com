@@ -303,6 +303,8 @@ try {
     }
   }
 
+  const takeShots = process.env.SKIP_SHOTS !== "1";
+  if (takeShots) {
   await mkdir(shotDir, { recursive: true });
   const captures = [
     ["home", routes.find(([name]) => name === "home")?.[1]],
@@ -333,6 +335,7 @@ try {
   }
   lines.push("");
   await writeFile(path.join(shotDir, "INDEX.md"), lines.join("\n"));
+  }
 } finally {
   await browser.close();
   server.kill("SIGTERM");

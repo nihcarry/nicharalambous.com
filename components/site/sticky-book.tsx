@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { bookNowHref } from "@/lib/site";
 
-/** Mobile bar on the Output Paradox page. Hidden while the hero booking card is on screen. */
+/** Mobile bar on the Output Paradox page. Hidden until the hero has left the viewport. */
 export function StickyBookBar() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const card = document.getElementById("book");
-    if (!card) return;
+    const hero = document.querySelector(".hero.op");
+    if (!hero) return;
     const mobile = window.matchMedia("(max-width: 600px)");
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -17,7 +17,7 @@ export function StickyBookBar() {
       },
       { threshold: 0 },
     );
-    observer.observe(card);
+    observer.observe(hero);
     function onChange() {
       if (!mobile.matches) setVisible(false);
     }

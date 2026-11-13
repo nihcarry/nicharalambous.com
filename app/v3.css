@@ -158,6 +158,10 @@ em.hl {
   color: var(--blue2);
 }
 
+.v3 h1 em {
+  white-space: nowrap;
+}
+
 .v3 section:not(.dark) h1 em,
 .v3 section:not(.dark) h2 em,
 .v3 .top h1 em {
