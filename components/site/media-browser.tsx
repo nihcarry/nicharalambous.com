@@ -88,14 +88,13 @@ function ExternalMark() {
 }
 
 function Card({ item, featured = false }: { item: MediaCard; featured?: boolean }) {
-  const showPlay = item.type === "Podcast" || item.type === "Video";
+  const showPlay = Boolean(item.poster) && (item.type === "Podcast" || item.type === "Video");
   const meta = [item.outlet, item.type, formatDate(item.date), item.archived ? "Archived" : null]
     .filter(Boolean)
     .join(" · ");
-  const marked = Boolean(item.poster || showPlay);
   return (
     <a
-      className={`${featured ? "media-feature-card" : "media-card"}${marked ? " has-mark" : ""}`}
+      className={`${featured ? "media-feature-card" : "media-card"}${!featured && item.poster ? " has-poster" : ""}`}
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
@@ -105,8 +104,6 @@ function Card({ item, featured = false }: { item: MediaCard; featured?: boolean 
           <img src={item.poster} alt="" width={480} height={360} />
           {showPlay ? <PlayMark /> : null}
         </span>
-      ) : showPlay ? (
-        <PlayMark />
       ) : null}
       <span className="copy">
         <span className="meta">{meta}</span>
@@ -168,9 +165,8 @@ export function MediaBrowser({
   const chipType = TYPE_CHIPS.find((chip) => chip.id === filters.type) || TYPE_CHIPS[0];
   const results = yearScoped.filter((item) => (chipType.type ? item.type === chipType.type : true));
   const visible = results.slice(0, shown);
-  const featuredVisible = featured.filter(
-    (item) => matchesQuery(item, filters.q.trim()) && matchesYear(item, filters.year) && (chipType.type ? item.type === chipType.type : true),
-  );
+  const filtersActive = filters.type !== "all" || filters.year !== "all" || filters.q.trim() !== "";
+  const showFeatured = !filtersActive && featured.length > 0;
 
   const groups: { label: string; items: MediaCard[] }[] = [];
   for (const item of visible) {
@@ -182,21 +178,19 @@ export function MediaBrowser({
 
   return (
     <div data-media-ready={ready ? "true" : "false"}>
-      {featuredVisible.length > 0 ? (
-        <section>
-          <div className="wrap">
-            <h2>Featured</h2>
-            <div className="media-feature">
-              {featuredVisible.map((item) => (
-                <Card key={item.id} item={item} featured />
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
       <section>
         <div className="wrap">
+          {showFeatured ? (
+            <>
+              <h2>Featured</h2>
+              <div className="media-feature">
+                {featured.map((item) => (
+                  <Card key={item.id} item={item} featured />
+                ))}
+              </div>
+            </>
+          ) : null}
+          <div className={`media-filters${showFeatured ? " after-feature" : ""}`}>
           <div className="media-chips" role="group" aria-label="Type">
             {TYPE_CHIPS.map((chip) => {
               const count = chip.type
@@ -245,6 +239,7 @@ export function MediaBrowser({
                 <option value="undated">Undated</option>
               </select>
             </div>
+          </div>
           </div>
 
           {results.length === 0 ? (
