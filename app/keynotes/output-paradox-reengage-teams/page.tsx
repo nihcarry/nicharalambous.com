@@ -13,7 +13,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 45 minutes, in person or on Zoom, Teams or Meet. Lunch and learn is 20 minutes, €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
+    "The Output Paradox: teams ship more and check out faster. €999 lunch and learn, virtual from €1,500, in-person from €4,500 ex travel and VAT.",
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
