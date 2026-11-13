@@ -7,6 +7,7 @@ import { client } from "@/lib/sanity/client";
 import { mediaAppearancesQuery, type MediaAppearanceData } from "@/lib/sanity/queries";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 async function getMediaAppearances(): Promise<MediaAppearanceData[] | null> {
@@ -43,7 +44,7 @@ export default async function MediaPage() {
   const grouped = groupByType(appearances);
 
   return (
-    <div className="v3">
+    <div className="v3 p-broadcast">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Media Appearances | Nic Haralambous",
@@ -98,22 +99,15 @@ export default async function MediaPage() {
           </section>
         );
       })}
-      <section className="dark">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <h2>Book Nic for your event</h2>
-          <p className="lead" style={{ margin: "16px auto 0" }}>
-            Keynotes for conferences, corporate events, and webinars, in person or virtually. Worldwide.
-          </p>
-          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
-            <a className="btn" href="/contact">
-              Enquire now
-            </a>
-            <a className="quiet-link" href={OUTPUT_PARADOX_PATH}>
-              See the keynote
-            </a>
-          </div>
-        </div>
-      </section>
+      <ClosingCta
+        className="pd-broadcast"
+        heading="Book Nic for your event"
+        copy="Keynotes for conferences, corporate events, and webinars, in person or virtually. Worldwide."
+        primaryHref="/contact"
+        primaryLabel="Enquire now"
+        secondaryHref={OUTPUT_PARADOX_PATH}
+        secondaryLabel="See the keynote"
+      />
     </div>
   );
 }

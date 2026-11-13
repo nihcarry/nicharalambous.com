@@ -219,8 +219,51 @@ em.hl {
 .v3 .quiet-link {
   color: #aeb3c0;
   font-size: 15px;
-  border-bottom: 1px solid #3a3f4c;
-  padding-bottom: 2px;
+  line-height: 1;
+  padding: 0;
+  border-bottom: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #3a3f4c;
+}
+
+.v3 .closing {
+  padding: 96px 0;
+  text-align: left;
+}
+
+.v3 .closing h2 {
+  margin: 0;
+  max-width: 18em;
+}
+
+.v3 .closing .lead {
+  max-width: 60ch;
+  margin: 20px 0 0;
+}
+
+.v3 .closing .acts,
+.v3 .closing-card .acts {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 32px 0 0;
+}
+
+.v3 .closing-card h2 {
+  margin: 0;
+}
+
+.v3 .closing-card h2 + p {
+  margin: 20px 0 0;
+}
+
+.v3 .closing-card .quiet-link {
+  color: var(--text);
+  text-decoration-color: currentColor;
 }
 
 .v3 .px {
@@ -2193,6 +2236,10 @@ html[data-nh-consent] .consent {
     padding: 72px 0;
   }
 
+  .v3 .closing {
+    padding: 64px 0;
+  }
+
   .v3 h2 {
     font-size: 38px;
   }
@@ -2623,7 +2670,6 @@ html[data-nh-consent] .consent {
 
 /* Older pages (about, session) on the v3 type and colour tokens. */
 .v3-legacy {
-  --shadow-cta: none;
   color: var(--text);
   font-family: var(--sans);
 }
@@ -2644,7 +2690,6 @@ html[data-nh-consent] .consent {
   color: var(--text);
 }
 
-.v3-legacy .shadow-cta,
 .v3-legacy a[class*="shadow"],
 .v3-legacy button[class*="shadow"] {
   box-shadow: none;
@@ -2785,6 +2830,109 @@ html[data-nh-consent] .consent {
 .v3 .plain-card p,
 .v3 .plain-card li {
   color: var(--muted);
+}
+
+.v3 .topic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.v3 .topic-chips a {
+  border: 1px solid #c9c1b2;
+  padding: 8px 14px;
+  background: #fbf9f4;
+}
+
+.v3 .topic-chips a.is-on {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.v3 .feature-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 20px;
+  background: #fbf9f4;
+  border: 1px solid #d8d1c2;
+  color: inherit;
+}
+
+.v3 .feature-card img,
+.v3 .feature-fallback {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--paper2);
+}
+
+.v3 .feature-card h3 {
+  font-size: clamp(32px, 4vw, 48px);
+  margin: 8px 0 12px;
+}
+
+.v3 .post-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.v3 .post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100%;
+  padding: 20px;
+  background: #fbf9f4;
+  border: 1px solid #d8d1c2;
+  color: inherit;
+}
+
+.v3 .post-card h3 {
+  font-size: 26px;
+  margin: 0;
+}
+
+.v3 .post-card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.v3 .pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 36px;
+}
+
+.v3 .pager a,
+.v3 .pager span {
+  border: 1px solid #c9c1b2;
+  padding: 8px 12px;
+  background: #fbf9f4;
+}
+
+.v3 .pager a.is-on {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .v3 .feature-card,
+  .v3 .post-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .v3 .plain-card ul {

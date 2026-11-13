@@ -11,6 +11,7 @@ import {
   type ArchivePostData,
 } from "@/lib/sanity/queries";
 import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 async function getArchivePost(slug: string): Promise<ArchivePostData | null> {
@@ -68,7 +69,7 @@ export default async function ArchivePostPage({
   const published = formatDate(post.publishedAt);
 
   return (
-    <div className="v3">
+    <div className="v3 p-quill">
       <article>
         <section>
           <div className="wrap" style={{ maxWidth: 820 }}>
@@ -113,22 +114,15 @@ export default async function ArchivePostPage({
           </div>
         </section>
       </article>
-      <section className="dark">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <h2>Read the latest</h2>
-          <p className="lead" style={{ margin: "16px auto 0" }}>
-            For Nic&apos;s current thinking on curiosity, innovation, AI, and building businesses, visit the blog.
-          </p>
-          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
-            <a className="btn" href="/blog">
-              Visit the blog
-            </a>
-            <a className="quiet-link" href={OUTPUT_PARADOX_PATH}>
-              See the keynote
-            </a>
-          </div>
-        </div>
-      </section>
+      <ClosingCta
+        className="pd-quill"
+        heading="Read the latest"
+        copy="For Nic's current thinking on curiosity, innovation, AI, and building businesses, visit the blog."
+        primaryHref="/blog"
+        primaryLabel="Visit the blog"
+        secondaryHref={OUTPUT_PARADOX_PATH}
+        secondaryLabel="See the keynote"
+      />
     </div>
   );
 }

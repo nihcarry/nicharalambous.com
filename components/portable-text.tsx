@@ -141,7 +141,7 @@ const components: PortableTextComponents = {
     pullQuote: ({ value }) => {
       if (!value?.quote) return null;
       return (
-        <aside className="my-8 rounded-xl bg-accent-50 p-6 text-center">
+        <aside className="plain-card">
           <p className="text-lg font-medium italic text-accent-800">
             &ldquo;{value.quote}&rdquo;
           </p>

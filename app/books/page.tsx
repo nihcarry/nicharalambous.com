@@ -10,6 +10,7 @@ import { FALLBACK_BOOKS, getPrimaryBuyUrl } from "@/lib/books-data";
 import { JsonLd } from "@/components/json-ld";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 const STATIC_COVERS: Record<string, string> = {
@@ -45,7 +46,7 @@ export default async function BooksPage() {
   const books = cmsBooks || FALLBACK_BOOKS;
 
   return (
-    <div className="v3">
+    <div className="v3 p-envelope">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Books by Nic Haralambous",
@@ -53,7 +54,7 @@ export default async function BooksPage() {
           url: "https://www.nicharalambous.com/books",
         })}
       />
-      <section className="p-envelope">
+      <section>
         <div className="wrap">
           <h1>My books</h1>
           <p className="lead">
@@ -93,22 +94,15 @@ export default async function BooksPage() {
           })}
         </div>
       </section>
-      <section className="dark pd-spotlight">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <h2>Want Nic at your next event?</h2>
-          <p className="lead" style={{ margin: "16px auto 0", color: "#c9cdd6" }}>
-            Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide.
-          </p>
-          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
-            <a className="btn" href={OUTPUT_PARADOX_PATH}>
-              See the keynote
-            </a>
-            <a className="quiet-link" href="/contact">
-              Book Nic
-            </a>
-          </div>
-        </div>
-      </section>
+      <ClosingCta
+        className="pd-envelope"
+        heading="Want Nic at your next event?"
+        copy="Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide."
+        primaryHref={OUTPUT_PARADOX_PATH}
+        primaryLabel="See the keynote"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic"
+      />
       <NewsletterBlock />
     </div>
   );

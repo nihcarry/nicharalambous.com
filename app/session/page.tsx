@@ -131,10 +131,10 @@ function OfferCard({
 
 export default function SessionPage() {
   return (
-    <div className="v3">
+    <div className="v3 p-person">
       <JsonLd data={sessionOffersJsonLd()} />
 
-      <section className="p-person">
+      <section>
         <div className="wrap">
           <h1>Work with Nic</h1>
           <p className="lead">

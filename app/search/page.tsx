@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function SearchPage() {
   return (
-    <div className="v3">
+    <div className="v3 p-quill">
       <section>
         <div className="wrap">
           <h1>Search</h1>

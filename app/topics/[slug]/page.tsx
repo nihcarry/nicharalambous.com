@@ -22,9 +22,9 @@ import {
   type TopicHubData,
   type TopicHubPost,
 } from "@/lib/sanity/queries";
-import { CTAButton } from "@/components/cta-button";
+import { TopicChips } from "@/components/site/topic-chips";
 import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { collectionPageJsonLd } from "@/lib/metadata";
@@ -117,7 +117,7 @@ export default async function TopicHubPage({
     topic.whyItMatters && topic.whyItMatters.length > 0;
 
   return (
-    <div className="v3">
+    <div className="v3 p-compass">
       {/* Structured data */}
       <JsonLd
         data={collectionPageJsonLd({
@@ -135,6 +135,7 @@ export default async function TopicHubPage({
         <h1 className="mt-2 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
           {topic.title}
         </h1>
+        <TopicChips active={slug} />
         <p className="mt-4 text-lg leading-relaxed text-brand-600">
           {topic.oneSentenceSummary}
         </p>
@@ -142,7 +143,7 @@ export default async function TopicHubPage({
 
       {/* Definition / What it is */}
       {hasDefinition && (
-        <Section width="content" className="bg-brand-50">
+        <Section width="content">
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             What Is {topic.title}?
           </h2>
@@ -162,7 +163,7 @@ export default async function TopicHubPage({
 
       {/* Related keynotes — links to keynote pages */}
       {topic.relatedKeynotes && topic.relatedKeynotes.length > 0 && (
-        <Section width="wide" className="bg-brand-50">
+        <Section width="wide">
           <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
             Explore This Topic as a Keynote
           </h2>
@@ -195,9 +196,9 @@ export default async function TopicHubPage({
             ))}
           </div>
           <div className="mt-6 text-center">
-            <CTAButton href="/keynotes/output-paradox-reengage-teams" variant="secondary">
+            <a className="btn" href="/keynotes/output-paradox-reengage-teams">
               See the keynote
-            </CTAButton>
+            </a>
           </div>
         </Section>
       )}
@@ -215,14 +216,7 @@ export default async function TopicHubPage({
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col border border-brand-900 bg-white p-6"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">
-                    FEATURED_{String(i + 1).padStart(2, "0")}
-                  </span>
-                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                </div>
-                <div className="my-3 border-t border-brand-200" />
-                <h3 className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
+                <h3 className="text-lg font-extrabold leading-tight tracking-tight text-brand-900">
                   {post.title}
                 </h3>
                 {post.excerpt && (
@@ -245,9 +239,9 @@ export default async function TopicHubPage({
             ))}
           </div>
           <div className="mt-6 text-center">
-            <CTAButton href="/blog" variant="secondary">
-              Read More on the Blog
-            </CTAButton>
+            <a className="btn" href="/blog">
+              Read more on the blog
+            </a>
           </div>
         </Section>
       )}
@@ -265,14 +259,7 @@ export default async function TopicHubPage({
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col border border-brand-900 bg-white p-6"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-accent-600">
-                    RECENT_{String(i + 1).padStart(2, "0")}
-                  </span>
-                  <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                </div>
-                <div className="my-3 border-t border-brand-200" />
-                <h3 className="text-lg font-extrabold uppercase leading-tight tracking-tight text-brand-900 transition-colors group-hover:text-accent-600">
+                <h3 className="text-lg font-extrabold leading-tight tracking-tight text-brand-900">
                   {post.title}
                 </h3>
                 {post.excerpt && (
@@ -295,9 +282,9 @@ export default async function TopicHubPage({
             ))}
           </div>
           <div className="mt-6 text-center">
-            <CTAButton href="/blog" variant="secondary">
-              Read More on the Blog
-            </CTAButton>
+            <a className="btn" href="/blog">
+              Read more on the blog
+            </a>
           </div>
         </Section>
       )}
@@ -321,11 +308,12 @@ export default async function TopicHubPage({
       </Section>
 
       {/* CTA */}
-      <FinalCta
-        heading={`Book a Keynote on ${topic.title}`}
-        description="Available in person or virtually. Customized for your audience."
+      <ClosingCta
+        className="pd-compass"
+        heading={`Book a keynote on ${topic.title}`}
+        copy="Available in person or virtually. Customised for your audience."
         primaryHref="/contact"
-        primaryLabel="Enquire Now"
+        primaryLabel="Enquire now"
         secondaryHref="/keynotes/output-paradox-reengage-teams"
         secondaryLabel="See the keynote"
       />

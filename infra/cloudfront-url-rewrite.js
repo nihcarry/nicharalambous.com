@@ -21,6 +21,7 @@ var redirects = {
   '/keynotes/curiosity-catalyst': '/keynotes/output-paradox-reengage-teams',
   '/keynotes/reclaiming-focus': '/keynotes/output-paradox-reengage-teams',
   '/businesses': '/building',
+  '/blog/page/1': '/blog',
   '/contact-me': '/contact',
   '/its-not-over': '/media',
   '/newsletter': '/#newsletter',

@@ -161,7 +161,7 @@ export default async function BlogPostPage({
   const hasVideo = post.videoEmbed && post.videoEmbed.trim().length > 0;
 
   return (
-    <div className="v3">
+    <div className="v3 p-quill">
       {/* Article JSON-LD */}
       <JsonLd
         data={articleJsonLd({
@@ -299,7 +299,7 @@ export default async function BlogPostPage({
               "[&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500",
               /* In-article primary CTA — matches CTAButton */
               "[&>p.prose-cta-wrap]:mt-8 [&>p.prose-cta-wrap]:mb-2 [&>p.prose-cta-wrap]:text-center",
-              "[&_a.prose-cta]:inline-flex [&_a.prose-cta]:items-center [&_a.prose-cta]:justify-center [&_a.prose-cta]:gap-2 [&_a.prose-cta]:rounded-none [&_a.prose-cta]:px-8 [&_a.prose-cta]:py-4 [&_a.prose-cta]:text-lg [&_a.prose-cta]:font-semibold [&_a.prose-cta]:whitespace-nowrap [&_a.prose-cta]:no-underline [&_a.prose-cta]:shadow-[var(--shadow-cta)] [&_a.prose-cta]:bg-accent-600 [&_a.prose-cta]:text-white [&_a.prose-cta]:transition-colors [&_a.prose-cta]:duration-200 [&_a.prose-cta:hover]:bg-accent-500 [&_a.prose-cta:hover]:text-white [&_a.prose-cta:focus-visible]:outline-2 [&_a.prose-cta:focus-visible]:outline-offset-2 [&_a.prose-cta:focus-visible]:outline-accent-500",
+              "[&_a.prose-cta]:inline-flex [&_a.prose-cta]:items-center [&_a.prose-cta]:justify-center [&_a.prose-cta]:gap-2 [&_a.prose-cta]:rounded-none [&_a.prose-cta]:px-8 [&_a.prose-cta]:py-4 [&_a.prose-cta]:text-lg [&_a.prose-cta]:font-semibold [&_a.prose-cta]:whitespace-nowrap [&_a.prose-cta]:no-underline [&_a.prose-cta]:bg-accent-600 [&_a.prose-cta]:text-white [&_a.prose-cta]:transition-colors [&_a.prose-cta]:duration-200 [&_a.prose-cta:hover]:bg-accent-500 [&_a.prose-cta:hover]:text-white [&_a.prose-cta:focus-visible]:outline-2 [&_a.prose-cta:focus-visible]:outline-offset-2 [&_a.prose-cta:focus-visible]:outline-accent-500",
               /* Strikethrough */
               "[&_s]:text-brand-400",
             ].join(" ")}

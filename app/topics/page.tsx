@@ -14,6 +14,7 @@ import {
   topicHubsListQuery,
   type TopicHubListItem,
 } from "@/lib/sanity/queries";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
 
@@ -96,7 +97,7 @@ export default async function TopicsPage() {
   })).filter((slide) => slide.topics.length > 0);
 
   return (
-    <div className="v3">
+    <div className="v3 p-compass">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Topics — Nic Haralambous",
@@ -105,7 +106,7 @@ export default async function TopicsPage() {
           url: "https://www.nicharalambous.com/topics",
         })}
       />
-      <section className="p-compass">
+      <section>
         <div className="wrap">
           <h1>Topics</h1>
           <p className="lead">
@@ -130,17 +131,13 @@ export default async function TopicsPage() {
           </div>
         </section>
       ))}
-      <section className="dark">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <h2>The themes that run through Nic&apos;s keynotes</h2>
-          <p className="lead" style={{ margin: "16px auto 0", color: "#c9cdd6" }}>
-            Explore each topic hub for related articles and keynote pathways.
-          </p>
-          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
-            <a className="btn" href="/keynotes/output-paradox-reengage-teams">See the keynote</a>
-          </div>
-        </div>
-      </section>
+      <ClosingCta
+        className="pd-compass"
+        heading="The themes that run through Nic's keynotes"
+        copy="Explore each topic hub for related articles and keynote pathways."
+        primaryHref="/keynotes/output-paradox-reengage-teams"
+        primaryLabel="See the keynote"
+      />
     </div>
   );
 }

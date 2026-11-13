@@ -5,6 +5,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { personJsonLd } from "@/lib/metadata";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -23,9 +24,9 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="v3">
+    <div className="v3 p-person">
       <JsonLd data={personJsonLd()} />
-      <section className="p-person">
+      <section>
         <div className="wrap about-hero">
           <div>
             <h1>I am Nic Haralambous</h1>
@@ -68,7 +69,7 @@ export default function AboutPage() {
           </blockquote>
         </div>
       </section>
-      <section className="dark">
+      <section className="dark pd-person">
         <div className="wrap">
           <h2>Career</h2>
           <div className="career" style={{ marginTop: 28 }}>
@@ -123,22 +124,15 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-      <section className="dark pd-spotlight">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <h2>Want Nic at your next event?</h2>
-          <p className="lead" style={{ margin: "16px auto 0", color: "#c9cdd6" }}>
-            Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide.
-          </p>
-          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
-            <a className="btn" href={OUTPUT_PARADOX_PATH}>
-              See the keynote
-            </a>
-            <a className="quiet-link" href="/contact">
-              Book Nic
-            </a>
-          </div>
-        </div>
-      </section>
+      <ClosingCta
+        className="pd-person"
+        heading="Want Nic at your next event?"
+        copy="Keynotes for conferences, corporate events, team offsites, and webinars, in person or virtually. Worldwide."
+        primaryHref={OUTPUT_PARADOX_PATH}
+        primaryLabel="See the keynote"
+        secondaryHref="/contact"
+        secondaryLabel="Book Nic"
+      />
     </div>
   );
 }

@@ -26,7 +26,7 @@ export function VideoReadAlong({
 
   return (
     <aside
-      className={`mt-8 border-l-[8px] border-brand-900 bg-brand-50 ${className}`}
+      className={`plain-card ${className}`}
     >
       <button
         type="button"

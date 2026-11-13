@@ -126,7 +126,7 @@ export default async function BusinessesPage() {
   const { exits, deadpool } = partitionBusinesses(all);
 
   return (
-    <div className="v3">
+    <div className="v3 p-gear">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Businesses by Nic Haralambous",
@@ -136,7 +136,7 @@ export default async function BusinessesPage() {
         })}
       />
 
-      <section className="p-gear" id="hero">
+      <section id="hero">
         <div className="wrap">
           <h1>Building</h1>
           <p className="lead">
@@ -259,8 +259,8 @@ function BusinessCard({ business, variant }: BusinessCardProps) {
     ? "text-base font-extrabold tracking-tight uppercase text-brand-700"
     : "text-lg font-extrabold tracking-tight uppercase text-brand-900";
   const cardClassName = deadpool
-    ? "border border-brand-400 bg-brand-100/40 p-4 opacity-90"
-    : "flex h-full flex-col overflow-hidden border border-brand-900 bg-white";
+    ? "border border-[#d8d1c2] bg-[#fbf9f4] p-4"
+    : "flex h-full flex-col overflow-hidden border border-[#d8d1c2] bg-[#fbf9f4]";
 
   const statusBadge = active ? (
     <span className="shrink-0 bg-accent-100 px-2.5 py-0.5 text-xs font-semibold text-accent-600">Active</span>

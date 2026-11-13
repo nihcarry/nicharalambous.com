@@ -23,9 +23,8 @@ import {
   fallbackBookToBookData,
   getPrimaryBuyUrl,
 } from "@/lib/books-data";
-import { CTAButton } from "@/components/cta-button";
 import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { bookJsonLd } from "@/lib/metadata";
@@ -133,7 +132,7 @@ export default async function BookPage({
   const buyUrl = getPrimaryBuyUrl(slug, book.buyLinks);
 
   return (
-    <div className="v3">
+    <div className="v3 p-envelope">
       {/* Structured data */}
       <JsonLd
         data={bookJsonLd({
@@ -179,12 +178,9 @@ export default async function BookPage({
             {/* Buy links */}
             {buyUrl && (
               <div className="mt-6">
-                <CTAButton
-                  href={buyUrl}
-                  external
-                >
-                  Buy Now
-                </CTAButton>
+                <a className="btn" href={buyUrl} target="_blank" rel="noopener noreferrer">
+                  Buy now
+                </a>
               </div>
             )}
           </div>
@@ -222,13 +218,14 @@ export default async function BookPage({
       )}
 
       {/* CTA */}
-      <FinalCta
+      <ClosingCta
+        className="pd-envelope"
         heading="The ideas in this book come alive in Nic's keynotes"
-        description="Real stories, actionable frameworks, tailored to your team. In person or virtually."
+        copy="Real stories, actionable frameworks, tailored to your team. In person or virtually."
         primaryHref="/keynotes/output-paradox-reengage-teams"
         primaryLabel="See the keynote"
         secondaryHref="/books"
-        secondaryLabel="View All Books"
+        secondaryLabel="View all books"
       />
     </div>
   );

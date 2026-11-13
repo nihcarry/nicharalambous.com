@@ -57,14 +57,14 @@ const SECTIONS = [
 
 export default function PrivacyPage() {
   return (
-    <div className="v3" data-no-orphan-opt-out="true">
+    <div className="v3 p-bookmark" data-no-orphan-opt-out="true">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Privacy policy", path: "/privacy" },
         ])}
       />
-      <section className="top pd-person" style={{ paddingBottom: 88 }}>
+      <section className="top pd-bookmark" style={{ paddingBottom: 88 }}>
         <div className="wrap">
           <h1>Privacy policy</h1>
           <p className="lead">What I collect, why, and how to get it deleted.</p>
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
           </p>
         </div>
       </section>
-      <section className="p-bookmark">
+      <section>
         <div className="wrap prose-col">
           {SECTIONS.map((section) => (
             <article key={section.heading}>

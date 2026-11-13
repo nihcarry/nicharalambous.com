@@ -21,14 +21,14 @@ export function ContextualCta({ relatedKeynote }: ContextualCtaProps) {
     "Real stories, actionable frameworks, tailored to your audience. In person or virtually.";
 
   return (
-    <div className="plain-card" style={{ textAlign: "center" }}>
+    <div className="plain-card closing-card">
       <h2>{title}</h2>
       <p>{detail}</p>
-      <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap", marginTop: 28 }}>
+      <div className="acts">
         <a className="btn" href={OUTPUT_PARADOX_PATH}>
           See the keynote
         </a>
-        <a className="link" href="/#newsletter">
+        <a className="quiet-link" href="/#newsletter">
           Subscribe to the newsletter
         </a>
       </div>
