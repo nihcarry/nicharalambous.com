@@ -248,13 +248,9 @@ export default async function BlogPostPage({
 
         {/* TL;DR / Excerpt block */}
         {post.excerpt && (
-          <aside className="mt-8 border-l-[8px] border-accent-600 bg-brand-50 p-6">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
-              TL;DR
-            </p>
-            <p className="mt-2 text-base leading-relaxed text-brand-700">
-              {post.excerpt}
-            </p>
+          <aside className="plain-card" style={{ marginTop: 28 }}>
+            <h2 className="side-title">TL;DR</h2>
+            <p>{post.excerpt}</p>
           </aside>
         )}
 
@@ -320,9 +316,13 @@ export default async function BlogPostPage({
 
       {/* FAQ section */}
       {hasFaq && (
-        <Section width="content" className="bg-brand-50">
-          <FaqSection faqs={post.faq!} />
-        </Section>
+        <section>
+          <div className="wrap" style={{ maxWidth: 820 }}>
+            <div className="plain-card">
+              <FaqSection faqs={post.faq!} headingClassName="side-title" />
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Topic hub links */}

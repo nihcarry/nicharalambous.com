@@ -162,10 +162,7 @@ export default async function BookPage({
           )}
 
           <div className="flex-1">
-            <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
-              Book
-            </p>
-            <h1 className="heading-display-stroke-sm mt-2 text-4xl text-brand-900 sm:text-5xl">
+            <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
               {book.title}
             </h1>
             {book.subtitle && (

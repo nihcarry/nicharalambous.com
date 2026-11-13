@@ -149,13 +149,9 @@ export default async function BusinessesPage() {
       </section>
 
       <Section id="active" width="wide" className="relative z-10">
-        <div className="mb-8 text-center md:mb-10">
-          <h2 className="heading-stroke mt-2 text-4xl font-extrabold tracking-tight uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-            What I&apos;m Building Now
-          </h2>
-          <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-brand-600 md:text-lg">
-            Live products I&apos;m actively shipping right now.
-          </p>
+        <div className="mb-8">
+          <h2>What I&apos;m Building Now</h2>
+          <p className="lead">Live products I&apos;m actively shipping right now.</p>
         </div>
         <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2">
           {CURRENT_BUILDS.map((build) => (
@@ -164,7 +160,7 @@ export default async function BusinessesPage() {
               href={build.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex h-full flex-col overflow-hidden border border-brand-900 bg-white"
+              className="group flex h-full flex-col overflow-hidden border border-[#d8d1c2] bg-[#fbf9f4]"
             >
               <div className="relative aspect-[16/8] border-b border-brand-200 bg-brand-100 md:aspect-[16/6]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

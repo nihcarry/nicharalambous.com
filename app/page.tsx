@@ -129,7 +129,6 @@ export default async function HomePage() {
 
       <div className="proof p-broadcast">
         <div className="wrap">
-          <span className="mono">Teams and stages I have spoken to</span>
           <LogoStrip />
         </div>
       </div>
@@ -150,7 +149,6 @@ export default async function HomePage() {
                 height={240}
                 loading="lazy"
               />
-              <span className="mono">01 · Keynotes</span>
               <h3>For your team or your stage</h3>
               <p>
                 For People, L&amp;D and Talent leads at remote and hybrid companies, and for the organisers of conferences and leadership events.
@@ -175,7 +173,6 @@ export default async function HomePage() {
                 height={288}
                 loading="lazy"
               />
-              <span className="mono">02 · Coaching</span>
               <h3>No Bull Ship</h3>
               <p>
                 An 8-week build sprint for people 40 and older who want to ship their first real product, with ruthless scope, clarity and weekly delivery.
@@ -207,10 +204,9 @@ export default async function HomePage() {
                 height={220}
                 loading="lazy"
               />
-              <span className="mono">03 · Content</span>
               <h3>Read, watch, subscribe</h3>
               <p>
-                I write to you every Thursday, I make videos on YouTube and I&apos;ve been writing on this site since 2013.
+                I write to you every week, I make videos on YouTube and I&apos;ve been writing on this site since 2013.
               </p>
               <ul>
                 <li>The weekly newsletter</li>
@@ -277,7 +273,6 @@ export default async function HomePage() {
           <div className="content-row">
             {video ? (
               <div>
-                <span className="mono section-kicker">On YouTube</span>
                 <a className="yt-card" href={`https://www.youtube.com/watch?v=${video.id}`}>
                   {poster ? (
                     <img src={poster} alt="" width={640} height={360} loading="lazy" />
@@ -289,7 +284,6 @@ export default async function HomePage() {
               </div>
             ) : null}
             <div>
-              <span className="mono section-kicker">The books</span>
               <div className="books">
                 {BOOKS.map((book) => (
                   <a href={book.href} key={book.href}>

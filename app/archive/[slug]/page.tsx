@@ -1,14 +1,6 @@
 /**
- * Archive Post Page — /archive/{slug}
- *
- * Minimal template for unoptimized legacy content imported from
- * Squarespace or Medium. Renders raw HTML with a
- * "From the archive" banner and link back to /blog.
- *
- * Per SEO strategy: no structured data beyond basic WebPage.
- * noIndex by default — these are reference copies, not primary content.
- *
- * Static params generated at build time — one page per archived post.
+ * Archive post — /archive/{slug}
+ * Legacy articles, noindex, in the v3 reading layout.
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -18,39 +10,26 @@ import {
   archivePostSlugListQuery,
   type ArchivePostData,
 } from "@/lib/sanity/queries";
-import { Section } from "@/components/section";
 import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
-import { CTAButton } from "@/components/cta-button";
-
-/* ---------- Data fetching ---------- */
+import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
 async function getArchivePost(slug: string): Promise<ArchivePostData | null> {
   try {
-    const data = await client.fetch<ArchivePostData | null>(
-      archivePostBySlugQuery,
-      { slug }
-    );
-    return data;
+    return await client.fetch<ArchivePostData | null>(archivePostBySlugQuery, { slug });
   } catch {
     return null;
   }
 }
 
 async function getArchiveSlugs(): Promise<{ slug: string }[]> {
-  const data = await client.fetch<{ slug: string }[]>(
-    archivePostSlugListQuery
-  );
+  const data = await client.fetch<{ slug: string }[]>(archivePostSlugListQuery);
   return data && data.length > 0 ? data : [{ slug: "_placeholder" }];
 }
-
-/* ---------- Static params ---------- */
 
 export async function generateStaticParams() {
   const slugs = await getArchiveSlugs();
   return slugs.map(({ slug }) => ({ slug }));
 }
-
-/* ---------- Metadata ---------- */
 
 export async function generateMetadata({
   params,
@@ -65,16 +44,17 @@ export async function generateMetadata({
     title: `${post.title} (Archive)`,
     description: `Archived post: ${post.title} by Nic Haralambous`,
     robots: { index: false, follow: true },
-    alternates: {
-      canonical: `https://www.nicharalambous.com/archive/${slug}`,
-    },
-    openGraph: {
-      url: `https://www.nicharalambous.com/archive/${slug}`,
-    },
+    alternates: { canonical: `https://www.nicharalambous.com/archive/${slug}` },
+    openGraph: { url: `https://www.nicharalambous.com/archive/${slug}` },
   };
 }
 
-/* ---------- Page ---------- */
+function formatDate(value: string | null): string | null {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
 
 export default async function ArchivePostPage({
   params,
@@ -83,116 +63,72 @@ export default async function ArchivePostPage({
 }) {
   const { slug } = await params;
   const post = await getArchivePost(slug);
+  if (!post) notFound();
 
-  if (!post) {
-    notFound();
-  }
+  const published = formatDate(post.publishedAt);
 
   return (
     <div className="v3">
-      {/* Archive banner */}
-      <Section width="content">
-        <div className="border-2 border-brand-300 bg-brand-50 p-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-brand-500">
-            From the Archive
-          </p>
-          <p className="mt-2 text-base text-brand-600">
-            This post is from the archive and may not reflect Nic&rsquo;s
-            current thinking. For the latest articles and insights, visit the{" "}
-            <a
-              href="/blog"
-              className="font-semibold text-accent-600 underline hover:text-accent-500"
-            >
-              blog
-            </a>
-            .
-          </p>
-        </div>
-      </Section>
-
-      {/* Article header */}
-      <Section width="content" as="article">
-        <header>
-          <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
-            {post.title}
-          </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-brand-500">
-            <span>By Nic Haralambous</span>
-            {post.publishedAt && (
-              <time dateTime={post.publishedAt}>
-                Originally published{" "}
-                {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
+      <article>
+        <section>
+          <div className="wrap" style={{ maxWidth: 820 }}>
+            <p>
+              This post is from the archive and may not reflect Nic&apos;s current thinking. For the latest articles and insights, visit the{" "}
+              <a className="link" href="/blog">
+                blog
+              </a>
+              .
+            </p>
+            <h1>{post.title}</h1>
+            <p className="meta">
+              By Nic Haralambous
+              {published ? ` · Originally published ${published}` : ""}
+            </p>
+            {post.topics && post.topics.length > 0 ? (
+              <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {post.topics.map((topic) => (
+                  <a className="tag" key={topic._id} href={`/topics/${topic.slug}`}>
+                    {topic.title}
+                  </a>
+                ))}
+              </p>
+            ) : null}
+            {post.rawHtmlBody ? (
+              <div
+                className="archive-body"
+                data-no-orphan-opt-out="true"
+                dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(post.rawHtmlBody) }}
+              />
+            ) : (
+              <p>Archive content is not available for this post.</p>
             )}
-          </div>
-
-          {/* Topic tags */}
-          {post.topics && post.topics.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {post.topics.map((topic) => (
-                <a
-                  key={topic._id}
-                  href={`/topics/${topic.slug}`}
-                  className="bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-200"
-                >
-                  {topic.title}
+            {post.originalUrl ? (
+              <p className="meta">
+                Originally published at:{" "}
+                <a className="link" href={post.originalUrl} target="_blank" rel="noopener noreferrer">
+                  {post.originalUrl}
                 </a>
-              ))}
-            </div>
-          )}
-        </header>
-
-        {/* Raw HTML body */}
-        {post.rawHtmlBody ? (
-          <div
-            className="mt-8 [&>p]:mt-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700 [&>h2]:mt-10 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-brand-900 [&>h3]:mt-8 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-brand-900 [&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5 [&>ul]:list-disc [&>ul]:text-brand-700 [&>ol]:mt-4 [&>ol]:space-y-2 [&>ol]:pl-5 [&>ol]:list-decimal [&>ol]:text-brand-700 [&>blockquote]:mt-6 [&>blockquote]:border-l-4 [&>blockquote]:border-brand-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-brand-600 [&>img]:my-6 [&>img]:w-full [&>img]:rounded-lg [&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500"
-            dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(post.rawHtmlBody) }}
-          />
-        ) : (
-          <p className="mt-8 text-brand-500 italic">
-            Archive content is not available for this post.
+              </p>
+            ) : null}
+          </div>
+        </section>
+      </article>
+      <section className="dark">
+        <div className="wrap" style={{ textAlign: "center" }}>
+          <h2>Read the latest</h2>
+          <p className="lead" style={{ margin: "16px auto 0" }}>
+            For Nic&apos;s current thinking on curiosity, innovation, AI, and building businesses, visit the blog.
           </p>
-        )}
-      </Section>
-
-      {/* Original URL reference */}
-      {post.originalUrl && (
-        <Section width="content">
-          <p className="text-sm text-brand-400">
-            Originally published at:{" "}
-            <a
-              href={post.originalUrl}
-              className="text-accent-600 underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {post.originalUrl}
+          <div className="acts" style={{ display: "flex", gap: 40, justifyContent: "center", flexWrap: "wrap" }}>
+            <a className="btn" href="/blog">
+              Visit the blog
             </a>
-          </p>
-        </Section>
-      )}
-
-      {/* CTA to blog */}
-      <Section width="content" className="text-center">
-        <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-          Read the Latest
-        </h2>
-        <p className="mt-4 text-lg text-brand-600">
-          For Nic&rsquo;s current thinking on curiosity, innovation, AI, and
-          building businesses, visit the blog.
-        </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <CTAButton href="/blog">Visit the Blog</CTAButton>
-          <CTAButton href="/keynotes/output-paradox-reengage-teams" variant="secondary">
-            See the keynote
-          </CTAButton>
+            <a className="quiet-link" href={OUTPUT_PARADOX_PATH}>
+              See the keynote
+            </a>
+          </div>
         </div>
-      </Section>
+      </section>
     </div>
   );
 }
-

@@ -46,7 +46,7 @@ export default function AboutPage() {
         </div>
       </section>
       <section>
-        <div className="wrap" style={{ maxWidth: 820 }}>
+        <div className="wrap story" style={{ maxWidth: 820 }}>
           <p>
             I built my first website when I was 11 years old, my first business at 16, and a band that didn&apos;t go as far as I wanted.
           </p>

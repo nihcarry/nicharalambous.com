@@ -88,7 +88,7 @@ function EnquiryFields() {
         <h2>Thanks, I will reply by email within two working days.</h2>
         <p>If it is urgent, email nic@nharry.com.</p>
         <a href="/keynotes/output-paradox-reengage-teams">Back to the keynote</a>
-        <a href="/#newsletter">Get the Thursday newsletter</a>
+        <a href="/#newsletter">Get the weekly newsletter</a>
       </div>
     );
   }

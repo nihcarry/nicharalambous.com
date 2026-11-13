@@ -35,7 +35,7 @@ const SECTIONS = [
   },
   {
     heading: "Newsletter",
-    body: `This section will explain the Thursday newsletter, Kit form ${KIT_FORM_ID}, what is stored (email and optional first name), and that you can unsubscribe from any email. Nic still needs to approve the legal wording.`,
+    body: `This section will explain the weekly newsletter, Kit form ${KIT_FORM_ID}, what is stored (email and optional first name), and that you can unsubscribe from any email. Nic still needs to approve the legal wording.`,
   },
   {
     heading: "Enquiry form",

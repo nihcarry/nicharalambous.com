@@ -48,7 +48,7 @@ export default function ContactPage() {
         <div className="wrap">
           <aside className="side">
             <div className="card">
-              <span className="mono">What happens next</span>
+              <h2 className="side-title">What happens next</h2>
               <ol className="next">
                 <li>
                   <span className="mono">01</span>
@@ -65,7 +65,7 @@ export default function ContactPage() {
               </ol>
             </div>
             <div className="card">
-              <span className="mono">Fees, so there are no surprises</span>
+              <h2 className="side-title">Fees, so there are no surprises</h2>
               <ul className="next">
                 <li>
                   <span className="mono">€</span>

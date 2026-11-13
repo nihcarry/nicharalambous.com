@@ -133,7 +133,6 @@ export default async function OutputParadoxPage() {
 
       <div className="proof p-broadcast">
         <div className="wrap">
-          <span className="mono">Teams and stages I have spoken to</span>
           <LogoStrip />
         </div>
       </div>
@@ -172,7 +171,6 @@ export default async function OutputParadoxPage() {
           </div>
           <div className="signals">
             <div>
-              <span className="mono">Signal 01</span>
               <h3>In what gets rewarded</h3>
               <ul>
                 <li>Speed rewarded over thinking</li>
@@ -180,7 +178,6 @@ export default async function OutputParadoxPage() {
               </ul>
             </div>
             <div>
-              <span className="mono">Signal 02</span>
               <h3>In how people show up</h3>
               <ul>
                 <li>&ldquo;Stay in my lane&rdquo; as the internal motto</li>
@@ -189,7 +186,6 @@ export default async function OutputParadoxPage() {
               </ul>
             </div>
             <div>
-              <span className="mono">Signal 03</span>
               <h3>In how leaders respond</h3>
               <ul>
                 <li>Endless alignment meetings with no ownership of outcomes</li>
@@ -286,9 +282,6 @@ export default async function OutputParadoxPage() {
           </p>
           <div className="formats">
             <div className="fmt lead1">
-              <span className="mono" style={{ color: "var(--blue2)" }}>
-                Virtual · Most teams start here
-              </span>
               <h3>Lunch and learn</h3>
               <p>
                 20 minutes, live on Zoom, Teams or Meet. The core of the Output Paradox, tailored to your people, with time for a few questions.
@@ -306,7 +299,6 @@ export default async function OutputParadoxPage() {
               </a>
             </div>
             <div className="fmt">
-              <span className="mono">Virtual</span>
               <h3>Virtual keynote</h3>
               <p>
                 The full 45 minute talk, built for remote and hybrid teams, with audience participation instead of a Q&amp;A tacked on at the end.
@@ -324,7 +316,6 @@ export default async function OutputParadoxPage() {
               </a>
             </div>
             <div className="fmt">
-              <span className="mono">In-person</span>
               <h3>In-person keynote</h3>
               <p>
                 For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast.
