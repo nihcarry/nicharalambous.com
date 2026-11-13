@@ -151,7 +151,7 @@ export default async function TopicHubPage({
       {/* Hero */}
       <section>
         <div className="wrap">
-          <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
+          <h1 className="heading-display-stroke-sm fit-title text-4xl text-brand-900 sm:text-5xl md:text-6xl">
             {topic.title}
           </h1>
           <TopicChips active={slug} />

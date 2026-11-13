@@ -67,6 +67,8 @@ function fitHeading(el: HTMLElement): void {
     const tightened = originalText.replace(/\s+([^\s]+)\s+([^\s]+)\s*$/, " $1\u00A0$2");
     if (tightened !== originalText) {
       el.textContent = tightened;
+      // Unbounded is wide enough that the joined pair can overflow the column.
+      if (el.scrollWidth > el.clientWidth + 1) el.textContent = originalText;
     }
   }
 

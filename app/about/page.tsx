@@ -114,7 +114,7 @@ export default function AboutPage() {
       <section>
         <div className="wrap">
           <h2>Books</h2>
-          <div className="offer-grid" style={{ marginTop: 24, gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
+          <div className="about-books">
             {BOOK_COVER_IMAGES.map((book) => (
               <img key={book.src} src={book.src} alt={book.alt} width={320} height={480} />
             ))}
