@@ -1,130 +1,66 @@
 /**
- * Media — /media
- * Existing appearances, grouped as before, in the v3 layout.
+ * Media and press. Coverage comes from data/media-coverage.json.
+ * The Sanity mediaAppearance query does not feed this page.
  */
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity/client";
-import { mediaAppearancesQuery, type MediaAppearanceData } from "@/lib/sanity/queries";
 import { JsonLd } from "@/components/json-ld";
-import { collectionPageJsonLd } from "@/lib/metadata";
 import { ClosingCta } from "@/components/site/closing-cta";
+import { MediaBrowser } from "@/components/site/media-browser";
+import { featuredMedia, loadMediaCoverage, mediaStatLine, outletNames } from "@/lib/media-coverage";
 import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
-/**
- * Unverified appearances. They stay in Sanity and in the fallback below.
- * Remove an entry here to show that item again.
- */
-const HIDDEN_MEDIA: { id: string; title: string }[] = [
-  { id: "fm-1", title: "The Future of Work and Curiosity" },
-  { id: "fm-2", title: "South African Entrepreneur on Building with AI" },
-  { id: "fm-3", title: "Entrepreneurship in Africa" },
-];
-
-const HOLDING_COPY = "Press and podcast appearances are coming soon.";
-
-function isHiddenMedia(item: MediaAppearanceData): boolean {
-  return HIDDEN_MEDIA.some((hidden) => hidden.id === item._id || hidden.title === item.title);
-}
-
-async function getMediaAppearances(): Promise<MediaAppearanceData[]> {
-  try {
-    const data = await client.fetch<MediaAppearanceData[]>(mediaAppearancesQuery, {
-      hiddenTitles: HIDDEN_MEDIA.map((item) => item.title),
-    });
-    const items = data && data.length > 0 ? data : FALLBACK_APPEARANCES;
-    return items.filter((item) => !isHiddenMedia(item));
-  } catch {
-    return FALLBACK_APPEARANCES.filter((item) => !isHiddenMedia(item));
-  }
-}
+const INTRO = "Press, podcasts, television, radio, video and talks.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const appearances = await getMediaAppearances();
-  const description =
-    appearances.length === 0
-      ? HOLDING_COPY
-      : "Nic Haralambous in the media, including press features, podcast appearances, TV/radio broadcasts, and video interviews.";
+  const items = loadMediaCoverage();
+  const description = `${mediaStatLine(items)}. ${INTRO}`;
   return {
-    title: "Media",
+    title: "Media and press",
     description,
     alternates: { canonical: "https://www.nicharalambous.com/media" },
     openGraph: {
       type: "website",
-      title: "Media | Nic Haralambous",
+      title: "Media and press | Nic Haralambous",
       description,
       url: "https://www.nicharalambous.com/media",
     },
   };
 }
 
-function formatDate(value: string | null): string | null {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  return date.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
-}
-
-export default async function MediaPage() {
-  const appearances = await getMediaAppearances();
-  const grouped = groupByType(appearances);
+export default function MediaPage() {
+  const items = loadMediaCoverage();
+  const featured = featuredMedia(items);
+  const outlets = outletNames(items);
+  const stat = mediaStatLine(items);
+  const description = `${stat}. ${INTRO}`;
 
   return (
     <div className="v3 p-broadcast">
       <JsonLd
-        data={collectionPageJsonLd({
-          name: "Media Appearances | Nic Haralambous",
-          description: appearances.length === 0 ? HOLDING_COPY : "Press features, podcast appearances, TV/radio broadcasts, and video interviews.",
-          url: "https://www.nicharalambous.com/media",
-        })}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Media and press",
+          description,
+          numberOfItems: items.length,
+          itemListElement: items.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: item.title,
+            url: item.href,
+            description: item.summary || undefined,
+          })),
+        }}
       />
       <section>
         <div className="wrap">
-          <h1>Media &amp; Press</h1>
-          {appearances.length === 0 ? (
-            <p className="lead">{HOLDING_COPY}</p>
-          ) : (
-            <p className="lead">Podcasts, press features, TV appearances, and video interviews.</p>
-          )}
+          <h1>Media and press</h1>
+          <p className="lead">{INTRO}</p>
+          <p className="outlet-row">{outlets.join("  ·  ")}</p>
+          <p className="stat">{stat}</p>
         </div>
       </section>
-      {APPEARANCE_TYPES.map(({ key, label }) => {
-        const items = grouped[key];
-        if (!items || items.length === 0) return null;
-        return (
-          <section key={key}>
-            <div className="wrap">
-              <h2>{label}</h2>
-              <div className="offer-grid" style={{ marginTop: 24 }}>
-                {items.map((item) => {
-                  const meta = [item.publication, formatDate(item.date)].filter(Boolean).join(" · ");
-                  return (
-                    <article className="plain-card" key={item._id}>
-                      {meta ? <span className="meta">{meta}</span> : null}
-                      <h3>
-                        {item.url ? (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer">
-                            {item.title}
-                          </a>
-                        ) : (
-                          item.title
-                        )}
-                      </h3>
-                      {item.description ? <p>{item.description}</p> : null}
-                      {item.url ? (
-                        <p style={{ marginTop: 16 }}>
-                          <a className="link" href={item.url} target="_blank" rel="noopener noreferrer">
-                            View
-                          </a>
-                        </p>
-                      ) : null}
-                    </article>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        );
-      })}
+      <MediaBrowser items={items} featured={featured} />
       <ClosingCta
         className="pd-broadcast"
         heading="Book Nic for your event"
@@ -137,59 +73,3 @@ export default async function MediaPage() {
     </div>
   );
 }
-
-const APPEARANCE_TYPES = [
-  { key: "podcast" as const, label: "Podcasts" },
-  { key: "video" as const, label: "Video" },
-  { key: "press" as const, label: "Press" },
-  { key: "broadcast" as const, label: "TV & Radio" },
-];
-
-function groupByType(items: MediaAppearanceData[]): Record<string, MediaAppearanceData[]> {
-  const groups: Record<string, MediaAppearanceData[]> = {};
-  for (const item of items) {
-    const key = item.type || "press";
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(item);
-  }
-  return groups;
-}
-
-const FALLBACK_APPEARANCES: MediaAppearanceData[] = [
-  {
-    _id: "fm-1",
-    title: "The Future of Work and Curiosity",
-    type: "podcast",
-    publication: "Tech Leadership Podcast",
-    date: "2025-06-15",
-    url: null,
-    embedUrl: null,
-    description:
-      "Nic discusses why curiosity is the god particle of innovation and how teams can break free from stagnation.",
-    logo: null,
-  },
-  {
-    _id: "fm-2",
-    title: "South African Entrepreneur on Building with AI",
-    type: "press",
-    publication: "Fast Company",
-    date: "2025-03-10",
-    url: null,
-    embedUrl: null,
-    description:
-      "Feature article on Nic's journey from music tech startup to AI product builder and keynote speaker.",
-    logo: null,
-  },
-  {
-    _id: "fm-3",
-    title: "Entrepreneurship in Africa",
-    type: "broadcast",
-    publication: "CNBC Africa",
-    date: "2024-11-20",
-    url: null,
-    embedUrl: null,
-    description:
-      "Live interview discussing the state of entrepreneurship in Africa and the role of AI in building businesses.",
-    logo: null,
-  },
-];

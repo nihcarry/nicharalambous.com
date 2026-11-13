@@ -219,8 +219,8 @@ export const bookSlugListQuery = `*[_type == "book" && defined(slug.current)]{
 /* ---------- Media Appearances ---------- */
 
 /**
- * Media appearances for /media, newest first.
- * Pass hiddenTitles to leave unverified items in Sanity but out of the build.
+ * Not used by /media. That page reads data/media-coverage.json.
+ * Kept so older scripts can still query mediaAppearance documents.
  */
 export const mediaAppearancesQuery = `*[_type == "mediaAppearance" && !(title in $hiddenTitles)] | order(date desc){
   _id,

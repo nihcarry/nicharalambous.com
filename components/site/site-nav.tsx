@@ -23,7 +23,12 @@ const CONTENT_LINKS = [
   { href: "/books", label: "Books" },
 ];
 
-type DropName = "keynotes" | "coaching" | "content";
+const ABOUT_LINKS = [
+  { href: "/about", label: "About" },
+  { href: "/media", label: "Media and press" },
+];
+
+type DropName = "keynotes" | "coaching" | "content" | "about";
 
 function isKeynotes(pathname: string) {
   return pathname.startsWith("/keynotes") || pathname === "/contact";
@@ -37,6 +42,10 @@ function isCoaching(pathname: string) {
   return pathname === "/session";
 }
 
+function isAbout(pathname: string) {
+  return pathname === "/about" || pathname === "/media" || pathname.startsWith("/media/");
+}
+
 export function SiteNav() {
   const pathname = usePathname() || "/";
   const bookHref = bookOfferHref();
@@ -44,6 +53,7 @@ export function SiteNav() {
   const keynotesId = useId();
   const coachingId = useId();
   const contentId = useId();
+  const aboutId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -110,6 +120,7 @@ export function SiteNav() {
   function dropPanelId(which: DropName) {
     if (which === "keynotes") return keynotesId;
     if (which === "coaching") return coachingId;
+    if (which === "about") return aboutId;
     return contentId;
   }
 
@@ -205,10 +216,24 @@ export function SiteNav() {
               ))}
             </div>
           </li>
-          <li className={pathname === "/about" ? "on" : ""}>
-            <a className="item" href="/about">
-              About
-            </a>
+          <li className={`drop${openDrop === "about" ? " is-open" : ""}${isAbout(pathname) ? " on" : ""}`}>
+            <button
+              type="button"
+              className="item-btn"
+              aria-expanded={openDrop === "about"}
+              aria-controls={aboutId}
+              onClick={() => setOpenDrop((current) => (current === "about" ? null : "about"))}
+              onKeyDown={(event) => onDropKey(event, "about")}
+            >
+              About <small aria-hidden="true">▾</small>
+            </button>
+            <div className="drop-panel" id={aboutId} role="group" aria-label="About">
+              {ABOUT_LINKS.map((link) => (
+                <a key={link.href} href={link.href}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </li>
         </ul>
         <a className="btn" href={bookHref}>
@@ -303,9 +328,24 @@ export function SiteNav() {
             ))}
           </div>
         ) : null}
-        <a href="/about" onClick={() => setMenuOpen(false)}>
+        <button
+          type="button"
+          className="acc"
+          aria-expanded={mobileGroup === "about"}
+          onClick={() => setMobileGroup((current) => (current === "about" ? null : "about"))}
+        >
           About
-        </a>
+          <span className="caret" aria-hidden="true">{mobileGroup === "about" ? "▴" : "▾"}</span>
+        </button>
+        {mobileGroup === "about" ? (
+          <div className="sub">
+            {ABOUT_LINKS.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
         <a href="/contact" onClick={() => setMenuOpen(false)}>
           Enquire
         </a>

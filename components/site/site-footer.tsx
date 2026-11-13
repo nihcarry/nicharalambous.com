@@ -59,6 +59,9 @@ export function SiteFooter() {
               <li>
                 <a href="/books">Books</a>
               </li>
+              <li>
+                <a href="/media">Media</a>
+              </li>
             </ul>
           </div>
           <div>
