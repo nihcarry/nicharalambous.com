@@ -15,6 +15,7 @@ const pages = [
   ["team", "/workshops/team-workflow-upgrade"],
   ["exec", "/workshops/executive-workflow-upgrade"],
   ["coaching", "/coaching"],
+  ["coaching-apply", "/coaching/apply"],
 ];
 const widths = [1440, 390];
 

@@ -25,6 +25,7 @@ module.exports = {
   // /session is a meta refresh to /coaching. Index the coaching URL.
   exclude: [
     "/session",
+    "/coaching/apply",
     "/studio",
     "/studio/*",
     "/archive/*",

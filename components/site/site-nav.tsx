@@ -8,8 +8,14 @@ const KEYNOTE_LINKS = [
   { href: OUTPUT_PARADOX_PATH, label: "The Output Paradox" },
   { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "Virtual lunch and learn" },
   { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "In-person keynotes" },
-  { href: "/workshops", label: "Workshops" },
   { href: "/contact", label: "Enquire" },
+];
+
+const WORKSHOP_LINKS = [
+  { href: "/workshops/my-week-with-grok-bot", label: "My week" },
+  { href: "/workshops/team-workflow-upgrade", label: "Team" },
+  { href: "/workshops/executive-workflow-upgrade", label: "Exec" },
+  { href: "/workshops", label: "All workshops" },
 ];
 
 const COACHING_LINKS = [
@@ -29,10 +35,14 @@ const ABOUT_LINKS = [
   { href: "/media", label: "Media and press" },
 ];
 
-type DropName = "keynotes" | "coaching" | "content" | "about";
+type DropName = "keynotes" | "workshops" | "coaching" | "content" | "about";
 
 function isKeynotes(pathname: string) {
-  return pathname.startsWith("/keynotes") || pathname.startsWith("/workshops") || pathname === "/contact";
+  return pathname.startsWith("/keynotes") || pathname === "/contact";
+}
+
+function isWorkshops(pathname: string) {
+  return pathname === "/workshops" || pathname.startsWith("/workshops/");
 }
 
 function isContent(pathname: string) {
@@ -40,7 +50,7 @@ function isContent(pathname: string) {
 }
 
 function isCoaching(pathname: string) {
-  return pathname === "/session" || pathname === "/coaching";
+  return pathname === "/session" || pathname === "/coaching" || pathname.startsWith("/coaching/");
 }
 
 function isAbout(pathname: string) {
@@ -52,6 +62,7 @@ export function SiteNav() {
   const bookHref = bookOfferHref();
   const menuId = useId();
   const keynotesId = useId();
+  const workshopsId = useId();
   const coachingId = useId();
   const contentId = useId();
   const aboutId = useId();
@@ -120,6 +131,7 @@ export function SiteNav() {
 
   function dropPanelId(which: DropName) {
     if (which === "keynotes") return keynotesId;
+    if (which === "workshops") return workshopsId;
     if (which === "coaching") return coachingId;
     if (which === "about") return aboutId;
     return contentId;
@@ -162,6 +174,25 @@ export function SiteNav() {
             <div className="drop-panel" id={keynotesId} role="group" aria-label="Keynotes">
               {KEYNOTE_LINKS.map((link) => (
                 <a key={link.label} href={link.href}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </li>
+          <li className={`drop${openDrop === "workshops" ? " is-open" : ""}${isWorkshops(pathname) ? " on" : ""}`}>
+            <button
+              type="button"
+              className="item-btn"
+              aria-expanded={openDrop === "workshops"}
+              aria-controls={workshopsId}
+              onClick={() => setOpenDrop((current) => (current === "workshops" ? null : "workshops"))}
+              onKeyDown={(event) => onDropKey(event, "workshops")}
+            >
+              Workshops <small aria-hidden="true">▾</small>
+            </button>
+            <div className="drop-panel" id={workshopsId} role="group" aria-label="Workshops">
+              {WORKSHOP_LINKS.map((link) => (
+                <a key={link.href} href={link.href}>
                   {link.label}
                 </a>
               ))}
@@ -274,6 +305,24 @@ export function SiteNav() {
           <div className="sub">
             {KEYNOTE_LINKS.map((link) => (
               <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
+        <button
+          type="button"
+          className="acc"
+          aria-expanded={mobileGroup === "workshops"}
+          onClick={() => setMobileGroup((current) => (current === "workshops" ? null : "workshops"))}
+        >
+          Workshops
+          <span className="caret" aria-hidden="true">{mobileGroup === "workshops" ? "▴" : "▾"}</span>
+        </button>
+        {mobileGroup === "workshops" ? (
+          <div className="sub">
+            {WORKSHOP_LINKS.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
                 {link.label}
               </a>
             ))}

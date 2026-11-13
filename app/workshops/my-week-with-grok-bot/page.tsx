@@ -139,7 +139,7 @@ export default function MyWeekPage() {
       <section className="dark pd-calendar" id="formats">
         <div className="wrap">
           <h2 style={{ margin: "20px 0 28px" }}>Talk, show-and-tell or hands-on workshop</h2>
-          <CompareTable />
+          <CompareTable highlight="My week with Grok Bot" />
         </div>
       </section>
       <section className="p-pen">

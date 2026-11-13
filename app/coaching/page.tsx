@@ -4,7 +4,6 @@ import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { breadcrumbJsonLd } from "@/lib/metadata";
 import { PATHS, coachingJsonLd } from "@/lib/offers";
-import { PwycaForm } from "../session/pwyca-form";
 
 const PATH = PATHS.coaching;
 const URL = `https://www.nicharalambous.com${PATH}`;
@@ -37,7 +36,7 @@ export default function CoachingPage() {
         <div className="wrap">
           <div className="copy">
             <h1 className="long">
-              Business coaching that holds you to what you said you&apos;d <em>do</em>
+              Business <em>coaching</em> that holds you to what you said you&apos;d do
             </h1>
             <p className="say">
               Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT.
@@ -58,12 +57,33 @@ export default function CoachingPage() {
                 <IntroCallLink />
               </div>
             </div>
+            <div className="meter">
+              <div>
+                <b>2 calls</b>every month
+              </div>
+              <div>
+                <b>60 minutes</b>each call
+              </div>
+              <div>
+                <b>Chat support</b>between calls
+              </div>
+            </div>
           </div>
           <div className="photo">
             <img className="ph-coach" src="/v3/new/hero-coach-01.webp" alt="Nic Haralambous" />
           </div>
         </div>
       </section>
+      <div className="ip pd-calendar">
+        <div className="wrap">
+          <span>
+            <b>If €399 a month isn&apos;t possible right now,</b> you can apply for pay-what-you-can-afford coaching instead.
+          </span>
+          <a className="link" href="#pwyca" style={{ color: "#fff" }}>
+            Apply for pay-what-you-can-afford coaching
+          </a>
+        </div>
+      </div>
       <section className="p-pen">
         <div className="wrap body-copy">
           <p className="lead">
@@ -132,20 +152,47 @@ export default function CoachingPage() {
         <div className="wrap bio">
           <div className="pic">
             <img src="/v3/new/bio-coach-11.jpg" alt="Nic Haralambous, portrait" width={1000} height={1250} />
+            <img className="px pxb" src="/v3/px/Nic_archeo_16bit.png" alt="" width={182} height={220} />
           </div>
           <div>
             <h2 style={{ margin: "20px 0 22px" }}>I&apos;ve been building businesses since I was 16</h2>
             <p className="lead" style={{ color: "#4b4f5a" }}>
               I&apos;ve sold four of them, written three books and spent more than 20 years learning through failure and success.
             </p>
+            <div className="nums">
+              <div>
+                <b>4</b>
+                <span>startup exits</span>
+              </div>
+              <div>
+                <b>3</b>
+                <span>books</span>
+              </div>
+              <div>
+                <b>20+</b>
+                <span>years building</span>
+              </div>
+              <div>
+                <b>16+</b>
+                <span>years speaking</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
       <section className="p-pen" id="pwyca">
         <div className="wrap">
           <article className="plain-card">
-            <h2>Apply for pay-what-you-can-afford coaching</h2>
-            <PwycaForm />
+            <h2 style={{ fontSize: 22 }}>Pay What You Can Afford</h2>
+            <p>Application-based coaching</p>
+            <p>
+              Same coaching intent, at a price you can actually afford. Paying €0 is totally fine. I limit this to <b>5 clients per month</b>, which is why there&apos;s an application.
+            </p>
+            <p style={{ marginTop: 20 }}>
+              <a className="btn ghost" href="/coaching/apply">
+                Apply for pay-what-you-can-afford coaching
+              </a>
+            </p>
           </article>
         </div>
       </section>
@@ -158,6 +205,11 @@ export default function CoachingPage() {
               <CheckoutButton id="buy-coaching-final" offer="accountability-coaching" label="Start coaching, €399 a month" />
               <IntroCallLink />
             </div>
+            <p style={{ marginTop: 18, textAlign: "center" }}>
+              <a className="quiet-link" href="/coaching/apply">
+                Apply for pay-what-you-can-afford coaching
+              </a>
+            </p>
           </div>
         </div>
       </section>

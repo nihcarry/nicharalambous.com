@@ -62,10 +62,10 @@ export default function ExecutiveWorkshopPage() {
                 <b>2 hours</b>one to one
               </div>
               <div>
-                <b>For the CEO</b>your own workflow
+                <b>CEOs</b>and founders running a company
               </div>
               <div>
-                <b>Virtual</b>by default
+                <b>Your week</b>reviewed and upgraded
               </div>
             </div>
           </div>

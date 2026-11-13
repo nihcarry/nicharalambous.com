@@ -159,6 +159,7 @@ function pages() {
     ["output-paradox", "/keynotes/output-paradox-reengage-teams"],
     ["session", "/session"],
     ["coaching", "/coaching"],
+    ["coaching-apply", "/coaching/apply"],
     ["workshops", "/workshops"],
     ["team-workshop", "/workshops/team-workflow-upgrade"],
     ["executive-workshop", "/workshops/executive-workflow-upgrade"],

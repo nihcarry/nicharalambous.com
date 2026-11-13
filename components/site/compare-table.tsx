@@ -1,5 +1,5 @@
 /** Content Studio comparison. data-col drives the stacked mobile layout. */
-export function CompareTable() {
+export function CompareTable({ highlight }: { highlight?: string }) {
   const cols = ["Lunch and learn", "My week with Grok Bot", "Team Workflow Upgrade Session"] as const;
   const rows: { label: string; cells: string[] }[] = [
     { label: "What it is", cells: ["A talk", "A show-and-tell", "A hands-on workshop"] },
@@ -44,7 +44,9 @@ export function CompareTable() {
           <tr>
             <th />
             {cols.map((col) => (
-              <th key={col}>{col}</th>
+              <th key={col} className={col === highlight ? "hl" : undefined}>
+                {col}
+              </th>
             ))}
           </tr>
         </thead>
@@ -53,7 +55,7 @@ export function CompareTable() {
             <tr key={row.label}>
               <th>{row.label}</th>
               {row.cells.map((cell, index) => (
-                <td key={cols[index]} data-col={cols[index]}>
+                <td key={cols[index]} className={cols[index] === highlight ? "hl" : undefined} data-col={cols[index]}>
                   {cell}
                 </td>
               ))}
