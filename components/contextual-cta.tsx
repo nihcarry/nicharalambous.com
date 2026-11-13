@@ -1,13 +1,8 @@
 /**
- * Contextual CTA component for blog posts.
- *
- * When a blog post has a related keynote, this displays a targeted
- * call-to-action linking to that specific keynote. Falls back to a
- * generic /speaker CTA when no related keynote is set.
- *
- * Part of the authority flow: blog posts → keynotes → /speaker.
+ * Article close. Retired keynotes are not promoted. The button goes to
+ * the Output Paradox page unless the related keynote is still live.
  */
-import { CTAButton } from "@/components/cta-button";
+import { OUTPUT_PARADOX_PATH, isRetiredKeynote } from "@/lib/site";
 
 interface RelatedKeynote {
   title: string;
@@ -20,56 +15,25 @@ interface ContextualCtaProps {
   className?: string;
 }
 
-export function ContextualCta({
-  relatedKeynote,
-  className = "",
-}: ContextualCtaProps) {
-  if (relatedKeynote) {
-    return (
-      <div
-        className={`bg-accent-50 p-8 text-center ${className}`}
-      >
-        <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
-          Explore This as a Keynote
-        </p>
-        <h3 className="mt-2 heading-display text-2xl text-brand-900">
-          {relatedKeynote.title}
-        </h3>
-        <p className="mt-2 text-base text-brand-600">
-          {relatedKeynote.tagline}
-        </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <CTAButton href={`/keynotes/${relatedKeynote.slug}`}>
-            Learn More About This Keynote
-          </CTAButton>
-          <CTAButton href="/speaker" variant="secondary">
-            About Nic as a Speaker
-          </CTAButton>
-        </div>
-      </div>
-    );
-  }
+export function ContextualCta({ relatedKeynote }: ContextualCtaProps) {
+  const live = relatedKeynote && !isRetiredKeynote(relatedKeynote.slug) ? relatedKeynote : null;
+  const title = live?.title || "These ideas come alive in Nic's keynotes";
+  const detail =
+    live?.tagline ||
+    "Real stories, actionable frameworks, tailored to your audience. In person or virtually.";
+  const href = live ? `/keynotes/${live.slug}` : OUTPUT_PARADOX_PATH;
 
-  /* Fallback: generic speaker CTA */
   return (
-    <div
-      className={`bg-accent-50 p-8 text-center ${className}`}
-    >
-      <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
-        Want the Keynote Version?
-      </p>
-      <h3 className="mt-2 heading-display text-2xl text-brand-900">
-        These ideas come alive in Nic&rsquo;s virtual keynotes
-      </h3>
-      <p className="mt-2 text-base text-brand-600">
-        Real stories, actionable frameworks, tailored to your audience.
-        Worldwide virtual delivery.
-      </p>
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <CTAButton href="/speaker">About Nic as a Speaker</CTAButton>
-        <CTAButton href="/keynotes" variant="secondary">
-          Explore Keynotes
-        </CTAButton>
+    <div className="plain-card closing-card">
+      <h2>{title}</h2>
+      <p>{detail}</p>
+      <div className="acts">
+        <a className="btn" href={href}>
+          See the keynote
+        </a>
+        <a className="quiet-link" href="/#newsletter">
+          Subscribe to the newsletter
+        </a>
       </div>
     </div>
   );

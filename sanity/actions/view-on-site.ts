@@ -5,15 +5,15 @@ const SITE_URL = "https://www.nicharalambous.com";
 
 const SLUG_ROUTES: Record<string, string> = {
   post: "/blog",
-  keynote: "/keynotes",
+  keynote: "/keynotes/output-paradox-reengage-teams",
   topicHub: "/topics",
   book: "/books",
   mediaAppearance: "/media",
-  business: "/businesses",
+  business: "/building",
 };
 
 const SINGLETON_ROUTES: Record<string, string> = {
-  speaker: "/speaker",
+  speaker: "/keynotes/output-paradox-reengage-teams",
 };
 
 export const viewOnSiteAction: DocumentActionComponent = (props) => {

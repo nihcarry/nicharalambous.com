@@ -50,7 +50,7 @@ export function CTAButton({
   };
 
   const baseStyles =
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-none px-6 py-3 text-center text-base font-semibold whitespace-nowrap transition-colors duration-200 shadow-[var(--shadow-cta)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500";
+    "inline-flex shrink-0 items-center justify-center gap-2 rounded-none px-6 py-3 text-center text-base font-semibold whitespace-nowrap transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500";
 
   const variants = {
     primary:

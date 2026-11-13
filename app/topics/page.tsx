@@ -14,16 +14,9 @@ import {
   topicHubsListQuery,
   type TopicHubListItem,
 } from "@/lib/sanity/queries";
-import { CTAButton } from "@/components/cta-button";
-import { Slide } from "@/components/slide";
-import { SlideDeck } from "@/components/slide-deck";
-import { SlideContent } from "@/components/slide-animations";
-import { NextSlideIndicator } from "@/components/next-slide-indicator";
-import { TopicsHeroTopicLinks } from "@/components/topics-hero-topic-links";
-import { FooterContent } from "@/components/footer-content";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { collectionPageJsonLd } from "@/lib/metadata";
-import { ArrowRight, Crosshair } from "lucide-react";
 
 /* ---------- Data fetching ---------- */
 
@@ -88,13 +81,6 @@ const STORYBOARD_SLIDES = [
   },
 ];
 
-/** Fixed bottom-left decoration — persists across all slides (md+). ~12% smaller than hero-only version. */
-const TOPICS_DECK_IMAGE = {
-  src: "/slides/%20Nic_Topics_2.png",
-  className:
-    "pointer-events-none fixed bottom-0 left-0 z-[1] hidden h-[33vh] w-auto select-none object-contain object-bottom md:block lg:h-[40vh]",
-};
-
 /* ---------- Page ---------- */
 
 export default async function TopicsPage() {
@@ -110,19 +96,8 @@ export default async function TopicsPage() {
       .filter((topic): topic is TopicHubListItem => Boolean(topic)),
   })).filter((slide) => slide.topics.length > 0);
 
-  const heroTopicLinks = slides.flatMap((slide) =>
-    slide.topics.map((topic) => ({
-      slug: topic.slug,
-      title: topic.title,
-      slideId: slide.id,
-    })),
-  );
-
   return (
-    <SlideDeck>
-      <NextSlideIndicator />
-
-      {/* Structured data */}
+    <div className="v3 p-compass">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Topics — Nic Haralambous",
@@ -131,190 +106,39 @@ export default async function TopicsPage() {
           url: "https://www.nicharalambous.com/topics",
         })}
       />
-
-      {/* Fixed decorative image — bottom-left, visible on every slide including footer */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={TOPICS_DECK_IMAGE.src}
-        alt=""
-        aria-hidden="true"
-        fetchPriority="high"
-        className={TOPICS_DECK_IMAGE.className}
-      />
-
-      <Slide
-        variant="grid-3"
-        background="bg-compass-pattern"
-        id="hero"
-        className="md:justify-start"
-      >
-        <SlideContent>
-          <h1 className="heading-stroke font-extrabold tracking-tight pt-8 md:pt-16 text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-6xl md:text-7xl lg:text-8xl">
-            Topics
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-center text-lg font-medium leading-relaxed text-brand-700 md:text-xl">
-            The themes that run through Nic&apos;s keynotes, books, and 20+ years
-            of building businesses.
+      <section>
+        <div className="wrap">
+          <h1>Topics</h1>
+          <p className="lead">
+            The themes that run through Nic&apos;s keynotes, books, and 20+ years of building businesses.
           </p>
-          <p className="mx-auto mt-3 max-w-3xl text-center text-base leading-relaxed text-brand-600 md:text-lg">
-            Explore each topic hub for related articles and keynote pathways.
-          </p>
-          <TopicsHeroTopicLinks items={heroTopicLinks} />
-          <div className="mt-20 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <CTAButton href="/speaker" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-              About Nic as a Speaker
-            </CTAButton>
-            <CTAButton href="/keynotes" variant="secondary" className="!rounded-none font-bold tracking-[0.02em] text-xl uppercase">
-              View All Keynotes
-            </CTAButton>
+          <p className="lead">Explore each topic hub for related articles and keynote pathways.</p>
+        </div>
+      </section>
+      {slides.map((slide) => (
+        <section key={slide.id} id={slide.id}>
+          <div className="wrap">
+            <h2>{slide.heading}</h2>
+            <p className="lead">{slide.description}</p>
+            <div className="read-list">
+              {slide.topics.map((topic) => (
+                <a className="row" href={`/topics/${topic.slug}`} key={topic.slug}>
+                  <h2>{topic.title}</h2>
+                  {topic.oneSentenceSummary ? <p>{topic.oneSentenceSummary}</p> : null}
+                </a>
+              ))}
+            </div>
           </div>
-        </SlideContent>
-      </Slide>
-
-      {slides.map((slide, slideIndex) => (
-        <Slide
-          key={slide.id}
-          id={slide.id}
-          variant="grid-3"
-          background={slide.background}
-        >
-          <SlideContent>
-            {slideIndex === 0 && (
-              <div className="grid gap-8 md:grid-cols-5 md:gap-14">
-                <div className="md:col-span-2">
-                  <h2
-                    className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] whitespace-pre-line text-brand-900 sm:text-5xl md:text-6xl"
-                    data-no-orphan-opt-out="true"
-                  >
-                    {slide.heading}
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-brand-700 md:text-lg">
-                    {slide.description}
-                  </p>
-                </div>
-                <div className="mt-3 space-y-6 md:col-span-3 md:mt-8 md:pl-16">
-                  {slide.topics.map((topic, i) => (
-                    <a
-                      key={topic.slug}
-                      href={`/topics/${topic.slug}`}
-                      className="group flex flex-col border border-brand-900 bg-white p-6"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          TOPIC_{String(i + 1).padStart(2, "0")}
-                        </span>
-                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                      </div>
-                      <div className="my-3 border-t border-brand-200" />
-                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
-                        {topic.title}
-                      </h3>
-                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
-                        {topic.oneSentenceSummary}
-                      </p>
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          Explore topic hub
-                        </span>
-                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {slideIndex === 1 && (
-              <div className="grid gap-8 md:grid-cols-5 md:gap-10">
-                <div className="order-2 space-y-6 md:order-1 md:col-span-3 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
-                  {slide.topics.map((topic, i) => (
-                    <a
-                      key={topic.slug}
-                      href={`/topics/${topic.slug}`}
-                      className="group flex flex-col border border-brand-900 bg-white p-6"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          TOPIC_{String(i + 3).padStart(2, "0")}
-                        </span>
-                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                      </div>
-                      <div className="my-3 border-t border-brand-200" />
-                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
-                        {topic.title}
-                      </h3>
-                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
-                        {topic.oneSentenceSummary}
-                      </p>
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          Explore topic hub
-                        </span>
-                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                      </div>
-                    </a>
-                  ))}
-                </div>
-                <div className="order-1 md:order-2 md:col-span-2 md:text-right">
-                  <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-                    {slide.heading}
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-brand-700 md:text-lg">
-                    {slide.description}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {slideIndex === 2 && (
-              <div>
-                <div className="mx-auto max-w-4xl text-center">
-                  <h2 className="heading-stroke-topics mt-2 font-extrabold tracking-tight text-4xl uppercase leading-[0.95] text-brand-900 sm:text-5xl md:text-6xl">
-                    {slide.heading}
-                  </h2>
-                  <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-brand-700 md:text-lg">
-                    {slide.description}
-                  </p>
-                </div>
-                <div className="mt-8 grid gap-6 md:grid-cols-2">
-                  {slide.topics.map((topic, i) => (
-                    <a
-                      key={topic.slug}
-                      href={`/topics/${topic.slug}`}
-                      className="group flex flex-col border border-brand-900 bg-white p-6"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          TOPIC_{String(i + 5).padStart(2, "0")}
-                        </span>
-                        <Crosshair className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                      </div>
-                      <div className="my-3 border-t border-brand-200" />
-                      <h3 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-brand-900 transition-colors group-hover:text-accent-600 sm:text-4xl">
-                        {topic.title}
-                      </h3>
-                      <p className="mt-3 font-mono text-sm leading-relaxed text-brand-600 md:text-base">
-                        {topic.oneSentenceSummary}
-                      </p>
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="font-mono text-xs tracking-widest text-accent-600">
-                          Explore topic hub
-                        </span>
-                        <ArrowRight className="h-4 w-4 text-accent-600 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </SlideContent>
-        </Slide>
+        </section>
       ))}
-
-      <Slide variant="footer" background="bg-foot-pattern" id="footer">
-        <FooterContent />
-      </Slide>
-    </SlideDeck>
+      <ClosingCta
+        className="pd-compass"
+        heading="The themes that run through Nic's keynotes"
+        copy="Explore each topic hub for related articles and keynote pathways."
+        primaryHref="/keynotes/output-paradox-reengage-teams"
+        primaryLabel="See the keynote"
+      />
+    </div>
   );
 }
 
@@ -327,10 +151,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "curiosity",
     oneSentenceSummary:
       "Curiosity is the god particle of innovation — the fundamental force that drives experimentation, learning, and breakthrough thinking.",
-    relatedKeynotes: [
-      { _id: "k1", title: "The Curiosity Catalyst", slug: "curiosity-catalyst" },
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -339,10 +160,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "innovation",
     oneSentenceSummary:
       "Innovation is an outcome, not an action. It requires curiosity, experimentation, and the courage to act on incomplete information.",
-    relatedKeynotes: [
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-      { _id: "k1", title: "The Curiosity Catalyst", slug: "curiosity-catalyst" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -360,9 +178,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "focus",
     oneSentenceSummary:
       "In an attention economy, focus is your most valuable resource. The DIAL framework helps teams reclaim deep work.",
-    relatedKeynotes: [
-      { _id: "k3", title: "Reclaiming Focus", slug: "reclaiming-focus" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -371,9 +187,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "ai",
     oneSentenceSummary:
       "AI as a tool, not a replacement. How to integrate AI into your product workflow without losing your team's creative edge.",
-    relatedKeynotes: [
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {
@@ -382,10 +196,7 @@ const FALLBACK_TOPICS: TopicHubListItem[] = [
     slug: "agency",
     oneSentenceSummary:
       "High agency — the belief that you can influence outcomes — separates breakthrough teams from stagnant ones.",
-    relatedKeynotes: [
-      { _id: "k3", title: "Reclaiming Focus", slug: "reclaiming-focus" },
-      { _id: "k2", title: "Breakthrough Product Teams", slug: "breakthrough-product-teams" },
-    ],
+    relatedKeynotes: [],
     seo: null,
   },
   {

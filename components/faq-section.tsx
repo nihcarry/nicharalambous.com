@@ -58,7 +58,7 @@ export function FaqSection({
             <dt>
               <button
                 type="button"
-                className="flex w-full items-center justify-between text-left"
+                className="flex min-h-11 w-full items-center justify-between text-left"
                 onClick={() => toggle(index)}
                 aria-expanded={openIndex === index}
               >

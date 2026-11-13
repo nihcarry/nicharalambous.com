@@ -4,7 +4,7 @@
  * Full article template for published blog posts. Supports two content
  * rendering modes:
  *   1. Portable Text (`body`) — for manually written or AI-optimized posts
- *   2. Raw HTML (`rawHtmlBody`) — for as-is Medium/Substack imports
+ *   2. Raw HTML (`rawHtmlBody`) — for as-is imported articles
  *
  * Sections (per SEO strategy):
  *   1. TL;DR / excerpt (when present)
@@ -34,14 +34,14 @@ const postBySlugQuery =
   process.env.NODE_ENV === "development" ? blogPostBySlugDevQuery : blogPostBySlugQuery;
 const postSlugListQuery =
   process.env.NODE_ENV === "development" ? blogPostSlugListDevQuery : blogPostSlugListQuery;
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
+import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { PortableText } from "@/components/portable-text";
 import { FaqSection } from "@/components/faq-section";
 import { RelatedPosts } from "@/components/related-posts";
 import { ContextualCta } from "@/components/contextual-cta";
 import { VideoReadAlong } from "@/components/video-read-along";
+import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
 import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
 import {
   rawHtmlToPlainText,
@@ -160,7 +160,7 @@ export default async function BlogPostPage({
   const hasVideo = post.videoEmbed && post.videoEmbed.trim().length > 0;
 
   return (
-    <>
+    <div className="v3 p-quill">
       {/* Article JSON-LD */}
       <JsonLd
         data={articleJsonLd({
@@ -177,29 +177,15 @@ export default async function BlogPostPage({
       {hasFaq && <JsonLd data={faqJsonLd(post.faq!)} />}
 
       {/* Article header */}
-      <Section width="content" as="article">
+      <article>
+      <section>
+        <div className="wrap">
         <header>
-          {/* Topic tags */}
-          {hasTopics && (
-            <div className="flex flex-wrap gap-2">
-              {post.topics.map((topic) => (
-                <a
-                  key={topic._id}
-                  href={`/topics/${topic.slug}`}
-                  className="bg-accent-100 px-3 py-1 text-xs font-medium text-accent-600 transition-colors hover:bg-accent-600 hover:text-white"
-                >
-                  {topic.title}
-                </a>
-              ))}
-            </div>
-          )}
-
-          <h1 className="mt-4 heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
+          <h1>
             {post.title}
           </h1>
 
-          {/* Meta: date + read time */}
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-brand-500">
+          <div className="article-meta">
             <span>By Nic Haralambous</span>
             {post.publishedAt && (
               <time dateTime={post.publishedAt}>
@@ -223,6 +209,12 @@ export default async function BlogPostPage({
             {post.estimatedReadTime && (
               <span>{post.estimatedReadTime} min read</span>
             )}
+            {hasTopics &&
+              post.topics.map((topic) => (
+                <a key={topic._id} href={`/topics/${topic.slug}`} className="tag">
+                  {topic.title}
+                </a>
+              ))}
           </div>
         </header>
 
@@ -247,13 +239,9 @@ export default async function BlogPostPage({
 
         {/* TL;DR / Excerpt block */}
         {post.excerpt && (
-          <aside className="mt-8 border-l-[8px] border-accent-600 bg-brand-50 p-6">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
-              TL;DR
-            </p>
-            <p className="mt-2 text-base leading-relaxed text-brand-700">
-              {post.excerpt}
-            </p>
+          <aside className="plain-card prose-col" style={{ marginTop: 28 }}>
+            <h2 className="side-title">TL;DR</h2>
+            <p>{post.excerpt}</p>
           </aside>
         )}
 
@@ -267,14 +255,14 @@ export default async function BlogPostPage({
 
         {/* Main content — Portable Text or raw HTML */}
         {hasPortableTextBody ? (
-          <div data-no-orphan-opt-out="true">
+          <div className="prose-col" data-no-orphan-opt-out="true">
             <PortableText value={post.body} className="mt-8" />
           </div>
         ) : hasRawHtmlBody ? (
           <div
             data-no-orphan-opt-out="true"
             className={[
-              "prose-imported mt-8",
+              "prose-col prose-imported mt-8",
               /* Paragraphs — clear separation between blocks */
               "[&>p]:mt-5 [&>p]:mb-0 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700",
               /* Headings — H1 for section titles (e.g. Notion imports), H2–H4 for hierarchy */
@@ -302,31 +290,38 @@ export default async function BlogPostPage({
               "[&_a]:text-accent-600 [&_a]:underline [&_a:hover]:text-accent-500",
               /* In-article primary CTA — matches CTAButton */
               "[&>p.prose-cta-wrap]:mt-8 [&>p.prose-cta-wrap]:mb-2 [&>p.prose-cta-wrap]:text-center",
-              "[&_a.prose-cta]:inline-flex [&_a.prose-cta]:items-center [&_a.prose-cta]:justify-center [&_a.prose-cta]:gap-2 [&_a.prose-cta]:rounded-none [&_a.prose-cta]:px-8 [&_a.prose-cta]:py-4 [&_a.prose-cta]:text-lg [&_a.prose-cta]:font-semibold [&_a.prose-cta]:whitespace-nowrap [&_a.prose-cta]:no-underline [&_a.prose-cta]:shadow-[var(--shadow-cta)] [&_a.prose-cta]:bg-accent-600 [&_a.prose-cta]:text-white [&_a.prose-cta]:transition-colors [&_a.prose-cta]:duration-200 [&_a.prose-cta:hover]:bg-accent-500 [&_a.prose-cta:hover]:text-white [&_a.prose-cta:focus-visible]:outline-2 [&_a.prose-cta:focus-visible]:outline-offset-2 [&_a.prose-cta:focus-visible]:outline-accent-500",
+              "[&_a.prose-cta]:inline-flex [&_a.prose-cta]:items-center [&_a.prose-cta]:justify-center [&_a.prose-cta]:gap-2 [&_a.prose-cta]:rounded-none [&_a.prose-cta]:px-8 [&_a.prose-cta]:py-4 [&_a.prose-cta]:text-lg [&_a.prose-cta]:font-semibold [&_a.prose-cta]:whitespace-nowrap [&_a.prose-cta]:no-underline [&_a.prose-cta]:bg-accent-600 [&_a.prose-cta]:text-white [&_a.prose-cta]:transition-colors [&_a.prose-cta]:duration-200 [&_a.prose-cta:hover]:bg-accent-500 [&_a.prose-cta:hover]:text-white [&_a.prose-cta:focus-visible]:outline-2 [&_a.prose-cta:focus-visible]:outline-offset-2 [&_a.prose-cta:focus-visible]:outline-accent-500",
               /* Strikethrough */
               "[&_s]:text-brand-400",
             ].join(" ")}
             dangerouslySetInnerHTML={{
-              __html: rawHtmlSplit.bodyHtml || post.rawHtmlBody!,
+              __html: gateThirdPartyEmbeds(rawHtmlSplit.bodyHtml || post.rawHtmlBody!),
             }}
           />
         ) : (
-          <p className="mt-8 text-brand-500 italic">
+          <p className="prose-col mt-8 text-brand-500 italic">
             Content is being prepared. Check back soon.
           </p>
         )}
-      </Section>
+        </div>
+      </section>
+      </article>
 
       {/* FAQ section */}
       {hasFaq && (
-        <Section width="content" className="bg-brand-50">
-          <FaqSection faqs={post.faq!} />
-        </Section>
+        <section>
+          <div className="wrap">
+            <div className="plain-card prose-col">
+              <FaqSection faqs={post.faq!} headingClassName="side-title" />
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Topic hub links */}
       {hasTopics && (
-        <Section width="content">
+        <section>
+          <div className="wrap">
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-sm font-medium text-brand-500">
               Filed under:
@@ -335,37 +330,34 @@ export default async function BlogPostPage({
               <a
                 key={topic._id}
                 href={`/topics/${topic.slug}`}
-                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="tag"
               >
                 {topic.title}
               </a>
             ))}
           </div>
-        </Section>
+          </div>
+        </section>
       )}
 
-      {/* Related posts */}
       {relatedPosts.length > 0 && (
-        <Section width="wide" className="bg-brand-50">
-          <RelatedPosts posts={relatedPosts} />
-        </Section>
+        <section>
+          <div className="wrap">
+            <RelatedPosts posts={relatedPosts} />
+          </div>
+        </section>
       )}
 
-      {/* Contextual CTA — related keynote or generic */}
-      <Section width="content">
-        <ContextualCta relatedKeynote={post.relatedKeynote} />
-      </Section>
+      <section>
+        <div className="wrap">
+          <div className="prose-col">
+            <ContextualCta relatedKeynote={post.relatedKeynote} />
+          </div>
+        </div>
+      </section>
 
-      {/* Final soft CTA → /speaker (always present per SEO strategy) */}
-      <FinalCta
-        heading="Want Nic at Your Next Event?"
-        description="Virtual keynotes for conferences, corporate events, team offsites, and webinars. Worldwide delivery."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/contact"
-        secondaryLabel="Book Nic for Your Event"
-      />
-    </>
+      <NewsletterBlock />
+    </div>
   );
 }
 

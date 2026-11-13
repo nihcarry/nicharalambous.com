@@ -26,7 +26,7 @@ export function VideoReadAlong({
 
   return (
     <aside
-      className={`mt-8 border-l-[8px] border-brand-900 bg-brand-50 ${className}`}
+      className={`plain-card ${className}`}
     >
       <button
         type="button"
@@ -89,12 +89,13 @@ function getEmbedUrl(url: string): string | null {
       if (parsed.hostname.includes("youtu.be")) {
         videoId = parsed.pathname.slice(1);
       } else if (parsed.pathname.includes("/embed/")) {
-        return url;
+        const id = parsed.pathname.split("/embed/")[1]?.split(/[?/]/)[0];
+        if (id) return `https://www.youtube-nocookie.com/embed/${id}?rel=0`;
       } else {
         videoId = parsed.searchParams.get("v") || "";
       }
       if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}?rel=0`;
+        return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
       }
     }
 

@@ -1,18 +1,1 @@
-/**
- * Site footer.
- *
- * Wraps FooterContent in the standard footer element with border and background.
- * Used on all pages except the homepage, where footer content is rendered
- * as the final slide instead (via ConditionalFooter).
- */
-import { FooterContent } from "@/components/footer-content";
-
-export function Footer() {
-  return (
-    <footer className="border-t border-brand-200 bg-foot-pattern max-md:pb-[calc(var(--bottom-nav-height-mobile)+env(safe-area-inset-bottom,0px))]">
-      <div className="container-wide py-16">
-        <FooterContent />
-      </div>
-    </footer>
-  );
-}
+export { SiteFooter as Footer } from "@/components/site/site-footer";

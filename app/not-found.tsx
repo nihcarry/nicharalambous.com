@@ -1,50 +1,37 @@
-/**
- * Custom 404 page.
- *
- * Provides helpful navigation back to key pages.
- * Includes search suggestion and links to main sections.
- */
-import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
+import type { Metadata } from "next";
+import { bookOfferHref } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: { absolute: "Page not found | Nic Haralambous" },
+  description: "That page is not on nicharalambous.com. Go home, read the Output Paradox keynote, or send an enquiry.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (
-    <Section width="content" className="flex flex-col items-center text-center">
-      <p className="heading-display text-8xl text-accent-600 sm:text-9xl">
-        404
-      </p>
-      <h1 className="heading-display-stroke-sm mt-2 text-4xl text-brand-900 sm:text-5xl">
-        Page not found
-      </h1>
-      <p className="mt-4 text-lg text-brand-600">
-        The page you&apos;re looking for doesn&apos;t exist or has moved.
-      </p>
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-        <CTAButton href="/">Go Home</CTAButton>
-        <CTAButton href="/speaker" variant="secondary">
-          View Speaking
-        </CTAButton>
-      </div>
-      <div className="mt-12 text-sm text-brand-400">
-        <p>Looking for something specific? Try these:</p>
-        <div className="mt-4 flex flex-wrap justify-center gap-4">
-          <a href="/blog" className="text-accent-600 hover:underline">
-            Blog
-          </a>
-          <a href="/keynotes" className="text-accent-600 hover:underline">
-            Keynotes
-          </a>
-          <a href="/topics" className="text-accent-600 hover:underline">
-            Topics
-          </a>
-          <a href="/about" className="text-accent-600 hover:underline">
-            About
-          </a>
-          <a href="/contact" className="text-accent-600 hover:underline">
-            Contact
-          </a>
+    <div className="v3" data-no-orphan-opt-out="true">
+      <section className="top pd-person not-found" style={{ paddingBottom: 120 }}>
+        <div className="wrap">
+          <h1>That page is not here</h1>
+          <p className="lead">
+            The link may be old, or the page may have moved. Here are the places people usually want.
+          </p>
+          <div className="acts">
+            <a className="btn" href="/">
+              Home
+            </a>
+            <a className="btn ghost" href="/keynotes/output-paradox-reengage-teams">
+              The Output Paradox
+            </a>
+            <a className="btn ghost" href="/contact">
+              Enquire
+            </a>
+            <a className="quiet-link" href={bookOfferHref()}>
+              Book a lunch and learn
+            </a>
+          </div>
         </div>
-      </div>
-    </Section>
+      </section>
+    </div>
   );
 }

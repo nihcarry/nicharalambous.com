@@ -10,7 +10,10 @@ import {
   type PortableTextComponents,
   type PortableTextBlock as PTBlock,
 } from "@portabletext/react";
+import { ClickToLoadYouTube, youtubeIdFromUrl } from "@/components/click-to-load-youtube";
+import { youtubePosterSrc } from "@/lib/v3-content";
 import { urlFor } from "@/lib/sanity/image";
+import { withoutEmDash } from "@/lib/site";
 
 /** Custom component map for Portable Text rendering */
 const components: PortableTextComponents = {
@@ -62,6 +65,7 @@ const components: PortableTextComponents = {
       <strong className="font-semibold text-brand-900">{children}</strong>
     ),
     em: ({ children }) => <em>{children}</em>,
+    highlight: ({ children }) => <em className="hl">{children}</em>,
     code: ({ children }) => (
       <code className="rounded bg-brand-100 px-1.5 py-0.5 text-sm font-mono text-brand-800">
         {children}
@@ -107,19 +111,15 @@ const components: PortableTextComponents = {
     },
     videoEmbed: ({ value }) => {
       if (!value?.url) return null;
-      const embedUrl = getVideoEmbedUrl(value.url);
-      if (!embedUrl) return null;
+      const videoId = youtubeIdFromUrl(value.url);
+      if (!videoId) return null;
       return (
         <figure className="mt-8">
-          <div className="aspect-video overflow-hidden rounded-lg">
-            <iframe
-              src={embedUrl}
-              title={value.caption || "Video"}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          <ClickToLoadYouTube
+            videoId={videoId}
+            title={value.caption || "Video"}
+            poster={youtubePosterSrc(videoId)}
+          />
           {value.caption && (
             <figcaption className="mt-2 text-center text-sm text-brand-500">
               {value.caption}
@@ -141,7 +141,7 @@ const components: PortableTextComponents = {
     pullQuote: ({ value }) => {
       if (!value?.quote) return null;
       return (
-        <aside className="my-8 rounded-xl bg-accent-50 p-6 text-center">
+        <aside className="plain-card">
           <p className="text-lg font-medium italic text-accent-800">
             &ldquo;{value.quote}&rdquo;
           </p>
@@ -156,21 +156,6 @@ const components: PortableTextComponents = {
   },
 };
 
-/** Convert a YouTube or Vimeo URL to an embeddable URL */
-function getVideoEmbedUrl(url: string): string | null {
-  // YouTube
-  const ytMatch = url.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
-  );
-  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
-
-  // Vimeo
-  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
-
-  return null;
-}
-
 /* ---------- Public API ---------- */
 
 interface PortableTextProps {
@@ -183,12 +168,25 @@ interface PortableTextProps {
  * Render Sanity Portable Text content with consistent styling.
  * Returns null if no content is provided.
  */
+function stripRenderedDashes<T>(value: T): T {
+  if (typeof value === "string") return withoutEmDash(value) as T;
+  if (Array.isArray(value)) return value.map((item) => stripRenderedDashes(item)) as T;
+  if (value && typeof value === "object") {
+    const copy: Record<string, unknown> = {};
+    for (const [key, child] of Object.entries(value)) {
+      copy[key] = stripRenderedDashes(child);
+    }
+    return copy as T;
+  }
+  return value;
+}
+
 export function PortableText({ value, className = "" }: PortableTextProps) {
   if (!value || value.length === 0) return null;
   return (
     <div className={className}>
       <PortableTextRenderer
-        value={value as PTBlock[]}
+        value={stripRenderedDashes(value) as PTBlock[]}
         components={components}
       />
     </div>

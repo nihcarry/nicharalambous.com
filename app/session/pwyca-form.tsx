@@ -187,7 +187,7 @@ export function PwycaForm() {
           What can you afford to pay for coaching?{" "}
           <span className="text-red-500">*</span>
         </label>
-        <p className="mt-1 font-mono text-xs leading-relaxed text-brand-500">
+        <p className="mt-1 font-mono text-sm leading-relaxed text-brand-500">
           Paying €0 is totally fine. Nic limits this programme to 5 clients per
           month. That&apos;s why there&apos;s an application.
         </p>

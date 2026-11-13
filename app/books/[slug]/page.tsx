@@ -23,9 +23,7 @@ import {
   fallbackBookToBookData,
   getPrimaryBuyUrl,
 } from "@/lib/books-data";
-import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
+import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
 import { bookJsonLd } from "@/lib/metadata";
@@ -133,7 +131,7 @@ export default async function BookPage({
   const buyUrl = getPrimaryBuyUrl(slug, book.buyLinks);
 
   return (
-    <div className="page-bg bg-openbook-pattern">
+    <div className="v3 p-envelope">
       {/* Structured data */}
       <JsonLd
         data={bookJsonLd({
@@ -147,7 +145,8 @@ export default async function BookPage({
       />
 
       {/* Hero */}
-      <Section width="content">
+      <section>
+        <div className="wrap">
         <div className="flex flex-col gap-8 md:flex-row md:items-start">
           {/* Cover image */}
           {coverUrl && (
@@ -162,10 +161,7 @@ export default async function BookPage({
           )}
 
           <div className="flex-1">
-            <p className="text-sm font-bold uppercase tracking-widest text-accent-600">
-              Book
-            </p>
-            <h1 className="heading-display-stroke-sm mt-2 text-4xl text-brand-900 sm:text-5xl">
+            <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl">
               {book.title}
             </h1>
             {book.subtitle && (
@@ -182,31 +178,32 @@ export default async function BookPage({
             {/* Buy links */}
             {buyUrl && (
               <div className="mt-6">
-                <CTAButton
-                  href={buyUrl}
-                  external
-                >
-                  Buy Now
-                </CTAButton>
+                <a className="btn" href={buyUrl} target="_blank" rel="noopener noreferrer">
+                  Buy now
+                </a>
               </div>
             )}
           </div>
         </div>
-      </Section>
+        </div>
+      </section>
 
       {/* Description */}
       {hasDescription && (
-        <Section width="content">
-          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
-            About This Book
-          </h2>
-          <PortableText value={book.description} className="mt-4" />
-        </Section>
+        <section>
+          <div className="wrap">
+            <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+              About This Book
+            </h2>
+            <PortableText value={book.description} className="prose-col mt-4" />
+          </div>
+        </section>
       )}
 
       {/* Related topics */}
       {book.relatedTopics && book.relatedTopics.length > 0 && (
-        <Section width="content">
+        <section>
+          <div className="wrap">
           <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Related Topics
           </h2>
@@ -215,23 +212,25 @@ export default async function BookPage({
               <a
                 key={topic.slug}
                 href={`/topics/${topic.slug}`}
-                className="bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                className="tag"
               >
                 {topic.title}
               </a>
             ))}
           </div>
-        </Section>
+          </div>
+        </section>
       )}
 
       {/* CTA */}
-      <FinalCta
-        heading="Want the Keynote Version?"
-        description="The ideas in this book come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
+      <ClosingCta
+        className="pd-envelope"
+        heading="The ideas in this book come alive in Nic's keynotes"
+        copy="Real stories, actionable frameworks, tailored to your team. In person or virtually."
+        primaryHref="/keynotes/output-paradox-reengage-teams"
+        primaryLabel="See the keynote"
         secondaryHref="/books"
-        secondaryLabel="View All Books"
+        secondaryLabel="View all books"
       />
     </div>
   );

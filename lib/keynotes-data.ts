@@ -15,9 +15,14 @@ export interface KeynoteSlideData {
   keyTakeaways: string[];
   keyTakeawaysLabel?: string;
   closingLine?: string;
-  deliveryFormat: "virtual" | "hybrid" | "in-person";
+  deliveryFormat: "in-person-or-virtual" | "virtual" | "hybrid" | "in-person";
   duration: string;
   audiences: string[];
+}
+
+/** Every keynote is offered in person and virtually. Older exclusive values still mean both. */
+export function deliveryFormatLabel(): string {
+  return "In person or virtual";
 }
 
 export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
@@ -39,8 +44,8 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
     keyTakeawaysLabel: "What your team leaves with:",
     closingLine:
       "You can't outsource curiosity to a tool. The fix is structural: incentives, trust, and room to think.",
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
+    deliveryFormat: "in-person-or-virtual",
+    duration: "45 minutes",
     audiences: [
       "HR leaders and executive teams",
       "Innovation and transformation leaders",
@@ -64,8 +69,8 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
       "The DIAL framework: Decide, Intend, Act, Loop back",
       "How to build team norms that protect deep work time",
     ],
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
+    deliveryFormat: "in-person-or-virtual",
+    duration: "45 minutes",
     audiences: [
       "Corporate teams struggling with digital overload",
       "Leadership groups building remote/hybrid work culture",
@@ -81,7 +86,7 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
       "Most organisations don't have an innovation problem. They have a curiosity problem. When people stop asking questions, stop experimenting, and stop challenging assumptions, progress stalls — no matter how many hackathons or brainstorms you run.",
       "In this keynote, Nic challenges the myths of \"innovation theatre\" and reactive change, and shows why real progress doesn't come from buzzwords or panic-driven ideas but from deliberately designing curiosity into how teams think, work, and experiment.",
       "Through powerful stories, research-backed insights, and live audience interaction, this talk helps leaders and teams break out of stagnation by replacing fear, efficiency obsession, and short-term thinking with curiosity, experimentation, and long-term perspective.",
-      "This is a highly interactive session designed for virtual delivery. Audiences don't just listen — they participate, reflect, and leave with frameworks they can apply immediately.",
+      "This is a highly interactive session, in person or virtually. Audiences don't just listen. They participate, reflect, and leave with frameworks they can apply immediately.",
     ],
     keyTakeaways: [
       "A clear understanding of why innovation stalls inside successful companies",
@@ -92,9 +97,9 @@ export const KEYNOTE_SLIDES: KeynoteSlideData[] = [
     ],
     keyTakeawaysLabel: "Audiences leave with:",
     closingLine:
-      "Designed for remote teams. Highly interactive. Built to spark action, not just ideas.",
-    deliveryFormat: "virtual",
-    duration: "45-60 minutes",
+      "In person or virtually. Highly interactive. Built to spark action, not just ideas.",
+    deliveryFormat: "in-person-or-virtual",
+    duration: "45 minutes",
     audiences: [
       "Conferences and leadership summits",
       "C-suite retreats and strategy sessions",

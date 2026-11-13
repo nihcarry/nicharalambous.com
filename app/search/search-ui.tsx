@@ -108,7 +108,7 @@ export function SearchUI({ blogOnly = false, placeholder }: SearchUIProps) {
           onChange={(e) => handleSearch(e.target.value)}
           placeholder={ready ? displayPlaceholder : "Loading search..."}
           disabled={!ready}
-          className="w-full border border-brand-300 bg-white py-4 pl-12 pr-12 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 disabled:opacity-50"
+          className="search-input w-full border border-brand-300 bg-white py-4 pr-12 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 disabled:opacity-50"
           autoFocus
         />
         {query && (

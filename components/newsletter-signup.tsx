@@ -28,7 +28,7 @@ const inputClassName =
   "mt-1 block min-h-11 w-full border border-brand-300 bg-white px-4 py-3 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 max-md:scroll-mb-28";
 
 const buttonClassName =
-  "inline-flex min-h-11 items-center justify-center rounded-none bg-accent-600 px-6 py-3 text-base font-semibold text-white shadow-[var(--shadow-cta)] transition-colors duration-200 hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:cursor-not-allowed disabled:opacity-60 max-md:scroll-mb-28";
+  "inline-flex min-h-11 items-center justify-center rounded-none bg-accent-600 px-6 py-3 text-base font-semibold text-white transition-colors duration-200 hover:bg-accent-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 disabled:cursor-not-allowed disabled:opacity-60 max-md:scroll-mb-28";
 
 export function NewsletterSignup({ variant = "section" }: NewsletterSignupProps) {
   const reactId = useId();

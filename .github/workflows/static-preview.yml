@@ -1,0 +1,49 @@
+# Build the static export on pull requests and upload it as a downloadable
+# artifact. Does not deploy, and does not create any hosting.
+name: Static preview artifact
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: |
+          export NEXT_PUBLIC_SANITY_PROJECT_ID="${NEXT_PUBLIC_SANITY_PROJECT_ID:-lsivhm7f}"
+          export NEXT_PUBLIC_SANITY_DATASET="${NEXT_PUBLIC_SANITY_DATASET:-production}"
+          npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: "2026-02-14"
+          NEXT_PUBLIC_ENQUIRY_EMAIL: nic@nharry.com
+          SITE_URL: https://www.nicharalambous.com
+
+      - name: Upload static site
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: out
+          if-no-files-found: error
+          retention-days: 7

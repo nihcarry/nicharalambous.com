@@ -5,6 +5,7 @@
  * and JSON-LD structured data across all page templates.
  */
 import type { Metadata } from "next";
+import { lunchLearnCheckoutUrl } from "@/lib/site";
 
 const SITE_URL = "https://www.nicharalambous.com";
 /**
@@ -80,13 +81,13 @@ export function personJsonLd() {
     "@type": "Person",
     name: "Nic Haralambous",
     url: HOME_URL,
-    jobTitle: "Entrepreneur, AI Product Builder, Virtual Keynote Speaker",
+    jobTitle: "Keynote speaker",
     description: DEFAULT_DESCRIPTION,
     image: `${SITE_URL}/images/nic-haralambous.jpg`,
     sameAs: [
       "https://www.linkedin.com/in/nicharalambous/",
-      "https://twitter.com/nicharry",
-      "https://nichasgottago.substack.com/",
+      "https://www.youtube.com/@nicharrynobull",
+      "https://x.com/nicharry",
     ],
   };
 }
@@ -135,7 +136,8 @@ export function articleJsonLd({
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    mainEntityOfPage: url,
     headline: title,
     description,
     url,
@@ -168,7 +170,7 @@ export function serviceJsonLd({
     description,
     url,
     provider: personJsonLd(),
-    serviceType: "Virtual Keynote Speaking",
+    serviceType: "Keynote speaking, in person or virtual",
     areaServed: "Worldwide",
   };
 }
@@ -229,9 +231,86 @@ export function contactPageJsonLd() {
     "@type": "ContactPage",
     name: "Contact Nic Haralambous",
     description:
-      "Book Nic Haralambous for your next virtual keynote. Enquire about speaking engagements, conferences, and corporate events.",
+      "Book Nic Haralambous for your next keynote, in person or virtually. Enquire about speaking engagements, conferences, and corporate events.",
     url: `${SITE_URL}/contact`,
     mainEntity: personJsonLd(),
+  };
+}
+
+/** Organization on the homepage, alongside the sitewide WebSite node. */
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Nic Haralambous",
+    url: HOME_URL,
+    logo: `${SITE_URL}/favicon-48x48.png`,
+    sameAs: personJsonLd().sameAs,
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.path === "/" ? HOME_URL : `${SITE_URL}${item.path}`,
+    })),
+  };
+}
+
+/** Output Paradox offers. No Event or VideoObject until a real clip exists. */
+export function outputParadoxServiceJsonLd() {
+  const url = `${SITE_URL}/keynotes/output-paradox-reengage-teams`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "The Output Paradox",
+    serviceType: "Keynote speaking, in person or virtual",
+    description:
+      "A keynote on why AI makes teams busier and less engaged, and what leaders can do about it. Delivered in person or on Zoom, Teams or Meet.",
+    url,
+    provider: {
+      "@type": "Person",
+      name: "Nic Haralambous",
+      url: HOME_URL,
+      jobTitle: "Keynote speaker",
+    },
+    areaServed: "Worldwide",
+    offers: [
+      {
+        "@type": "Offer",
+        name: "20-minute virtual lunch and learn",
+        price: "999",
+        priceCurrency: "EUR",
+        description: "€999 excluding VAT. 20 minutes, live on Zoom, Teams or Meet.",
+        url: `${url}#book`,
+        ...(lunchLearnCheckoutUrl()
+          ? { availability: "https://schema.org/InStock" }
+          : {}),
+      },
+      {
+        "@type": "Offer",
+        name: "Virtual keynote",
+        price: "1500",
+        priceCurrency: "EUR",
+        description: "From €1,500 excluding VAT. 45 minutes.",
+        url: `${url}#formats`,
+        availability: "https://schema.org/InStock",
+      },
+      {
+        "@type": "Offer",
+        name: "In-person keynote",
+        price: "4500",
+        priceCurrency: "EUR",
+        description: "From €4,500 excluding travel and VAT. 45 minutes.",
+        url: `${url}#formats`,
+        availability: "https://schema.org/InStock",
+      },
+    ],
   };
 }
 
@@ -242,7 +321,7 @@ export function aboutPageJsonLd() {
     "@type": "AboutPage",
     name: "About Nic Haralambous",
     description:
-      "Entrepreneur, AI product builder, and virtual keynote speaker with 4 startup exits, 3 books, and 20+ years building technology businesses.",
+      "Entrepreneur, AI product builder, and keynote speaker, in person or virtually, with 4 startup exits, 3 books, and 20+ years building technology businesses.",
     url: `${SITE_URL}/about`,
     mainEntity: personJsonLd(),
   };

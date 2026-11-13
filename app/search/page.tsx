@@ -12,12 +12,14 @@ export const metadata: Metadata = {
 
 export default function SearchPage() {
   return (
-    <div className="container-content py-16 md:py-24">
-      <h1 className="text-3xl font-bold text-brand-900 sm:text-4xl">Search</h1>
-      <p className="mt-3 text-lg text-brand-600">
-        Find articles, keynotes, and topics across the site.
-      </p>
-      <SearchUI />
+    <div className="v3 p-quill">
+      <section>
+        <div className="wrap">
+          <h1>Search</h1>
+          <p className="lead">Find articles, keynotes, and topics across the site.</p>
+          <SearchUI />
+        </div>
+      </section>
     </div>
   );
 }

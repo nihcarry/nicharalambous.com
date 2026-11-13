@@ -1,179 +1,52 @@
 /**
- * Blog Listing Page — /blog
- *
- * Displays all published blog posts with client-side pagination and
- * topic filtering. Content fetched from Sanity at build time.
- *
- * The listing is interactive (filter + paginate) so post data is passed
- * to a client component. All data is embedded in the static HTML —
- * no runtime API calls.
- *
- * JSON-LD: CollectionPage
+ * Blog index, page 1. Later pages live at /blog/page/2 and so on.
  */
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity/client";
-import {
-  blogPostsListQuery,
-  blogTopicFiltersQuery,
-  mostPopularPostsQuery,
-  type BlogPostListItem,
-  type TopicReference,
-  type FeaturedPostItem,
-} from "@/lib/sanity/queries";
-import { CTAButton } from "@/components/cta-button";
-import { Section } from "@/components/section";
-import { FinalCta } from "@/components/final-cta";
 import { JsonLd } from "@/components/json-ld";
-import { BlogList } from "@/components/blog-list";
-import { MostPopularHero } from "@/components/most-popular-hero";
-import { SearchUI } from "@/app/search/search-ui";
+import { BlogFeed } from "@/components/site/blog-feed";
+import { ClosingCta } from "@/components/site/closing-cta";
+import { blogPageCount, getBlogPosts } from "@/lib/blog-index";
 import { collectionPageJsonLd } from "@/lib/metadata";
+import { OUTPUT_PARADOX_PATH } from "@/lib/site";
 
-/* ---------- Data fetching ---------- */
-
-async function getBlogPosts(): Promise<BlogPostListItem[] | null> {
-  try {
-    const data = await client.fetch<BlogPostListItem[]>(blogPostsListQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
-async function getBlogTopics(): Promise<TopicReference[] | null> {
-  try {
-    const data = await client.fetch<TopicReference[]>(blogTopicFiltersQuery);
-    return data && data.length > 0 ? data : null;
-  } catch {
-    return null;
-  }
-}
-
-/** Fetches curated Most Popular posts (tagged in Sanity, max 5). */
-async function getMostPopularPosts(): Promise<FeaturedPostItem[]> {
-  try {
-    const data = await client.fetch<FeaturedPostItem[] | null>(
-      mostPopularPostsQuery
-    );
-    return Array.isArray(data) ? data.filter(Boolean) : [];
-  } catch {
-    return [];
-  }
-}
-
-/* ---------- Metadata ---------- */
+const URL = "https://www.nicharalambous.com/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
     "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure by Nic Haralambous. Real stories and actionable frameworks from 20+ years of building businesses.",
-  alternates: { canonical: "https://www.nicharalambous.com/blog" },
+  alternates: { canonical: URL },
   openGraph: {
     type: "website",
     title: "Blog | Nic Haralambous",
-    description:
-      "Articles on curiosity, innovation, AI, entrepreneurship, and building businesses.",
-    url: "https://www.nicharalambous.com/blog",
+    description: "Articles on curiosity, innovation, AI, entrepreneurship, and building businesses.",
+    url: URL,
   },
 };
 
-/* ---------- Page ---------- */
-
 export default async function BlogPage() {
-  const [cmsPosts, cmsTopics, mostPopularPosts] = await Promise.all([
-    getBlogPosts(),
-    getBlogTopics(),
-    getMostPopularPosts(),
-  ]);
-
-  const posts = cmsPosts || [];
-  const topics = cmsTopics || FALLBACK_TOPICS;
+  const posts = await getBlogPosts();
+  const pageCount = blogPageCount(posts.length);
 
   return (
-    <div className="page-bg bg-quill-pattern">
-      {/* Structured data */}
+    <div className="v3 p-quill">
       <JsonLd
         data={collectionPageJsonLd({
           name: "Blog | Nic Haralambous",
-          description:
-            "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure.",
-          url: "https://www.nicharalambous.com/blog",
+          description: "Articles on curiosity, innovation, AI, entrepreneurship, focus, and failure.",
+          url: URL,
         })}
       />
-
-      {/* Fixed decorative image — bottom-left, content scrolls over it */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/slides/Blog_Bottom_Left.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none fixed bottom-0 left-0 z-[1] hidden h-[28vh] w-auto select-none object-contain object-bottom md:block"
-      />
-
-      <Section width="content" className="relative z-10 text-center">
-        <h1 className="heading-stroke font-extrabold tracking-tight text-center text-5xl uppercase leading-[0.95] text-accent-600 sm:text-7xl md:text-7xl lg:text-8xl 2xl:text-9xl">
-          Blog
-        </h1>
-        <p className="mt-4 text-lg text-brand-600">
-          Real stories and actionable frameworks from 20+ years of building,
-          failing, and learning. Explore by topic or start with the latest.
-        </p>
-        {/* Blog search — Pagefind index is blog + archive only */}
-        <div className="mt-[10px] p-[10px]">
-          <SearchUI blogOnly placeholder="Search blog posts..." />
-        </div>
-      </Section>
-
-      {/* Most Popular — up to 5 (curated via post field "Most Popular" in Sanity) */}
-      {mostPopularPosts.length > 0 && (
-        <Section width="wide" className="relative z-10">
-          <MostPopularHero posts={mostPopularPosts} />
-        </Section>
-      )}
-
-      <Section width="wide" className="relative z-10">
-        {posts.length > 0 ? (
-          <BlogList posts={posts} topics={topics} />
-        ) : (
-          /* Empty state when no posts are published yet */
-          <div className="text-center">
-            <p className="text-lg text-brand-500">
-              New articles are on the way. In the meantime, explore the topics
-              that Nic writes and speaks about.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <CTAButton href="/topics" variant="secondary">
-                Explore Topics
-              </CTAButton>
-              <CTAButton href="/keynotes" variant="secondary">
-                Explore Keynotes
-              </CTAButton>
-            </div>
-          </div>
-        )}
-      </Section>
-
-      {/* CTA */}
-      <FinalCta
-        heading="Want These Ideas as a Keynote?"
-        description="The ideas on this blog come alive in Nic's virtual keynotes. Real stories, actionable frameworks, tailored to your team."
-        primaryHref="/speaker"
-        primaryLabel="About Nic as a Speaker"
-        secondaryHref="/topics"
-        secondaryLabel="Explore Topics"
+      <BlogFeed posts={posts} page={1} pageCount={pageCount} />
+      <ClosingCta
+        className="pd-quill"
+        heading="Want these ideas as a keynote?"
+        copy="The ideas on this blog come alive in Nic's keynotes, in person or virtually. Real stories, actionable frameworks, tailored to your team."
+        primaryHref={OUTPUT_PARADOX_PATH}
+        primaryLabel="See the keynote"
+        secondaryHref="/#newsletter"
+        secondaryLabel="Subscribe to the newsletter"
       />
     </div>
   );
 }
-
-/* ---------- Fallback data ---------- */
-
-const FALLBACK_TOPICS: TopicReference[] = [
-  { _id: "t1", title: "Curiosity", slug: "curiosity" },
-  { _id: "t2", title: "Innovation", slug: "innovation" },
-  { _id: "t3", title: "Entrepreneurship", slug: "entrepreneurship" },
-  { _id: "t4", title: "Focus", slug: "focus" },
-  { _id: "t5", title: "AI", slug: "ai" },
-  { _id: "t6", title: "Agency", slug: "agency" },
-  { _id: "t7", title: "Failure", slug: "failure" },
-];
