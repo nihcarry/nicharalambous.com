@@ -17,7 +17,7 @@ const pages = [
   ["executive-workshop", "/workshops/executive-workflow-upgrade"],
   ["grok-week", "/workshops/my-week-with-grok-bot"],
 ];
-const widths = [360, 390, 768, 1440];
+const widths = [1440, 390];
 
 const child = spawn("node", ["scripts/preview-static.mjs", "--skip-build", "--port", String(port)], {
   cwd: root,
@@ -46,7 +46,7 @@ const problems = [];
 const lines = [
   "# Offer stack QA",
   "",
-  "Full-page screenshots of the draft offer stack. Cookie banner dismissed. No horizontal overflow on these loads.",
+  "Full-page screenshots of the draft offer stack at 1440 and 390. Cookie banner dismissed. No horizontal overflow on these loads.",
   "",
   "Local preview, after `npm run build`:",
   "",

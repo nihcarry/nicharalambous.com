@@ -4,14 +4,14 @@ import { LogoStrip } from "@/components/site/logo-strip";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { INTRO_CALL_URL } from "@/lib/offers";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
-import { HOMEPAGE_COACHING_CARD } from "@/lib/offers";
 import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
 
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
   description:
-    "Nic Haralambous speaks to teams about the Output Paradox, in person or on Zoom, Teams or Meet. Virtual lunch and learn €999 ex VAT. Virtual keynotes from €2,000 ex VAT. In-person keynotes from €4,500 ex VAT, 45 minutes. Q&A, travel, podcasts and other extras can be bundled on.",
+    "Nic Haralambous speaks to teams about the Output Paradox, runs Grok Bot workshops for leadership teams and coaches founders and CEOs. Lunch and learn €999, virtual keynotes from €2,000 and in-person keynotes from €4,500, all ex VAT.",
   alternates: { canonical: HOME_URL },
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
@@ -93,14 +93,14 @@ export default async function HomePage() {
               Your teams are shipping more, and <em>checking out</em> faster
             </h1>
             <p className="say">
-              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room.
+              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room. I also run hands-on Grok Bot workshops for leadership teams, and I coach founders and CEOs one to one.
             </p>
             <div className="acts">
-              <CheckoutButton id="buy-lunch-and-learn-home" offer="lunch-and-learn" label="Buy now" />
+              <CheckoutButton id="buy-lunch-and-learn-home" offer="lunch-and-learn" label="Buy the lunch and learn" />
               <span>€999, ex VAT</span>
               <IntroCallLink />
-              <a className="quiet-link" href="/keynotes/output-paradox-reengage-teams">
-                See the keynote
+              <a className="quiet-link" href="/workshops">
+                See the workshops
               </a>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default async function HomePage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>In-person keynotes from €4,500 ex VAT</b>, 45 minutes. Q&A, travel, podcasts and other extras can be bundled on.
+            <b>In-person keynotes from €4,500, ex VAT, 45 minutes.</b> Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.
           </span>
           <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
             Enquire about a date
@@ -137,7 +137,7 @@ export default async function HomePage() {
       <section className="p-mic">
         <div className="wrap">
           <h2 className="h-pillars">
-            I speak, I coach and I write. Pick the one you <br className="h-break" />
+            I speak, I run workshops, I coach and I write. Pick the one you <br className="h-break" />
             came for.
           </h2>
           <div className="pillars">
@@ -157,9 +157,10 @@ export default async function HomePage() {
               <ul>
                 <li>20-minute virtual lunch and learn, €999, ex VAT</li>
                 <li>Virtual keynotes from €2,000, ex VAT</li>
-                <li>In-person keynotes from €4,500, ex VAT</li>
+                <li>In-person keynotes from €4,500, ex VAT, travel extra</li>
               </ul>
               <div className="card-links">
+              <CheckoutButton id="buy-lunch-and-learn-speak" offer="lunch-and-learn" label="Buy the lunch and learn" />
               <a className="go" href="/keynotes/output-paradox-reengage-teams">
                 See the Output Paradox <span>→</span>
               </a>
@@ -174,41 +175,23 @@ export default async function HomePage() {
                 height={280}
                 loading="lazy"
               />
-              {HOMEPAGE_COACHING_CARD === "coaching-only" ? (
-                <>
-                  <h3>Work with me one to one</h3>
-                  <p>
-                    Two calls a month, accountability in between, and someone who will ask whether you did what you said you&apos;d do. €399 a month, ex VAT.
-                  </p>
-                  <div className="card-links">
-                    <CheckoutButton
-                      id="buy-accountability-coaching-home"
-                      offer="accountability-coaching"
-                      label="Start coaching, €399 a month"
-                    />
-                    <IntroCallLink />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h3>For you, or your leadership team</h3>
-                  <p>
-                    Hands-on sessions where you and your senior leaders build your own workflows in Grok Bot, and monthly coaching that holds you to what you said you&apos;d do.
-                  </p>
-                  <ul>
-                    <li>Team Workflow Upgrade Session, €4,999 for up to 8 people, ex VAT</li>
-                    <li>Executive Workflow Upgrade Session, €1,499, ex VAT</li>
-                    <li>Accountability business coaching, €399 a month, ex VAT</li>
-                  </ul>
-                  <div className="card-links">
-                    <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy now" />
-                    <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy now" />
-                    <CheckoutButton id="buy-accountability-coaching-home" offer="accountability-coaching" label="Buy now" />
-                    <IntroCallLink />
-                    <p>See workshops and coaching [TBC: link target once the pages have URLs]</p>
-                  </div>
-                </>
-              )}
+              <h3>For your leadership team</h3>
+              <p>
+                Grok Bot workshops, virtual by default. Watch how I work with it, build your own workflows with me as a team, or upgrade your own week one to one.
+              </p>
+              <ul>
+                <li>My week with Grok Bot: a 90-minute show-and-tell for up to 20 people, €2,999, ex VAT</li>
+                <li>Team Workflow Upgrade Session: 2 hours, hands-on, up to 8 senior leaders from one company, €4,999, ex VAT (extra seats €499 each, up to 10)</li>
+                <li>Executive Workflow Upgrade Session: 2 hours, one to one, for CEOs, €1,499, ex VAT</li>
+              </ul>
+              <div className="card-links">
+                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy now" />
+                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy now" />
+                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy now" />
+                <a className="go" href="/workshops">
+                  See all workshops <span>→</span>
+                </a>
+              </div>
             </div>
             <div className="pl">
               <img
@@ -219,23 +202,24 @@ export default async function HomePage() {
                 height={288}
                 loading="lazy"
               />
-              <h3>No Bull Ship</h3>
+              <h3>For founders and CEOs</h3>
               <p>
-                An 8-week build sprint for people 40 and older who want to ship their first real product, with ruthless scope, clarity and weekly delivery.
+                Accountability business coaching. Two 60-minute calls a month with me, plus ongoing accountability and chat support in between, from someone who has built and sold four companies.
               </p>
               <ul>
-                <li>8 weeks, one real product shipped</li>
-                <li>Ruthless scope and weekly delivery</li>
-                <li>Built for experienced professionals</li>
+                <li>€399 a month, ex VAT</li>
+                <li>A sounding board for the decisions in your business</li>
+                <li>Can&apos;t afford it right now? Apply for pay-what-you-can-afford coaching</li>
               </ul>
-              <span className="nbs">
-                <i />
-                No Bull Ship Academy · nobullship.co
-              </span>
               <div className="card-links">
-              <a className="go" href="https://nobullship.co">
-                Go to nobullship.co <span>↗</span>
-              </a>
+                <CheckoutButton
+                  id="buy-accountability-coaching-home"
+                  offer="accountability-coaching"
+                  label="Start coaching, €399 a month"
+                />
+                <a className="go" href="/session">
+                  See coaching <span>→</span>
+                </a>
               </div>
             </div>
             <div className="pl">
@@ -263,6 +247,11 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+          <p className="offer-follow">
+            <a className="link" href={INTRO_CALL_URL} target="_blank" rel="noopener noreferrer">
+              Not sure which one fits? Book a free 20-minute intro call
+            </a>
+          </p>
         </div>
       </section>
 
@@ -353,12 +342,14 @@ export default async function HomePage() {
         <div className="wrap final">
           <h2>If your team is doing more and feeling less, let&apos;s talk</h2>
           <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-            <CheckoutButton id="buy-lunch-and-learn-home-final" offer="lunch-and-learn" label="Buy now" />
+            <CheckoutButton id="buy-lunch-and-learn-home-final" offer="lunch-and-learn" label="Buy the lunch and learn" />
             <span>€999, ex VAT</span>
-            <IntroCallLink />
             <a className="quiet-link" href="/contact">
               Talk to me first
             </a>
+            <span>
+              Or see the <a className="link" href="/workshops">workshops</a> and <a className="link" href="/session">coaching</a>
+            </span>
           </div>
         </div>
       </section>

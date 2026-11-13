@@ -19,9 +19,7 @@
  * - team-workflow-upgrade: still TBC. Do not create this link in code.
  *   When it is created: a €4,999 base (up to 8 people) plus an optional
  *   €499 extra-seat line with quantity 0 to 2, so the room can reach 10.
- *   Tax exclusive. One company per booking. The €1,000 off for a company
- *   that books within 60 days of My week with Grok Bot needs a coupon or
- *   promo code. Do not build that discount here.
+ *   Tax exclusive. One company per booking. No discount or promo code.
  */
 
 export const CHECKOUT_LINKS = {

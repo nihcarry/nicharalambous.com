@@ -33,7 +33,6 @@ export default function ExecutiveWorkshopPage() {
       />
       <section>
         <div className="wrap story">
-          <p>[TBC: URL, for example /workshops/executive-workflow-upgrade]</p>
           <h1>Two hours, one to one, to upgrade how you run your week</h1>
           <p className="lead">
             For CEOs. A Grok Bot introduction, a review of your workflow and an upgrade, in one 2-hour session. €1,499, ex VAT. Virtual by default.

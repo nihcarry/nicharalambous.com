@@ -33,7 +33,6 @@ export default function TeamWorkshopPage() {
       />
       <section>
         <div className="wrap story">
-          <p>[TBC: URL, for example /workshops/team-workflow-upgrade]</p>
           <h1>Your senior leaders build their own workflows in Grok Bot, in one two-hour session</h1>
           <p className="lead">
             A hands-on workshop for up to 8 senior leaders from one company. 2 hours, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Virtual by default.
@@ -59,7 +58,6 @@ export default function TeamWorkshopPage() {
             <li>A 2-hour hands-on session with me, virtual by default. In person is possible, with travel extra.</li>
             <li>Up to 8 people from one company, €4,999 per session, ex VAT</li>
             <li>Extra seats at €499 each, ex VAT, up to 10 people (a maximum of €5,997, ex VAT)</li>
-            <li>€1,000 off if you book within 60 days of a My week with Grok Bot session</li>
             <li>Each person builds their own workflow in Grok Bot, on a piece of their own real work</li>
             <li>
               Setup before the session: I work with your organisation to get things ready, ideally on your Grok Bot, or on Claude or ChatGPT if that&apos;s what you use [TBC: what each person brings to the session]
@@ -93,10 +91,6 @@ export default function TeamWorkshopPage() {
             <p>
               Yes, up to 10. Each extra seat is €499, ex VAT, so 10 people is €5,997, ex VAT. Everyone comes from one company. [TBC: whether a group bigger than 10 can book a second session]
             </p>
-            <h3>We&apos;ve done My week with Grok Bot. Is there a discount?</h3>
-            <p>
-              Yes. Book this session within 60 days of your My week with Grok Bot session and you get €1,000 off, so it&apos;s €3,999 for up to 8 people, ex VAT.
-            </p>
             <h3>Is it virtual or in person?</h3>
             <p>Virtual by default. In person is possible, with travel extra.</p>
           </div>
@@ -107,7 +101,6 @@ export default function TeamWorkshopPage() {
               offer="team-workflow-upgrade"
               label="Buy the team session"
             />
-            <p>Checkout is €4,999 for up to 8 people, with up to 2 extra seats at €499 each, and a way to apply the €1,000 off [TBC: how]</p>
             <IntroCallLink />
           </div>
         </div>

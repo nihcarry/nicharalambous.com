@@ -14,7 +14,7 @@ const KEYNOTE_LINKS = [
 
 const COACHING_LINKS = [
   { href: SOCIAL.nobullship, label: "No Bull Ship (8 weeks)", external: true },
-  { href: "/session", label: "Accountability coaching" },
+  { href: "/session", label: "Accountability business coaching" },
 ];
 
 const CONTENT_LINKS = [

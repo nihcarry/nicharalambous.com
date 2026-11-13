@@ -55,7 +55,7 @@ function pricedOffer(price: number, unitText: string) {
   };
 }
 
-/** Base price only. Extra seats and the €1,000 reduction are described, not calculated. */
+/** Base price €4,999. Extra seats are described. No discount. */
 export function teamWorkshopJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -63,7 +63,7 @@ export function teamWorkshopJsonLd() {
     name: "Team Workflow Upgrade Session",
     serviceType: "Workshop",
     description:
-      "A hands-on workshop for up to 8 senior leaders from one company. 2 hours, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Virtual by default. €1,000 off if booked within 60 days of a My week with Grok Bot session.",
+      "A hands-on workshop for up to 8 senior leaders from one company. 2 hours, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Virtual by default.",
     url: pageUrl(PATHS.team),
     provider: PERSON,
     offers: pricedOffer(4999, "session"),

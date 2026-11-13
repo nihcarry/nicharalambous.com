@@ -45,7 +45,7 @@ export function SiteFooter() {
                 <a href={SOCIAL.nobullship}>nobullship.co</a>
               </li>
               <li>
-                <a href="/session">Accountability coaching</a>
+                <a href="/session">Accountability business coaching</a>
               </li>
             </ul>
             <h2 className="later">Content</h2>

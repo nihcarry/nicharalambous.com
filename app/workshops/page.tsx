@@ -22,7 +22,6 @@ const SESSIONS = [
   {
     href: PATHS.grokWeek,
     title: "90 minutes inside how I actually work with Grok Bot",
-    slug: "[TBC: URL, for example /workshops/my-week-with-grok-bot]",
     detail:
       "A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what's out there to do. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.",
     id: "buy-my-week-with-grok-bot-index",
@@ -32,18 +31,15 @@ const SESSIONS = [
   {
     href: PATHS.team,
     title: "Your senior leaders build their own workflows in Grok Bot, in one two-hour session",
-    slug: "[TBC: URL, for example /workshops/team-workflow-upgrade]",
     detail:
       "A hands-on workshop for up to 8 senior leaders from one company. 2 hours, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Virtual by default.",
     id: "buy-team-workflow-upgrade-index",
     offer: "team-workflow-upgrade" as const,
     label: "Buy the team session",
-    note: "Checkout is €4,999 for up to 8 people, with up to 2 extra seats at €499 each, and a way to apply the €1,000 off [TBC: how]",
   },
   {
     href: PATHS.executive,
     title: "Two hours, one to one, to upgrade how you run your week",
-    slug: "[TBC: URL, for example /workshops/executive-workflow-upgrade]",
     detail:
       "For CEOs. A Grok Bot introduction, a review of your workflow and an upgrade, in one 2-hour session. €1,499, ex VAT. Virtual by default.",
     id: "buy-executive-workflow-upgrade-index",
@@ -76,17 +72,14 @@ export default function WorkshopsPage() {
       <section>
         <div className="wrap story">
           <h1>Workshops</h1>
-          <p>[TBC: One page for both workshops, or one page each? Does coaching stay at /session?]</p>
           <div className="offer-grid">
             {SESSIONS.map((session) => (
               <article className="plain-card" key={session.href}>
-                <p>{session.slug}</p>
                 <h2>
                   <a href={session.href}>{session.title}</a>
                 </h2>
                 <p>{session.detail}</p>
                 <CheckoutButton id={session.id} offer={session.offer} label={session.label} />
-                {"note" in session && session.note ? <p>{session.note}</p> : null}
                 <p>
                   <IntroCallLink />
                 </p>

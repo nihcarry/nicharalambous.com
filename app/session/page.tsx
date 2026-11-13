@@ -34,7 +34,6 @@ export default function SessionPage() {
       />
       <section>
         <div className="wrap story">
-          <p>[TBC: replaces the €200 and €900 coaching on /session, so either /session or a new URL]</p>
           <h1>Business coaching that holds you to what you said you&apos;d do</h1>
           <p className="lead">
             Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT.

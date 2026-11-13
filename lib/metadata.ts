@@ -299,7 +299,7 @@ export function outputParadoxServiceJsonLd() {
         price: "2000",
         priceCurrency: "EUR",
         valueAddedTaxIncluded: false,
-        description: "From €2,000 excluding VAT. 45 minutes.",
+        description: "Virtual keynotes from €2,000, ex VAT.",
         url: `${url}#formats`,
         availability: "https://schema.org/InStock",
       },
@@ -310,7 +310,7 @@ export function outputParadoxServiceJsonLd() {
         priceCurrency: "EUR",
         valueAddedTaxIncluded: false,
         description:
-          "From €4,500 excluding VAT. 45 minutes. Q&A, travel, podcasts and other extras can be bundled on.",
+          "In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.",
         url: `${url}#formats`,
         availability: "https://schema.org/InStock",
       },

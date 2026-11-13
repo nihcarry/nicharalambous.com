@@ -33,7 +33,6 @@ export default function GrokWeekPage() {
       />
       <section>
         <div className="wrap story">
-          <p>[TBC: URL, for example /workshops/my-week-with-grok-bot]</p>
           <h1>90 minutes inside how I actually work with Grok Bot</h1>
           <p className="lead">
             A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
@@ -62,47 +61,47 @@ export default function GrokWeekPage() {
               <tbody>
                 <tr>
                   <th scope="row">What it is</th>
-                  <td>A talk</td>
-                  <td>A show-and-tell</td>
-                  <td>A hands-on workshop</td>
+                  <td data-label="Lunch and learn">A talk</td>
+                  <td data-label="My week with Grok Bot">A show-and-tell</td>
+                  <td data-label="Team Workflow Upgrade Session">A hands-on workshop</td>
                 </tr>
                 <tr>
                   <th scope="row">Length</th>
-                  <td>20 minutes</td>
-                  <td>90 minutes</td>
-                  <td>2 hours</td>
+                  <td data-label="Lunch and learn">20 minutes</td>
+                  <td data-label="My week with Grok Bot">90 minutes</td>
+                  <td data-label="Team Workflow Upgrade Session">2 hours</td>
                 </tr>
                 <tr>
                   <th scope="row">Who&apos;s in the room</th>
-                  <td>Any team size</td>
-                  <td>Up to 20 people</td>
-                  <td>Up to 8 senior leaders (10 with extra seats), one company</td>
+                  <td data-label="Lunch and learn">Any team size</td>
+                  <td data-label="My week with Grok Bot">Up to 20 people</td>
+                  <td data-label="Team Workflow Upgrade Session">Up to 8 senior leaders (10 with extra seats), one company</td>
                 </tr>
                 <tr>
                   <th scope="row">What it covers</th>
-                  <td>The Output Paradox: why AI makes everyone busier and less engaged</td>
-                  <td>My own Grok Bot setup, how I work with it and what&apos;s out there to do</td>
-                  <td>Workflow automation in Grok Bot, on each person&apos;s own work</td>
+                  <td data-label="Lunch and learn">The Output Paradox: why AI makes everyone busier and less engaged</td>
+                  <td data-label="My week with Grok Bot">My own Grok Bot setup, how I work with it and what&apos;s out there to do</td>
+                  <td data-label="Team Workflow Upgrade Session">Workflow automation in Grok Bot, on each person&apos;s own work</td>
                 </tr>
                 <tr>
                   <th scope="row">What your people do</th>
-                  <td>Listen, with time for a few questions</td>
-                  <td>Watch me work and ask questions</td>
-                  <td>Build their own workflow with me</td>
+                  <td data-label="Lunch and learn">Listen, with time for a few questions</td>
+                  <td data-label="My week with Grok Bot">Watch me work and ask questions</td>
+                  <td data-label="Team Workflow Upgrade Session">Build their own workflow with me</td>
                 </tr>
                 <tr>
                   <th scope="row">Price</th>
-                  <td>€999 per session, ex VAT</td>
-                  <td>€2,999 per session, ex VAT</td>
-                  <td>
-                    €4,999 per session for up to 8, plus €499 per extra seat up to 10 (maximum €5,997), ex VAT. €1,000 off within 60 days of My week with Grok Bot
+                  <td data-label="Lunch and learn">€999 per session, ex VAT</td>
+                  <td data-label="My week with Grok Bot">€2,999 per session, ex VAT</td>
+                  <td data-label="Team Workflow Upgrade Session">
+                    €4,999 per session for up to 8, plus €499 per extra seat up to 10 (maximum €5,997), ex VAT.
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">Where</th>
-                  <td>Live on Zoom, Teams or Meet</td>
-                  <td>Virtual by default; in person possible, travel extra</td>
-                  <td>Virtual by default; in person possible, travel extra</td>
+                  <td data-label="Lunch and learn">Live on Zoom, Teams or Meet</td>
+                  <td data-label="My week with Grok Bot">Virtual by default; in person possible, travel extra</td>
+                  <td data-label="Team Workflow Upgrade Session">Virtual by default; in person possible, travel extra</td>
                 </tr>
               </tbody>
             </table>
@@ -162,12 +161,11 @@ export default function GrokWeekPage() {
           </div>
           <h2>After the session</h2>
           <p>
-            If your senior people want to go from watching to building, the next step is the Team Workflow Upgrade Session: two hands-on hours where up to 8 of them build their own workflows with me. Book it within 60 days of your My week with Grok Bot session and you get €1,000 off, so it&apos;s €3,999 for up to 8 people, ex VAT.
+            If your senior people want to go from watching to building, the next step is the Team Workflow Upgrade Session: two hands-on hours where up to 8 of them build their own workflows with me. It&apos;s €4,999 for up to 8 people, ex VAT, with extra seats at €499 each up to 10.
           </p>
           <p>
-            <span className="btn wrap static">See the team session</span>
+            <a className="btn wrap" href="/workshops/team-workflow-upgrade">See the team session</a>
           </p>
-          <p>[TBC: Team Workflow Upgrade Session page]</p>
         </div>
       </section>
     </div>
