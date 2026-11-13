@@ -1,5 +1,8 @@
 export const CONSENT_KEY = "nh-consent";
 
+/** Fired after the visitor accepts or rejects, including when storage is blocked. */
+export const CONSENT_EVENT = "nh-consent";
+
 /** The stored choice is kept for six calendar months, then the banner returns. */
 export const CONSENT_MONTHS = 6;
 

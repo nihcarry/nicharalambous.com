@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
+import { readConsent } from "@/lib/consent";
 
 export function ClickToLoadFrame({
   src,
@@ -21,7 +22,13 @@ export function ClickToLoadFrame({
   return (
     <div className={centered ? "tt-facade is-center" : "tt-facade"} style={play ? style : undefined}>
       {play ? (
-        <iframe src={src} title={title} scrolling="no" style={{ height: "100%" }} />
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          scrolling="auto"
+          style={{ height: "100%", background: "transparent" }}
+        />
       ) : (
         <>
           <p className="tt-note">These load from Testimonial.to when you open them.</p>
@@ -29,6 +36,10 @@ export function ClickToLoadFrame({
             type="button"
             className="btn"
             onClick={() => {
+              if (readConsent() !== "accepted") {
+                window.dispatchEvent(new Event("nh-consent-open"));
+                return;
+              }
               setPlay(true);
               onPlay?.();
             }}

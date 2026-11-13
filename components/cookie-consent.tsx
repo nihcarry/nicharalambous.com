@@ -4,6 +4,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { GA_MEASUREMENT_ID } from "@/components/google-analytics";
 import {
   CONSENT_DENIED,
+  CONSENT_EVENT,
   CONSENT_GRANTED,
   clearAnalyticsCookies,
   type ConsentChoice,
@@ -87,10 +88,16 @@ function playTestimonial(button: HTMLButtonElement) {
   const src = button.getAttribute("data-tt-play");
   const box = button.closest(".tt-facade");
   if (!src || !box) return;
+  if (readConsent() !== "accepted") {
+    window.dispatchEvent(new Event("nh-consent-open"));
+    return;
+  }
   const frame = document.createElement("iframe");
   frame.src = src;
   frame.title = "Client testimonials";
-  frame.setAttribute("scrolling", "no");
+  frame.loading = "lazy";
+  frame.setAttribute("scrolling", "auto");
+  frame.style.background = "transparent";
   box.replaceChildren(frame);
 }
 
@@ -155,6 +162,7 @@ export function CookieConsent() {
     if (closing) return;
     writeConsent(choice);
     loadGtag(choice);
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: choice }));
     setClosing(true);
     window.setTimeout(() => {
       document.documentElement.setAttribute("data-nh-consent", choice);

@@ -9,6 +9,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/json-ld";
+import { WhatPeopleSay } from "@/components/what-people-say";
 import { PwycaForm } from "./pwyca-form";
 
 const STRIPE_BRAIN_PICK =
@@ -198,6 +199,7 @@ export default function SessionPage() {
           </div>
         </div>
       </section>
+      <WhatPeopleSay />
       <section>
         <div className="wrap">
           <article className="plain-card">

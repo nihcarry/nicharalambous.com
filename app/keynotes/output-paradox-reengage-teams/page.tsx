@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { LogoStrip } from "@/components/site/logo-strip";
 import { StickyBookBar } from "@/components/site/sticky-book";
+import { WhatPeopleSay } from "@/components/what-people-say";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
 import { bookNowHref, bookOfferHref, checkoutIsLive } from "@/lib/site";
 import { v3ContentSettings } from "@/lib/v3-content";
@@ -374,6 +375,8 @@ export default async function OutputParadoxPage() {
           </div>
         </div>
       </section>
+
+      <WhatPeopleSay />
 
       <section className="p-person" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
         <div className="wrap bio">
