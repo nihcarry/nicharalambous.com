@@ -72,8 +72,8 @@ export default async function ArchivePostPage({
     <div className="v3 p-quill">
       <article>
         <section>
-          <div className="wrap" style={{ maxWidth: 820 }}>
-            <p>
+          <div className="wrap">
+            <p className="prose-col">
               This post is from the archive and may not reflect Nic&apos;s current thinking. For the latest articles and insights, visit the{" "}
               <a className="link" href="/blog">
                 blog
@@ -96,12 +96,12 @@ export default async function ArchivePostPage({
             ) : null}
             {post.rawHtmlBody ? (
               <div
-                className="archive-body"
+                className="archive-body prose-col"
                 data-no-orphan-opt-out="true"
                 dangerouslySetInnerHTML={{ __html: gateThirdPartyEmbeds(post.rawHtmlBody) }}
               />
             ) : (
-              <p>Archive content is not available for this post.</p>
+              <p className="prose-col">Archive content is not available for this post.</p>
             )}
             {post.originalUrl ? (
               <p className="meta">

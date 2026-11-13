@@ -23,7 +23,6 @@ import {
   fallbackBookToBookData,
   getPrimaryBuyUrl,
 } from "@/lib/books-data";
-import { Section } from "@/components/section";
 import { ClosingCta } from "@/components/site/closing-cta";
 import { JsonLd } from "@/components/json-ld";
 import { PortableText } from "@/components/portable-text";
@@ -146,7 +145,8 @@ export default async function BookPage({
       />
 
       {/* Hero */}
-      <Section width="content">
+      <section>
+        <div className="wrap">
         <div className="flex flex-col gap-8 md:flex-row md:items-start">
           {/* Cover image */}
           {coverUrl && (
@@ -185,21 +185,25 @@ export default async function BookPage({
             )}
           </div>
         </div>
-      </Section>
+        </div>
+      </section>
 
       {/* Description */}
       {hasDescription && (
-        <Section width="content">
-          <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
-            About This Book
-          </h2>
-          <PortableText value={book.description} className="mt-4" />
-        </Section>
+        <section>
+          <div className="wrap">
+            <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
+              About This Book
+            </h2>
+            <PortableText value={book.description} className="prose-col mt-4" />
+          </div>
+        </section>
       )}
 
       {/* Related topics */}
       {book.relatedTopics && book.relatedTopics.length > 0 && (
-        <Section width="content">
+        <section>
+          <div className="wrap">
           <h2 className="heading-display text-2xl text-brand-900 sm:text-3xl">
             Related Topics
           </h2>
@@ -214,7 +218,8 @@ export default async function BookPage({
               </a>
             ))}
           </div>
-        </Section>
+          </div>
+        </section>
       )}
 
       {/* CTA */}

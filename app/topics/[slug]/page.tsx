@@ -149,34 +149,40 @@ export default async function TopicHubPage({
       />
 
       {/* Hero */}
-      <Section width="content">
-        <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
-          {topic.title}
-        </h1>
-        <TopicChips active={slug} />
-        <p className="mt-4 text-lg leading-relaxed text-brand-600">
-          {topic.oneSentenceSummary}
-        </p>
-      </Section>
+      <section>
+        <div className="wrap">
+          <h1 className="heading-display-stroke-sm text-4xl text-brand-900 sm:text-5xl md:text-6xl">
+            {topic.title}
+          </h1>
+          <TopicChips active={slug} />
+          <p className="prose-col mt-4 text-lg leading-relaxed text-brand-600">
+            {topic.oneSentenceSummary}
+          </p>
+        </div>
+      </section>
 
       {/* Definition / What it is */}
       {hasDefinition && (
-        <Section width="content">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            What Is {topic.title}?
-          </h2>
-          <PortableText value={topic.definition} className="mt-4" />
-        </Section>
+        <section>
+          <div className="wrap">
+            <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
+              What Is {topic.title}?
+            </h2>
+            <PortableText value={topic.definition} className="prose-col mt-4" />
+          </div>
+        </section>
       )}
 
       {/* Why it matters */}
       {hasWhyItMatters && (
-        <Section width="content">
-          <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
-            Why {topic.title} Matters
-          </h2>
-          <PortableText value={topic.whyItMatters} className="mt-4" />
-        </Section>
+        <section>
+          <div className="wrap">
+            <h2 className="heading-display text-3xl text-brand-900 sm:text-4xl">
+              Why {topic.title} Matters
+            </h2>
+            <PortableText value={topic.whyItMatters} className="prose-col mt-4" />
+          </div>
+        </section>
       )}
 
       {/* Related keynotes — links to keynote pages */}
@@ -240,7 +246,8 @@ export default async function TopicHubPage({
       )}
 
       {/* All topics link */}
-      <Section width="content">
+      <section>
+        <div className="wrap">
         <div className="flex flex-wrap items-center gap-3">
           <span className="text-sm font-medium text-brand-500">
             All topics:
@@ -255,7 +262,8 @@ export default async function TopicHubPage({
             </a>
           ))}
         </div>
-      </Section>
+        </div>
+      </section>
 
       {/* CTA */}
       <ClosingCta

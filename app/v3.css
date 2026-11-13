@@ -2068,9 +2068,11 @@ html[data-nh-consent] .consent {
   overflow: hidden;
 }
 
-/* Privacy and 404 */
+/* Readable body column. Left edge matches the 1240 wrap, not a centred box. */
 .v3 .prose-col {
-  max-width: 720px;
+  max-width: 68ch;
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .v3 .prose-col h2 {

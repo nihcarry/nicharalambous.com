@@ -77,13 +77,15 @@ export default function PrivacyPage() {
         </div>
       </section>
       <section>
-        <div className="wrap prose-col">
-          {SECTIONS.map((section) => (
-            <article key={section.heading}>
-              <h2>{section.heading}</h2>
-              <p>{section.body}</p>
-            </article>
-          ))}
+        <div className="wrap">
+          <div className="prose-col">
+            {SECTIONS.map((section) => (
+              <article key={section.heading}>
+                <h2>{section.heading}</h2>
+                <p>{section.body}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
       <NewsletterBlock />

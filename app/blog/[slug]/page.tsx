@@ -34,7 +34,6 @@ const postBySlugQuery =
   process.env.NODE_ENV === "development" ? blogPostBySlugDevQuery : blogPostBySlugQuery;
 const postSlugListQuery =
   process.env.NODE_ENV === "development" ? blogPostSlugListDevQuery : blogPostSlugListQuery;
-import { Section } from "@/components/section";
 import { JsonLd } from "@/components/json-ld";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { PortableText } from "@/components/portable-text";
@@ -178,7 +177,9 @@ export default async function BlogPostPage({
       {hasFaq && <JsonLd data={faqJsonLd(post.faq!)} />}
 
       {/* Article header */}
-      <Section width="content" as="article">
+      <article>
+      <section>
+        <div className="wrap">
         <header>
           {/* Topic tags */}
           {hasTopics && (
@@ -248,7 +249,7 @@ export default async function BlogPostPage({
 
         {/* TL;DR / Excerpt block */}
         {post.excerpt && (
-          <aside className="plain-card" style={{ marginTop: 28 }}>
+          <aside className="plain-card prose-col" style={{ marginTop: 28 }}>
             <h2 className="side-title">TL;DR</h2>
             <p>{post.excerpt}</p>
           </aside>
@@ -264,14 +265,14 @@ export default async function BlogPostPage({
 
         {/* Main content — Portable Text or raw HTML */}
         {hasPortableTextBody ? (
-          <div data-no-orphan-opt-out="true">
+          <div className="prose-col" data-no-orphan-opt-out="true">
             <PortableText value={post.body} className="mt-8" />
           </div>
         ) : hasRawHtmlBody ? (
           <div
             data-no-orphan-opt-out="true"
             className={[
-              "prose-imported mt-8",
+              "prose-col prose-imported mt-8",
               /* Paragraphs — clear separation between blocks */
               "[&>p]:mt-5 [&>p]:mb-0 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-brand-700",
               /* Headings — H1 for section titles (e.g. Notion imports), H2–H4 for hierarchy */
@@ -308,17 +309,19 @@ export default async function BlogPostPage({
             }}
           />
         ) : (
-          <p className="mt-8 text-brand-500 italic">
+          <p className="prose-col mt-8 text-brand-500 italic">
             Content is being prepared. Check back soon.
           </p>
         )}
-      </Section>
+        </div>
+      </section>
+      </article>
 
       {/* FAQ section */}
       {hasFaq && (
         <section>
-          <div className="wrap" style={{ maxWidth: 820 }}>
-            <div className="plain-card">
+          <div className="wrap">
+            <div className="plain-card prose-col">
               <FaqSection faqs={post.faq!} headingClassName="side-title" />
             </div>
           </div>
@@ -327,7 +330,8 @@ export default async function BlogPostPage({
 
       {/* Topic hub links */}
       {hasTopics && (
-        <Section width="content">
+        <section>
+          <div className="wrap">
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-sm font-medium text-brand-500">
               Filed under:
@@ -342,7 +346,8 @@ export default async function BlogPostPage({
               </a>
             ))}
           </div>
-        </Section>
+          </div>
+        </section>
       )}
 
       {relatedPosts.length > 0 && (
@@ -354,8 +359,10 @@ export default async function BlogPostPage({
       )}
 
       <section>
-        <div className="wrap" style={{ maxWidth: 820 }}>
-          <ContextualCta relatedKeynote={post.relatedKeynote} />
+        <div className="wrap">
+          <div className="prose-col">
+            <ContextualCta relatedKeynote={post.relatedKeynote} />
+          </div>
         </div>
       </section>
 
