@@ -1,0 +1,2640 @@
+{
+  "source": "https://app.notion.com/p/f99b123b29344fd3ac21c951ae7a16cc",
+  "exportedAt": "2026-11-13T10:27:23+01:00",
+  "count": 129,
+  "countsByType": {
+    "Press": 65,
+    "Podcast": 23,
+    "TV": 10,
+    "Radio": 7,
+    "Video": 13,
+    "Talk": 11
+  },
+  "yearRange": {
+    "earliest": 2008,
+    "latest": 2026
+  },
+  "notes": [
+    "Featured picks are provisional, chosen from the biggest outlets (BBC, Forbes, The Guardian, CNBC Africa, Mail & Guardian) plus a high-profile talk with a YouTube thumbnail (TEDxCapeTown). Design will confirm with Nic.",
+    "No items were excluded: every one of the 129 rows has a live URL, an archive URL, or both. The 4 items marked Link status=Dead all have an Archive URL.",
+    "thumbnailUrl is derived from a YouTube ID in url or archiveUrl where present. The Notion database has no thumbnail or image property.",
+    "14 items have no Date in Notion; date is left null and those items are sorted last.",
+    "All items have hidden=false and reviewStatus='To review'. Nothing was written back to Notion or Sanity."
+  ],
+  "items": [
+    {
+      "notionId": "41740164-6a3e-81ad-aa59-fdd64f7d05b6",
+      "title": "Choosing not to have children",
+      "outlet": "I Thought This Would Be Simpler",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2026-06-17",
+      "url": "https://podcasts.apple.com/us/podcast/choosing-not-to-have-children-nic-haralambous-i-thought/id1896934849?i=1000773147057",
+      "archiveUrl": null,
+      "summary": "Nic and Andy Golding on choosing not to have children and the assumptions around it.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81adaa59fdd64f7d05b6",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-818a-b8c2-e3eeb15ea4cd",
+      "title": "#13 AI Myths and legends, Success Lies, and the Burnout Rebellion",
+      "outlet": "Through the Fog (Pierre du Plessis)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2026-06-05",
+      "url": "https://www.iono.fm/e/1683231",
+      "archiveUrl": null,
+      "summary": "Podcast on AI's impact on work, burnout and success. Video and write-up on thisispierre.co.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818ab8c2e3eeb15ea4cd",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f6-ac6c-e9843c322025",
+      "title": "Why Curiosity and Action Will Shape Your Future",
+      "outlet": "Because Growth Matters",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2025-11-24",
+      "url": "https://podcasts.apple.com/us/podcast/why-curiosity-and-action-will-shape-your-future-with/id1829925637?i=1000738060560",
+      "archiveUrl": null,
+      "summary": "Podcast on curiosity, speed and not letting failure slow you down. Also on YouTube.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f6ac6ce9843c322025",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-818c-b0e5-ee8d280d70a7",
+      "title": "Your Route to Wellbeing Podcast: Nic Haralambous",
+      "outlet": "Sue Fuller-Good Wellbeing",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2025-04-07",
+      "url": "https://www.youtube.com/watch?v=5pY1PI5r3gw",
+      "archiveUrl": null,
+      "summary": "Wellbeing podcast on living by his own rules, failure and being different.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/5pY1PI5r3gw/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818cb0e5ee8d280d70a7",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "5pY1PI5r3gw"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8148-8811-d3d186a8c20d",
+      "title": "Journey from Teenage Entrepreneur to Global Keynote Speaker (S6 E089)",
+      "outlet": "The Brand Called You",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2024-08-21",
+      "url": "https://tbcy.in/journey-from-teenage-entrepreneur-to-global-keynote-speaker-nic-haralambous-entrepreneur-global-keynote-speaker-and-bestselling-author/",
+      "archiveUrl": "https://web.archive.org/web/20260316024654/https://tbcy.in/journey-from-teenage-entrepreneur-to-global-keynote-speaker-nic-haralambous-entrepreneur-global-keynote-speaker-and-bestselling-author/",
+      "summary": "Indian business podcast on Nic's path from teenage founder to keynote speaker.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81488811d3d186a8c20d",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81cf-8823-c49de4006fd7",
+      "title": "The Power of Personal Branding",
+      "outlet": "The Dylan Kohlstadt Show",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2023-07-10",
+      "url": "https://castro.fm/episode/a42cAb",
+      "archiveUrl": null,
+      "summary": "Podcast on personal branding and marketing. Video version posted April 2022.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81cf8823c49de4006fd7",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8146-8633-ebd1af77e30f",
+      "title": "Swipe right on side hustles: The rise of side hustles in SA",
+      "outlet": "Bizcommunity (GIBS)",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2022-11-14",
+      "url": "https://www.bizcommunity.com/Article/196/837/233491.html",
+      "archiveUrl": "https://web.archive.org/web/20230306014526/https://www.bizcommunity.com/Article/196/837/233491.html",
+      "summary": "GIBS piece citing Nic's list of 51 businesses that began as side hustles.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81468633ebd1af77e30f",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811b-aaa8-e31f4d8d242c",
+      "title": "Episode 30: Life Lessons from a Serial Entrepreneur",
+      "outlet": "Get More Done",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2022-06-08",
+      "url": "https://podcasts.apple.com/us/podcast/episode-30-life-lessons-from-a-serial-entrepreneur/id1580635920?i=1000565655931",
+      "archiveUrl": null,
+      "summary": "Season one finale on Nic's businesses, books and 'Nicisms'.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811baaa8e31f4d8d242c",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8174-8607-e3820e4d84c0",
+      "title": "Innovation isn't a verb. It's an outcome. (S2 Ep 26)",
+      "outlet": "SpeakerFlow Podcast",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2022-04-26",
+      "url": "https://speakerflow.com/podcast/innovation-isnt-an-action-its-an-outcome",
+      "archiveUrl": null,
+      "summary": "Speaking industry podcast on curiosity as the start of innovation.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81748607e3820e4d84c0",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81b1-a290-cff03bb91e31",
+      "title": "OLX Hone Your Hustle with Nic Haralambous",
+      "outlet": "OLX (Anomaly Agency)",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2022-04-07",
+      "url": "https://www.youtube.com/watch?v=3S5-aAKcb94",
+      "archiveUrl": null,
+      "summary": "OLX campaign video with Nic coaching side hustlers.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/3S5-aAKcb94/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81b1a290cff03bb91e31",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "3S5-aAKcb94"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8103-82e0-eb3be76baab5",
+      "title": "#87: The Business Builder's Toolkit",
+      "outlet": "Kickoff Sessions (Darren Lee)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2022-04-06",
+      "url": "https://podcasts.apple.com/us/podcast/87-nic-haralambous-the-business-builders-toolkit/id1541531544?i=1000556364736",
+      "archiveUrl": null,
+      "summary": "Second Kickoff Sessions episode on execution, outsourcing and planning in chaos.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e810382e0eb3be76baab5",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81a2-842c-fe14877c1e9b",
+      "title": "It shouldn't have been 7 years of my life",
+      "outlet": "Mea Culpa, lessons learned in startups",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2022-03-02",
+      "url": "https://caster.podbean.com/e/it-shouldn-t-have-been-7-years-of-my-life-nic-haralambous/",
+      "archiveUrl": null,
+      "summary": "Founder lessons podcast where Nic looks back on seven years spent on one business. Video posted on YouTube in 2024.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81a2842cfe14877c1e9b",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8114-8a6e-f93fca62c357",
+      "title": "Biggest reason businesses fail",
+      "outlet": "HustlersGlobal",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2022-02-18",
+      "url": "https://www.youtube.com/watch?v=YywyLbqk0-o",
+      "archiveUrl": null,
+      "summary": "Interview clip on why businesses fail. A second clip on growth myths is on the same channel.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/YywyLbqk0-o/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81148a6ef93fca62c357",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "YywyLbqk0-o"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8157-84b3-def30023c83a",
+      "title": "Owners of small businesses must work smart and not fear failure",
+      "outlet": "Daily Maverick",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2022-02-16",
+      "url": "https://www.dailymaverick.co.za/article/2022-02-16-owners-of-small-businesses-must-work-smart-and-not-fear-failure-says-entrepreneur-nic-haralambous/",
+      "archiveUrl": "https://web.archive.org/web/20260114035926/https://www.dailymaverick.co.za/article/2022-02-16-owners-of-small-businesses-must-work-smart-and-not-fear-failure-says-entrepreneur-nic-haralambous/",
+      "summary": "Daily Maverick article about Nic's advice to small business owners.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e815784b3def30023c83a",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81b6-bd8f-ef840aa6aaab",
+      "title": "Kick-start your side hustle: Nedbank interviews Nic Haralambous",
+      "outlet": "Nedbank",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2021-11-11",
+      "url": "https://www.youtube.com/watch?v=tQobcBmH-sg",
+      "archiveUrl": "https://web.archive.org/web/20230412180626/https://www.youtube.com/watch?v=tQobcBmH-sg",
+      "summary": "Nedbank video interview on side hustles in hard economic times.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/tQobcBmH-sg/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81b6bd8fef840aa6aaab",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "tQobcBmH-sg"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8122-85b8-dd45dc91d154",
+      "title": "Business Matters: Side Hustle",
+      "outlet": "eNCA",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2021-11-02",
+      "url": "https://www.youtube.com/watch?v=6D5xbTbXl4o",
+      "archiveUrl": null,
+      "summary": "eNCA Business Matters segment on turning a side hustle into a business.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/6D5xbTbXl4o/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e812285b8dd45dc91d154",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "6D5xbTbXl4o"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-819e-b8e6-d2cead4ebdab",
+      "title": "Author interview: How to Start a Side Hustle",
+      "outlet": "The Business Book Club",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2021-10-14",
+      "url": "https://www.youtube.com/watch?v=tABE1r88jUI",
+      "archiveUrl": null,
+      "summary": "Book club author interview on How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/tABE1r88jUI/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e819eb8e6d2cead4ebdab",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "tABE1r88jUI"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8187-a759-cc23762f0989",
+      "title": "#55: How to Start a Side Hustle",
+      "outlet": "Kickoff Sessions (Darren Lee)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2021-09-15",
+      "url": "https://podcasts.apple.com/us/podcast/55-nic-haralambous-how-to-start-a-side-hustle/id1541531544?i=1000535358895",
+      "archiveUrl": null,
+      "summary": "Podcast on the book How to Start a Side Hustle. Video version on YouTube.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8187a759cc23762f0989",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81a2-ba8c-ff4582c9d24e",
+      "title": "SME Tuesdays on Power FM: Nic Haralambous",
+      "outlet": "Power FM (MTN Business)",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": "2021-06-04",
+      "url": "https://www.youtube.com/watch?v=75d4rKsFpks",
+      "archiveUrl": null,
+      "summary": "Power FM's Tumisang Ndlovu talks to Nic about entrepreneurship and Nic Harry Bamboo.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/75d4rKsFpks/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81a2ba8cff4582c9d24e",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "75d4rKsFpks"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811a-8606-e18684ab7b6a",
+      "title": "Slowing Your Side-Hustle to Accelerate Your Growth (ep. 164)",
+      "outlet": "How'd It Happen? (Mike Malatesta)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2021-05-27",
+      "url": "https://mikemalatesta.com/podcast/nic-haralambous-slow-hustle-ceo-and-co-founder-slowing-your-side-hustle-to-accelerate-your-growth-episode-164/",
+      "archiveUrl": "https://web.archive.org/web/20230602230052/https://mikemalatesta.com/podcast/nic-haralambous-slow-hustle-ceo-and-co-founder-slowing-your-side-hustle-to-accelerate-your-growth-episode-164/",
+      "summary": "US podcast with transcript on Slow-Hustle and building side businesses slowly.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811a8606e18684ab7b6a",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-814c-8842-f79c6619a4e8",
+      "title": "Roundtable: 5am Club and Covid Burnout",
+      "outlet": "Classic Business (Easy Classical)",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": "2021-05-19",
+      "url": "https://iono.fm/e/1042147",
+      "archiveUrl": null,
+      "summary": "Michael Avery's radio roundtable with Nic and Richard Sutton on the 5am Club and burnout.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e814c8842f79c6619a4e8",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81fd-9966-ca31204cc6d1",
+      "title": "Want to make more money? Everything you need to know about starting a side hustle",
+      "outlet": "YOU (News24)",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-03-29",
+      "url": "https://www.news24.com/you/news/local/want-to-make-more-money-heres-everything-you-need-to-know-about-starting-a-side-hustle-20210329",
+      "archiveUrl": "https://web.archive.org/web/20240421104615/https://www.news24.com/you/news/local/want-to-make-more-money-heres-everything-you-need-to-know-about-starting-a-side-hustle-20210329",
+      "summary": "YOU magazine extract from How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81fd9966ca31204cc6d1",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-813c-b6e8-f33da3399902",
+      "title": "Part 2: Be Prolific, Not Perfect",
+      "outlet": "The Jeff Large Podcast",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2021-03-26",
+      "url": "https://www.jefflarge.com/podcast/nic-haralambous-pt-2/",
+      "archiveUrl": "https://web.archive.org/web/20240620080840/https://www.jefflarge.com/podcast/nic-haralambous-pt-2/",
+      "summary": "Follow-up episode on burnout, reinvention and putting yourself first.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e813cb6e8f33da3399902",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-817d-84f7-f1495c78be93",
+      "title": "How to Start a Side Hustle",
+      "outlet": "Super Teachers Unite",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2021-03-25",
+      "url": "https://www.youtube.com/watch?v=mwpWM2SI2gc",
+      "archiveUrl": null,
+      "summary": "Interview for teachers on adding a side income.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/mwpWM2SI2gc/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e817d84f7f1495c78be93",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "mwpWM2SI2gc"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-810f-ad2c-f3c253870636",
+      "title": "Exclusive Books Recommends: What to read next",
+      "outlet": "The South African",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-03-22",
+      "url": "https://www.thesouthafrican.com/culture/books/exclusive-books-win-vouchers-quiz-competition-march-releases/",
+      "archiveUrl": "https://web.archive.org/web/20230308024348/https://www.thesouthafrican.com/culture/books/exclusive-books-win-vouchers-quiz-competition-march-releases/",
+      "summary": "Book round-up recommending How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e810fad2cf3c253870636",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8196-a56e-fc9a3175e3a6",
+      "title": "TOW2021: Unleash Your Side Hustle",
+      "outlet": "Time of the Writer festival (UKZN)",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2021-03-19",
+      "url": "https://www.youtube.com/watch?v=csmuun0MewU",
+      "archiveUrl": null,
+      "summary": "Book festival session on How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/csmuun0MewU/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8196a56efc9a3175e3a6",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "csmuun0MewU"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-819e-813b-ee1305567242",
+      "title": "Side Hustles to Increase Your Income",
+      "outlet": "The Family Finance Show (Old Mutual)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2021-03-15",
+      "url": "https://podcasts.apple.com/us/podcast/side-hustles-to-increase-your-income-nic-haralambous/id1514945490?i=1000513170418",
+      "archiveUrl": null,
+      "summary": "Old Mutual's finance podcast on using a side hustle to add income.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e819e813bee1305567242",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81aa-a651-c340f8e66647",
+      "title": "Side hustling",
+      "outlet": "African Tech Story (Marc Bromhall)",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-03-11",
+      "url": "https://www.africantechstory.com/p/side-hustling",
+      "archiveUrl": "https://web.archive.org/web/20260422203518/https://www.africantechstory.com/p/side-hustling",
+      "summary": "Newsletter piece on Nic's side hustle approach. Live page errored; archive verified.",
+      "linkStatus": "Dead",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81aaa651c340f8e66647",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81b4-b7f5-f2ad780ce7bc",
+      "title": "How to start a side hustle",
+      "outlet": "Centre for Risk Analysis",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2021-03-04",
+      "url": "https://www.youtube.com/watch?v=_8pRFHVRHn0",
+      "archiveUrl": null,
+      "summary": "David Ansara of the CRA interviews Nic on diversifying income.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/_8pRFHVRHn0/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81b4b7f5f2ad780ce7bc",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "_8pRFHVRHn0"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c3-b9ce-c8837b126a87",
+      "title": "How to start a side hustle: You need to embrace failure",
+      "outlet": "Daily Maverick",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-03-03",
+      "url": "https://www.dailymaverick.co.za/article/2021-03-03-how-to-start-a-side-hustle-you-need-to-embrace-failure/",
+      "archiveUrl": "https://web.archive.org/web/20250722063624/https://www.dailymaverick.co.za/article/2021-03-03-how-to-start-a-side-hustle-you-need-to-embrace-failure/",
+      "summary": "Second book extract on embracing failure.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c3b9cec8837b126a87",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8162-95ac-e6bf55daa317",
+      "title": "How to Start a Side Hustle: A playbook for a new economy",
+      "outlet": "Daily Maverick",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-03-01",
+      "url": "https://www.dailymaverick.co.za/article/2021-03-01-how-to-start-a-side-hustle-a-playbook-for-a-new-economy/",
+      "archiveUrl": "https://web.archive.org/web/20260123115109/https://www.dailymaverick.co.za/article/2021-03-01-how-to-start-a-side-hustle-a-playbook-for-a-new-economy/",
+      "summary": "Book extract from How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816295ace6bf55daa317",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ab-8c90-fdc04853d314",
+      "title": "How to side hustle",
+      "outlet": "Independent on Saturday (IOL)",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-02-20",
+      "url": "https://iol.co.za/ios/news/2021-02-20-how-to-side-hustle/",
+      "archiveUrl": "https://web.archive.org/web/20250723012811/https://iol.co.za/ios/news/2021-02-20-how-to-side-hustle/",
+      "summary": "Interview on tips from his new book How to Start a Side Hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ab8c90fdc04853d314",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-818a-944a-c31f4ba606f5",
+      "title": "Nic Haralambous on starting businesses, exiting and living happily",
+      "outlet": "Happy Like Buddha (Adewale Adejumo)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2021-02-14",
+      "url": "https://www.youtube.com/watch?v=qxD0a0cEknk",
+      "archiveUrl": null,
+      "summary": "Podcast interview on starting and exiting businesses and living well.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/qxD0a0cEknk/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818a944ac31f4ba606f5",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "qxD0a0cEknk"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8186-b2d7-c74157ad958b",
+      "title": "SA entrepreneur launches fund to help people launch a 'side hustle'",
+      "outlet": "Disrupt Africa",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2021-02-05",
+      "url": "https://disruptafrica.com/2021/02/05/sa-entrepreneur-launches-fund-to-help-people-launch-a-side-hustle/",
+      "archiveUrl": null,
+      "summary": "News of Nic's Slow Fund, giving R1,000 a day to side hustlers.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8186b2d7c74157ad958b",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8187-a342-f2114414a025",
+      "title": "Waitroom sessions with Nic Haralambous",
+      "outlet": "Rumi (Waitroom)",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2020-12-15",
+      "url": "https://www.youtube.com/watch?v=EbgXWPw9lQg",
+      "archiveUrl": "https://web.archive.org/web/20201230134909/https://www.youtube.com/watch?v=EbgXWPw9lQg",
+      "summary": "Nine short clips of Nic advising founders on Waitroom, December 2020 to October 2021. Link is the first one.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/EbgXWPw9lQg/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8187a342f2114414a025",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "EbgXWPw9lQg"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81a1-b9d8-c2e4fa1ae581",
+      "title": "Nic Haralambous live interview",
+      "outlet": "Danni Health",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2020-11-26",
+      "url": "https://www.youtube.com/watch?v=WQSeOopYpcw",
+      "archiveUrl": null,
+      "summary": "Livestreamed interview with Nic.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/WQSeOopYpcw/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81a1b9d8c2e4fa1ae581",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "WQSeOopYpcw"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8162-87f6-c9d9667cdb50",
+      "title": "How to help your small business thrive",
+      "outlet": "Moneyweb (Small Business Conversations)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2020-09-30",
+      "url": "https://www.moneyweb.co.za/moneyweb-podcasts/small-business-conversations/how-to-help-your-small-business-thrive/",
+      "archiveUrl": "https://web.archive.org/web/20220701180122/https://www.moneyweb.co.za/moneyweb-podcasts/small-business-conversations/how-to-help-your-small-business-thrive/",
+      "summary": "Podcast with full transcript: Nic on getting back to basics, cutting costs and mental health during Covid.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816287f6c9d9667cdb50",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81a6-961e-cde5fb866971",
+      "title": "Now is the time to start that 'side hustle'",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2020-07-23",
+      "url": "https://www.bizcommunity.com/Article/196/837/206561.html",
+      "archiveUrl": "https://web.archive.org/web/20230216154349/https://www.bizcommunity.com/Article/196/837/206561.html",
+      "summary": "Article quoting Nic on what counts as a side hustle.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81a6961ecde5fb866971",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f3-8942-d8864c3530ff",
+      "title": "The importance of a side hustle when finances are uncertain",
+      "outlet": "Moneyweb Radio",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": "2020-07-13",
+      "url": "https://www.moneyweb.co.za/moneyweb-radio/the-importance-of-a-side-hustle-when-finances-are-uncertain/",
+      "archiveUrl": "https://web.archive.org/web/20200806074936/https://www.moneyweb.co.za/moneyweb-radio/the-importance-of-a-side-hustle-when-finances-are-uncertain/",
+      "summary": "Moneyweb Radio segment with Nic as author on side hustles in uncertain times.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f38942d8864c3530ff",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8192-b4c6-e9d6e2a1f53b",
+      "title": "Candid Conversations: Nic Haralambous, the obsessive entrepreneur",
+      "outlet": "Candid Conversations (Flying Kite)",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2020-06-15",
+      "url": "https://podcasts.apple.com/us/podcast/candid-conversations-nic-haralambous-the-obsessive/id1508932669?i=1000478012724",
+      "archiveUrl": null,
+      "summary": "Charles Hsuan interviews Nic on his businesses since Nic Harry. Also on YouTube.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8192b4c6e9d6e2a1f53b",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-814f-927a-fc75403e7e9f",
+      "title": "How to start a side hustle",
+      "outlet": "eNCA",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2020-06-13",
+      "url": "https://www.youtube.com/watch?v=bASWpJ-HbzQ",
+      "archiveUrl": null,
+      "summary": "eNCA interview on his book How to Start a Side Hustle and the challenges of starting one.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/bASWpJ-HbzQ/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e814f927afc75403e7e9f",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "bASWpJ-HbzQ"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ad-9466-d21e9b6f4989",
+      "title": "Book Review: first steps towards that side hustle",
+      "outlet": "SABC News",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2020-05-01",
+      "url": "https://www.youtube.com/watch?v=Kub7VVR58GI",
+      "archiveUrl": null,
+      "summary": "SABC News interview on How to Start a Side Hustle and why now is the time to start one.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/Kub7VVR58GI/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ad9466d21e9b6f4989",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "Kub7VVR58GI"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-813f-8c7f-c8ae93edf8e9",
+      "title": "Ideas are worthless: insights from How To Start A Side Hustle",
+      "outlet": "Heavy Chef",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2020-04-15",
+      "url": "https://www.youtube.com/watch?v=2clCSHr9Fjc",
+      "archiveUrl": "https://web.archive.org/web/20260430155254/https://www.youtube.com/watch?v=2clCSHr9Fjc",
+      "summary": "Heavy Chef video on the new side hustle book.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/2clCSHr9Fjc/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e813f8c7fc8ae93edf8e9",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "2clCSHr9Fjc"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81b4-85e4-e3b7cb746f55",
+      "title": "Start up, go global, get paid, all with crypto",
+      "outlet": "Disrupt Africa",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2019-12-02",
+      "url": "https://disruptafrica.com/2019/12/02/start-up-go-global-get-paid-all-with-crypto/",
+      "archiveUrl": null,
+      "summary": "Guest piece by Nic as Coindirect CMO on crypto for young founders. Also ran on Global Crypto.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81b485e4e3b7cb746f55",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f4-997b-d1ef6013726c",
+      "title": "Three lessons I learned from my first investment cheque",
+      "outlet": "Ventureburn",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2019-10-30",
+      "url": "https://ventureburn.com/2019/11/three-lessons-i-learned-from-first-investment-cheque-opinion/",
+      "archiveUrl": "https://web.archive.org/web/20250424232628/https://ventureburn.com/2019/11/three-lessons-i-learned-from-first-investment-cheque-opinion/",
+      "summary": "Guest opinion piece by Nic as Coindirect co-founder.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f4997bd1ef6013726c",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ae-b983-c014dd0f262d",
+      "title": "SA crypto firm Coindirect raises R16-million in funding",
+      "outlet": "TechCentral",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2019-02-21",
+      "url": "https://techcentral.co.za/sa-crypto-firm-raises-r16-million-in-funding/178330/",
+      "archiveUrl": "https://web.archive.org/web/20260124075543/https://techcentral.co.za/sa-crypto-firm-raises-r16-million-in-funding/178330/",
+      "summary": "Funding news for Coindirect, where Nic was a co-founder.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81aeb983c014dd0f262d",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f9-bfd8-c781b0a54664",
+      "title": "Crypto exchange platform Coindirect raises EUR1m in round led by Concentric",
+      "outlet": "Ventureburn",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2019-02-21",
+      "url": "https://ventureburn.com/2019/02/coindirect-raises-e1m-concentric/",
+      "archiveUrl": "https://web.archive.org/web/20261027021506/https://ventureburn.com/2019/02/coindirect-raises-e1m-concentric/",
+      "summary": "Ventureburn on Coindirect's funding round.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f9bfd8c781b0a54664",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8157-ad35-d643b4c91e06",
+      "title": "Failing, to succeed",
+      "outlet": "Brainstorm Magazine",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-09-12",
+      "url": "https://brainstorm.itweb.co.za/article/failing-to-succeed/5yONP7Ego4ZqXWrb",
+      "archiveUrl": null,
+      "summary": "Brainstorm feature on reframing failure through Do. Fail. Learn. Repeat.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8157ad35d643b4c91e06",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8176-bcab-dbf630a5f696",
+      "title": "How 'Serial Failure' Nic Harry finally found a way to pull up his socks",
+      "outlet": "BizNews",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-08-20",
+      "url": "https://www.biznews.com/thought-leaders/serial-failure-nic-harry-pull-up-socks",
+      "archiveUrl": null,
+      "summary": "Profile on Nic's failures and Nic Harry. BrightRock video version also on YouTube.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8176bcabdbf630a5f696",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8126-bdc4-f86a9dc2a045",
+      "title": "Do. Learn. Fail. Repeat. Again and again.",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-08-06",
+      "url": "https://www.bizcommunity.com/Article/196/713/180302.html",
+      "archiveUrl": null,
+      "summary": "Report on Nic's Heavy Chef talk on failure and his book.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8126bdc4f86a9dc2a045",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81d4-9f39-da96ebc5fc89",
+      "title": "Talking Books Ep 18: Do. Fail. Learn. Repeat.",
+      "outlet": "CNBC Africa",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2018-07-31",
+      "url": "https://www.cnbcafrica.com/2018/talking-books-ep-18-do-fail-learn-repeat-by-nicholas-haralambous",
+      "archiveUrl": "https://web.archive.org/web/20210926201710/https://www.cnbcafrica.com/2018/talking-books-ep-18-do-fail-learn-repeat-by-nicholas-haralambous/",
+      "summary": "Book show interview on Do. Fail. Learn. Repeat. and recovering from failure.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81d49f39da96ebc5fc89",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811e-a987-f9fda14ea111",
+      "title": "Nicholas Haralambous: Do. Fail. Learn. Repeat.",
+      "outlet": "Expresso Show (SABC 3)",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2018-07-26",
+      "url": "https://www.youtube.com/watch?v=9Ln8yyauBzY",
+      "archiveUrl": null,
+      "summary": "Morning TV interview about the launch of his autobiography Do. Fail. Learn. Repeat.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/9Ln8yyauBzY/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811ea987f9fda14ea111",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "9Ln8yyauBzY"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81da-b4f8-c6bb48323638",
+      "title": "How failure taught me to be a better entrepreneur",
+      "outlet": "Heavy Chef",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2018-07-24",
+      "url": "https://www.youtube.com/watch?v=4i8Sm7qTUPA",
+      "archiveUrl": null,
+      "summary": "Heavy Chef talk for the Do. Fail. Learn. Repeat. launch.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/4i8Sm7qTUPA/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81dab4f8c6bb48323638",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "4i8Sm7qTUPA"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f4-8381-e9a394b60bae",
+      "title": "Entrepreneur Nic Haralambous: CEOwise with Dan Newman #27",
+      "outlet": "CEOwise",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2018-07-24",
+      "url": "https://www.youtube.com/watch?v=WHvlqA5MpcY",
+      "archiveUrl": "https://web.archive.org/web/20200301195808/https://www.youtube.com/watch?v=WHvlqA5MpcY",
+      "summary": "Video interview on Nic Harry, from online bamboo socks to physical stores.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/WHvlqA5MpcY/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f48381e9a394b60bae",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "WHvlqA5MpcY"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81d9-abb1-debc36976308",
+      "title": "Heavy Chef launches Do.Fail.Learn.Repeat with Nic Haralambous",
+      "outlet": "Payfast",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-07-17",
+      "url": "https://payfast.io/blog/heavy-chef-launches-do-fail-learn-repeat-with-nic-haralambous/",
+      "archiveUrl": "https://web.archive.org/web/20260105043838/https://payfast.io/blog/heavy-chef-launches-do-fail-learn-repeat-with-nic-haralambous/",
+      "summary": "Payfast blog on the Heavy Chef book launch event.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81d9abb1debc36976308",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81da-9a3a-fbe573b967ec",
+      "title": "Interview: Entrepreneur and author Nic Haralambous",
+      "outlet": "TechCentral",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-07-02",
+      "url": "https://techcentral.co.za/interview-entrepreneur-and-author-nic-haralambous/200351/",
+      "archiveUrl": "https://web.archive.org/web/20260610031450/https://techcentral.co.za/interview-entrepreneur-and-author-nic-haralambous/200351/",
+      "summary": "TechCentral interview on Do. Fail. Learn. Repeat. and his ventures.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81da9a3afbe573b967ec",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8188-b60d-f80a704dcbdd",
+      "title": "Part 1: Framing Failure in Positivity",
+      "outlet": "The Jeff Large Podcast",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2018-06-25",
+      "url": "https://www.jefflarge.com/podcast/nic-haralambous-do-fail-learn-repeat/",
+      "archiveUrl": "https://web.archive.org/web/20240620083307/https://www.jefflarge.com/podcast/nic-haralambous-do-fail-learn-repeat/",
+      "summary": "US podcast on failure and doing, ahead of Do. Fail. Learn. Repeat.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8188b60df80a704dcbdd",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ab-b353-c01afeec0605",
+      "title": "It's not an apocalypse, it's a retail revolution",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2018-03-26",
+      "url": "https://www.bizcommunity.com/Article/196/458/175234.html",
+      "archiveUrl": "https://web.archive.org/web/20250512191818/https://www.bizcommunity.com/Article/196/458/175234.html",
+      "summary": "Report on Nic's DHL e-commerce conference talk on malls and retail.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81abb353c01afeec0605",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81e3-81b5-c2a805e1181c",
+      "title": "Email marketing, getting focused in 2018, and when it's good to cut back (ep. 145)",
+      "outlet": "eCommerce MasterPlan",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2018-02-12",
+      "url": "https://ecommercemasterplan.com/nicholas-haralambous/",
+      "archiveUrl": "https://web.archive.org/web/20260519195732/https://ecommercemasterplan.com/nicholas-haralambous/",
+      "summary": "E-commerce podcast on email marketing and focus at Nic Harry.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81e381b5c2a805e1181c",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81d8-a4d5-f0c3a7e23fce",
+      "title": "Nic Harry: Changing the Game",
+      "outlet": "CapeTalk",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": "2017-11-06",
+      "url": "https://www.youtube.com/watch?v=rFtjFfFUz80",
+      "archiveUrl": "https://web.archive.org/web/20190507020839/https://www.youtube.com/watch?v=rFtjFfFUz80",
+      "summary": "CapeTalk video interview on growing Nic Harry from a R5,000 start.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/rFtjFfFUz80/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81d8a4d5f0c3a7e23fce",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "rFtjFfFUz80"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81fc-9d92-d1bee0050eba",
+      "title": "#1: Tackling retail in the age of the retail apocalypse",
+      "outlet": "The Innovators with Tom Kennedy",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2017-07-31",
+      "url": "https://podcasts.apple.com/us/podcast/1-nic-haralambous-nicharry-com-tackling-retail-in-the/id1265930211?i=1000390499260",
+      "archiveUrl": null,
+      "summary": "First episode of the show, on running NicHarry.com through the retail downturn.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81fc9d92d1bee0050eba",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8129-8b9d-d86f44c22342",
+      "title": "Heavy Chef Show: Nic Haralambous on the future of retail",
+      "outlet": "Heavy Chef",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2017-06-19",
+      "url": "https://www.youtube.com/watch?v=YwhF0OScYAo",
+      "archiveUrl": null,
+      "summary": "Heavy Chef Show interview on where retail is heading.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/YwhF0OScYAo/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81298b9dd86f44c22342",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "YwhF0OScYAo"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ad-af44-e833d9fb81d4",
+      "title": "Heavy Chef Events: Nic Haralambous on the end of retail as we know it",
+      "outlet": "Heavy Chef",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2017-06-14",
+      "url": "https://www.youtube.com/watch?v=Xmmp_JbNBbE",
+      "archiveUrl": null,
+      "summary": "Heavy Chef talk from 30 May 2017 on the future of retail.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/Xmmp_JbNBbE/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81adaf44e833d9fb81d4",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "Xmmp_JbNBbE"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8106-858a-f3175c649660",
+      "title": "Bootstrapper: Nic Harry, a business built on colourful socks",
+      "outlet": "OfferZen",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2017-05-26",
+      "url": "https://www.offerzen.com/blog/bootstrapper-nic-harry-a-business-built-on-colorful-socks",
+      "archiveUrl": "https://web.archive.org/web/20251013152849/https://www.offerzen.com/blog/bootstrapper-nic-harry-a-business-built-on-colorful-socks",
+      "summary": "Bootstrapping case study on how Nic grew Nic Harry.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8106858af3175c649660",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8178-976b-f56ad81066c7",
+      "title": "Patience you must have my young Padawan",
+      "outlet": "CreativeMornings Johannesburg",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2017-05-17",
+      "url": "https://www.youtube.com/watch?v=vgOP-LBsvfw",
+      "archiveUrl": null,
+      "summary": "CreativeMornings talk from February 2017 on ambition, patience and happiness.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/vgOP-LBsvfw/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8178976bf56ad81066c7",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "vgOP-LBsvfw"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c9-9bf3-da38ee8b349c",
+      "title": "CTE Style Tribe: NicHarry.com Socks",
+      "outlet": "Cape Town Etc",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2017-04-28",
+      "url": "https://www.capetownetc.com/culture/cte-style-tribe-nic-harry-socks/",
+      "archiveUrl": "https://web.archive.org/web/20250805043956/https://www.capetownetc.com/culture/cte-style-tribe-nic-harry-socks/",
+      "summary": "Cape Town Etc style feature on Nic Harry.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c99bf3da38ee8b349c",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81fa-87de-e75cc0cd03fb",
+      "title": "Sock & Style Maestro Nic Harry on South Africa's Conservative Fashion Style",
+      "outlet": "MenStuff",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2017-03-27",
+      "url": "https://www.menstuff.co.za/fashion/sock-style-maestro-nic-harry-on-south-africas-conservative-fashion-style/",
+      "archiveUrl": "https://web.archive.org/web/20191018082802/https://www.menstuff.co.za/fashion/sock-style-maestro-nic-harry-on-south-africas-conservative-fashion-style/",
+      "summary": "Interview on men's style in SA and the Nic Harry brand.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81fa87dee75cc0cd03fb",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8120-b758-da28dc7a2b5a",
+      "title": "Shelf Life: NicHarry.com socks it to Valentine's Day",
+      "outlet": "MarkLives",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2017-02-14",
+      "url": "https://www.marklives.com/2017/02/shelf-life-valentines-day-nic-harry-sasko-liquorice-freshbreathquest/",
+      "archiveUrl": "https://web.archive.org/web/20181215022111/http://www.marklives.com/2017/02/shelf-life-valentines-day-nic-harry-sasko-liquorice-freshbreathquest/",
+      "summary": "Marketing column on the Nic Harry Valentine's campaign.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8120b758da28dc7a2b5a",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811c-87d6-e4030670e721",
+      "title": "Future of Media Conference: Tech is not going to save your business",
+      "outlet": "Media Update",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2016-07-29",
+      "url": "https://www.mediaupdate.co.za/media/112789/future-of-media-conference-tech-is-not-going-to-save-your-business",
+      "archiveUrl": "https://web.archive.org/web/20160802031356/http://www.mediaupdate.co.za:80/media/112789/future-of-media-conference-tech-is-not-going-to-save-your-business",
+      "summary": "Report on Nic's Future of Media talk on getting tech out of the way.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811c87d6e4030670e721",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-818f-8c5c-ee9e6d59c368",
+      "title": "Nic Haralambous, serial entrepreneur",
+      "outlet": "Face to Face with Success",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2016-06-15",
+      "url": "https://podcasts.apple.com/us/podcast/nic-haralambous-serial-entrepreneur/id1056129049?i=1000371029868",
+      "archiveUrl": null,
+      "summary": "Interview with Nic as a serial entrepreneur.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818f8c5cee9e6d59c368",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8120-adbb-e30490cde023",
+      "title": "Nic Haralambous interview",
+      "outlet": "Take Risks Be Happy",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2015-11-17",
+      "url": "https://www.takerisksbehappy.com/nic-haralambous/",
+      "archiveUrl": "https://web.archive.org/web/20260421172845/https://www.takerisksbehappy.com/nic-haralambous/",
+      "summary": "Long Q&A on moving from journalism to Motribe and NicHarry.com. Live site challenges automated readers; verified via archive.",
+      "linkStatus": "Archive only",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8120adbbe30490cde023",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8196-91d4-e24871f67a78",
+      "title": "Inspiring any Tom, Nic and Vuyo to be an entrepreneurial success",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2015-11-06",
+      "url": "https://www.bizcommunity.com/Article/196/626/137011.html",
+      "archiveUrl": null,
+      "summary": "Event report quoting Nic on staying fluid to survive as an entrepreneur.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e819691d4e24871f67a78",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8187-b25d-f5df878b02a7",
+      "title": "Ep. 4: Nic Haralambous (nicharry.com)",
+      "outlet": "Foodie Chat Show",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2015-10-19",
+      "url": "https://podcasts.apple.com/us/podcast/ep-4-nic-haralambous-nicharry-com/id1030358131?i=1000354873182",
+      "archiveUrl": null,
+      "summary": "Early podcast interview with Nic about nicharry.com.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8187b25df5df878b02a7",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81e6-9840-f7b0a28e7d96",
+      "title": "E-commerce in the retail industry",
+      "outlet": "CNBC Africa",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2015-10-16",
+      "url": "https://www.cnbcafrica.com/media/FUHsIwg-88o/e-commerce-in-the-retail-industry",
+      "archiveUrl": null,
+      "summary": "Studio interview on Nic Harry's online and e-commerce strategy, after a Techbusters review of the store.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81e69840f7b0a28e7d96",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8109-ae61-c57d19233bda",
+      "title": "26: Everything is difficult, from Nic Harry's Tech4Africa talk",
+      "outlet": "African Tech Roundup",
+      "type": "Podcast",
+      "typeRaw": "Podcast",
+      "date": "2015-10-12",
+      "url": "https://www.africantechroundup.com/nic-harry-reckons-everyone-who-starts-a-business-is-broken/",
+      "archiveUrl": "https://web.archive.org/web/20260618102753/https://www.africantechroundup.com/nic-harry-reckons-everyone-who-starts-a-business-is-broken/",
+      "summary": "Podcast episode unpacking Nic's Tech4Africa talk on why everything in business is difficult.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8109ae61c57d19233bda",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-816e-838e-e60a3b05fdb7",
+      "title": "South Africa's 'fun sock' entrepreneur",
+      "outlet": "BBC News (Africa Business Report)",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2015-10-09",
+      "url": "https://www.bbc.com/news/av/business-34485964",
+      "archiveUrl": "https://web.archive.org/web/20250610115615/https://www.bbc.com/news/av/business-34485964",
+      "summary": "BBC video profile of Nic and Nic Harry socks after the Motribe sale, filmed for Africa Business Report.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816e838ee60a3b05fdb7",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ca-96d3-d39092302f69",
+      "title": "Advice from 30 Year Old Me to 20 Year Old Me",
+      "outlet": "Observer",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2015-08-31",
+      "url": "https://observer.com/2015/08/advice-from-30-year-old-me-to-20-year-old-me/",
+      "archiveUrl": "https://web.archive.org/web/20260718151352/https://observer.com/2015/08/advice-from-30-year-old-me-to-20-year-old-me/",
+      "summary": "Guest piece by Nic published by the New York Observer.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ca96d3d39092302f69",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8119-aaff-d1d06d7e4e8b",
+      "title": "Biz Takeouts 137: Vehicle branding, the Daily Maverick and Nic Harry",
+      "outlet": "Bizcommunity (Biz Takeouts radio show)",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": "2015-06-26",
+      "url": "https://www.bizcommunity.com/Article/196/589/130610.html",
+      "archiveUrl": "https://web.archive.org/web/20171015113442/http://www.bizcommunity.com/Article/196/589/130610.html",
+      "summary": "Marketing and media radio show episode with a Nic Harry segment.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8119aaffd1d06d7e4e8b",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8145-ac26-f4b8f46f6af2",
+      "title": "Delivering the product to the doorstep",
+      "outlet": "Moneyweb",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2015-04-08",
+      "url": "https://www.moneyweb.co.za/news/economy/delivering-the-product-to-the-doorstep/",
+      "archiveUrl": "https://web.archive.org/web/20150809114805/http://www.moneyweb.co.za/news/economy/delivering-the-product-to-the-doorstep/",
+      "summary": "E-commerce logistics feature with a Q&A with Nic on Nic Harry.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8145ac26f4b8f46f6af2",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-814a-9078-ff3d33cc4775",
+      "title": "There's more to ecommerce business than selling online",
+      "outlet": "WordCamp Cape Town 2014",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2014-12-12",
+      "url": "https://www.youtube.com/watch?v=VPqNg5EBws0",
+      "archiveUrl": null,
+      "summary": "WordCamp talk on relationships beyond online selling, from NicSocks and Motribe.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/VPqNg5EBws0/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e814a9078ff3d33cc4775",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "VPqNg5EBws0"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81aa-9b42-ce277fce5ba8",
+      "title": "Nic Haralambous's empire of the sock",
+      "outlet": "TechCentral",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2014-12-03",
+      "url": "https://techcentral.co.za/nic-haralambouss-empire-of-the-sock/191412/",
+      "archiveUrl": "https://web.archive.org/web/20260414210927/https://techcentral.co.za/nic-haralambouss-empire-of-the-sock/191412/",
+      "summary": "Long profile of Nic's career from 702 and the FM to Motribe and NicSocks.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81aa9b42ce277fce5ba8",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ed-9e44-f5e348c9b837",
+      "title": "The sock-trepreneurs",
+      "outlet": "CNBC Africa",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2014-10-20",
+      "url": "https://www.cnbcafrica.com/media/rh5VFxCEuow/the-sock-trepreneurs",
+      "archiveUrl": null,
+      "summary": "CNBC Africa segment with Nic and the Skinny Sbu Socks founder on lessons from building sock brands.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ed9e44f5e348c9b837",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81e2-bbba-d0ffe38e14f3",
+      "title": "Top Billing meets the mastermind behind Nic Socks",
+      "outlet": "Top Billing (SABC 3)",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": "2014-09-05",
+      "url": "https://www.youtube.com/watch?v=mn9YvOzofns",
+      "archiveUrl": null,
+      "summary": "Full Top Billing insert with Nico Panagio visiting Nic and NicSocks.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/mn9YvOzofns/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81e2bbbad0ffe38e14f3",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "mn9YvOzofns"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-816c-920f-e920502dfc2a",
+      "title": "How to wear colourful socks",
+      "outlet": "Men's Health SA",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2014-07-11",
+      "url": "https://mh.co.za/how-to-peacock/",
+      "archiveUrl": "https://web.archive.org/web/20260614131030/https://mh.co.za/how-to-peacock/",
+      "summary": "Style piece where Nic shows how to wear loud socks.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816c920fe920502dfc2a",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81d4-9187-e694d6ecb393",
+      "title": "How a tech guru got into selling socks",
+      "outlet": "Men's Health SA",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2014-06-30",
+      "url": "https://mh.co.za/how-a-tech-guru-got-into-selling-socks/",
+      "archiveUrl": "https://web.archive.org/web/20260521083433/https://mh.co.za/how-a-tech-guru-got-into-selling-socks/",
+      "summary": "Men's Health feature on Nic's move from tech to NicSocks.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81d49187e694d6ecb393",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8113-acc3-f6d057489785",
+      "title": "Advice to my 20-year-old self",
+      "outlet": "Men's Health SA",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2014-06-23",
+      "url": "https://mh.co.za/advice-to-my-20-year-old-self/",
+      "archiveUrl": "https://web.archive.org/web/20260605221823/https://mh.co.za/advice-to-my-20-year-old-self/",
+      "summary": "Guest piece by Nic at 30: 11 things he wished he knew at 20.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8113acc3f6d057489785",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811b-9425-ed52180af251",
+      "title": "Startup database aims to accelerate African investment",
+      "outlet": "Hypertext (htxt)",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2014-06-13",
+      "url": "https://htxt.co.za/2014/06/startup-database-aims-to-accelerate-african-investment/",
+      "archiveUrl": "https://web.archive.org/web/20211207023217/https://www.htxt.co.za/2014/06/startup-database-aims-to-accelerate-african-investment/",
+      "summary": "Coverage of the AfricanUp startup database Nic launched with Paul Cartmel. Live site timed out; archive verified.",
+      "linkStatus": "Dead",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811b9425ed52180af251",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8188-8a71-dfba5b79df94",
+      "title": "Revisiting childhood means no mean feet",
+      "outlet": "Mail & Guardian",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-09-20",
+      "url": "https://mg.co.za/friday/2013-09-20-revisiting-childhood-means-no-mean-feet/",
+      "archiveUrl": null,
+      "summary": "M&G Friday piece by Nechama Brodie on how Nic started NicSocks for under R5,000.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81888a71dfba5b79df94",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-816d-bb5f-ef3fbf48fc15",
+      "title": "Nigerian techies, Y U no build your own data analytics platforms?",
+      "outlet": "TechCabal",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-09-06",
+      "url": "https://techcabal.com/2013/09/06/nic-haralambous-nigerians-build-data-insights-platform/",
+      "archiveUrl": "https://web.archive.org/web/20260420151501/https://techcabal.com/2013/09/06/nic-haralambous-nigerians-build-data-insights-platform/",
+      "summary": "TechCabal piece built on Nic's view that Nigeria needs local data platforms.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816dbb5fef3fbf48fc15",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8110-942b-ea9abef30fb7",
+      "title": "Living at the Forefront of Incompetence",
+      "outlet": "TEDxCapeTown",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2013-09-05",
+      "url": "https://www.youtube.com/watch?v=SopFDmbznws",
+      "archiveUrl": "https://web.archive.org/web/20140911005111/http://www.youtube.com/watch?v=SopFDmbznws",
+      "summary": "Nic's TEDxCapeTown 2013 talk on embracing incompetence to learn and innovate.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/SopFDmbznws/hqdefault.jpg",
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8110942bea9abef30fb7",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "SopFDmbznws"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811f-89d9-fdd1928e515e",
+      "title": "Like Nic: How to found and sell a successful startup in eight months",
+      "outlet": "TechCabal",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-09-05",
+      "url": "https://techcabal.com/2013/09/05/like-nic-found-sell-successful-startup-eight-months/",
+      "archiveUrl": "https://web.archive.org/web/20221003005319/https://techcabal.com/2013/09/05/like-nic-found-sell-successful-startup-eight-months/",
+      "summary": "Long TechCabal profile on Motribe, NicSocks and the fast Forefront Africa exit.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811f89d9fdd1928e515e",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8124-b4a4-d1a2ba9ef6e6",
+      "title": "Imperial Holdings in mobile buy",
+      "outlet": "TechCentral",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-08-28",
+      "url": "https://techcentral.co.za/imperial-holdings-in-mobile-buy/188576/",
+      "archiveUrl": "https://web.archive.org/web/20260207225730/https://techcentral.co.za/imperial-holdings-in-mobile-buy/188576/",
+      "summary": "Imperial Holdings buys Forefront Africa, co-founded by Nic, later Resolve Mobile.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8124b4a4d1a2ba9ef6e6",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81fe-9510-fcefbcda0236",
+      "title": "Nic Haralambous (Forefront Africa) at Startup Grind Cape Town",
+      "outlet": "Startup Grind",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2013-08-23",
+      "url": "https://www.youtube.com/watch?v=OH3qOBuOCYo",
+      "archiveUrl": "https://web.archive.org/web/20140314222702/http://www.youtube.com/watch?v=OH3qOBuOCYo",
+      "summary": "Fireside chat at Startup Grind Cape Town, 15 August 2013.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/OH3qOBuOCYo/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81fe9510fcefbcda0236",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "OH3qOBuOCYo"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81bc-a0b2-eb4935cf1ba0",
+      "title": "Nicsocks: Selling limited edition socks online with WordPress",
+      "outlet": "WordPress Cape Town",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2013-08-12",
+      "url": "https://www.youtube.com/watch?v=b-0-eqzuVZI",
+      "archiveUrl": "https://web.archive.org/web/20150520063123/https://www.youtube.com/watch?v=b-0-eqzuVZI",
+      "summary": "Meetup talk on running NicSocks on WordPress. Also on WordPress.tv.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/b-0-eqzuVZI/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81bca0b2eb4935cf1ba0",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "b-0-eqzuVZI"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c7-b59b-fc42368f894e",
+      "title": "Traffic biggest e-commerce problem",
+      "outlet": "HumanIPO",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-07-29",
+      "url": "https://humanipo.com/news/7571/Traffic-biggest-e-commerce-problem",
+      "archiveUrl": "https://web.archive.org/web/20250622000637/https://humanipo.com/news/7571/traffic-biggest-e-commerce-problem/",
+      "summary": "Nic on traffic as the main obstacle for online retailers.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c7b59bfc42368f894e",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8178-9312-ebe57c55d166",
+      "title": "Socks by subscription: the tech guy who wants to revolutionise South African fashion",
+      "outlet": "The Guardian",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-02-21",
+      "url": "https://www.theguardian.com/fashion/fashion-blog/2013/feb/21/socks-subscription-south-african-fashion",
+      "archiveUrl": null,
+      "summary": "Guardian fashion blog feature on NicSocks, his post-Motribe sock subscription business.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81789312ebe57c55d166",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ac-a5cb-ca0bfc0fc4c0",
+      "title": "SABLE's Entrepreneur of the Week: Nicholas Haralambous",
+      "outlet": "SABLE Accelerator Network",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2013-02-15",
+      "url": "https://www.sablenetwork.com/insights/blogs/sables-entrepreneur-of-the-week-nicholas-haralambous-02-15-2013",
+      "archiveUrl": null,
+      "summary": "Profile of Nic and NicSocks' use of local manufacturers.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81aca5cbca0bfc0fc4c0",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8127-bf37-ea7c35b7078f",
+      "title": "Mobile marketing tactics from the guy who just sold Motribe to Mxit",
+      "outlet": "Adlip",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": "2012-11-14",
+      "url": "https://www.youtube.com/watch?v=pvwUGicvP8A",
+      "archiveUrl": null,
+      "summary": "Short interview on why he would never run a smartphone-only campaign.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/pvwUGicvP8A/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8127bf37ea7c35b7078f",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "pvwUGicvP8A"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-812d-94a6-fc5b10a38c4b",
+      "title": "Mxit's Motribe acquisition was 'organic'",
+      "outlet": "ITWeb",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-10-09",
+      "url": "https://www.itweb.co.za/article/mxits-motribe-acquisition-was-organic/2j5alrvQrld7pYQk",
+      "archiveUrl": null,
+      "summary": "ITWeb on the Motribe deal, with app numbers for JudgeMe and MxPix.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e812d94a6fc5b10a38c4b",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8167-8445-dbd8d85b75f1",
+      "title": "First Silicon Cape exit as MXit buys out Motribe",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-10-04",
+      "url": "https://www.bizcommunity.com/Article/196/78/82832.html",
+      "archiveUrl": "https://web.archive.org/web/20130701215027/http://www.bizcommunity.com/Article/196/78/82832.html",
+      "summary": "Motribe sale framed as the first Silicon Cape exit.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81678445dbd8d85b75f1",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-818a-90bd-fa03ccbc3e8b",
+      "title": "Motribe flipped to Mxit",
+      "outlet": "TechCentral",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-09-25",
+      "url": "https://techcentral.co.za/motribe-flipped-to-mxit/186617/",
+      "archiveUrl": "https://web.archive.org/web/20260712120212/https://techcentral.co.za/motribe-flipped-to-mxit/186617/",
+      "summary": "TechCentral report on the Motribe sale and Nic's exit.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818a90bdfa03ccbc3e8b",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f6-accc-e299da206ea1",
+      "title": "Mxit-Motribe deal details",
+      "outlet": "BusinessTech",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-09-25",
+      "url": "https://businesstech.co.za/news/mobile/22871/mxit-motribe-deal-details/",
+      "archiveUrl": "https://web.archive.org/web/20250520035733/https://businesstech.co.za/news/mobile/22871/mxit-motribe-deal-details/",
+      "summary": "Follow-up with Nic explaining why he left after the sale. Live site blocks automated checks; read via archive.",
+      "linkStatus": "Archive only",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f6accce299da206ea1",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8103-aa92-ca2e4bc1a826",
+      "title": "Mxit acquires Motribe",
+      "outlet": "BusinessTech",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-09-23",
+      "url": "https://businesstech.co.za/news/mobile/22808/mxit-acquires-motribe/",
+      "archiveUrl": "https://web.archive.org/web/20250516040953/https://businesstech.co.za/news/mobile/22808/mxit-acquires-motribe/",
+      "summary": "News of Mxit buying out 4Di Capital, Nic and Vincent Maher. Live site blocks automated checks; read via archive.",
+      "linkStatus": "Archive only",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8103aa92ca2e4bc1a826",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81bb-8d3a-da5c403b4343",
+      "title": "Mxit buys mobile social network builder Motribe, CEO steps down",
+      "outlet": "Ventureburn",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-09-23",
+      "url": "https://ventureburn.com/2012/09/breaking-news-mxit-buys-mobile-social-network-builder-motribe-ceo-steps-down/",
+      "archiveUrl": "https://web.archive.org/web/20250327181159/https://ventureburn.com/2012/09/breaking-news-mxit-buys-mobile-social-network-builder-motribe-ceo-steps-down/",
+      "summary": "Breaking news on Mxit buying Motribe and Nic stepping down as CEO.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81bb8d3ada5c403b4343",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-817c-b12f-dd32cc394dfa",
+      "title": "Top 20 Tech Startups in Africa",
+      "outlet": "Forbes",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2012-02-13",
+      "url": "https://www.forbes.com/sites/mfonobongnsehe/2012/02/13/top-20-tech-startups-in-africa/",
+      "archiveUrl": "https://web.archive.org/web/20260518153916/https://www.forbes.com/sites/mfonobongnsehe/2012/02/13/top-20-tech-startups-in-africa/",
+      "summary": "Forbes list from Forbes Africa naming Motribe among Africa's top 20 tech startups. Nic is not named.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": true,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e817cb12fdd32cc394dfa",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8133-ad13-e6eb0ac002eb",
+      "title": "How Motribe grew to 1.5 million users in 10 months",
+      "outlet": "The Next Web",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2011-07-31",
+      "url": "https://thenextweb.com/news/how-create-your-own-mobile-social-network-tool-motribe-grew-to-1-5-million-users-in-10-months",
+      "archiveUrl": "https://web.archive.org/web/20230603183131/https://thenextweb.com/news/how-create-your-own-mobile-social-network-tool-motribe-grew-to-1-5-million-users-in-10-months",
+      "summary": "TNW interview with Nic and Vincent Maher on Motribe's growth.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8133ad13e6eb0ac002eb",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8137-9550-fa1c3ba120fb",
+      "title": "Heavy Chef Events: How Motribe got 1mil members in 8 months",
+      "outlet": "Heavy Chef",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2011-06-03",
+      "url": "https://www.youtube.com/watch?v=z1P-HEIMOKk",
+      "archiveUrl": null,
+      "summary": "Early Heavy Chef talk on Motribe's growth.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/z1P-HEIMOKk/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81379550fa1c3ba120fb",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "z1P-HEIMOKk"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8100-98cf-fb48a3cf2d61",
+      "title": "Ogilvy How To Friday: Nic Haralambous",
+      "outlet": "Ogilvy (Chris Rawlinson)",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": "2011-02-14",
+      "url": "https://www.youtube.com/watch?v=-ebPXzbW1Os",
+      "archiveUrl": null,
+      "summary": "Talk on mobile marketing in SA and building Motribe.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/-ebPXzbW1Os/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e810098cffb48a3cf2d61",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "-ebPXzbW1Os"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-811b-a47b-e715966fa495",
+      "title": "Motribe hits half-a-million milestone",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2011-01-21",
+      "url": "https://www.bizcommunity.com/Article/196/78/56012.html",
+      "archiveUrl": null,
+      "summary": "Early Motribe growth story.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e811ba47be715966fa495",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8150-af99-ce1450195e37",
+      "title": "SA online professionals do their own thing",
+      "outlet": "MyBroadband",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2011-01-06",
+      "url": "https://mybroadband.co.za/news/business/17575-sa-online-professionals-do-their-own-thing.html",
+      "archiveUrl": "https://web.archive.org/web/20250518032019/https://mybroadband.co.za/news/business/17575-sa-online-professionals-do-their-own-thing.html",
+      "summary": "Round-up of SA internet founders of 2010, including Nic at Motribe.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8150af99ce1450195e37",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81f3-93fe-f06062c03900",
+      "title": "Interview: Motribe founders Vincent Maher and Nic Haralambous",
+      "outlet": "Bandwidth Blog",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2010-12-07",
+      "url": "https://bandwidthblog.co.za/2010/12/07/motribe-mobile-social-networks/",
+      "archiveUrl": "https://web.archive.org/web/20260113054334/https://bandwidthblog.co.za/2010/12/07/motribe-mobile-social-networks/",
+      "summary": "Early interview with both Motribe founders on mobile social networks.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81f393fef06062c03900",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8150-83e4-cc123df30ed0",
+      "title": "300 Young South Africans: Technology",
+      "outlet": "Mail & Guardian",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2009-06-12",
+      "url": "https://mg.co.za/news/south-africa/2009-06-12-300-young-south-africans-technology/",
+      "archiveUrl": null,
+      "summary": "Nic, then 24 and at Vodacom, named in the M&G's young South Africans list for technology.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e815083e4cc123df30ed0",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8180-94e6-dfe2a45d103d",
+      "title": "Zoopy: YouTube meets Flickr meets Blogging, South African Style",
+      "outlet": "Ubergizmo",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2008-12-03",
+      "url": "https://www.ubergizmo.com/2008/12/zoopy-youtube-meets-flickr-meets-blogging-south-african-style/",
+      "archiveUrl": "https://web.archive.org/web/20260414114317/https://www.ubergizmo.com/2008/12/zoopy-youtube-meets-flickr-meets-blogging-south-african-style/",
+      "summary": "Ubergizmo interviews Nic as Zoopy GM during the blogging tour.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e818094e6dfe2a45d103d",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-816b-8b3b-d4eebf325e71",
+      "title": "United States bloggers to tour SA",
+      "outlet": "Bizcommunity",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2008-11-17",
+      "url": "https://www.bizcommunity.com/Article/196/16/30412.html",
+      "archiveUrl": null,
+      "summary": "Announces Nic, then Zoopy Gauteng GM, blogging the We Blog the World SA tour for Bizcommunity.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e816b8b3bd4eebf325e71",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8178-9c53-fac2534d9a97",
+      "title": "Local blogging celebs launch gadget blog, Nudjit",
+      "outlet": "Bandwidth Blog",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": "2008-02-04",
+      "url": "https://bandwidthblog.co.za/2008/02/04/local-blogging-celebs-launch-gadget-blog-nudjit/",
+      "archiveUrl": "https://web.archive.org/web/20250426142218/https://bandwidthblog.co.za/2008/02/04/local-blogging-celebs-launch-gadget-blog-nudjit/",
+      "summary": "News of the Nudjit gadget blog Nic co-founded.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81789c53fac2534d9a97",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-810e-a7e5-e1f8e1748702",
+      "title": "Tips on How to Start a Side Hustle",
+      "outlet": "Old Mutual",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://www.oldmutual.co.za/articles/side-hustles-to-increase-your-income/",
+      "archiveUrl": "https://web.archive.org/web/20210317102533/https://www.oldmutual.co.za/articles/side-hustles-to-increase-your-income/",
+      "summary": "Old Mutual article with Nic's side hustle tips. Now 404; archive from March 2021.",
+      "linkStatus": "Dead",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e810ea7e5e1f8e1748702",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8143-95fa-c175fe510335",
+      "title": "The moments that make meaning in your life",
+      "outlet": "CreativeMornings",
+      "type": "Talk",
+      "typeRaw": "Talk",
+      "date": null,
+      "url": "https://www.youtube.com/watch?v=kFd2BkHpm-c",
+      "archiveUrl": null,
+      "summary": "Second CreativeMornings talk. Upload date not readable (YouTube sign-in gate).",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kFd2BkHpm-c/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e814395fac175fe510335",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "kFd2BkHpm-c"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8147-80de-cf47e78a0a81",
+      "title": "33 ideas from Nic Haralambous",
+      "outlet": "Civitas Network",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://www.civitas.network/blog/nic-haralambous",
+      "archiveUrl": "https://web.archive.org/web/20260520063217/https://www.civitas.network/blog/nic-haralambous",
+      "summary": "Founder Stories write-up of 33 ideas from Nic on fundraising and crypto. No date on page.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e814780decf47e78a0a81",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8157-bea7-fdd212f5a569",
+      "title": "Failure won't kill you",
+      "outlet": "Leader.co.za",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://www.leader.co.za/article.aspx?a=7665&s=213&title=Startups",
+      "archiveUrl": null,
+      "summary": "Profile on using failure to grow Nic Harry from a R5,000 start. No date on page.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8157bea7fdd212f5a569",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8169-b3db-e584559a1b91",
+      "title": "The Business Builder's toolkit",
+      "outlet": "CapeTalk (The Morning Review with Lester Kiewit)",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": null,
+      "url": "https://omny.fm/shows/the-morning-review-with-lester-kiewit/the-business-builders-toolkit",
+      "archiveUrl": null,
+      "summary": "Lester Kiewit talks to Nic as author of How to Start a Side Hustle. No air date on the page.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8169b3dbe584559a1b91",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8178-b889-d4ef5e2d740c",
+      "title": "Books #OnPoint: Do. Fail. Learn. Repeat.",
+      "outlet": "SABC News",
+      "type": "TV",
+      "typeRaw": "TV",
+      "date": null,
+      "url": "https://www.youtube.com/watch?v=7rFlRQ2jJMg",
+      "archiveUrl": null,
+      "summary": "SABC News books segment on Do. Fail. Learn. Repeat. Upload date not readable (YouTube sign-in gate).",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/7rFlRQ2jJMg/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8178b889d4ef5e2d740c",
+        "createdTime": "2026-11-13 09:19:36Z",
+        "youtubeId": "7rFlRQ2jJMg"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8186-8242-dc630ea2899e",
+      "title": "Entrepreneurs, investors: innovating and funding startups in SA",
+      "outlet": "Ventureburn",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://ventureburn.com/2016/05/entrepreneurs-investors-innovating-and-funding-startups-in-sa/",
+      "archiveUrl": "https://web.archive.org/web/20220817223106/https://ventureburn.com/2016/05/entrepreneurs-investors-innovating-and-funding-startups-in-sa/",
+      "summary": "Panel report with Nic as moderator on SA startup funding. Page has conflicting date metadata.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81868242dc630ea2899e",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-8190-afdc-c97b3acc460f",
+      "title": "The Series: How to start a Side Hustle, part 3",
+      "outlet": "702 (Afternoons with Relebogile Mabotja)",
+      "type": "Radio",
+      "typeRaw": "Radio",
+      "date": null,
+      "url": "https://omny.fm/shows/the-best-of-azania-mosaka/the-series-how-to-start-a-side-hustle-part-3",
+      "archiveUrl": null,
+      "summary": "702 afternoon show series on side hustles with Nic as guest. No air date on the page.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e8190afdcc97b3acc460f",
+        "createdTime": "2026-11-13 09:19:36Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ad-8897-dc96f991be43",
+      "title": "Q&A: Nic Haralambous, Motribe co-founder",
+      "outlet": "HumanIPO",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "http://humanipo.com/blog/2838/QA-Nic-Haralambous-Motribe-co-founder",
+      "archiveUrl": "https://web.archive.org/web/20240803222529/https://humanipo.com/blog/2838/QA-Nic-Haralambous-Motribe-co-founder",
+      "summary": "Q&A on building Motribe, the Mxit deal and launching NicSocks. Live page errors.",
+      "linkStatus": "Dead",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ad8897dc96f991be43",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c5-98a0-ce035ed666ac",
+      "title": "MEDIA Protocol meets Nicholas Haralambous (Coin Insider)",
+      "outlet": "MEDIA Protocol",
+      "type": "Video",
+      "typeRaw": "Video",
+      "date": null,
+      "url": "https://www.youtube.com/watch?v=8V_mJVkPuYw",
+      "archiveUrl": "https://web.archive.org/web/20250823232919/https://www.youtube.com/watch?v=8V_mJVkPuYw",
+      "summary": "Crypto media interview from the Coindirect period. Upload date not readable (YouTube sign-in gate).",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": "https://i.ytimg.com/vi/8V_mJVkPuYw/hqdefault.jpg",
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c598a0ce035ed666ac",
+        "createdTime": "2026-11-13 09:21:44Z",
+        "youtubeId": "8V_mJVkPuYw"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c7-96e0-ecb793d72a64",
+      "title": "Daily Maverick columns by Nic Haralambous",
+      "outlet": "Daily Maverick",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://www.dailymaverick.co.za/author/nicharalambous/",
+      "archiveUrl": "https://web.archive.org/web/20220129011512/https://www.dailymaverick.co.za/author/nicharalambous/",
+      "summary": "Author page for Nic's Opinionista columns, roughly December 2019 to January 2024.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c796e0ecb793d72a64",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81c9-9439-d5423aa5c830",
+      "title": "INTERVIEW: Nic Haralambous: Do. Fail. Learn. Repeat.",
+      "outlet": "#ImStaying",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://imstaying.co.za/interview-nic-haralambous-do-fail-learn-repeat/",
+      "archiveUrl": "https://web.archive.org/web/20260615044642/https://imstaying.co.za/interview-nic-haralambous-do-fail-learn-repeat/",
+      "summary": "#ImStaying interview on his book. Live site challenges automated readers; verified via archive. Video version on YouTube (April 2020).",
+      "linkStatus": "Archive only",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81c99439d5423aa5c830",
+        "createdTime": "2026-11-13 09:21:44Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81ca-85d2-f076d6ac96c9",
+      "title": "Imperial enters mobile with startup acquisition",
+      "outlet": "BusinessTech",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://businesstech.co.za/news/mobile/44845/imperial-enters-mobile-with-startup-acquisition/",
+      "archiveUrl": "https://web.archive.org/web/20130831094901/http://businesstech.co.za:80/news/mobile/44845/imperial-enters-mobile-with-startup-acquisition/",
+      "summary": "BusinessTech on the Forefront Africa sale to Imperial. Live site blocks automated checks; read via archive.",
+      "linkStatus": "Archive only",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81ca85d2f076d6ac96c9",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    },
+    {
+      "notionId": "41740164-6a3e-81fa-b34c-fc71ea2b26b7",
+      "title": "Nic Haralambous: entrepreneurship is an addiction and there's no cure",
+      "outlet": "Ventureburn",
+      "type": "Press",
+      "typeRaw": "Press",
+      "date": null,
+      "url": "https://ventureburn.com/2015/08/nic-haralambous-entrepreneurship-addiction-theres-cure/",
+      "archiveUrl": "https://web.archive.org/web/20250426044840/https://ventureburn.com/2015/08/nic-haralambous-entrepreneurship-addiction-theres-cure/",
+      "summary": "Write-up of Nic's Tech4Africa keynote on Motribe, the Mxit exit and Nic Harry. URL says August 2015; displayed date has changed.",
+      "linkStatus": "Live",
+      "reviewStatus": "To review",
+      "thumbnailUrl": null,
+      "hidden": false,
+      "featured": false,
+      "extra": {
+        "notionUrl": "https://app.notion.com/417401646a3e81fab34cfc71ea2b26b7",
+        "createdTime": "2026-11-13 09:20:26Z"
+      }
+    }
+  ]
+}
