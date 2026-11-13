@@ -1,14 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { bookNowHref } from "@/lib/site";
+import { CheckoutButton } from "@/components/site/checkout-cta";
 
-/** Mobile bar on the Output Paradox page. Hidden until the hero has left the viewport. */
-export function StickyBookBar() {
+/** Mobile bar. Hidden until the hero has left the viewport. */
+export function StickyBookBar({
+  title = "Lunch and learn",
+  detail = "€999, ex VAT",
+  offer = "lunch-and-learn" as const,
+  label = "Buy",
+  id = "buy-lunch-and-learn-sticky",
+  href,
+}: {
+  title?: string;
+  detail?: string;
+  offer?: "lunch-and-learn" | "team-workflow-upgrade" | "executive-workflow-upgrade" | "my-week-with-grok-bot" | "accountability-coaching";
+  label?: string;
+  id?: string;
+  href?: string;
+}) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const hero = document.querySelector(".hero.op");
+    const hero = document.querySelector(".hero");
     if (!hero) return;
     const mobile = window.matchMedia("(max-width: 600px)");
     const observer = new IntersectionObserver(
@@ -31,12 +45,18 @@ export function StickyBookBar() {
   return (
     <div className="sticky-book" hidden={!visible}>
       <span className="t">
-        <b>Lunch and learn</b>
-        20 minutes, live, ex VAT
+        <b>{title}</b>
+        {detail}
       </span>
-      <a className="btn" href={bookNowHref()}>
-        Book now, €999
-      </a>
+      <span className="sticky-acts">
+        {href ? (
+          <a id={id} className="btn btn-wrap" href={href}>
+            {label}
+          </a>
+        ) : (
+          <CheckoutButton id={id} offer={offer} label={label} />
+        )}
+      </span>
     </div>
   );
 }
