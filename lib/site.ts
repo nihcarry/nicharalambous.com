@@ -37,9 +37,11 @@ export const KIT_FORM_ID = "10044760";
 export const KIT_SUBSCRIBE_URL = `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`;
 
 /**
- * Enquiry delivery. The live site already posts to FormSubmit, which emails Nic.
- * NEXT_PUBLIC_ENQUIRY_EMAIL is the address. NEXT_PUBLIC_ENQUIRY_ENDPOINT overrides
- * the whole URL if the transport ever changes. Default is nic@nharry.com.
+ * Enquiry delivery. The live site posts to FormSubmit from the browser, which
+ * emails Nic. There is no Lambda. FormSubmit holds the response until that
+ * email is sent. NEXT_PUBLIC_ENQUIRY_EMAIL is the address.
+ * NEXT_PUBLIC_ENQUIRY_ENDPOINT overrides the whole URL if the transport changes.
+ * Default is nic@nharry.com.
  */
 export const ENQUIRY_EMAIL =
   process.env.NEXT_PUBLIC_ENQUIRY_EMAIL?.trim() || "nic@nharry.com";
