@@ -10,7 +10,7 @@ import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
   description:
-    "Nic Haralambous speaks to teams about the Output Paradox, in person or on Zoom, Teams or Meet. Virtual lunch and learn €999 ex VAT. Virtual keynotes from €1,500 ex VAT. In-person keynotes from €4,500, excluding travel and VAT.",
+    "Keynotes on the Output Paradox, live or virtual. Lunch and learn €999 ex VAT. Virtual from €1,500 ex VAT. In-person from €4,500, excluding travel and VAT.",
   alternates: { canonical: HOME_URL },
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
