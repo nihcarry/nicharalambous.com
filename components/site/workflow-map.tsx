@@ -1,38 +1,39 @@
-// PLACEHOLDER: Nic to supply real examples before this ships
 const WORKFLOW_MAP_ROWS = [
   {
-    workflow: "Board pack prep",
-    today: "Two days, four people",
-    after: "Grok Bot drafts, CFO edits",
-    mobileAfter: "Grok Bot drafts",
+    workflow: "Marketing",
+    today: "Campaigns planned in someone's head",
+    after: "Agent researches, drafts and tracks outreach daily",
+    owner: "CMO",
+  },
+  {
+    workflow: "Back office",
+    today: "Invoices and contracts chased by hand",
+    after: "Receipts filed, contracts drafted for sign-off",
     owner: "CFO",
-    active: true,
   },
   {
-    workflow: "Customer escalations",
-    today: "Long email chains",
-    after: "Agent summarises and routes",
-    mobileAfter: "Agent routes",
-    owner: "COO",
-    active: false,
+    workflow: "Design",
+    today: "Briefs lost in chat threads",
+    after: "Options from real assets, ready to pick",
+    owner: "Brand lead",
   },
   {
-    workflow: "Hiring pipeline review",
-    today: "Weekly meeting",
-    after: "Friday digest, no meeting",
-    mobileAfter: "Friday digest",
-    owner: "CPO",
-    active: false,
+    workflow: "Content",
+    today: "Blank page every week",
+    after: "Interview in, posts and newsletter out",
+    owner: "Content lead",
   },
   {
-    workflow: "Monday leadership brief",
-    today: "Nobody owns it",
-    after: "Agent compiles from",
-    mobileAfter: "",
+    workflow: "Paid media",
+    today: "Dashboards nobody checks",
+    after: "Daily spend and results, with changes suggested",
+    owner: "Growth lead",
+  },
+  {
+    workflow: "Business unit COOs",
+    today: "Status updates in meetings",
+    after: "One scorecard each Friday, blockers flagged",
     owner: "CEO",
-    active: false,
-    caret: true,
-    desktopOnly: true,
   },
 ] as const;
 
@@ -58,21 +59,13 @@ export function WorkflowMap() {
             </tr>
           </thead>
           <tbody>
-            {WORKFLOW_MAP_ROWS.map((row) => (
-              <tr
-                key={row.workflow}
-                className={[row.active ? "is-on" : "", "desktopOnly" in row && row.desktopOnly ? "wf-desk" : ""]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
+            {WORKFLOW_MAP_ROWS.map((row, index) => (
+              <tr key={row.workflow} className={index === 0 ? "is-on" : undefined}>
                 <th scope="row">{row.workflow}</th>
                 <td className="wf-today">{row.today}</td>
                 <td className="wf-after">
-                  <span className="wf-full">
-                    {row.after}
-                    {"caret" in row && row.caret ? <span className="wf-caret" aria-hidden="true" /> : null}
-                  </span>
-                  {row.mobileAfter ? <span className="wf-short">{row.mobileAfter}</span> : null}
+                  {row.after}
+                  {index === WORKFLOW_MAP_ROWS.length - 1 ? <span className="wf-caret" aria-hidden="true" /> : null}
                 </td>
                 <td className="wf-owner">{row.owner}</td>
               </tr>

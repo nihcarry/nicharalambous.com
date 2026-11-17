@@ -4018,6 +4018,10 @@ html.fullshot .sticky-book{display:none!important}
     background: linear-gradient(90deg, #0b0c10 0%, #0b0c10 32%, rgba(11, 12, 16, 0.55) 48%, rgba(11, 12, 16, 0) 64%);
   }
 
+  .v3 .hero.hub.wf .wrap {
+    min-height: 780px;
+  }
+
   .v3 .hero.hub.wf .copy {
     max-width: 520px;
   }
@@ -4253,14 +4257,8 @@ html.fullshot .sticky-book{display:none!important}
   }
 
   .v3 .wf-edited,
-  .v3 .wf-cursor,
-  .v3 .wf-full {
+  .v3 .wf-cursor {
     display: none;
-  }
-
-  .v3 .wf-short {
-    display: inline;
-    color: #cfdcff;
   }
 
   .v3 .wf-head {
@@ -4282,8 +4280,18 @@ html.fullshot .sticky-book{display:none!important}
   .v3 .wf-map tr {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
+  }
+
+  .v3 .wf-map th,
+  .v3 .wf-map td.wf-after {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .v3 .wf-map td.wf-after {
+    flex: 1 1 auto;
   }
 
   .v3 .wf-map th,
@@ -4332,13 +4340,12 @@ html.fullshot .sticky-book{display:none!important}
 
   .v3 .wf-map thead,
   .v3 .wf-map .wf-today,
-  .v3 .wf-map .wf-owner,
-  .v3 .wf-map tr.wf-desk {
+  .v3 .wf-map .wf-owner {
     display: none;
   }
 
   .v3 .wf-map {
-    margin-bottom: 8px;
+    margin-bottom: 52px;
   }
 }
 
