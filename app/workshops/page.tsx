@@ -52,6 +52,24 @@ export default function WorkshopsPage() {
         <div className="wrap">
           <h2 style={{ margin: "20px 0 18px" }}>Pick the session that fits</h2>
           <div className="formats">
+            <div className="fmt">
+              <h3>Executive Workflow Upgrade Session</h3>
+              <p>
+                For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade. If the leader doesn&apos;t get AI, nobody else in the organisation will.
+              </p>
+              <ul>
+                <li>2 hours</li>
+                <li>One to one</li>
+                <li>Virtual by default</li>
+              </ul>
+              <div className="price">
+                €1,499<span>one to one, ex VAT</span>
+              </div>
+              <CheckoutButton id="buy-exec-hub" offer="executive-workflow-upgrade" label="Buy your session" />
+              <a className="quiet-link fmt-see" href="/workshops/executive-workflow-upgrade">
+                See the session
+              </a>
+            </div>
             <div className="fmt has-fstk">
               <img className="fmt-stk" src="/v3/new/sticker-thumbs.png" alt="" />
               <h3>My week with Grok Bot</h3>
@@ -82,22 +100,6 @@ export default function WorkshopsPage() {
               </div>
               <CheckoutButton id="buy-team-hub" offer="team-workflow-upgrade" label="Buy the team session" />
               <a className="quiet-link fmt-see" href="/workshops/team-workflow-upgrade">
-                See the session
-              </a>
-            </div>
-            <div className="fmt">
-              <h3>Executive Workflow Upgrade Session</h3>
-              <p>For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.</p>
-              <ul>
-                <li>2 hours</li>
-                <li>One to one</li>
-                <li>Virtual by default</li>
-              </ul>
-              <div className="price">
-                €1,499<span>one to one, ex VAT</span>
-              </div>
-              <CheckoutButton id="buy-exec-hub" offer="executive-workflow-upgrade" label="Buy your session" />
-              <a className="quiet-link fmt-see" href="/workshops/executive-workflow-upgrade">
                 See the session
               </a>
             </div>
