@@ -3031,6 +3031,24 @@ html[data-nh-consent] .consent {
     align-items: center;
     max-width: 100%;
   }
+
+  /* "Request a session" is longer than "Buy": keep it beside the title. */
+  .sticky-book.sticky-request {
+    flex-wrap: nowrap;
+  }
+
+  .sticky-book.sticky-request .t {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .sticky-book.sticky-request .sticky-acts {
+    flex: 0 0 auto;
+  }
+
+  .sticky-book.sticky-request .btn {
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 601px) {
