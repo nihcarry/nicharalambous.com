@@ -3737,6 +3737,122 @@ html.fullshot .sticky-book{display:none!important}
 .v3 .cmp tr{padding:12px 0;border-top:1px solid #2e3442}.v3 .cmp tbody th{padding:4px 0;border:0;width:auto}
 .v3 .cmp td{border:0;padding:4px 0 4px 0}.v3 .cmp td::before{content:attr(data-col);display:block;font-family:var(--mono);font-size:12px;color:var(--blue2)}.v3 .cmp .hl{background:none}
 .v3 .p-pen .cmp td::before{color:var(--blue)}}
+
+/* Workshops compare: Option B tabs at 900px and below. Desktop table is unchanged. */
+.v3 .cmp-tabs,
+.v3 .cmp-panels {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .v3 .cmp-panel {
+    padding: 10px 10px 12px;
+  }
+
+  html body .v3 .cmp-wrap {
+    display: none;
+  }
+
+  .v3 .cmp-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    margin: 0 0 8px;
+    background: #12151c;
+    border: 1px solid #2e3442;
+    border-radius: 999px;
+  }
+
+  .v3 .cmp-tabs [role="tab"] {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    margin: 0;
+    padding: 8px 6px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #c9cdd6;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+  }
+
+  .v3 .cmp-tabs [role="tab"][aria-selected="true"] {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  .v3 .cmp-tabs [role="tab"]:focus-visible {
+    outline: 2px solid var(--blue2);
+    outline-offset: 2px;
+    z-index: 1;
+  }
+
+  .v3 .cmp-panels {
+    display: grid;
+  }
+
+  .v3 .cmp-panels > [role="tabpanel"] {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    min-width: 0;
+  }
+
+  .v3 .cmp-panels > [role="tabpanel"].is-active {
+    visibility: visible;
+  }
+
+  .v3 .cmp-session {
+    margin: 0;
+    padding: 4px 6px 8px;
+  }
+
+  html body .v3 .cmp-session > h3 {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: #edeef2;
+    margin: 6px 0 10px;
+  }
+
+  .v3 .cmp-session dl {
+    margin: 0;
+  }
+
+  .v3 .cmp-session .cmp-row {
+    border-top: 1px solid #2e3442;
+    padding: 12px 0;
+  }
+
+  .v3 .cmp-session .cmp-row:last-child {
+    padding-bottom: 4px;
+  }
+
+  .v3 .cmp-session dt {
+    font-family: var(--mono);
+    color: #9aa0ae;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    margin: 0 0 4px;
+  }
+
+  .v3 .cmp-session dd {
+    margin: 0;
+    color: #c9cdd6;
+    font-size: 15.5px;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+  }
+}
+
 /* after band (My week) */
 .v3 .after{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;align-items:center}
 .v3 .after .stk-big{width:200px;transform:rotate(-5deg);filter:drop-shadow(0 8px 12px rgba(10,12,16,.2))}
@@ -4005,6 +4121,74 @@ html.fullshot .sticky-book{display:none!important}
 
   .v3 .hero.op:has(.photo.photo-card) h1 {
     margin-top: 0;
+  }
+}
+
+
+/* Team C and Exec C heroes: same photo-card as coaching, with their own crops. */
+@media (min-width: 1101px) {
+  .v3 .hero.op .photo.photo-card img.ph-team,
+  .v3 .hero.op .photo.photo-card img.ph-exec {
+    aspect-ratio: auto;
+    object-fit: cover;
+    mix-blend-mode: normal;
+    border-radius: 18px;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-team {
+    object-position: 50% 30%;
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-exec {
+    object-position: 50% 30%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .v3 .hero.op .photo.photo-card img.ph-team,
+  .v3 .hero.op .photo.photo-card img.ph-exec {
+    object-fit: cover;
+    mix-blend-mode: normal;
+    border-radius: 16px;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-team {
+    object-position: 50% 18%;
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-exec {
+    object-position: 50% 22%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1100px) {
+  .v3 .hero.op .photo.photo-card img.ph-team {
+    object-position: 50% 18%;
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-exec {
+    object-position: 50% 25%;
   }
 }
 

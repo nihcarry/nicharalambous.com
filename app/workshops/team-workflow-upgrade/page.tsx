@@ -70,8 +70,17 @@ export default function TeamWorkshopPage() {
               </div>
             </div>
           </div>
-          <div className="photo">
-            <img className="ph-team" src="/v3/new/hero-team-05.webp" alt="Nic Haralambous" />
+          <div className="photo photo-card">
+            <picture>
+              <source srcSet="/v3/new/team-hero-C.webp" type="image/webp" />
+              <img
+                className="ph-team"
+                src="/v3/new/team-hero-C.jpg"
+                alt="Nic standing in a grey coat, hands in pockets"
+                width={1500}
+                height={2200}
+              />
+            </picture>
           </div>
         </div>
       </section>
