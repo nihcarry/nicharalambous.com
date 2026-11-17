@@ -3771,3 +3771,86 @@ html.fullshot .sticky-book{display:none!important}
 }
 .v3.has-sticky section:not(.hero){padding:96px 0}
 @media (max-width:700px){.v3.has-sticky section:not(.hero){padding:56px 0}}
+
+/* My week hero, option B. Other .hero.op pages still stack at 1100px. */
+@media (min-width: 1000px) {
+  .v3 .hero.hero-b .copy {
+    display: contents;
+  }
+
+  .v3 .hero.hero-b .wrap {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-areas: "h h" "s p" "b p" "m p";
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: 24px;
+    row-gap: 0;
+    min-height: 0;
+  }
+
+  .v3 .hero.hero-b h1 {
+    grid-area: h;
+    max-width: none;
+    font-size: clamp(60px, 8.2vw, 116px);
+    line-height: 0.98;
+    margin: 84px 0 34px;
+  }
+
+  .v3 .hero.hero-b h1 em {
+    display: block;
+  }
+
+  .v3 .hero.hero-b .say {
+    grid-area: s;
+  }
+
+  .v3 .hero.hero-b .book {
+    grid-area: b;
+  }
+
+  .v3 .hero.hero-b .meter {
+    grid-area: m;
+    align-self: start;
+    margin-bottom: 72px;
+  }
+
+  .v3 .hero.hero-b .photo {
+    grid-area: p;
+    position: relative;
+    height: auto;
+    order: 0;
+  }
+
+  .v3 .hero.hero-b img.emoji-hero {
+    position: absolute;
+    top: -40px;
+    bottom: auto;
+    right: -80px;
+    left: auto;
+    transform: none;
+    width: calc(100% + 150px);
+    max-width: 760px;
+    height: auto;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 999px) {
+  .v3 .hero.hero-b .photo {
+    height: 380px;
+  }
+
+  .v3 .hero.hero-b img.emoji-hero {
+    height: 420px;
+    bottom: -10px;
+  }
+}
+
+/* The full "Book a lunch and learn" label is wider than the bar once the links are still showing. */
+@media (max-width: 900px) {
+  .site-nav .dt {
+    display: none;
+  }
+
+  .site-nav .mb {
+    display: inline;
+  }
+}

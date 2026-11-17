@@ -31,11 +31,13 @@ export default function MyWeekPage() {
           { name: "My week with Grok Bot", path: PATH },
         ])}
       />
-      <section className="hero op pd-spotlight">
+      <section className="hero op pd-spotlight hero-b">
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <h1 className="long">My week with Grok Bot</h1>
+            <h1>
+              My week with <em>Grok Bot</em>
+            </h1>
             <p className="say">
               A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. We cover best practices and workflow ideas. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
             </p>
