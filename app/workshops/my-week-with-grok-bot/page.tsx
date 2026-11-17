@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { CompareTable } from "@/components/site/compare-table";
 import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { breadcrumbJsonLd } from "@/lib/metadata";
@@ -36,11 +35,9 @@ export default function MyWeekPage() {
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <h1 className="long">
-              90 minutes inside how I actually work with <em>Grok Bot</em>
-            </h1>
+            <h1 className="long">My week with Grok Bot</h1>
             <p className="say">
-              A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
+              A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. We cover best practices and workflow ideas. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
             </p>
             <div className="book" id="book">
               <div className="row">
@@ -79,16 +76,6 @@ export default function MyWeekPage() {
           </div>
         </div>
       </section>
-      <div className="ip pd-calendar">
-        <div className="wrap">
-          <span>
-            <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders, €4,999 per session, ex VAT.
-          </span>
-          <a className="link" href="/workshops/team-workflow-upgrade" style={{ color: "#fff" }}>
-            See the team session
-          </a>
-        </div>
-      </div>
       <section className="p-pen">
         <div className="wrap body-copy">
           <p className="lead">
@@ -98,7 +85,7 @@ export default function MyWeekPage() {
             For 90 minutes I take your team through my own setup. I show them how I work with Grok Bot day to day and what&apos;s out there for them to do with it. Your people watch, ask questions and see it working, before anyone has to commit to building something of their own.
           </p>
           <p className="body">
-            The lunch and learn is a 20-minute talk about why AI is making teams busier and less engaged. My week with Grok Bot is 90 minutes of me showing up to 20 of your people how I work with Grok Bot, for €2,999 a session, ex VAT. The Team Workflow Upgrade Session is where up to 8 of your senior leaders build their own workflows with me, for €4,999 a session, ex VAT.
+            My week with Grok Bot is 90 minutes of me showing up to 20 of your people how I work with Grok Bot, for €2,999 a session, ex VAT.
           </p>
         </div>
       </section>
@@ -131,15 +118,6 @@ export default function MyWeekPage() {
           <p className="body">
             Teams and organisations that want to see what working with Grok Bot looks like, from someone who uses it, before anyone builds anything. Up to 20 people in the session.
           </p>
-          <p className="body">
-            It isn&apos;t for a group that wants to leave with their own workflows built. That&apos;s the Team Workflow Upgrade Session.
-          </p>
-        </div>
-      </section>
-      <section className="dark pd-calendar" id="formats">
-        <div className="wrap">
-          <h2 style={{ margin: "20px 0 28px" }}>Talk, show-and-tell or hands-on workshop</h2>
-          <CompareTable highlight="My week with Grok Bot" />
         </div>
       </section>
       <section className="p-pen">
@@ -148,36 +126,12 @@ export default function MyWeekPage() {
           <div className="faq">
             <details>
               <summary>Will my team build anything in the session?</summary>
-              <p>
-                No. This is a show-and-tell: I show, they watch and ask questions. If you want people building their own workflows, book the Team Workflow Upgrade Session.
-              </p>
-            </details>
-            <details>
-              <summary>How is this different from the lunch and learn?</summary>
-              <p>
-                The lunch and learn is a 20-minute talk on the Output Paradox, for any team size. This is 90 minutes on how I work with Grok Bot, for up to 20 people.
-              </p>
+              <p>No. This is a show-and-tell: I show, they watch and ask questions.</p>
             </details>
             <details>
               <summary>Do my team need Grok Bot to attend?</summary>
               <p>No. I show it all on my own Grok Bot, so nobody needs to switch tools to attend.</p>
             </details>
-          </div>
-        </div>
-      </section>
-      <section className="p-lightbulb after-band" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
-        <div className="wrap after">
-          <img className="stk-big" src="/v3/new/sticker-thumbs.png" alt="" />
-          <div>
-            <h2 style={{ margin: "0 0 18px" }}>After the session</h2>
-            <p className="lead">
-              If your senior people want to go from watching to building, the next step is the Team Workflow Upgrade Session: two hands-on hours where up to 8 of them build their own workflows with me. It&apos;s €4,999 for up to 8 people, ex VAT, with extra seats at €499 each up to 10.
-            </p>
-            <p style={{ marginTop: 22 }}>
-              <a className="btn ghost" href="/workshops/team-workflow-upgrade">
-                See the team session
-              </a>
-            </p>
           </div>
         </div>
       </section>
