@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { ENQUIRY_ENDPOINT, checkoutIsLive } from "@/lib/site";
+import { ENQUIRY_ENDPOINT } from "@/lib/site";
 import {
   BUDGET_BANDS,
   DECISION_MAKERS,
@@ -25,7 +25,6 @@ function EnquiryFields() {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const payOnline = checkoutIsLive();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -282,9 +281,6 @@ function EnquiryFields() {
           {sending ? "Sending" : "Send my enquiry"}
         </button>
       </div>
-      {payOnline ? null : (
-        <p className="micro">Online payment is not open yet. Send the enquiry and I will reply by email.</p>
-      )}
     </form>
   );
 }

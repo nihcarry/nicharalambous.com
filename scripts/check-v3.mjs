@@ -73,6 +73,8 @@ for (const file of walk(OUT)) {
       continue;
     }
     const source = name === "US spelling" || name === "60 minutes" ? text : html;
+    // The coaching meter uses "60 minutes" as the call length. That label is the mockup.
+    if (name === "60 minutes" && (route === "/coaching" || route.startsWith("/coaching/"))) continue;
     if (pattern.test(source)) bucket.push(`${route}: ${name}`);
   }
   const promo = body.match(/class="plain-card closing-card"[\s\S]{0,900}/);

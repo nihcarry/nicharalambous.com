@@ -8,7 +8,7 @@
     "preview:static": "node scripts/preview-static.mjs",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "node scripts/check-no-eyebrows.mjs && node scripts/inline-critical-css.mjs && node scripts/strip-emdash-html.mjs && next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"{blog.html,blog/**/*.html,archive/**/*.html}\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\" && rm -rf public/pagefind && cp -r out/pagefind public/pagefind && node scripts/check-v3.mjs",
+    "postbuild": "node scripts/check-no-eyebrows.mjs && node scripts/inline-critical-css.mjs && node scripts/strip-emdash-html.mjs && next-sitemap && cp public/sitemap*.xml public/robots.txt out/ && npx pagefind --site out --glob \"{blog.html,blog/**/*.html,archive/**/*.html}\" --exclude-selectors \"nav, footer, .studio-page, [data-pagefind-ignore]\" && rm -rf public/pagefind && cp -r out/pagefind public/pagefind && node scripts/check-v3.mjs && node scripts/check-static-assets.mjs && node scripts/check-no-tbc.mjs",
     "check:v3": "node scripts/check-v3.mjs",
     "check:eyebrows": "node scripts/check-no-eyebrows.mjs",
     "check:overflow": "node scripts/check-heading-overflow.mjs",

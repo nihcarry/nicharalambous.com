@@ -33,6 +33,23 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
+            <h2>Workshops</h2>
+            <ul>
+              <li>
+                <a href="/workshops/my-week-with-grok-bot">My week</a>
+              </li>
+              <li>
+                <a href="/workshops/team-workflow-upgrade">Team</a>
+              </li>
+              <li>
+                <a href="/workshops/executive-workflow-upgrade">Exec</a>
+              </li>
+              <li>
+                <a href="/workshops">All workshops</a>
+              </li>
+            </ul>
+          </div>
+          <div>
             <h2>Coaching</h2>
             <ul>
               <li>
@@ -42,7 +59,7 @@ export function SiteFooter() {
                 <a href={SOCIAL.nobullship}>nobullship.co</a>
               </li>
               <li>
-                <a href="/session">1:1 coaching sessions</a>
+                <a href="/coaching">Accountability business coaching</a>
               </li>
             </ul>
             <h2 className="later">Content</h2>

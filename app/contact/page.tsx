@@ -8,7 +8,7 @@ const URL = "https://www.nicharalambous.com/contact";
 export const metadata: Metadata = {
   title: { absolute: "Enquire | Nic Haralambous" },
   description:
-    "Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. Lunch and learn €999 ex VAT. Virtual keynotes from €1,500. In-person from €4,500, excluding travel and VAT.",
+    "Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. Virtual lunch and learn, 20 minutes: €999, ex VAT. Virtual keynotes from €2,000, ex VAT. In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Enquire | Nic Haralambous",
@@ -69,15 +69,15 @@ export default function ContactPage() {
               <ul className="next">
                 <li>
                   <span className="mono">€</span>
-                  Virtual lunch and learn, 20 minutes: €999
+                  Virtual lunch and learn, 20 minutes: €999, ex VAT
                 </li>
                 <li>
                   <span className="mono">€</span>
-                  Virtual keynotes, 45 minutes: from €1,500 ex VAT
+                  Virtual keynotes from €2,000, ex VAT
                 </li>
                 <li>
                   <span className="mono">€</span>
-                  In-person keynotes from €4,500, excluding travel and VAT
+                  In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.
                 </li>
               </ul>
             </div>
