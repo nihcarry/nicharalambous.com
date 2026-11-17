@@ -69,8 +69,17 @@ export default function ExecutiveWorkshopPage() {
               </div>
             </div>
           </div>
-          <div className="photo">
-            <img className="ph-exec" src="/v3/new/hero-exec-03.webp" alt="Nic Haralambous" />
+          <div className="photo photo-card">
+            <picture>
+              <source srcSet="/v3/new/exec-hero-C.webp" type="image/webp" />
+              <img
+                className="ph-exec"
+                src="/v3/new/exec-hero-C.jpg"
+                alt="Nic smiling in a grey blazer on a city street"
+                width={1500}
+                height={2200}
+              />
+            </picture>
           </div>
         </div>
       </section>
