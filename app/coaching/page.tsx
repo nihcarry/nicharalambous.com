@@ -68,7 +68,16 @@ export default function CoachingPage() {
             </div>
           </div>
           <div className="photo">
-            <img className="ph-coach" src="/v3/new/hero-coach-01.webp" alt="Nic Haralambous" />
+            <picture>
+              <source srcSet="/v3/new/coaching-hero-A.webp" type="image/webp" />
+              <img
+                className="ph-coach ph-sofa"
+                src="/v3/new/coaching-hero-A.jpg"
+                alt="Nic Haralambous on a sofa"
+                width={1200}
+                height={1754}
+              />
+            </picture>
           </div>
         </div>
       </section>

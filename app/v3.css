@@ -3844,6 +3844,28 @@ html.fullshot .sticky-book{display:none!important}
   }
 }
 
+/* Sofa portrait in the existing coaching photo slot. Full photo, face kept in frame. */
+.v3 .hero .photo img.ph-sofa {
+  mix-blend-mode: normal;
+  -webkit-mask-image: none;
+  mask-image: none;
+  object-fit: cover;
+  object-position: center top;
+  width: min(46%, 480px);
+  right: 0;
+}
+
+@media (max-width: 1100px) {
+  .v3 .hero .photo img.ph-sofa {
+    left: auto;
+    transform: none;
+    width: min(72%, 420px);
+    height: 100%;
+    max-height: 420px;
+    bottom: 0;
+  }
+}
+
 /* The full "Book a lunch and learn" label is wider than the bar once the links are still showing. */
 @media (max-width: 900px) {
   .site-nav .dt {
