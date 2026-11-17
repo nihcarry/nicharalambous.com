@@ -48,6 +48,22 @@ import {
   splitLeadingRawHtmlH1,
 } from "@/lib/blog/split-leading-heading";
 
+const OUTPUT_PARADOX_PATH = "/keynotes/output-paradox-reengage-teams";
+
+/** Link the keynote phrase in a TL;DR. Other excerpts render as plain text. */
+function tldrWithKeynoteLink(text: string) {
+  const phrase = "the Output Paradox";
+  const at = text.indexOf(phrase);
+  if (at < 0) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <a href={OUTPUT_PARADOX_PATH}>{phrase}</a>
+      {text.slice(at + phrase.length)}
+    </>
+  );
+}
+
 /* ---------- Data fetching ---------- */
 
 async function getPost(slug: string): Promise<BlogPostData | null> {
@@ -241,7 +257,7 @@ export default async function BlogPostPage({
         {post.excerpt && (
           <aside className="plain-card prose-col" style={{ marginTop: 28 }}>
             <h2 className="side-title">TL;DR</h2>
-            <p>{post.excerpt}</p>
+            <p>{tldrWithKeynoteLink(post.excerpt)}</p>
           </aside>
         )}
 
