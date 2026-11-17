@@ -35,7 +35,9 @@ export default function CoachingPage() {
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <h1 className="long">Accountability coaching for business leaders</h1>
+            <h1 className="long">
+              Accountability <em>coaching</em> for business leaders
+            </h1>
             <p className="say">
               Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT.
             </p>
