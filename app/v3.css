@@ -2114,7 +2114,7 @@ html[data-nh-consent] .consent {
   top: 140px;
   bottom: 0;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48' height='48'%3E%3Crect x='19' y='20' width='10' height='9' rx='1' fill='none' stroke='%23000' stroke-opacity='0.072' stroke-width='1.5'/%3E%3Crect x='19' y='20' width='10' height='3' rx='1' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='21' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='25.5' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='72' height='72'%3E%3Crect x='19' y='20' width='10' height='9' rx='1' fill='none' stroke='%23000' stroke-opacity='0.072' stroke-width='1.5'/%3E%3Crect x='19' y='20' width='10' height='3' rx='1' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='21' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='25.5' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3C/svg%3E");
   background-size: 72px 72px;
 }
 
@@ -3710,6 +3710,11 @@ html.fullshot .sticky-book{display:none!important}
 .v3 .dark .cmp thead th.hl{color:var(--blue2)}
 .v3 .p-pen .cmp th,.v3 .p-pen .cmp td{border-top-color:#d8d1c2}
 .v3 .p-pen .cmp td{color:#3b3f49}
+.v3 .cmp-panel{background:var(--ink);padding:8px 12px 12px;margin-top:4px}
+.v3 .p-pen .cmp-panel .cmp th,.v3 .p-pen .cmp-panel .cmp td{border-top-color:#2e3442;color:#c9cdd6}
+.v3 .p-pen .cmp-panel .cmp thead th{color:#edeef2}
+.v3 .p-pen .cmp-panel .cmp tbody th{color:#9aa0ae}
+.v3 .p-pen .cmp-panel .cmp td::before{color:var(--blue2)}
 @media (max-width:700px){.v3 .cmp thead{display:none}.v3 .cmp,.v3 .cmp tbody,.v3 .cmp tr,.v3 .cmp th,.v3 .cmp td{display:block;width:100%}
 .v3 .cmp tr{padding:12px 0;border-top:1px solid #2e3442}.v3 .cmp tbody th{padding:4px 0;border:0;width:auto}
 .v3 .cmp td{border:0;padding:4px 0 4px 0}.v3 .cmp td::before{content:attr(data-col);display:block;font-family:var(--mono);font-size:12px;color:var(--blue2)}.v3 .cmp .hl{background:none}
@@ -3847,20 +3852,56 @@ html.fullshot .sticky-book{display:none!important}
 /* Coaching hero, option A. A portrait card in the photo column, not a cutout. */
 @media (min-width: 1101px) {
   .v3 .hero.op:has(.photo.photo-card) .wrap {
+    display: grid;
     grid-template-columns: minmax(0, 1fr) 460px;
+    grid-template-rows: 110px auto auto auto auto 72px;
+    column-gap: 24px;
+    row-gap: 0;
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  .v3 .hero.op:has(.photo.photo-card) .copy {
+    display: contents;
+    padding: 0;
+  }
+
+  .v3 .hero.op:has(.photo.photo-card) h1 {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+    align-self: start;
+  }
+
+  .v3 .hero.op:has(.photo.photo-card) .say {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .v3 .hero.op:has(.photo.photo-card) .book {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .v3 .hero.op:has(.photo.photo-card) .meter {
+    grid-column: 1;
+    grid-row: 5;
+    margin-bottom: 0;
+    align-self: end;
   }
 
   .v3 .hero.op .photo.photo-card {
+    grid-column: 2;
+    grid-row: 2 / 6;
     position: relative;
     align-self: stretch;
+    height: auto;
+    min-height: 0;
   }
 
   .v3 .hero.op .photo.photo-card picture {
     position: absolute;
-    top: 110px;
-    right: 0;
-    bottom: 72px;
-    left: 0;
+    inset: 0;
     width: auto;
     height: auto;
     aspect-ratio: auto;
@@ -3967,10 +4008,7 @@ html.fullshot .sticky-book{display:none!important}
 
 @media (min-width: 1100px) {
   .v3 .hero.hub.wf .hub-grid {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(#171a22 1px, transparent 1px), linear-gradient(90deg, #171a22 1px, transparent 1px);
-    background-size: 48px 48px;
+    display: none;
   }
 
   .v3 .hero.hub.wf .hub-fade {

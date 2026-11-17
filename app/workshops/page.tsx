@@ -37,7 +37,9 @@ export default function WorkshopsPage() {
         <div className="hub-fade" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
-            <h1>Grok Bot workshops</h1>
+            <h1>
+              <em>Grok Bot</em> workshops
+            </h1>
             <p className="say">
               Three sessions. My week with Grok Bot, the Team Workflow Upgrade Session and the Executive Workflow Upgrade Session. Virtual by default. In person is possible, with travel extra.
             </p>
@@ -111,7 +113,9 @@ export default function WorkshopsPage() {
       <section className="p-pen" style={{ background: "var(--paper2)" }}>
         <div className="wrap">
           <h2 style={{ margin: "20px 0 22px" }}>How the sessions compare</h2>
-          <CompareTable />
+          <div className="cmp-panel">
+            <CompareTable />
+          </div>
         </div>
       </section>
       <div className="ip pd-calendar">
