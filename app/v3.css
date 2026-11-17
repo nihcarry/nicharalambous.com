@@ -3844,25 +3844,442 @@ html.fullshot .sticky-book{display:none!important}
   }
 }
 
-/* Sofa portrait in the existing coaching photo slot. Full photo, face kept in frame. */
-.v3 .hero .photo img.ph-sofa {
-  mix-blend-mode: normal;
-  -webkit-mask-image: none;
-  mask-image: none;
-  object-fit: cover;
-  object-position: center top;
-  width: min(46%, 480px);
-  right: 0;
+/* Coaching hero, option A. A portrait card in the photo column, not a cutout. */
+@media (min-width: 1101px) {
+  .v3 .hero.op:has(.photo.photo-card) .wrap {
+    grid-template-columns: minmax(0, 1fr) 460px;
+  }
+
+  .v3 .hero.op .photo.photo-card {
+    position: relative;
+    align-self: stretch;
+  }
+
+  .v3 .hero.op .photo.photo-card picture {
+    position: absolute;
+    top: 110px;
+    right: 0;
+    bottom: 72px;
+    left: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: 7 / 10;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-coach {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 45% 30%;
+    border-radius: 18px;
+    mix-blend-mode: normal;
+    -webkit-mask-image: none;
+    mask-image: none;
+    transform: none;
+  }
 }
 
 @media (max-width: 1100px) {
-  .v3 .hero .photo img.ph-sofa {
-    left: auto;
-    transform: none;
-    width: min(72%, 420px);
+  .v3 .hero.op .photo.photo-card {
+    position: relative;
+    order: -1;
+    height: 360px;
+    margin: 8px -48px 0;
+  }
+
+  .v3 .hero.op .photo.photo-card picture {
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    left: 22px;
+    right: 22px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .v3 .hero.op .photo.photo-card img.ph-coach {
+    position: absolute;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    max-height: 420px;
-    bottom: 0;
+    max-width: none;
+    object-fit: cover;
+    object-position: 45% 30%;
+    border-radius: 16px;
+    mix-blend-mode: normal;
+    -webkit-mask-image: none;
+    mask-image: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .v3 .hero.op .photo.photo-card {
+    height: 332px;
+    margin: 8px -22px 0;
+  }
+}
+
+/* Workshops hub: the workflow map replaces the photo. */
+.v3 .hero.hub.wf {
+  background-color: #0b0c10;
+}
+
+.v3 .hero.hub.wf .hub-grid,
+.v3 .hero.hub.wf .hub-fade,
+.v3 .hero.hub.wf .wf-stage {
+  pointer-events: none;
+}
+
+.v3 .hero.hub.wf .wrap {
+  position: relative;
+  z-index: 3;
+}
+
+@media (min-width: 1100px) {
+  .v3 .hero.hub.wf .hub-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(#171a22 1px, transparent 1px), linear-gradient(90deg, #171a22 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .v3 .hero.hub.wf .hub-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(90deg, #0b0c10 0%, #0b0c10 32%, rgba(11, 12, 16, 0.55) 48%, rgba(11, 12, 16, 0) 64%);
+  }
+
+  .v3 .hero.hub.wf .copy {
+    max-width: 520px;
+  }
+
+  .v3 .hero.hub.wf .wf-stage {
+    position: absolute;
+    z-index: 1;
+    top: 72px;
+    right: max(48px, calc((100% - 1240px) / 2));
+    width: min(560px, 42vw);
+    padding-bottom: 148px;
+  }
+}
+
+@media (max-width: 1099px) {
+  .v3 .hero.hub.wf .hub-fade {
+    display: none;
+  }
+
+  .v3 .hero.hub.wf .hub-grid {
+    display: none;
+  }
+
+  .v3 .hero.hub.wf .wrap {
+    min-height: 0;
+  }
+
+  .v3 .hero.hub.wf .copy {
+    padding-top: 8px;
+  }
+
+  .v3 .hero.hub.wf .wf-stage {
+    position: relative;
+    z-index: 1;
+    margin: 22px 48px 0;
+    padding: 8px 0 18px;
+    background-image: linear-gradient(#171a22 1px, transparent 1px), linear-gradient(90deg, #171a22 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .v3 .hero.hub.wf .wf-stage {
+    margin: 16px 22px 0;
+  }
+}
+
+.v3 .wf-map {
+  background: #11131a;
+  border: 1px solid #2a2e3a;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  color: #f2f2f5;
+}
+
+.v3 .wf-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid #2a2e3a;
+}
+
+.v3 .wf-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.v3 .wf-edited {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a8f9c;
+  white-space: nowrap;
+}
+
+.v3 .wf-map table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.v3 .wf-map th,
+.v3 .wf-map td {
+  text-align: left;
+  font-weight: 400;
+  padding: 16px 10px 16px 0;
+  border-bottom: 1px solid #22252f;
+  vertical-align: middle;
+}
+
+.v3 .wf-map thead th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a8f9c;
+}
+
+.v3 .wf-map th:first-child,
+.v3 .wf-map td:first-child,
+.v3 .wf-map thead th:first-child {
+  padding-left: 22px;
+}
+
+.v3 .wf-map tbody tr:last-child th,
+.v3 .wf-map tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.v3 .wf-map .wf-today,
+.v3 .wf-map .wf-owner {
+  color: #b9bdc8;
+}
+
+.v3 .wf-map .wf-after {
+  color: #cfdcff;
+}
+
+.v3 .wf-map tr.is-on th,
+.v3 .wf-map tr.is-on td {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.v3 .wf-map tr.is-on th {
+  box-shadow: inset 3px 0 0 #2563eb;
+}
+
+.v3 .wf-short {
+  display: none;
+}
+
+.v3 .wf-caret {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  margin-left: 3px;
+  background: #3b82f6;
+  vertical-align: text-bottom;
+  animation: wf-caret 1s steps(1) infinite;
+}
+
+@keyframes wf-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3 .wf-caret {
+    animation: none;
+  }
+}
+
+.v3 .wf-stage {
+  position: relative;
+}
+
+.v3 .wf-cursor {
+  position: absolute;
+  right: 18px;
+  bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.v3 .wf-cursor span {
+  margin-left: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+}
+
+.v3 .wf-chip {
+  position: absolute;
+  left: 22%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #11131a;
+  border: 1px solid #2a2e3a;
+  padding: 12px 18px 12px 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.v3 .wf-chip picture,
+.v3 .wf-chip img {
+  width: 52px;
+  height: 52px;
+  max-width: none;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  flex: none;
+}
+
+.v3 .wf-chip p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v3 .wf-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.v3 .wf-role,
+.v3 .wf-role-m {
+  font-size: 13px;
+  color: #9db8ff;
+}
+
+.v3 .wf-role-m {
+  display: none;
+}
+
+@media (max-width: 1099px) {
+  .v3 .wf-stage {
+    padding-bottom: 16px;
+  }
+
+  .v3 .wf-edited,
+  .v3 .wf-cursor,
+  .v3 .wf-full {
+    display: none;
+  }
+
+  .v3 .wf-short {
+    display: inline;
+    color: #cfdcff;
+  }
+
+  .v3 .wf-head {
+    padding: 12px 14px;
+  }
+
+  .v3 .wf-title {
+    font-size: 12px;
+  }
+
+  .v3 .wf-map table,
+  .v3 .wf-map tbody,
+  .v3 .wf-map tr,
+  .v3 .wf-map th,
+  .v3 .wf-map td {
+    display: block;
+  }
+
+  .v3 .wf-map tr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .v3 .wf-map th,
+  .v3 .wf-map td {
+    width: auto;
+    border-bottom: 0;
+    padding: 12px 14px;
+  }
+
+  .v3 .wf-map td.wf-after {
+    padding-left: 0;
+    text-align: right;
+  }
+
+  .v3 .wf-map tr {
+    border-bottom: 1px solid #22252f;
+  }
+
+  .v3 .wf-map tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .v3 .wf-chip {
+    left: auto;
+    right: 0;
+    bottom: 10px;
+    gap: 10px;
+    padding: 8px 14px 8px 8px;
+  }
+
+  .v3 .wf-chip picture,
+  .v3 .wf-chip img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .v3 .wf-name,
+  .v3 .wf-role {
+    display: none;
+  }
+
+  .v3 .wf-role-m {
+    display: inline;
+    font-size: 12px;
+  }
+
+  .v3 .wf-map thead,
+  .v3 .wf-map .wf-today,
+  .v3 .wf-map .wf-owner,
+  .v3 .wf-map tr.wf-desk {
+    display: none;
+  }
+
+  .v3 .wf-map {
+    margin-bottom: 8px;
   }
 }
 

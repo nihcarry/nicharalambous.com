@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { CompareTable } from "@/components/site/compare-table";
 import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { WorkflowMap } from "@/components/site/workflow-map";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { breadcrumbJsonLd } from "@/lib/metadata";
 import { PATHS } from "@/lib/offers";
@@ -30,9 +31,10 @@ export default function WorkshopsPage() {
           { name: "Workshops", path: PATH },
         ])}
       />
-      <section className="hero hub pd-spotlight" style={{ ["--hub" as string]: "url(/v3/new/hub-15.jpg)" }}>
-        <div className="hub-bg" aria-hidden="true" />
-        <div className="glow" aria-hidden="true" />
+      <section className="hero hub wf pd-spotlight">
+        <div className="hub-grid" aria-hidden="true" />
+        <WorkflowMap />
+        <div className="hub-fade" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
             <h1>Grok Bot workshops</h1>

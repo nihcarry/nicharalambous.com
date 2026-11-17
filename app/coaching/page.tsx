@@ -67,11 +67,11 @@ export default function CoachingPage() {
               </div>
             </div>
           </div>
-          <div className="photo">
+          <div className="photo photo-card">
             <picture>
               <source srcSet="/v3/new/coaching-hero-A.webp" type="image/webp" />
               <img
-                className="ph-coach ph-sofa"
+                className="ph-coach"
                 src="/v3/new/coaching-hero-A.jpg"
                 alt="Nic Haralambous on a sofa"
                 width={1200}
