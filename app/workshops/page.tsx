@@ -86,7 +86,7 @@ export default function WorkshopsPage() {
               <div className="price">
                 €2,999<span>per session, ex VAT</span>
               </div>
-              <CheckoutButton id="buy-my-week-hub" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+              <CheckoutButton id="buy-my-week-hub" offer="my-week-with-grok-bot" label="Request a session" />
               <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
                 See the session
               </a>
@@ -102,7 +102,7 @@ export default function WorkshopsPage() {
               <div className="price">
                 €4,999<span>per session, up to 8 people, ex VAT</span>
               </div>
-              <CheckoutButton id="buy-team-hub" offer="team-workflow-upgrade" label="Buy the team session" />
+              <CheckoutButton id="buy-team-hub" offer="team-workflow-upgrade" label="Request a session" />
               <a className="quiet-link fmt-see" href="/workshops/team-workflow-upgrade">
                 See the session
               </a>

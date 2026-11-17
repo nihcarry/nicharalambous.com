@@ -53,7 +53,7 @@ export default function MyWeekPage() {
                 </div>
               </div>
               <div className="acts">
-                <CheckoutButton id="buy-my-week-with-grok-bot" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+                <CheckoutButton id="buy-my-week-with-grok-bot" offer="my-week-with-grok-bot" label="Request a session" />
                 <IntroCallLink />
               </div>
             </div>
@@ -174,7 +174,7 @@ export default function MyWeekPage() {
             <h2>My week with Grok Bot</h2>
             <p className="final-sub">90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>
-              <CheckoutButton id="buy-my-week-final" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+              <CheckoutButton id="buy-my-week-final" offer="my-week-with-grok-bot" label="Request a session" />
               <IntroCallLink />
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function MyWeekPage() {
         title="My week with Grok Bot"
         detail="€2,999, ex VAT"
         offer="my-week-with-grok-bot"
-        label="Buy"
+        label="Request a session"
         id="buy-my-week-sticky"
       />
     </div>

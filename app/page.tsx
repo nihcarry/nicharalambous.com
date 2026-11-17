@@ -176,7 +176,7 @@ export default async function HomePage() {
                 <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" variant="link" />
+                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Request a session" variant="link" />
                 <a className="session-link" href="/workshops/my-week-with-grok-bot">See the session</a>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default async function HomePage() {
                 <li>€499 per extra seat, up to 10</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Buy the team session" variant="link" />
+                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Request a session" variant="link" />
                 <a className="session-link" href="/workshops/team-workflow-upgrade">See the session</a>
               </div>
             </div>
