@@ -14,13 +14,13 @@ const valid = {
   honey: "",
 };
 
-test("team and my week buttons go to the request form, Stripe offers do not", () => {
+test("team and my week buttons go to the request form, Stripe offers go to Stripe", () => {
   assert.equal(checkoutHref("team-workflow-upgrade"), "/workshops/request-a-session?offer=team");
   assert.equal(checkoutHref("my-week-with-grok-bot"), "/workshops/request-a-session?offer=my-week");
   assert.equal(isEnquiryOffer("accountability-coaching"), false);
   assert.equal(isEnquiryOffer("executive-workflow-upgrade"), false);
-  assert.equal(checkoutHref("accountability-coaching"), "");
-  assert.equal(checkoutHref("executive-workflow-upgrade"), "");
+  assert.match(checkoutHref("accountability-coaching"), /^https:\/\/buy\.stripe\.com\//);
+  assert.match(checkoutHref("executive-workflow-upgrade"), /^https:\/\/buy\.stripe\.com\//);
 });
 
 test("valid request passes and carries the offer", () => {

@@ -10,11 +10,12 @@
  *
  * Tax on every link, once created: exclusive of VAT.
  *
+ * Live links (OGC Products, created 17 Nov 2026 with Nic's yes):
+ * - executive-workflow-upgrade: prod_Ve6VIACchTYnVv, plink_1UcoIyF8qci2BYDcM5NS5Ntm.
+ * - accountability-coaching: prod_Ve6VOLIs9VrG2e, plink_1UcoIrF8qci2BYDcfhjoLIM1.
+ *
  * Links to create later:
  * - lunch-and-learn: €999, one payment, 20-minute virtual lunch and learn.
- * - executive-workflow-upgrade: €1,499, one payment, one person.
- * - accountability-coaching: €399 every month, a recurring price. Not the
- *   No Bull Ship Private Accountabull Coach.
  * - team-workflow-upgrade and my-week-with-grok-bot: no Stripe link. These
  *   are sold by enquiry (see ENQUIRY_OFFERS below). Keep their values empty.
  */
@@ -22,9 +23,9 @@
 export const CHECKOUT_LINKS = {
   "lunch-and-learn": "",
   "team-workflow-upgrade": "",
-  "executive-workflow-upgrade": "",
+  "executive-workflow-upgrade": "https://buy.stripe.com/8x2eVdfjI0toaT0gOC2wU0c",
   "my-week-with-grok-bot": "",
-  "accountability-coaching": "",
+  "accountability-coaching": "https://buy.stripe.com/28E9AT6Nc5NIgdkaqe2wU0b",
 } as const;
 
 export type CheckoutOffer = keyof typeof CHECKOUT_LINKS;
