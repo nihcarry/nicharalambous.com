@@ -10,29 +10,57 @@
  *
  * Tax on every link, once created: exclusive of VAT.
  *
+ * Live links (OGC Products, created 17 Nov 2026 with Nic's yes):
+ * - executive-workflow-upgrade: prod_Ve6VIACchTYnVv, plink_1UcoIyF8qci2BYDcM5NS5Ntm.
+ * - accountability-coaching: prod_Ve6VOLIs9VrG2e, plink_1UcoIrF8qci2BYDcfhjoLIM1.
+ *
  * Links to create later:
  * - lunch-and-learn: €999, one payment, 20-minute virtual lunch and learn.
- * - executive-workflow-upgrade: €1,499, one payment, one person.
- * - my-week-with-grok-bot: €2,999, one payment, one session, up to 20 people.
- * - accountability-coaching: €399 every month, a recurring price. Not the
- *   No Bull Ship Private Accountabull Coach.
- * - team-workflow-upgrade: no URL yet. Do not create this link in code.
- *   When it is created: a €4,999 base (up to 8 people) plus an optional
- *   €499 extra-seat line with quantity 0 to 2, so the room can reach 10.
- *   Tax exclusive. One company per booking. No discount or promo code.
+ * - team-workflow-upgrade and my-week-with-grok-bot: no Stripe link. These
+ *   are sold by enquiry (see ENQUIRY_OFFERS below). Keep their values empty.
  */
 
 export const CHECKOUT_LINKS = {
   "lunch-and-learn": "",
   "team-workflow-upgrade": "",
-  "executive-workflow-upgrade": "",
+  "executive-workflow-upgrade": "https://buy.stripe.com/8x2eVdfjI0toaT0gOC2wU0c",
   "my-week-with-grok-bot": "",
-  "accountability-coaching": "",
+  "accountability-coaching": "https://buy.stripe.com/28E9AT6Nc5NIgdkaqe2wU0b",
 } as const;
 
 export type CheckoutOffer = keyof typeof CHECKOUT_LINKS;
 
-/** Empty string until the matching Payment Link exists. */
+/**
+ * Offers sold by enquiry, not Stripe (Nic, 17 Nov 2026: "Stripe for coaching
+ * and Exec, enquiry form for Team and My Week"). Their buttons open the
+ * session request form, which emails Nic through the same FormSubmit
+ * endpoint as /contact. The value is the short code sent as the hidden
+ * `offer` field.
+ */
+export const ENQUIRY_OFFERS = {
+  "team-workflow-upgrade": "team",
+  "my-week-with-grok-bot": "my-week",
+} as const satisfies Partial<Record<CheckoutOffer, string>>;
+
+export type EnquiryOffer = keyof typeof ENQUIRY_OFFERS;
+
+export const SESSION_REQUEST_PATH = "/workshops/request-a-session";
+
+export const SESSION_REQUEST_LABEL = "Request a session";
+
+export function isEnquiryOffer(offer: CheckoutOffer): offer is EnquiryOffer {
+  return offer in ENQUIRY_OFFERS;
+}
+
+export function sessionRequestHref(offer: EnquiryOffer): string {
+  return `${SESSION_REQUEST_PATH}?offer=${ENQUIRY_OFFERS[offer]}`;
+}
+
+/**
+ * Where a buy button goes. Enquiry offers go to the request form.
+ * Stripe offers return their Payment Link, or "" until it exists.
+ */
 export function checkoutHref(offer: CheckoutOffer): string {
+  if (isEnquiryOffer(offer)) return sessionRequestHref(offer);
   return CHECKOUT_LINKS[offer].trim();
 }

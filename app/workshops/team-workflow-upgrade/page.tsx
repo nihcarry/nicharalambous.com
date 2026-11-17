@@ -54,7 +54,7 @@ export default function TeamWorkshopPage() {
                 </div>
               </div>
               <div className="acts">
-                <CheckoutButton id="buy-team-workflow-upgrade" offer="team-workflow-upgrade" label="Buy the team session" />
+                <CheckoutButton id="buy-team-workflow-upgrade" offer="team-workflow-upgrade" label="Request a session" />
                 <IntroCallLink />
               </div>
             </div>
@@ -176,7 +176,7 @@ export default function TeamWorkshopPage() {
               <div className="price">
                 €2,999<span>per session, ex VAT</span>
               </div>
-              <CheckoutButton id="buy-my-week-on-team" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+              <CheckoutButton id="buy-my-week-on-team" offer="my-week-with-grok-bot" label="Request a session" />
               <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
                 See the session
               </a>
@@ -192,7 +192,7 @@ export default function TeamWorkshopPage() {
               <div className="price">
                 €4,999<span>per session, up to 8 people, ex VAT</span>
               </div>
-              <CheckoutButton id="buy-team-on-team" offer="team-workflow-upgrade" label="Buy the team session" />
+              <CheckoutButton id="buy-team-on-team" offer="team-workflow-upgrade" label="Request a session" />
             </div>
             <div className="fmt">
               <h3>Executive Workflow Upgrade Session</h3>
@@ -283,7 +283,7 @@ export default function TeamWorkshopPage() {
             <h2>Team Workflow Upgrade Session</h2>
             <p className="final-sub">2 hours, up to 8 senior leaders, €4,999 per session, ex VAT. Extra seats €499, up to 10.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>
-              <CheckoutButton id="buy-team-final" offer="team-workflow-upgrade" label="Buy the team session" />
+              <CheckoutButton id="buy-team-final" offer="team-workflow-upgrade" label="Request a session" />
               <IntroCallLink />
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function TeamWorkshopPage() {
         title="Team Workflow Upgrade Session"
         detail="Up to 8 people, €4,999"
         offer="team-workflow-upgrade"
-        label="Buy"
+        label="Request a session"
         id="buy-team-sticky"
       />
     </div>

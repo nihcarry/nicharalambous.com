@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CheckoutButton } from "@/components/site/checkout-cta";
+import { isEnquiryOffer } from "@/lib/checkout-links";
 
 /** Mobile bar. Hidden until the hero has left the viewport. */
 export function StickyBookBar({
@@ -43,7 +44,7 @@ export function StickyBookBar({
   }, []);
 
   return (
-    <div className="sticky-book" hidden={!visible}>
+    <div className={!href && isEnquiryOffer(offer) ? "sticky-book sticky-request" : "sticky-book"} hidden={!visible}>
       <span className="t">
         <b>{title}</b>
         {detail}

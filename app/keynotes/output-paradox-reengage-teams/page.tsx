@@ -353,13 +353,13 @@ export default async function OutputParadoxPage() {
                 <p>
                   <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
                 </p>
-                <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Buy My week with Grok Bot" />
+                <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Request a session" />
               </div>
               <div>
                 <p>
                   <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders from one company, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Each person builds their own workflow in Grok Bot. The lunch and learn is a 20-minute talk for everyone; this is two hours of building for your senior team.
                 </p>
-                <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Buy the team session" />
+                <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Request a session" />
               </div>
               <div>
                 <p>
