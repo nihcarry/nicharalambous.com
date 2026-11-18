@@ -11,12 +11,12 @@ const PATH = PATHS.workshops;
 const URL = `https://www.nicharalambous.com${PATH}`;
 
 export const metadata: Metadata = {
-  title: "Grok Bot workshops",
+  title: "AI workshops",
   description:
-    "Three virtual Grok Bot sessions: My week with Grok Bot at €2,999, the Team Workflow Upgrade Session from €4,999, and the Executive Workflow Upgrade Session at €1,499. All ex VAT.",
+    "Three virtual Grok Bot sessions: My week with AI at €2,999, the Team Workflow Upgrade Session from €4,999, and the Executive Workflow Upgrade Session at €1,499. All ex VAT.",
   alternates: { canonical: URL },
   openGraph: {
-    title: "Grok Bot workshops | Nic Haralambous",
+    title: "AI workshops | Nic Haralambous",
     description: "Watch, build, or upgrade. Virtual by default.",
     url: URL,
   },
@@ -38,10 +38,10 @@ export default function WorkshopsPage() {
         <div className="wrap">
           <div className="copy">
             <h1>
-              <em>Grok Bot</em> workshops
+              <em>AI</em> workshops
             </h1>
             <p className="say">
-              Three sessions. My week with Grok Bot, the Team Workflow Upgrade Session and the Executive Workflow Upgrade Session. Virtual by default. In person is possible, with travel extra.
+              Three sessions. My week with AI, the Team Workflow Upgrade Session and the Executive Workflow Upgrade Session. Virtual by default. In person is possible, with travel extra.
             </p>
             <div className="acts" style={{ marginTop: 8 }}>
               <a className="btn btn-wrap" href="#formats">
@@ -76,7 +76,7 @@ export default function WorkshopsPage() {
             </div>
             <div className="fmt has-fstk">
               <img className="fmt-stk" src="/v3/new/sticker-thumbs.png" alt="" />
-              <h3>My week with Grok Bot</h3>
+              <h3>My week with AI</h3>
               <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
                 <li>90 minutes</li>
@@ -87,7 +87,7 @@ export default function WorkshopsPage() {
                 €2,999<span>per session, ex VAT</span>
               </div>
               <CheckoutButton id="buy-my-week-hub" offer="my-week-with-grok-bot" label="Request a session" />
-              <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
+              <a className="quiet-link fmt-see" href="/workshops/my-week-with-ai">
                 See the session
               </a>
             </div>
@@ -139,7 +139,7 @@ export default function WorkshopsPage() {
           </div>
         </div>
       </section>
-      <StickyBookBar title="Grok Bot workshops" detail="From €1,499, ex VAT" href="#formats" label="See sessions" id="hub-sticky" />
+      <StickyBookBar title="AI workshops" detail="From €1,499, ex VAT" href="#formats" label="See sessions" id="hub-sticky" />
     </div>
   );
 }

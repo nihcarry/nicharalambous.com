@@ -12,7 +12,7 @@ const KEYNOTE_LINKS = [
 ];
 
 const WORKSHOP_LINKS = [
-  { href: "/workshops/my-week-with-grok-bot", label: "My week" },
+  { href: "/workshops/my-week-with-ai", label: "My week" },
   { href: "/workshops/team-workflow-upgrade", label: "Team" },
   { href: "/workshops/executive-workflow-upgrade", label: "Exec" },
   { href: "/workshops", label: "All workshops" },

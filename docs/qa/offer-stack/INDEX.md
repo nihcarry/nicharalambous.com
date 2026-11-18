@@ -24,7 +24,7 @@ There is no hosted preview. CI uploads a static-site artifact on the pull reques
 - /workshops/team-workflow-upgrade at 390px: docs/qa/offer-stack/team-workshop-390.png
 - /workshops/executive-workflow-upgrade at 1440px: docs/qa/offer-stack/executive-workshop-1440.png
 - /workshops/executive-workflow-upgrade at 390px: docs/qa/offer-stack/executive-workshop-390.png
-- /workshops/my-week-with-grok-bot at 1440px: docs/qa/offer-stack/grok-week-1440.png
-- /workshops/my-week-with-grok-bot at 390px: docs/qa/offer-stack/grok-week-390.png
+- /workshops/my-week-with-ai at 1440px: docs/qa/offer-stack/grok-week-1440.png
+- /workshops/my-week-with-ai at 390px: docs/qa/offer-stack/grok-week-390.png
 
 No horizontal overflow on these screenshots.

@@ -1,6 +1,6 @@
 /**
  * Session request form for the two workshops sold by enquiry:
- * Team Workflow Upgrade Session and My week with Grok Bot.
+ * Team Workflow Upgrade Session and My week with AI.
  * Posts to the same FormSubmit endpoint as /contact (ENQUIRY_ENDPOINT).
  */
 
@@ -12,7 +12,7 @@ export const SESSION_OFFERS = [
   },
   {
     value: "my-week",
-    title: "My week with Grok Bot",
+    title: "My week with AI",
     detail: "90 minutes, up to 20 people, €2,999 per session, ex VAT.",
   },
 ] as const;

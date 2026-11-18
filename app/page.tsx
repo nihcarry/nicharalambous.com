@@ -169,7 +169,7 @@ export default async function HomePage() {
             </div>
             <div className="pl gb">
               <img className="pxi stk-card" src="/v3/new/sticker-laptop.png" alt="Emoji-style Nic with a laptop" width={160} height={160} />
-              <h3>My week with Grok Bot</h3>
+              <h3>My week with AI</h3>
               <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
                 <li>90 minutes, up to 20 people</li>
@@ -178,7 +178,7 @@ export default async function HomePage() {
               </ul>
               <div className="card-links">
                 <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Request a session" variant="link" />
-                <a className="session-link" href="/workshops/my-week-with-grok-bot">See the session</a>
+                <a className="session-link" href="/workshops/my-week-with-ai">See the session</a>
               </div>
             </div>
             <div className="pl">

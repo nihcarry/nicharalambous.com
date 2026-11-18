@@ -11,7 +11,7 @@ const pages = [
   ["home", "/"],
   ["output-paradox", "/keynotes/output-paradox-reengage-teams"],
   ["workshops", "/workshops"],
-  ["my-week", "/workshops/my-week-with-grok-bot"],
+  ["my-week", "/workshops/my-week-with-ai"],
   ["team", "/workshops/team-workflow-upgrade"],
   ["exec", "/workshops/executive-workflow-upgrade"],
   ["coaching", "/coaching"],

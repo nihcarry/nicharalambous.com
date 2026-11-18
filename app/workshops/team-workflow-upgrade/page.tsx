@@ -87,10 +87,10 @@ export default function TeamWorkshopPage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT.
+            <b>My week with AI.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT.
           </span>
-          <a className="link" href="/workshops/my-week-with-grok-bot" style={{ color: "#fff" }}>
-            See My week with Grok Bot
+          <a className="link" href="/workshops/my-week-with-ai" style={{ color: "#fff" }}>
+            See My week with AI
           </a>
         </div>
       </div>
@@ -175,7 +175,7 @@ export default function TeamWorkshopPage() {
           <h2 style={{ margin: "20px 0 18px" }}>Three ways to work with Grok Bot</h2>
           <div className="formats">
             <div className="fmt">
-              <h3>My week with Grok Bot</h3>
+              <h3>My week with AI</h3>
               <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
                 <li>90 minutes</li>
@@ -186,7 +186,7 @@ export default function TeamWorkshopPage() {
                 €2,999<span>per session, ex VAT</span>
               </div>
               <CheckoutButton id="buy-my-week-on-team" offer="my-week-with-grok-bot" label="Request a session" />
-              <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
+              <a className="quiet-link fmt-see" href="/workshops/my-week-with-ai">
                 See the session
               </a>
             </div>

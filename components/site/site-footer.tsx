@@ -36,7 +36,7 @@ export function SiteFooter() {
             <h2>Workshops</h2>
             <ul>
               <li>
-                <a href="/workshops/my-week-with-grok-bot">My week</a>
+                <a href="/workshops/my-week-with-ai">My week</a>
               </li>
               <li>
                 <a href="/workshops/team-workflow-upgrade">Team</a>

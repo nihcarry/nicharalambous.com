@@ -14,7 +14,7 @@ export const PATHS = {
   workshops: "/workshops",
   team: "/workshops/team-workflow-upgrade",
   executive: "/workshops/executive-workflow-upgrade",
-  grokWeek: "/workshops/my-week-with-grok-bot",
+  grokWeek: "/workshops/my-week-with-ai",
   coaching: "/coaching",
 } as const;
 
@@ -85,7 +85,7 @@ export function grokWeekJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "My week with Grok Bot",
+    name: "My week with AI",
     serviceType: "Workshop",
     description:
       "A 90-minute show-and-tell for up to 20 people. €2,999 per session, excluding VAT. Virtual by default.",

@@ -3,7 +3,7 @@
 import { useState, type KeyboardEvent } from "react";
 
 /** Content Studio comparison. data-col drives the stacked mobile layout. */
-const COLS = ["Executive Workflow Upgrade Session", "My week with Grok Bot", "Team Workflow Upgrade Session"] as const;
+const COLS = ["Executive Workflow Upgrade Session", "My week with AI", "Team Workflow Upgrade Session"] as const;
 const TAB_IDS = ["exec", "my-week", "team"] as const;
 const TAB_LABELS = ["Exec", "My Week", "Team"] as const;
 const ROWS: { label: string; cells: string[] }[] = [

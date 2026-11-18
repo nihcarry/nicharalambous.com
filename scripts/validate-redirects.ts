@@ -181,6 +181,11 @@ function assertHandler(source: string, redirects: Map<string, string>, errors: s
     errors.push("Trailing-slash WordPress slugs must 301 to the current blog post.");
   }
 
+  const grokWeekSlash = runHandler(handler, "/workshops/my-week-with-grok-bot/");
+  if (grokWeekSlash.statusCode !== 301 || grokWeekSlash.headers?.location?.value !== "/workshops/my-week-with-ai") {
+    errors.push("Trailing-slash form of /workshops/my-week-with-grok-bot must 301 to /workshops/my-week-with-ai.");
+  }
+
   const rsc = runHandler(handler, "/about", "www.nicharalambous.com", "text/x-component");
   if (rsc.statusCode || rsc.uri !== "/about.txt") {
     errors.push("Accept: text/x-component must rewrite extensionless paths to .txt.");
@@ -233,6 +238,18 @@ function main() {
         errors.push(`public/decision-trackr/privacy.html is missing: ${snippet}`);
       }
     }
+  }
+
+  const grokWeekOld = "/workshops/my-week-with-grok-bot";
+  const grokWeekNew = "/workshops/my-week-with-ai";
+  if (redirects.get(grokWeekOld) !== grokWeekNew) {
+    errors.push(`Expected ${grokWeekOld} to 301 to ${grokWeekNew}, got ${redirects.get(grokWeekOld) ?? "(missing)"}`);
+  }
+  if (existsSync(join(process.cwd(), "app", "workshops", "my-week-with-grok-bot", "page.tsx"))) {
+    errors.push("app/workshops/my-week-with-grok-bot/page.tsx must stay deleted so the static export does not overwrite the 301.");
+  }
+  if (!existsSync(join(process.cwd(), "app", "workshops", "my-week-with-ai", "page.tsx"))) {
+    errors.push("app/workshops/my-week-with-ai/page.tsx is missing. The redirect destination has no page.");
   }
 
   if (existsSync(RETIRED_SPEAKER) || existsSync(RETIRED_KEYNOTES) || existsSync(RETIRED_BUSINESSES)) {

@@ -15,7 +15,7 @@ const pages = [
   ["workshops", "/workshops"],
   ["team-workshop", "/workshops/team-workflow-upgrade"],
   ["executive-workshop", "/workshops/executive-workflow-upgrade"],
-  ["grok-week", "/workshops/my-week-with-grok-bot"],
+  ["grok-week", "/workshops/my-week-with-ai"],
 ];
 const widths = [1440, 390];
 

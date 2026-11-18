@@ -163,7 +163,7 @@ function pages() {
     ["workshops", "/workshops"],
     ["team-workshop", "/workshops/team-workflow-upgrade"],
     ["executive-workshop", "/workshops/executive-workflow-upgrade"],
-    ["grok-week", "/workshops/my-week-with-grok-bot"],
+    ["grok-week", "/workshops/my-week-with-ai"],
     ["building", "/building"],
     ["contact", "/contact"],
   ];

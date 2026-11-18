@@ -351,7 +351,7 @@ export default async function OutputParadoxPage() {
             <div className="next-list buy">
               <div>
                 <p>
-                  <b>My week with Grok Bot.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
+                  <b>My week with AI.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
                 </p>
                 <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Request a session" />
               </div>
