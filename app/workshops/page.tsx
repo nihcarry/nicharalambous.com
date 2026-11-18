@@ -11,12 +11,12 @@ const PATH = PATHS.workshops;
 const URL = `https://www.nicharalambous.com${PATH}`;
 
 export const metadata: Metadata = {
-  title: "Grok Bot workshops",
+  title: "AI workshops",
   description:
     "Three virtual Grok Bot sessions: My week with AI at €2,999, the Team Workflow Upgrade Session from €4,999, and the Executive Workflow Upgrade Session at €1,499. All ex VAT.",
   alternates: { canonical: URL },
   openGraph: {
-    title: "Grok Bot workshops | Nic Haralambous",
+    title: "AI workshops | Nic Haralambous",
     description: "Watch, build, or upgrade. Virtual by default.",
     url: URL,
   },
@@ -139,7 +139,7 @@ export default function WorkshopsPage() {
           </div>
         </div>
       </section>
-      <StickyBookBar title="Grok Bot workshops" detail="From €1,499, ex VAT" href="#formats" label="See sessions" id="hub-sticky" />
+      <StickyBookBar title="AI workshops" detail="From €1,499, ex VAT" href="#formats" label="See sessions" id="hub-sticky" />
     </div>
   );
 }
