@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { ENQUIRY_ENDPOINT } from "@/lib/site";
+import { flushSync } from "react-dom";
+import { ENQUIRY_ENDPOINT, ENQUIRY_EMAIL } from "@/lib/site";
 import {
   BUDGET_BANDS,
   DECISION_MAKERS,
@@ -12,6 +13,7 @@ import {
   validateEnquiry,
   type EnquiryErrors,
 } from "@/lib/enquiry";
+import { enquiryMailto, finishEnquiry, postEnquiry } from "@/lib/enquiry-submit";
 
 function EnquiryFields() {
   const [format, setFormat] = useState("");
@@ -25,6 +27,40 @@ function EnquiryFields() {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [deliveryError, setDeliveryError] = useState(false);
+  const [backgroundFailed, setBackgroundFailed] = useState(false);
+  const [mailto, setMailto] = useState(`mailto:${ENQUIRY_EMAIL}`);
+  const [savedPayload, setSavedPayload] = useState<Record<string, string> | null>(null);
+
+  async function deliver(payload: Record<string, string>, fromFallback: boolean) {
+    setSavedPayload(payload);
+    setMailto(enquiryMailto(payload));
+    flushSync(() => {
+      setSending(true);
+      setFormError(null);
+      setDeliveryError(false);
+      setDone(false);
+      if (!fromFallback) setBackgroundFailed(false);
+    });
+
+    const result = await finishEnquiry(postEnquiry(ENQUIRY_ENDPOINT, payload), {
+      onPending: () => {
+        setSending(false);
+        setBackgroundFailed(false);
+        setDone(true);
+      },
+    });
+
+    setSending(false);
+    if (result.ok) {
+      setBackgroundFailed(false);
+      setDone(true);
+      return;
+    }
+    setDone(false);
+    if (result.pending) setBackgroundFailed(true);
+    else setDeliveryError(true);
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,6 +86,7 @@ function EnquiryFields() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
       setFormError("Check the highlighted fields and try again.");
+      setDeliveryError(false);
       return;
     }
     if (input.honey.trim()) {
@@ -57,28 +94,12 @@ function EnquiryFields() {
       return;
     }
 
-    setSending(true);
-    setFormError(null);
-    const payload = enquiryPayload(input);
-    const body = new FormData();
-    for (const [key, value] of Object.entries(payload)) body.set(key, value);
+    await deliver(enquiryPayload(input), false);
+  }
 
-    try {
-      const response = await fetch(ENQUIRY_ENDPOINT, {
-        method: "POST",
-        body,
-        headers: { Accept: "application/json" },
-      });
-      if (!response.ok) {
-        setFormError("Something went wrong. Please try again or email nic@nharry.com.");
-        return;
-      }
-      setDone(true);
-    } catch {
-      setFormError("Network error. Please try again or email nic@nharry.com.");
-    } finally {
-      setSending(false);
-    }
+  function retry() {
+    if (!savedPayload || sending) return;
+    void deliver(savedPayload, true);
   }
 
   if (done) {
@@ -88,6 +109,20 @@ function EnquiryFields() {
         <p>If it is urgent, email nic@nharry.com.</p>
         <a href="/keynotes/output-paradox-reengage-teams">Back to the keynote</a>
         <a href="/#newsletter">Get the weekly newsletter</a>
+      </div>
+    );
+  }
+
+  if (backgroundFailed) {
+    return (
+      <div className="card enquiry-fallback" role="alert">
+        <h2>Something went wrong.</h2>
+        <p>
+          Please try again or <a href={mailto}>email nic@nharry.com</a>.
+        </p>
+        <button className="btn" type="button" onClick={retry} disabled={sending}>
+          {sending ? "Sending..." : "Try again"}
+        </button>
       </div>
     );
   }
@@ -267,6 +302,11 @@ function EnquiryFields() {
         />
       </div>
 
+      {deliveryError ? (
+        <p className="form-error" role="alert">
+          Something went wrong. Please try again or <a href={mailto}>email nic@nharry.com</a>.
+        </p>
+      ) : null}
       {formError ? (
         <p className="form-error" role="alert">
           {formError}
@@ -277,8 +317,14 @@ function EnquiryFields() {
         <p className="micro" style={{ maxWidth: 380 }}>
           I use these details to reply to your enquiry and nothing else. <a href="/privacy">Privacy policy</a>.
         </p>
-        <button className="btn" type="submit" disabled={sending} style={{ padding: "18px 30px" }}>
-          {sending ? "Sending" : "Send my enquiry"}
+        <button
+          className="btn"
+          type="submit"
+          disabled={sending}
+          aria-busy={sending || undefined}
+          style={{ padding: "18px 30px" }}
+        >
+          {sending ? "Sending..." : "Send my enquiry"}
         </button>
       </div>
     </form>

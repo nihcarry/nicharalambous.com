@@ -2342,6 +2342,23 @@ html[data-nh-consent] .consent {
   gap: 20px;
 }
 
+.v3 .submit .btn:disabled,
+.v3 .enquiry-fallback .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.v3 .form-error a,
+.v3 .enquiry-fallback a {
+  border-bottom: 1px solid currentColor;
+}
+
+.v3 .enquiry-fallback {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
 .v3 .hp {
   position: absolute;
   left: -9999px;
