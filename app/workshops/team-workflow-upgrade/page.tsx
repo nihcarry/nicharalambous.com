@@ -89,7 +89,7 @@ export default function TeamWorkshopPage() {
           <span>
             <b>My week with AI.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT.
           </span>
-          <a className="link" href="/workshops/my-week-with-grok-bot" style={{ color: "#fff" }}>
+          <a className="link" href="/workshops/my-week-with-ai" style={{ color: "#fff" }}>
             See My week with AI
           </a>
         </div>
@@ -186,7 +186,7 @@ export default function TeamWorkshopPage() {
                 €2,999<span>per session, ex VAT</span>
               </div>
               <CheckoutButton id="buy-my-week-on-team" offer="my-week-with-grok-bot" label="Request a session" />
-              <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
+              <a className="quiet-link fmt-see" href="/workshops/my-week-with-ai">
                 See the session
               </a>
             </div>

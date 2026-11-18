@@ -13,7 +13,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: "Grok Bot workshops",
   description:
-    "Three virtual Grok Bot sessions: My week with Grok Bot at €2,999, the Team Workflow Upgrade Session from €4,999, and the Executive Workflow Upgrade Session at €1,499. All ex VAT.",
+    "Three virtual Grok Bot sessions: My week with AI at €2,999, the Team Workflow Upgrade Session from €4,999, and the Executive Workflow Upgrade Session at €1,499. All ex VAT.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Grok Bot workshops | Nic Haralambous",
@@ -38,10 +38,10 @@ export default function WorkshopsPage() {
         <div className="wrap">
           <div className="copy">
             <h1>
-              <em>Grok Bot</em> workshops
+              <em>AI</em> workshops
             </h1>
             <p className="say">
-              Three sessions. My week with Grok Bot, the Team Workflow Upgrade Session and the Executive Workflow Upgrade Session. Virtual by default. In person is possible, with travel extra.
+              Three sessions. My week with AI, the Team Workflow Upgrade Session and the Executive Workflow Upgrade Session. Virtual by default. In person is possible, with travel extra.
             </p>
             <div className="acts" style={{ marginTop: 8 }}>
               <a className="btn btn-wrap" href="#formats">
@@ -87,7 +87,7 @@ export default function WorkshopsPage() {
                 €2,999<span>per session, ex VAT</span>
               </div>
               <CheckoutButton id="buy-my-week-hub" offer="my-week-with-grok-bot" label="Request a session" />
-              <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
+              <a className="quiet-link fmt-see" href="/workshops/my-week-with-ai">
                 See the session
               </a>
             </div>

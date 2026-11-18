@@ -40,6 +40,9 @@ var redirects = {
   '/confidence-easy-project-hard-live': '/blog/confidence-easy-to-project-hard-to-live',
   '/slowly-and-then-quickly': '/blog/slowly-and-then-quickly',
   '/keynotes/escaping-the-apathy-trap': '/keynotes/output-paradox-reengage-teams',
+  // Workshop slug move. Trailing slash is handled below, after the strip.
+  // Production returns this 301 only after the function is published.
+  '/workshops/my-week-with-grok-bot': '/workshops/my-week-with-ai',
   // Decision Trackr moved to its own site. Exact match runs before the
   // trailing-slash strip, so both forms are listed. Absolute URL is required
   // for a cross-origin 301. The site deploy does not publish this function.

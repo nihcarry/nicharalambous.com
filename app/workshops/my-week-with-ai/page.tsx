@@ -81,13 +81,13 @@ export default function MyWeekPage() {
       <section className="p-pen">
         <div className="wrap body-copy">
           <p className="lead">
-            I think the quickest way for a team to understand what Grok Bot can do is to watch someone use it on their real work, with nothing staged. So that&apos;s what this session is: my week with Grok Bot, shown to your people.
+            I think the quickest way for a team to understand what Grok Bot can do is to watch someone use it on their real work, with nothing staged. So that&apos;s what this session is: My week with AI, shown to your people.
           </p>
           <p className="body">
             For 90 minutes I take your team through my own setup. I show them how I work with Grok Bot day to day and what&apos;s out there for them to do with it. Your people watch, ask questions and see it working, before anyone has to commit to building something of their own.
           </p>
           <p className="body">
-            My week with Grok Bot is 90 minutes of me showing up to 20 of your people how I work with Grok Bot, for €2,999 a session, ex VAT.
+            My week with AI is 90 minutes of me showing up to 20 of your people how I work with Grok Bot, for €2,999 a session, ex VAT.
           </p>
         </div>
       </section>

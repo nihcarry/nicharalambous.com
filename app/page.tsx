@@ -178,7 +178,7 @@ export default async function HomePage() {
               </ul>
               <div className="card-links">
                 <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Request a session" variant="link" />
-                <a className="session-link" href="/workshops/my-week-with-grok-bot">See the session</a>
+                <a className="session-link" href="/workshops/my-week-with-ai">See the session</a>
               </div>
             </div>
             <div className="pl">

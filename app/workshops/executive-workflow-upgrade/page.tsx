@@ -184,7 +184,7 @@ export default function ExecutiveWorkshopPage() {
                 €2,999<span>per session, ex VAT</span>
               </div>
               <CheckoutButton id="buy-my-week-on-exec" offer="my-week-with-grok-bot" label="Request a session" />
-              <a className="quiet-link fmt-see" href="/workshops/my-week-with-grok-bot">
+              <a className="quiet-link fmt-see" href="/workshops/my-week-with-ai">
                 See the session
               </a>
             </div>

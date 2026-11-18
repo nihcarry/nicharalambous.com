@@ -14,7 +14,7 @@ export const PATHS = {
   workshops: "/workshops",
   team: "/workshops/team-workflow-upgrade",
   executive: "/workshops/executive-workflow-upgrade",
-  grokWeek: "/workshops/my-week-with-grok-bot",
+  grokWeek: "/workshops/my-week-with-ai",
   coaching: "/coaching",
 } as const;
 

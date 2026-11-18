@@ -10,7 +10,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "Request a session | Nic Haralambous" },
   description:
-    "Request a Team Workflow Upgrade Session (€4,999, up to 8 people) or My week with Grok Bot (€2,999, up to 20 people). Prices ex VAT. Nic replies by email within two working days.",
+    "Request a Team Workflow Upgrade Session (€4,999, up to 8 people) or My week with AI (€2,999, up to 20 people). Prices ex VAT. Nic replies by email within two working days.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Request a session | Nic Haralambous",
