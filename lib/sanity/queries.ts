@@ -366,6 +366,21 @@ export const blogTopicFiltersQuery = `*[_type == "topicHub" && count(*[_type == 
 
 /* ---------- Blog Post (single) ---------- */
 
+/**
+ * Image fields for the post hero. The article template renders featuredImage.
+ * mainImage is the same picture on posts that have both, and is preferred for
+ * share cards when it is set.
+ */
+const blogHeroImageProjection = `{
+  asset->{
+    _id,
+    url
+  },
+  alt,
+  hotspot,
+  crop
+}`;
+
 /** Full blog post by slug — used for /blog/[slug] */
 export const blogPostBySlugQuery = `*[_type == "post" && slug.current == $slug && contentStatus == "published"][0]{
   _id,
@@ -380,10 +395,8 @@ export const blogPostBySlugQuery = `*[_type == "post" && slug.current == $slug &
   videoEmbed,
   featured,
   featuredLabel,
-  "featuredImage": featuredImage{
-    asset->{url},
-    alt
-  },
+  "mainImage": mainImage${blogHeroImageProjection},
+  "featuredImage": featuredImage${blogHeroImageProjection},
   faq[]{
     question,
     answer
@@ -421,10 +434,8 @@ export const blogPostBySlugDevQuery = `*[_type == "post" && slug.current == $slu
   videoEmbed,
   featured,
   featuredLabel,
-  "featuredImage": featuredImage{
-    asset->{url},
-    alt
-  },
+  "mainImage": mainImage${blogHeroImageProjection},
+  "featuredImage": featuredImage${blogHeroImageProjection},
   faq[]{
     question,
     answer
@@ -749,6 +760,14 @@ export interface FeaturedPostItem {
   topics: TopicReference[];
 }
 
+/** Hero image on a blog post. The article template renders featuredImage. */
+export interface BlogHeroImage {
+  asset: { _id: string; url: string } | null;
+  alt: string | null;
+  hotspot: { x: number; y: number; height: number; width: number } | null;
+  crop: { top: number; bottom: number; left: number; right: number } | null;
+}
+
 /** Shape returned by blogPostBySlugQuery */
 export interface BlogPostData {
   _id: string;
@@ -763,7 +782,8 @@ export interface BlogPostData {
   videoEmbed: string | null;
   featured: boolean | null;
   featuredLabel: string | null;
-  featuredImage: { asset: { url: string }; alt: string } | null;
+  mainImage: BlogHeroImage | null;
+  featuredImage: BlogHeroImage | null;
   faq: { question: string; answer: string }[] | null;
   topics: TopicReference[];
   relatedKeynote: {

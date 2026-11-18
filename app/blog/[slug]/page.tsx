@@ -42,6 +42,7 @@ import { RelatedPosts } from "@/components/related-posts";
 import { ContextualCta } from "@/components/contextual-cta";
 import { VideoReadAlong } from "@/components/video-read-along";
 import { gateThirdPartyEmbeds } from "@/lib/gate-embeds";
+import { blogShareImage } from "@/lib/blog-og-image";
 import { articleJsonLd, faqJsonLd } from "@/lib/metadata";
 import {
   rawHtmlToPlainText,
@@ -124,6 +125,7 @@ export async function generateMetadata({
     post.seo?.seoDescription ||
     post.excerpt ||
     `${post.title} by Nic Haralambous`;
+  const shareImage = blogShareImage(post);
 
   return {
     title,
@@ -138,11 +140,13 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.publishedAt,
       ...(post.updatedAt && { modifiedTime: post.updatedAt }),
+      images: [shareImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [shareImage],
     },
   };
 }
