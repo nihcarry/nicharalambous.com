@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
     description:
-      "Your teams are shipping more, and checking out faster. Book a 20-minute virtual lunch and learn for €999 ex VAT, or an in-person keynote from €4,500.",
+      "Do better work, not just more of it. Book a 20-minute virtual lunch and learn for €999 ex VAT, or an in-person keynote from €4,500.",
     url: HOME_URL,
     images: [{ url: "/og/home.png", width: 1200, height: 630 }],
   },
@@ -83,14 +83,15 @@ export default async function HomePage() {
 
   return (
     <div className="v3" data-no-orphan-opt-out="true">
-      <link rel="preload" as="image" href="/v3/nic-hero-4.webp" fetchPriority="high" />
+      <link rel="preload" as="image" href="/v3/nic-hero-4-hd.webp" fetchPriority="high" />
       <JsonLd data={organizationJsonLd()} />
       <section className="hero home pd-beard">
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
             <h1>
-              Your teams are shipping more, and <em>checking out</em> faster
+              <span className="h-a">Do better work,</span>
+              <em className="h-b">not just<br className="hero-br-m" /> more of it</em>
             </h1>
             <p className="say">
               I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room. I also run hands-on Grok Bot workshops for leadership teams, and I coach founders and CEOs one to one.
@@ -106,10 +107,10 @@ export default async function HomePage() {
           </div>
           <div className="photo">
             <img
-              src="/v3/nic-hero-4.webp"
+              src="/v3/nic-hero-4-hd.webp"
               alt="Nic Haralambous speaking, hands open, in a white shirt"
-              width={560}
-              height={841}
+              width={682}
+              height={1024}
               fetchPriority="high"
               decoding="sync"
             />
