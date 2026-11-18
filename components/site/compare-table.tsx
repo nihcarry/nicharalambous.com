@@ -3,33 +3,33 @@
 import { useState, type KeyboardEvent } from "react";
 
 /** Content Studio comparison. data-col drives the stacked mobile layout. */
-const COLS = ["Executive Workflow Upgrade Session", "My week with AI", "Team Workflow Upgrade Session"] as const;
+const COLS = ["The CEO AI Session", "My week with AI", "Senior Leaders AI Lab"] as const;
 const TAB_IDS = ["exec", "my-week", "team"] as const;
-const TAB_LABELS = ["Exec", "My Week", "Team"] as const;
+const TAB_LABELS = ["CEO", "My week", "Leaders"] as const;
 const ROWS: { label: string; cells: string[] }[] = [
   {
     label: "What it is",
     cells: [
-      "For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.",
+      "For the CEO: a briefing call, then a custom session built for you.",
       "A show-and-tell",
       "A hands-on workshop",
     ],
   },
-  { label: "Length", cells: ["2 hours", "90 minutes", "2 hours"] },
+  { label: "Length", cells: ["3 hours", "90 minutes", "Half a day"] },
   {
     label: "Who's in the room",
     cells: [
-      "CEOs, and founders running a company. It's one person per session.",
+      "CEOs, and founders running a company. One leader per session, plus one exec free.",
       "Up to 20 people",
-      "Up to 8 senior leaders (10 with extra seats), one company",
+      "Up to 10 senior leaders from one company. Senior leaders only.",
     ],
   },
   {
     label: "What it covers",
     cells: [
-      "A Grok Bot introduction. A review of your current workflow. An upgrade, built during the session on your own work.",
-      "My own Grok Bot setup, how I work with it and what's out there to do",
-      "Workflow automation in Grok Bot, on each person's own work",
+      "A briefing call and setup. A review of your current workflow. An upgrade, built during the session on your own work.",
+      "My own AI setup, how I work with it and what's out there to do",
+      "Workflows on each person's own work. They keep ownership of the thinking, and AI does the work around the work.",
     ],
   },
   {
@@ -37,15 +37,7 @@ const ROWS: { label: string; cells: string[] }[] = [
     cells: [
       "Then we upgrade it together, on your real work, so you leave with the changes set up and running.",
       "Watch me work and ask questions",
-      "Build their own workflow with me",
-    ],
-  },
-  {
-    label: "Price",
-    cells: [
-      "€1,499, one to one, ex VAT",
-      "€2,999 per session, ex VAT",
-      "€4,999 per session for up to 8, plus €499 per extra seat up to 10 (maximum €5,997), ex VAT.",
+      "Build their own workflows with me",
     ],
   },
   {

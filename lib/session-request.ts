@@ -1,14 +1,22 @@
 /**
- * Session request form for the two workshops sold by enquiry:
- * Team Workflow Upgrade Session and My week with AI.
+ * Session request form for the workshops sold by enquiry:
+ * The CEO AI Session, the Senior Leaders AI Lab and My week with AI.
  * Posts to the same FormSubmit endpoint as /contact (ENQUIRY_ENDPOINT).
+ *
+ * `value` is the ?offer= code. The CEO session is `exec`. The Senior
+ * Leaders AI Lab keeps `team`, which this form already accepts.
  */
 
 export const SESSION_OFFERS = [
   {
+    value: "exec",
+    title: "The CEO AI Session",
+    detail: "3 hours, hands-on, with a free seat for one exec. Virtual by default.",
+  },
+  {
     value: "team",
-    title: "Team Workflow Upgrade Session",
-    detail: "2 hours, up to 8 senior leaders, €4,999 per session, ex VAT. Extra seats €499, up to 10.",
+    title: "Senior Leaders AI Lab",
+    detail: "Half a day, up to 10 senior leaders from one company. Virtual by default.",
   },
   {
     value: "my-week",

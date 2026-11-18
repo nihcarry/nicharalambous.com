@@ -1,5 +1,20 @@
-import { SESSION_REQUEST_LABEL, checkoutHref, isEnquiryOffer, type CheckoutOffer } from "@/lib/checkout-links";
+import { SESSION_REQUEST_LABEL, SESSION_REQUEST_PATH, checkoutHref, isEnquiryOffer, type CheckoutOffer } from "@/lib/checkout-links";
 import { INTRO_CALL_LABEL, INTRO_CALL_URL } from "@/lib/offers";
+
+export type EnquireCode = "exec" | "team" | "my-week";
+
+/** Enquiry form for a workshop. Executive checkout stays on Stripe elsewhere. */
+export function enquireHref(offer: EnquireCode): string {
+  return `${SESSION_REQUEST_PATH}?offer=${offer}`;
+}
+
+export function EnquireButton({ id, offer }: { id: string; offer: EnquireCode }) {
+  return (
+    <a id={id} className="btn btn-wrap" data-offer={offer} href={enquireHref(offer)}>
+      Enquire to book
+    </a>
+  );
+}
 
 export function CheckoutButton({
   id,

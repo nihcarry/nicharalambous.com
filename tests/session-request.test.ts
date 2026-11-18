@@ -27,11 +27,18 @@ test("valid request passes and carries the offer", () => {
   assert.deepEqual(validateSessionRequest(valid), {});
   const payload = sessionRequestPayload(valid);
   assert.equal(payload.offer, "team");
-  assert.equal(payload.session, "Team Workflow Upgrade Session");
+  assert.equal(payload.session, "Senior Leaders AI Lab");
   assert.equal(payload.team_size, "8");
   assert.equal(payload.preferred_dates, "Any Tuesday in February");
   assert.equal(payload._replyto, "ada@example.com");
-  assert.match(payload._subject, /^Session request: Team Workflow Upgrade Session/);
+  assert.match(payload._subject, /^Session request: Senior Leaders AI Lab/);
+});
+
+test("the CEO session is an enquiry offer", () => {
+  const payload = sessionRequestPayload({ ...valid, offer: "exec" });
+  assert.equal(validateSessionRequest({ ...valid, offer: "exec" }).offer, undefined);
+  assert.equal(payload.session, "The CEO AI Session");
+  assert.equal(payload.offer, "exec");
 });
 
 test("required fields and offer are checked", () => {

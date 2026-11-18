@@ -1,7 +1,7 @@
 /**
  * Public offer paths and structured data.
- * Team Workflow Upgrade Session has no price here. The copy doc still
- * shows a per-seat figure, and that price is being reworked.
+ * The CEO AI Session and the Senior Leaders AI Lab are booked by enquiry.
+ * Their structured data names the session and the length, and carries no price.
  */
 
 import { SITE_URL } from "@/lib/site";
@@ -52,18 +52,18 @@ function pricedOffer(price: number, unitText: string) {
   };
 }
 
-/** Base price €4,999. Extra seats are described. No discount. */
+/** Half a day for up to 10 senior leaders. No public price. */
 export function teamWorkshopJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Team Workflow Upgrade Session",
+    name: "Senior Leaders AI Lab",
     serviceType: "Workshop",
     description:
-      "A hands-on workshop for up to 8 senior leaders from one company. 2 hours, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Virtual by default.",
+      "A hands-on, half-day workshop for up to 10 senior leaders from one company. Senior leaders only. Virtual by default.",
+    timeRequired: "half a day",
     url: pageUrl(PATHS.team),
     provider: PERSON,
-    offers: pricedOffer(4999, "session"),
   };
 }
 
@@ -71,13 +71,13 @@ export function executiveWorkshopJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Executive Workflow Upgrade Session",
+    name: "The CEO AI Session",
     serviceType: "Workshop",
     description:
-      "A 2-hour one-to-one session for a CEO. Virtual by default. €1,499 excluding VAT.",
+      "Three hours, custom built for the CEO, with a briefing call first and a free seat for one exec. Virtual by default.",
+    timeRequired: "PT3H",
     url: pageUrl(PATHS.executive),
     provider: PERSON,
-    offers: pricedOffer(1499, "session"),
   };
 }
 

@@ -4367,6 +4367,12 @@ html.fullshot .sticky-book{display:none!important}
     max-width: 520px;
   }
 
+  .v3 .hero.hub.wf h1 {
+    width: max-content;
+    max-width: none;
+    white-space: nowrap;
+  }
+
   .v3 .hero.hub.wf .wf-stage {
     position: absolute;
     z-index: 1;
@@ -4687,6 +4693,60 @@ html.fullshot .sticky-book{display:none!important}
 
   .v3 .wf-map {
     margin-bottom: 52px;
+  }
+}
+
+/* Workshop v4. Hero names break on a set line. Closing titles do the same only on a phone. */
+.v3.workshop-v4 :is(h1, h2, h3) {
+  text-wrap: wrap;
+}
+
+.v3 .hero.op h1.session-name {
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 11em;
+  margin: 0 0 22px;
+}
+
+.v3 .hero .say p {
+  margin: 0;
+}
+
+.v3 .hero .say p + p {
+  margin-top: 16px;
+}
+
+.v3 .fmt ul + .btn {
+  margin-top: auto;
+}
+
+.v3 h2.bio-lines span {
+  display: block;
+  white-space: nowrap;
+}
+
+.v3 h2.closing-title span {
+  display: inline;
+}
+
+@media (min-width: 1200px) {
+  .v3 h2.closing-title {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .v3 .hero.op h1.session-name {
+    font-size: 34px;
+  }
+
+  .v3 h2.closing-title {
+    white-space: normal;
+  }
+
+  .v3 h2.closing-title span {
+    display: block;
   }
 }
 

@@ -43,8 +43,10 @@ export function StickyBookBar({
     };
   }, []);
 
+  const enquiryBar = Boolean(href?.includes("request-a-session")) || (!href && isEnquiryOffer(offer));
+
   return (
-    <div className={!href && isEnquiryOffer(offer) ? "sticky-book sticky-request" : "sticky-book"} hidden={!visible}>
+    <div className={enquiryBar ? "sticky-book sticky-request" : "sticky-book"} hidden={!visible}>
       <span className="t">
         <b>{title}</b>
         {detail}
