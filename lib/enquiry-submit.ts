@@ -18,6 +18,8 @@ export const ENQUIRY_SLOW_ACK_MS = 2000;
 const MAILTO_FIELDS = [
   ["format", "Format"],
   ["organisation", "Organisation"],
+  ["session", "Session"],
+  ["company", "Company"],
   ["team_size", "Team size"],
   ["audience", "Audience"],
   ["date_from_display", "Date from"],
@@ -25,6 +27,7 @@ const MAILTO_FIELDS = [
   ["budget_eur_ex_vat", "Budget"],
   ["decision_maker", "Decision maker"],
   ["decision_maker_role", "Decision maker role"],
+  ["preferred_dates", "Preferred dates"],
   ["name", "Name"],
   ["email", "Email"],
   ["message", "Message"],

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { enquiryPayload } from "../lib/enquiry";
+import { sessionRequestPayload } from "../lib/session-request";
 import {
   enquiryMailto,
   finishEnquiry,
@@ -122,4 +123,27 @@ test("mailto carries the answers and skips empty and transport fields", () => {
   assert.equal(body.includes("_captcha"), false);
   assert.equal(body.includes("_honey"), false);
   assert.equal(body.includes("Decision maker role"), false);
+});
+
+test("mailto carries a session request and uses its subject", () => {
+  const session = sessionRequestPayload({
+    offer: "team",
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+    company: "Example Ltd",
+    teamSize: "8",
+    preferredDates: "Any Tuesday in February",
+    message: "Workflow upgrade for the leadership team",
+    honey: "",
+  });
+  const href = enquiryMailto(session, "nic@nharry.com");
+  assert.match(href, /subject=Session%20request%3A%20Team%20Workflow%20Upgrade%20Session/);
+  const body = decodeURIComponent(href.split("body=")[1]);
+  assert.match(body, /Session: Team Workflow Upgrade Session/);
+  assert.match(body, /Company: Example Ltd/);
+  assert.match(body, /Team size: 8/);
+  assert.match(body, /Preferred dates: Any Tuesday in February/);
+  assert.match(body, /Email: ada@example.com/);
+  assert.equal(body.includes("offer:"), false);
+  assert.equal(body.includes("_captcha"), false);
 });
