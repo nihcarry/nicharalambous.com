@@ -76,7 +76,7 @@ export default function WorkshopsPage() {
             </div>
             <div className="fmt has-fstk">
               <img className="fmt-stk" src="/v3/new/sticker-thumbs.png" alt="" />
-              <h3>My week with Grok Bot</h3>
+              <h3>My week with AI</h3>
               <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
                 <li>90 minutes</li>

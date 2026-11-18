@@ -9,12 +9,12 @@ const PATH = PATHS.grokWeek;
 const URL = `https://www.nicharalambous.com${PATH}`;
 
 export const metadata: Metadata = {
-  title: "My week with Grok Bot",
+  title: "My week with AI",
   description:
     "A 90-minute show-and-tell for up to 20 people. I take your team through my own Grok Bot setup. €2,999 per session, ex VAT. Virtual by default.",
   alternates: { canonical: URL },
   openGraph: {
-    title: "My week with Grok Bot | Nic Haralambous",
+    title: "My week with AI | Nic Haralambous",
     description: "Watch how I actually work with Grok Bot, then ask me anything. Virtual by default.",
     url: URL,
   },
@@ -28,7 +28,7 @@ export default function MyWeekPage() {
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Workshops", path: PATHS.workshops },
-          { name: "My week with Grok Bot", path: PATH },
+          { name: "My week with AI", path: PATH },
         ])}
       />
       <section className="hero op pd-spotlight hero-b">
@@ -36,7 +36,7 @@ export default function MyWeekPage() {
         <div className="wrap">
           <div className="copy">
             <h1>
-              My week with <em>Grok Bot</em>
+              My week with <em>AI</em>
             </h1>
             <p className="say">
               A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. We cover best practices and workflow ideas. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
@@ -44,7 +44,7 @@ export default function MyWeekPage() {
             <div className="book" id="book">
               <div className="row">
                 <div>
-                  <h2>My week with Grok Bot</h2>
+                  <h2>My week with AI</h2>
                   <p>A walk-through of my own setup, how I work with Grok Bot and what&apos;s out there to do.</p>
                 </div>
                 <div className="price">
@@ -171,7 +171,7 @@ export default function MyWeekPage() {
       <section className="dark pd-cta">
         <div className="wrap">
           <div className="final op">
-            <h2>My week with Grok Bot</h2>
+            <h2>My week with AI</h2>
             <p className="final-sub">90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>
               <CheckoutButton id="buy-my-week-final" offer="my-week-with-grok-bot" label="Request a session" />
@@ -181,7 +181,7 @@ export default function MyWeekPage() {
         </div>
       </section>
       <StickyBookBar
-        title="My week with Grok Bot"
+        title="My week with AI"
         detail="€2,999, ex VAT"
         offer="my-week-with-grok-bot"
         label="Request a session"

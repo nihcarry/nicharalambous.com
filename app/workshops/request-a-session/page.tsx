@@ -68,7 +68,7 @@ export default function RequestSessionPage() {
                 </li>
                 <li>
                   <span className="mono">€</span>
-                  My week with Grok Bot: €2,999 per session for up to 20 people, ex VAT.
+                  My week with AI: €2,999 per session for up to 20 people, ex VAT.
                 </li>
               </ul>
             </div>

@@ -173,7 +173,7 @@ export default function ExecutiveWorkshopPage() {
           <h2 style={{ margin: "20px 0 18px" }}>Three ways to work with Grok Bot</h2>
           <div className="formats">
             <div className="fmt">
-              <h3>My week with Grok Bot</h3>
+              <h3>My week with AI</h3>
               <p>A show-and-tell of my own setup, for up to 20 people.</p>
               <ul>
                 <li>90 minutes</li>
