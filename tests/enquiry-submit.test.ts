@@ -137,9 +137,9 @@ test("mailto carries a session request and uses its subject", () => {
     honey: "",
   });
   const href = enquiryMailto(session, "nic@nharry.com");
-  assert.match(href, /subject=Session%20request%3A%20Team%20Workflow%20Upgrade%20Session/);
+  assert.match(href, /subject=Session%20request%3A%20Senior%20Leaders%20AI%20Lab/);
   const body = decodeURIComponent(href.split("body=")[1]);
-  assert.match(body, /Session: Team Workflow Upgrade Session/);
+  assert.match(body, /Session: Senior Leaders AI Lab/);
   assert.match(body, /Company: Example Ltd/);
   assert.match(body, /Team size: 8/);
   assert.match(body, /Preferred dates: Any Tuesday in February/);

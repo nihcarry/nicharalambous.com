@@ -10,7 +10,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "Request a session | Nic Haralambous" },
   description:
-    "Request a Team Workflow Upgrade Session (€4,999, up to 8 people) or My week with AI (€2,999, up to 20 people). Prices ex VAT. Nic replies by email within two working days.",
+    "Request The CEO AI Session, the Senior Leaders AI Lab or My week with AI. Nic replies by email within two working days.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Request a session | Nic Haralambous",
@@ -60,15 +60,19 @@ export default function RequestSessionPage() {
               </ol>
             </div>
             <div className="card">
-              <h2 className="side-title">Prices, so there are no surprises</h2>
+              <h2 className="side-title">The sessions</h2>
               <ul className="next">
                 <li>
-                  <span className="mono">€</span>
-                  Team Workflow Upgrade Session: €4,999 per session for up to 8 people, ex VAT. Extra seats €499, up to 10.
+                  <span className="mono">01</span>
+                  The CEO AI Session: 3 hours, with a free seat for one exec. Virtual by default.
                 </li>
                 <li>
-                  <span className="mono">€</span>
-                  My week with AI: €2,999 per session for up to 20 people, ex VAT.
+                  <span className="mono">02</span>
+                  Senior Leaders AI Lab: half a day, up to 10 senior leaders from one company. Virtual by default.
+                </li>
+                <li>
+                  <span className="mono">03</span>
+                  My week with AI: 90 minutes, up to 20 people, €2,999 per session, ex VAT.
                 </li>
               </ul>
             </div>
