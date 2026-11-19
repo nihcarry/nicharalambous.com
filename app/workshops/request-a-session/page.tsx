@@ -72,7 +72,7 @@ export default function RequestSessionPage() {
                 </li>
                 <li>
                   <span className="mono">03</span>
-                  My week with AI: 90 minutes, up to 20 people, €2,999 per session, ex VAT.
+                  My week with AI: 90 minutes, up to 20 people.
                 </li>
               </ul>
             </div>

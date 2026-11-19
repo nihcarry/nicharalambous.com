@@ -21,7 +21,7 @@ export const SESSION_OFFERS = [
   {
     value: "my-week",
     title: "My week with AI",
-    detail: "90 minutes, up to 20 people, €2,999 per session, ex VAT.",
+    detail: "90 minutes, up to 20 people.",
   },
 ] as const;
 
