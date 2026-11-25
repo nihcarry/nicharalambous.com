@@ -28,8 +28,12 @@ export const LUNCH_AND_LEARN_PATH =
 /** Used while the Calendly URL is empty. */
 export const LUNCH_AND_LEARN_FALLBACK_HREF = "/contact?format=lunch-and-learn";
 
+/** The offer name. Use this everywhere a heading or link names the offer. */
+export const LUNCH_AND_LEARN_LABEL =
+  "Virtual lunch and learn: a 20-minute talk plus Q&A in a 45-minute slot";
+
 export const LUNCH_AND_LEARN_FACTS = {
-  offerName: "The Output Paradox, a virtual lunch and learn",
+  offerName: LUNCH_AND_LEARN_LABEL,
   priceAmount: "€999",
   priceCaption: "ex VAT",
   /** Literal euro string. Never localised. */

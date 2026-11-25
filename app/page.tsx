@@ -5,7 +5,7 @@ import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
 import { INTRO_CALL_URL } from "@/lib/offers";
-import { LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
+import { LUNCH_AND_LEARN_LABEL, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
 import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
 
@@ -99,7 +99,7 @@ export default async function HomePage() {
             </p>
             <div className="acts">
               <a className="btn btn-wrap" id="buy-lunch-and-learn-home" href={LUNCH_AND_LEARN_PATH}>
-                Buy the lunch and learn
+                Book the lunch and learn
               </a>
               <span>€999 ex VAT</span>
               <IntroCallLink />
@@ -160,14 +160,14 @@ export default async function HomePage() {
               </p>
               <ul>
                 <li>
-                  <a href={LUNCH_AND_LEARN_PATH}>20-minute virtual lunch and learn, €999&nbsp;ex&nbsp;VAT</a>
+                  <a href={LUNCH_AND_LEARN_PATH}>{LUNCH_AND_LEARN_LABEL}</a>
                 </li>
                 <li>Virtual keynote on Zoom, Teams or Meet</li>
                 <li>In-person keynote, 45 minutes, travel extra</li>
               </ul>
               <div className="card-links">
               <a className="go buy" id="buy-lunch-and-learn-speak" href={LUNCH_AND_LEARN_PATH}>
-                Buy the lunch and learn <span>→</span>
+                Book the lunch and learn <span>→</span>
               </a>
               <a className="go" href="/contact">
                 Enquire to book <span>→</span>
@@ -357,7 +357,7 @@ export default async function HomePage() {
           <h2>If your team is doing more and feeling less, let&apos;s talk</h2>
           <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
             <a className="btn btn-wrap" id="buy-lunch-and-learn-home-final" href={LUNCH_AND_LEARN_PATH}>
-              Buy the lunch and learn
+              Book the lunch and learn
             </a>
             <span>€999 ex VAT</span>
             <a className="quiet-link" href="/contact">

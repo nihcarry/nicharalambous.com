@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { EnquiryForm } from "@/components/site/enquiry-form";
 import { breadcrumbJsonLd } from "@/lib/metadata";
-import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 
 const URL = "https://www.nicharalambous.com/contact";
 
@@ -69,7 +69,7 @@ export default function ContactPage() {
               <ul className="next">
                 <li>
                   <span className="mono">€</span>
-                  The Output Paradox, a virtual lunch and learn: {LUNCH_AND_LEARN_FACTS.priceLine}. A 45-minute slot on Wednesday or Friday. You send the call link.
+                  The Output Paradox lunch and learn: {LUNCH_AND_LEARN_LABEL}. {LUNCH_AND_LEARN_FACTS.priceLine}. You send the call link.
                 </li>
                 <li>
                   <span className="mono">01</span>

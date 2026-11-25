@@ -6,6 +6,7 @@ import { StickyBookBar } from "@/components/site/sticky-book";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
 import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
 import { followOnSessionsJsonLd } from "@/lib/offers";
 import { v3ContentSettings } from "@/lib/v3-content";
 
@@ -74,7 +75,7 @@ export default async function OutputParadoxPage() {
             <div className="book" id="book">
               <div className="row">
                 <div>
-                  <h2>20-minute virtual lunch and learn</h2>
+                  <h2>{LUNCH_AND_LEARN_LABEL}</h2>
                   <p>
                     A short, live version of the talk for your team on Zoom, Teams or Meet. You pick the date, I tailor it to your people.
                   </p>
@@ -284,7 +285,7 @@ export default async function OutputParadoxPage() {
           </p>
           <div className="formats">
             <div className="fmt lead1">
-              <h3>Lunch and learn</h3>
+              <h3>{LUNCH_AND_LEARN_LABEL}</h3>
               <p>
                 20 minutes, live on Zoom, Teams or Meet. The core of the Output Paradox, tailored to your people, with time for a few questions.
               </p>

@@ -1,5 +1,5 @@
 import { LunchLearnEmbed, PickSlotLink } from "@/components/site/lunch-learn-embed";
-import { LUNCH_AND_LEARN_FACTS } from "@/lib/lunch-and-learn";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
 import { INTRO_CALL_URL } from "@/lib/offers";
 
 /**
@@ -16,7 +16,7 @@ export function LunchLearnCheckout() {
               Book your team’s lunch and learn in&nbsp;one&nbsp;go
             </h2>
             <p className="lead">
-              Pick a Wednesday or Friday, a 45-minute session at 11:00, 12:00 or 13:00 Amsterdam time, shown in your time zone. Book at least 7 calendar days ahead, pay online and it’s in your diary. I’ll take it from&nbsp;there.
+              Pick a slot, pay online and it’s in your diary. I’ll take it from&nbsp;there.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function LunchLearnCheckout() {
           </ol>
 
           <div className="pricecard">
-            <h3>20-minute virtual lunch and learn</h3>
+            <h3>{LUNCH_AND_LEARN_LABEL}</h3>
             <p className="sub">Pay when you book. No proposal and no back and&nbsp;forth.</p>
             <div className="row">
               <div className="price">
@@ -98,13 +98,13 @@ export function LunchLearnCheckout() {
                 <li>
                   <span className="mono">04</span>
                   <div>
-                    <b>Online only.</b> You send the Zoom, Teams or Meet link. Any team size, and it works across time zones.
+                    <b>Online only.</b> You send the Zoom, Teams or Meet link. It works across time zones.
                   </div>
                 </li>
                 <li>
                   <span className="mono">05</span>
                   <div>
-                    <b>Lunchtime.</b> Wednesdays and Fridays, 45-minute sessions starting 11:00, 12:00 or 13:00 Amsterdam time, shown in your time zone, booked at least 7 calendar days ahead.
+                    <b>Lunchtime.</b> Wednesdays and Fridays.
                   </div>
                 </li>
               </ul>
