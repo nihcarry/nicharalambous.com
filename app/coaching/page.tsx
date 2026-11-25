@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { EnquireButton, IntroCallLink, enquireHref } from "@/components/site/checkout-cta";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { breadcrumbJsonLd } from "@/lib/metadata";
 import { PATHS, coachingJsonLd } from "@/lib/offers";
@@ -11,12 +11,12 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: "Accountability business coaching",
   description:
-    "Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT. Pay-what-you-can-afford coaching stays open as an application.",
+    "Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. Enquire to book. Pay-what-you-can-afford coaching stays open as an application.",
   alternates: { canonical: URL },
   openGraph: {
     type: "website",
     title: "Accountability business coaching | Nic Haralambous",
-    description: "Business coaching that holds you to what you said you'd do. €399 a month, ex VAT.",
+    description: "Business coaching that holds you to what you said you'd do. Enquire to book.",
     url: URL,
   },
 };
@@ -39,7 +39,7 @@ export default function CoachingPage() {
               Accountability <em>coaching</em> for business leaders
             </h1>
             <p className="say">
-              Two 60-minute calls a month with me, plus ongoing accountability and chat support in between. €399 a month, ex VAT.
+              Two 60-minute calls a month with me, plus ongoing accountability and chat support in between.
             </p>
             <div className="book" id="book">
               <div className="row">
@@ -48,12 +48,12 @@ export default function CoachingPage() {
                   <p>A sounding board for the decisions in your business, and someone who asks whether you did what you said you would.</p>
                 </div>
                 <div className="price">
-                  €399
-                  <small>a month, ex VAT</small>
+                  2 calls
+                  <small>every month</small>
                 </div>
               </div>
               <div className="acts">
-                <CheckoutButton id="buy-accountability-coaching" offer="accountability-coaching" label="Start coaching, €399 a month" />
+                <EnquireButton id="buy-accountability-coaching" offer="coaching" />
                 <IntroCallLink />
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function CoachingPage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>If €399 a month isn&apos;t possible right now,</b> you can apply for pay-what-you-can-afford coaching instead.
+            <b>If the monthly fee isn&apos;t possible right now,</b> you can apply for pay-what-you-can-afford coaching instead.
           </span>
           <a className="link" href="#pwyca" style={{ color: "#fff" }}>
             Apply for pay-what-you-can-afford coaching
@@ -105,7 +105,7 @@ export default function CoachingPage() {
             I&apos;ve been building businesses since I was 16. I&apos;ve sold four of them, written three books and spent more than 20 years learning through failure and success. I&apos;ll tell you what I think, and I&apos;ll ask whether you did what you said you would.
           </p>
           <p className="body">
-            If €399 a month isn&apos;t possible right now, you can apply for pay-what-you-can-afford coaching instead. I keep that to 5 clients a month, and paying €0 is totally fine.
+            If the monthly fee isn&apos;t possible right now, you can apply for pay-what-you-can-afford coaching instead. I keep that to 5 clients a month, and paying nothing is totally fine.
           </p>
         </div>
       </section>
@@ -127,7 +127,7 @@ export default function CoachingPage() {
             </div>
             <div>
               <span className="mono">04</span>
-              <p>€399 a month, ex VAT</p>
+              <p>Pay-what-you-can-afford coaching is an application, for up to 5 people a month</p>
             </div>
           </div>
         </div>
@@ -151,8 +151,8 @@ export default function CoachingPage() {
               </p>
             </details>
             <details>
-              <summary>What if I can&apos;t afford €399 a month?</summary>
-              <p>Apply for pay-what-you-can-afford coaching. I take up to 5 people a month, and paying €0 is fine.</p>
+              <summary>What if I can&apos;t afford the monthly fee?</summary>
+              <p>Apply for pay-what-you-can-afford coaching. I take up to 5 people a month, and paying nothing is fine.</p>
             </details>
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function CoachingPage() {
             <h2 style={{ fontSize: 22 }}>Pay What You Can Afford</h2>
             <p>Application-based coaching</p>
             <p>
-              Same coaching intent, at a price you can actually afford. Paying €0 is totally fine. I limit this to <b>5 clients per month</b>, which is why there&apos;s an application.
+              Same coaching intent, at a price you can actually afford. Paying nothing is totally fine. I limit this to <b>5 clients per month</b>, which is why there&apos;s an application.
             </p>
             <p style={{ marginTop: 20 }}>
               <a className="btn ghost" href="/coaching/apply">
@@ -210,9 +210,9 @@ export default function CoachingPage() {
           <div className="final op">
             <img className="px pxf op" src="/v3/px/Nic_Ancient_greece_16bit.png" alt="" width={226} height={280} />
             <h2>Accountability business coaching</h2>
-            <p className="final-sub">€399 a month, ex VAT.</p>
+            <p className="final-sub">Two calls a month, plus chat in between.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>
-              <CheckoutButton id="buy-coaching-final" offer="accountability-coaching" label="Start coaching, €399 a month" />
+              <EnquireButton id="buy-coaching-final" offer="coaching" />
               <IntroCallLink />
             </div>
             <p style={{ marginTop: 18, textAlign: "center" }}>
@@ -225,9 +225,9 @@ export default function CoachingPage() {
       </section>
       <StickyBookBar
         title="Accountability coaching"
-        detail="€399 a month"
-        offer="accountability-coaching"
-        label="Start"
+        detail="Two calls a month"
+        href={enquireHref("coaching")}
+        label="Enquire to book"
         id="buy-coaching-sticky"
       />
     </div>

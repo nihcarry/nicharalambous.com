@@ -1330,6 +1330,11 @@ html[data-nh-consent] .consent {
   gap: 12px;
 }
 
+.v3 .pl .card-links .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
 .v3 .pl .go {
   margin-top: 0;
   font-weight: 600;
@@ -4760,3 +4765,363 @@ html.fullshot .sticky-book{display:none!important}
     display: inline;
   }
 }
+
+/*
+ * Lunch and learn checkout (#checkout). Scoped so it does not restyle
+ * .price, .steps or .btn elsewhere. Matches the 25 Nov 2026 design spec.
+ */
+.v3 section.checkout {
+  --rule: #d8d1c2;
+  --rule2: #bdb5a5;
+  background-color: var(--paper2);
+  border-top: 1px solid var(--rule);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='72' height='72'%3E%3Crect x='19' y='20' width='10' height='9' rx='1' fill='none' stroke='%23000' stroke-opacity='0.072' stroke-width='1.5'/%3E%3Crect x='19' y='20' width='10' height='3' rx='1' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='21' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3Crect x='25.5' y='19' width='1.5' height='2.5' rx='0.75' fill='%23000' fill-opacity='0.072'/%3E%3C/svg%3E");
+  padding: 112px 0 104px;
+  scroll-margin-top: 72px;
+  color: var(--text);
+}
+
+.v3 .checkout h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  font-size: 42px;
+  margin: 0;
+  max-width: 19ch;
+  text-wrap: balance;
+}
+
+.v3 .checkout .lead {
+  color: var(--muted);
+  font-size: 21px;
+  line-height: 1.5;
+  max-width: 640px;
+  margin: 22px 0 0;
+  text-wrap: pretty;
+}
+
+.v3 .checkout .co-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: 56px;
+  grid-template-areas: "head price" "steps price" "widget side";
+  align-items: start;
+}
+
+.v3 .checkout .co-head { grid-area: head; }
+.v3 .checkout .steps {
+  grid-area: steps;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 44px 0 0;
+  list-style: none;
+  padding: 0;
+}
+
+.v3 .checkout .step {
+  border-top: 1px solid var(--rule2);
+  padding-top: 18px;
+}
+
+.v3 .checkout .step .n {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 800;
+  font-size: 40px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+
+.v3 .checkout .step h3 {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+
+.v3 .checkout .step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+.v3 .checkout .side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  margin-top: 56px;
+  align-self: stretch;
+}
+
+.v3 .checkout .get,
+.v3 .checkout .after {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.v3 .checkout .get h3,
+.v3 .checkout .after h3 {
+  width: 100%;
+  text-wrap: balance;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+  margin: 0 0 18px;
+}
+
+.v3 .checkout .get ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.v3 .checkout .get li {
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  padding: 15px 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.v3 .checkout .get li:last-child { border-bottom: 1px solid var(--rule); }
+.v3 .checkout .get .mono { color: var(--blue); padding-top: 3px; }
+.v3 .checkout .get b { font-weight: 650; }
+
+.v3 .checkout .pricecard {
+  grid-area: price;
+  background: #0f1a33;
+  border: 1px solid var(--blue);
+  color: #edeef2;
+  padding: 30px;
+}
+
+.v3 .checkout .pricecard h3 {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+.v3 .checkout .pricecard .sub {
+  color: #aeb3c0;
+  font-size: 15.5px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.v3 .checkout .pricecard .row { margin: 24px 0 14px; }
+
+.v3 .checkout .price {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: normal;
+}
+
+.v3 .checkout .price small {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #7d8392;
+  display: block;
+  margin-top: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.v3 .checkout .when {
+  color: #c9cdd6;
+  font-size: 15.5px;
+  line-height: 1.45;
+  margin: 0 0 22px;
+}
+
+.v3 .checkout .btn-book {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--ink);
+  border: 0;
+  border-radius: 2px;
+  padding: 10px 20px 10px 10px;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+  min-height: 64px;
+}
+
+.v3 .checkout .btn-book .ic {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  background: var(--blue);
+  display: grid;
+  place-items: center;
+  border-radius: 1px;
+}
+
+.v3 .checkout .btn-book .ic svg { width: 22px; height: 22px; }
+.v3 .checkout .btn-book .lbl { margin-right: auto; }
+.v3 .checkout .btn-book .dn { font-size: 20px; line-height: 1; }
+.v3 .checkout .btn-book:hover { background: #fff; }
+.v3 .checkout .btn-book:focus-visible {
+  outline: 3px solid var(--blue2);
+  outline-offset: 3px;
+}
+
+.v3 .checkout .pricecard .links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.v3 .checkout .tlink {
+  color: #aeb3c0;
+  font-size: 15px;
+  line-height: 1.4;
+  min-height: 44px;
+  padding: 6px 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: underline;
+  text-decoration-color: #3a3f4c;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.v3 .checkout .widget {
+  grid-area: widget;
+  margin-top: 56px;
+  align-self: stretch;
+  background: #fbf9f4;
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  scroll-margin-top: 72px;
+}
+
+.v3 .checkout .widget:focus {
+  outline: 3px solid var(--blue2);
+  outline-offset: 3px;
+}
+
+.v3 .checkout .widget-fallback {
+  padding: 36px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  min-height: 280px;
+}
+
+.v3 .checkout .widget-fallback .btn { min-height: 44px; }
+
+.v3 .checkout .calendly-inline-widget,
+.v3 .checkout .widget iframe {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  min-width: 0 !important;
+  height: 760px;
+  border: 0;
+}
+
+.v3 .checkout .after ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.v3 .checkout .after li {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: #3b3f49;
+  padding-left: 22px;
+  position: relative;
+}
+
+.v3 .checkout .after li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--blue);
+}
+
+@media (max-width: 1100px) {
+  .v3 .checkout h2 { font-size: 36px; }
+  .v3 .checkout .co-grid { column-gap: 32px; }
+  .v3 .checkout .steps { gap: 18px; }
+  .v3 .checkout .step .n { font-size: 34px; }
+  .v3 .checkout .pricecard { padding: 26px; }
+  .v3 .checkout .price { font-size: 42px; }
+}
+
+@media (max-width: 960px) {
+  .v3 .checkout .co-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: none;
+  }
+  .v3 .checkout .side { display: contents; margin: 0; }
+  .v3 .checkout .co-head { order: 1; grid-area: auto; }
+  .v3 .checkout .pricecard { order: 2; grid-area: auto; margin-top: 36px; }
+  .v3 .checkout .steps { order: 3; grid-area: auto; margin: 40px 0 36px; }
+  .v3 .checkout .get { order: 4; }
+  .v3 .checkout .widget { order: 5; grid-area: auto; margin-top: 40px; align-self: auto; }
+  .v3 .checkout .after { order: 6; margin-top: 44px; }
+  .v3 .checkout h2 { max-width: 22ch; }
+}
+
+@media (max-width: 700px) {
+  .v3 section.checkout { padding: 72px 0 64px; scroll-margin-top: 64px; }
+  .v3 .checkout h2 { font-size: clamp(24px, 7.4vw, 36px); max-width: none; }
+  .v3 .checkout .lead { font-size: 18px; margin-top: 18px; }
+  .v3 .checkout .steps { grid-template-columns: 1fr; gap: 24px; }
+  .v3 .checkout .step {
+    padding-top: 16px;
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    column-gap: 8px;
+  }
+  .v3 .checkout .step .n { font-size: 32px; margin: 0; }
+  .v3 .checkout .pricecard { padding: 24px; }
+  .v3 .checkout .price { font-size: 40px; }
+  .v3 .checkout .btn-book { padding: 9px 16px 9px 9px; }
+  .v3 .checkout .calendly-inline-widget,
+  .v3 .checkout .widget iframe { height: 860px; }
+  .v3 .checkout .widget { scroll-margin-top: 64px; }
+  .v3 .checkout .widget-fallback { padding: 22px 16px; }
+}
+

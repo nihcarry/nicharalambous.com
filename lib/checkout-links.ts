@@ -1,52 +1,49 @@
 /**
- * Stripe Payment Links for the five public buy buttons.
+ * Where each public offer button goes.
  *
- * Every value stays empty until Nic creates the live link. Do not invent a
- * URL. Do not reuse a No Bull Ship price or payment link. Accountability
- * business coaching is a different product.
+ * The lunch and learn is booked on its own Calendly scheduling page.
+ * Every other offer is "Enquire to book". None of them use a Stripe
+ * Payment Link on the site.
  *
- * When a value is empty, the buy button is still a real link to #checkout.
- * Do not print a placeholder on the page.
+ * Stripe itself is unchanged. These Payment Links still exist and are
+ * not called from the site:
+ * - executive-workflow-upgrade: prod_Ve6VIACchTYnVv, plink_1UcoIyF8qci2BYDcM5NS5Ntm
+ * - accountability-coaching: prod_Ve6VOLIs9VrG2e, plink_1UcoIrF8qci2BYDcfhjoLIM1
  *
- * Tax on every link, once created: exclusive of VAT.
- *
- * Live links (OGC Products, created 17 Nov 2026 with Nic's yes):
- * - executive-workflow-upgrade: prod_Ve6VIACchTYnVv, plink_1UcoIyF8qci2BYDcM5NS5Ntm.
- * - accountability-coaching: prod_Ve6VOLIs9VrG2e, plink_1UcoIrF8qci2BYDcfhjoLIM1.
- *
- * Links to create later:
- * - lunch-and-learn: €999, one payment, 20-minute virtual lunch and learn.
- * - team-workflow-upgrade and my-week-with-grok-bot: no Stripe link. These
- *   are sold by enquiry (see ENQUIRY_OFFERS below). Keep their values empty.
+ * Do not put those URLs back on a button.
  */
+
+import { LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 
 export const CHECKOUT_LINKS = {
   "lunch-and-learn": "",
   "team-workflow-upgrade": "",
-  "executive-workflow-upgrade": "https://buy.stripe.com/8x2eVdfjI0toaT0gOC2wU0c",
+  "executive-workflow-upgrade": "",
   "my-week-with-grok-bot": "",
-  "accountability-coaching": "https://buy.stripe.com/28E9AT6Nc5NIgdkaqe2wU0b",
+  "accountability-coaching": "",
 } as const;
 
 export type CheckoutOffer = keyof typeof CHECKOUT_LINKS;
 
 /**
- * Offers sold by enquiry, not Stripe (Nic, 17 Nov 2026: "Stripe for coaching
- * and Exec, enquiry form for Team and My Week"). Their buttons open the
- * session request form, which emails Nic through the same FormSubmit
- * endpoint as /contact. The value is the short code sent as the hidden
- * `offer` field.
+ * Offers sold by enquiry. The value is the short code sent as ?offer=
+ * on the session request form.
  */
 export const ENQUIRY_OFFERS = {
   "team-workflow-upgrade": "team",
   "my-week-with-grok-bot": "my-week",
+  "executive-workflow-upgrade": "exec",
+  "accountability-coaching": "coaching",
 } as const satisfies Partial<Record<CheckoutOffer, string>>;
 
 export type EnquiryOffer = keyof typeof ENQUIRY_OFFERS;
 
 export const SESSION_REQUEST_PATH = "/workshops/request-a-session";
 
-export const SESSION_REQUEST_LABEL = "Request a session";
+export const SESSION_REQUEST_LABEL = "Enquire to book";
+
+/** Keynotes are enquired on the contact form, not the workshop form. */
+export const KEYNOTE_ENQUIRY_PATH = "/contact";
 
 export function isEnquiryOffer(offer: CheckoutOffer): offer is EnquiryOffer {
   return offer in ENQUIRY_OFFERS;
@@ -57,10 +54,12 @@ export function sessionRequestHref(offer: EnquiryOffer): string {
 }
 
 /**
- * Where a buy button goes. Enquiry offers go to the request form.
- * Stripe offers return their Payment Link, or "" until it exists.
+ * Where a buy button goes.
+ * The lunch and learn goes to its booking section.
+ * Every other offer goes to the enquiry form.
  */
 export function checkoutHref(offer: CheckoutOffer): string {
+  if (offer === "lunch-and-learn") return LUNCH_AND_LEARN_PATH;
   if (isEnquiryOffer(offer)) return sessionRequestHref(offer);
-  return CHECKOUT_LINKS[offer].trim();
+  return "";
 }

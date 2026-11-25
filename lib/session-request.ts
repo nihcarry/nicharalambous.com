@@ -23,6 +23,11 @@ export const SESSION_OFFERS = [
     title: "My week with AI",
     detail: "90 minutes, up to 20 people.",
   },
+  {
+    value: "coaching",
+    title: "Accountability business coaching",
+    detail: "Two 60-minute calls a month, plus chat in between.",
+  },
 ] as const;
 
 export type SessionOfferCode = (typeof SESSION_OFFERS)[number]["value"];

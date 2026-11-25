@@ -3,20 +3,21 @@ import { JsonLd } from "@/components/json-ld";
 import { LogoStrip } from "@/components/site/logo-strip";
 import { NewsletterBlock } from "@/components/site/newsletter-block";
 import { WhatPeopleSay } from "@/components/what-people-say";
-import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
 import { INTRO_CALL_URL } from "@/lib/offers";
+import { LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
 import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
 
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
   description:
-    "Nic Haralambous speaks to teams about the Output Paradox, runs Grok Bot workshops for leadership teams and coaches founders and CEOs. Lunch and learn €999, virtual keynotes from €2,000 and in-person keynotes from €4,500, all ex VAT.",
+    "Nic Haralambous speaks to teams about the Output Paradox, runs AI workshops for leadership teams and coaches founders and CEOs. The Output Paradox lunch and learn is €999 ex VAT.",
   alternates: { canonical: HOME_URL },
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
     description:
-      "Do better work, not just more of it. Book a 20-minute virtual lunch and learn for €999 ex VAT, or an in-person keynote from €4,500.",
+      "Do better work, not just more of it. Book the virtual lunch and learn for €999 ex VAT, or enquire about a keynote.",
     url: HOME_URL,
     images: [{ url: "/og/home.png", width: 1200, height: 630 }],
   },
@@ -94,11 +95,13 @@ export default async function HomePage() {
               <em className="h-b">not just<br className="hero-br-m" /> more of it</em>
             </h1>
             <p className="say">
-              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room. I also run hands-on Grok Bot workshops for leadership teams, and I coach founders and CEOs one to one.
+              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room. I also run hands-on AI workshops for leadership teams, and I coach founders and CEOs one to one.
             </p>
             <div className="acts">
-              <CheckoutButton id="buy-lunch-and-learn-home" offer="lunch-and-learn" label="Buy the lunch and learn" />
-              <span>€999, ex VAT</span>
+              <a className="btn btn-wrap" id="buy-lunch-and-learn-home" href={LUNCH_AND_LEARN_PATH}>
+                Buy the lunch and learn
+              </a>
+              <span>€999 ex VAT</span>
               <IntroCallLink />
               <a className="quiet-link" href="/workshops">
                 See the workshops
@@ -121,10 +124,10 @@ export default async function HomePage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>In-person keynotes from €4,500, ex VAT, 45 minutes.</b> Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.
+            <b>In-person keynotes, 45 minutes.</b> Travel is extra. Q&amp;A, podcasts and other extras can be bundled.
           </span>
           <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
-            Enquire about a date
+            Enquire to book
           </a>
         </div>
       </div>
@@ -156,12 +159,19 @@ export default async function HomePage() {
                 For People, L&amp;D and Talent leads at remote and hybrid companies, and for the organisers of conferences and leadership events.
               </p>
               <ul>
-                <li>20-minute virtual lunch and learn, €999, ex VAT</li>
-                <li>Virtual keynotes from €2,000, ex VAT</li>
-                <li>In-person keynotes from €4,500, ex VAT, travel extra</li>
+                <li>
+                  <a href={LUNCH_AND_LEARN_PATH}>20-minute virtual lunch and learn, €999&nbsp;ex&nbsp;VAT</a>
+                </li>
+                <li>Virtual keynote on Zoom, Teams or Meet</li>
+                <li>In-person keynote, 45 minutes, travel extra</li>
               </ul>
               <div className="card-links">
-              <CheckoutButton id="buy-lunch-and-learn-speak" offer="lunch-and-learn" label="Buy the lunch and learn" variant="link" />
+              <a className="go buy" id="buy-lunch-and-learn-speak" href={LUNCH_AND_LEARN_PATH}>
+                Buy the lunch and learn <span>→</span>
+              </a>
+              <a className="go" href="/contact">
+                Enquire to book <span>→</span>
+              </a>
               <a className="go" href="/keynotes/output-paradox-reengage-teams">
                 See the Output Paradox <span>→</span>
               </a>
@@ -170,42 +180,41 @@ export default async function HomePage() {
             <div className="pl gb">
               <img className="pxi stk-card" src="/v3/new/sticker-laptop.png" alt="Emoji-style Nic with a laptop" width={160} height={160} />
               <h3>My week with AI</h3>
-              <p>A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.</p>
+              <p>A show-and-tell: I take your team through my own AI setup, how I work with it and what&apos;s out there to do.</p>
               <ul>
                 <li>90 minutes, up to 20 people</li>
-                <li>€2,999 per session, ex VAT</li>
                 <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-my-week-with-grok-bot-home" offer="my-week-with-grok-bot" label="Request a session" variant="link" />
+                <EnquireButton id="buy-my-week-with-grok-bot-home" offer="my-week" />
                 <a className="session-link" href="/workshops/my-week-with-ai">See the session</a>
               </div>
             </div>
             <div className="pl">
               <img className="px pxi" src="/v3/px/Nic_Hunting_Pickaxe.png" alt="Pixel drawing of Nic with a pickaxe" width={170} height={288} />
-              <h3>Team Workflow Upgrade Session</h3>
-              <p>A hands-on workshop for up to 8 senior leaders from one company. Each person builds their own workflow in Grok Bot.</p>
+              <h3>Senior Leaders AI Lab</h3>
+              <p>A hands-on workshop. Each person builds their own workflows and keeps ownership of the thinking.</p>
               <ul>
-                <li>2 hours, hands-on</li>
-                <li>€4,999 for up to 8 people, ex VAT</li>
-                <li>€499 per extra seat, up to 10</li>
+                <li>Half day, hands-on</li>
+                <li>Up to 10 senior leaders from one company</li>
+                <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-team-workflow-upgrade-home" offer="team-workflow-upgrade" label="Request a session" variant="link" />
+                <EnquireButton id="buy-team-workflow-upgrade-home" offer="team" />
                 <a className="session-link" href="/workshops/team-workflow-upgrade">See the session</a>
               </div>
             </div>
             <div className="pl">
               <img className="px pxi" src="/v3/px/Nic_Ancient_greece_16bit.png" alt="Pixel drawing of Nic as a Greek orator" width={226} height={280} />
-              <h3>Executive Workflow Upgrade Session</h3>
-              <p>For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.</p>
+              <h3>The CEO AI Session</h3>
+              <p>For the CEO: a briefing call, then a custom session built for you.</p>
               <ul>
-                <li>2 hours, one to one</li>
-                <li>€1,499, ex VAT</li>
+                <li>3 hours</li>
+                <li>One to one, plus one exec free</li>
                 <li>Virtual by default</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton id="buy-executive-workflow-upgrade-home" offer="executive-workflow-upgrade" label="Buy your session" variant="link" />
+                <EnquireButton id="buy-executive-workflow-upgrade-home" offer="exec" />
                 <a className="session-link" href="/workshops/executive-workflow-upgrade">See the session</a>
               </div>
             </div>
@@ -216,17 +225,12 @@ export default async function HomePage() {
                 Accountability business coaching. Two 60-minute calls a month with me, plus ongoing accountability and chat support in between, from someone who has built and sold four companies.
               </p>
               <ul>
-                <li>€399 a month, ex VAT</li>
+                <li>Two 60-minute calls a month</li>
                 <li>A sounding board for the decisions in your business</li>
                 <li>Can&apos;t afford it right now? Apply for pay-what-you-can-afford coaching</li>
               </ul>
               <div className="card-links">
-                <CheckoutButton
-                  id="buy-accountability-coaching-home"
-                  offer="accountability-coaching"
-                  label="Start coaching, €399 a month"
-                  variant="link"
-                />
+                <EnquireButton id="buy-accountability-coaching-home" offer="coaching" />
                 <a className="session-link" href="/coaching">See coaching</a>
               </div>
             </div>
@@ -273,8 +277,10 @@ export default async function HomePage() {
               Nearly one in four of your employees is disengaged right now, and AI is masking the signal. The Output Paradox gives your leaders three shifts and gives your team one change they can make before they leave the room.
             </p>
             <div className="acts2">
-              <CheckoutButton id="buy-lunch-and-learn-home-talk" offer="lunch-and-learn" label="Buy now" />
-              <span>€999, ex VAT</span>
+              <a className="btn btn-wrap" id="buy-lunch-and-learn-home-talk" href={LUNCH_AND_LEARN_PATH}>
+                Buy now
+              </a>
+              <span>€999 ex VAT</span>
               <IntroCallLink />
               <a className="quiet-link" href="/keynotes/output-paradox-reengage-teams">
                 Read about the talk
@@ -350,8 +356,10 @@ export default async function HomePage() {
         <div className="wrap final">
           <h2>If your team is doing more and feeling less, let&apos;s talk</h2>
           <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-            <CheckoutButton id="buy-lunch-and-learn-home-final" offer="lunch-and-learn" label="Buy the lunch and learn" />
-            <span>€999, ex VAT</span>
+            <a className="btn btn-wrap" id="buy-lunch-and-learn-home-final" href={LUNCH_AND_LEARN_PATH}>
+              Buy the lunch and learn
+            </a>
+            <span>€999 ex VAT</span>
             <a className="quiet-link" href="/contact">
               Talk to me first
             </a>

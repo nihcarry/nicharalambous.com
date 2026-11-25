@@ -117,7 +117,7 @@ export default function TeamWorkshopPage() {
             The key is ownership. I want your leaders to keep ownership of their ideas, their critical thinking, their opinions, their taste and their creativity, and to hand AI the work around the work. Before the session I work with your organisation to set things up in the AI tools your business already uses, so nobody needs to switch tools to attend.
           </p>
           <p className="body">
-            The lunch and learn is a 20-minute talk I give to your whole team; the Senior Leaders AI Lab is half a day of up to 10 of your senior leaders building their own workflows with me.
+            The lunch and learn is a 45-minute virtual slot (a 20-minute talk plus Q&amp;A) for a wider room; the Senior Leaders AI Lab is half a day of up to 10 of your senior leaders building their own workflows with me.
           </p>
           <p className="body">
             I&apos;ve built and sold four companies, written three books and spent more than 20 years building technology businesses. I&apos;d rather your leaders leave with one workflow they actually use than ten ideas they never get to.
@@ -233,7 +233,7 @@ export default function TeamWorkshopPage() {
             <details>
               <summary>How is this different from the lunch and learn?</summary>
               <p>
-                The lunch and learn is a 20-minute talk on the Output Paradox for any team size. This is a half-day workshop for up to 10 senior leaders, where each person builds their own workflows on their own work.
+                The lunch and learn is a 45-minute slot on the Output Paradox for a wider room: a 20-minute talk plus Q&amp;A. This is a half-day workshop for up to 10 senior leaders, where each person builds their own workflows on their own work.
               </p>
             </details>
             <details>

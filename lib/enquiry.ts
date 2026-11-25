@@ -20,7 +20,7 @@ export const BUDGET_BANDS = [
 ] as const;
 
 export const FORMATS = [
-  { value: "lunch-and-learn", title: "Lunch and learn", detail: "20 minutes" },
+  { value: "lunch-and-learn", title: "Lunch and learn", detail: "45-minute slot" },
   { value: "virtual", title: "Virtual keynote", detail: "Zoom, Teams or Meet" },
   { value: "in-person", title: "In-person keynote", detail: "At your venue" },
   { value: "unsure", title: "Not sure yet", detail: "Help me choose" },

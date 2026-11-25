@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { LogoStrip } from "@/components/site/logo-strip";
+import { LunchLearnCheckout } from "@/components/site/lunch-learn-checkout";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
-import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
-import { checkoutIsLive } from "@/lib/site";
+import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
 import { followOnSessionsJsonLd } from "@/lib/offers";
 import { v3ContentSettings } from "@/lib/v3-content";
 
@@ -15,19 +15,19 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. 45 minutes, in person or on Zoom, Teams or Meet. Lunch and learn is 20 minutes, €999, ex VAT. Virtual keynotes from €2,000, ex VAT. In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.",
+    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. The virtual lunch and learn is a 45-minute slot, a 20-minute talk plus Q&A, at €999 ex VAT. Keynotes are booked by enquiry.",
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
     description:
-      "I help leaders reengage teams in the age of AI. Virtual lunch and learn €999 ex VAT, or an in-person keynote from €4,500.",
+      "I help leaders reengage teams in the age of AI. The virtual lunch and learn is €999 ex VAT. Keynotes are booked by enquiry.",
     url: URL,
     images: [{ url: "/og/output-paradox.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "The Output Paradox | Nic Haralambous",
-    description: "A keynote on reengaging teams in the age of AI. From €999 ex VAT.",
+    description: "A keynote on reengaging teams in the age of AI. Virtual lunch and learn, €999 ex VAT.",
     images: ["/og/output-paradox.png"],
   },
 };
@@ -47,7 +47,6 @@ const QUOTES = [
 
 export default async function OutputParadoxPage() {
   const settings = await v3ContentSettings();
-  const paidOnline = checkoutIsLive();
 
   return (
     <div className="v3 has-sticky" data-no-orphan-opt-out="true">
@@ -82,11 +81,13 @@ export default async function OutputParadoxPage() {
                 </div>
                 <div className="price">
                   €999
-                  <small>per session, ex VAT</small>
+                  <small>ex VAT</small>
                 </div>
               </div>
               <div className="acts">
-                <CheckoutButton id="buy-lunch-and-learn" offer="lunch-and-learn" label="Buy now" />
+                <a className="btn btn-wrap" id="buy-lunch-and-learn" href="#checkout">
+                  Buy now
+                </a>
                 <IntroCallLink />
                 <a className="quiet-link" href="/contact">
                   Planning something bigger? Talk to me first
@@ -124,10 +125,10 @@ export default async function OutputParadoxPage() {
       <div className="ip pd-calendar">
         <div className="wrap">
           <span>
-            <b>In-person keynotes from €4,500, ex VAT, 45 minutes.</b> Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.
+            <b>In-person keynotes, 45 minutes.</b> Travel is extra. Q&amp;A, podcasts and other extras can be bundled.
           </span>
           <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
-            Enquire about a date
+            Enquire to book
           </a>
         </div>
       </div>
@@ -288,14 +289,16 @@ export default async function OutputParadoxPage() {
                 20 minutes, live on Zoom, Teams or Meet. The core of the Output Paradox, tailored to your people, with time for a few questions.
               </p>
               <ul>
-                <li>{paidOnline ? "Booked and paid online" : "You pick the date"}</li>
+                <li>You pick the date</li>
                 <li>Any team size</li>
                 <li>Works across time zones</li>
               </ul>
               <div className="price">
                 €999<span>ex VAT</span>
               </div>
-              <CheckoutButton id="buy-lunch-and-learn-formats" offer="lunch-and-learn" label="Buy now" />
+              <a className="btn" id="buy-lunch-and-learn-formats" href="#checkout">
+                Buy now
+              </a>
               <IntroCallLink />
             </div>
             <div className="fmt">
@@ -308,11 +311,8 @@ export default async function OutputParadoxPage() {
                 <li>Tailored stories and examples</li>
                 <li>Frameworks your team keeps</li>
               </ul>
-              <div className="price">
-                <small className="from">from</small>€2,000<span>ex VAT</span>
-              </div>
               <a className="btn ghost" href="/contact?format=virtual">
-                Talk to me first
+                Enquire to book
               </a>
             </div>
             <div className="fmt">
@@ -336,6 +336,8 @@ export default async function OutputParadoxPage() {
         </div>
       </section>
 
+      <LunchLearnCheckout />
+
       <section className="p-mic op-next" id="after-the-talk">
         <div className="wrap">
           <div className="next-band">
@@ -351,25 +353,26 @@ export default async function OutputParadoxPage() {
             <div className="next-list buy">
               <div>
                 <p>
-                  <b>My week with AI.</b> 90 minutes, up to 20 people, €2,999 per session, ex VAT. A show-and-tell: I take your team through my own Grok Bot setup, how I work with it and what&apos;s out there to do.
+                  <b>My week with AI.</b> 90 minutes, up to 20 people. A show-and-tell: I take your team through my own setup, how I work with it and what&apos;s out there to do.
                 </p>
-                <CheckoutButton id="buy-my-week-with-grok-bot-op" offer="my-week-with-grok-bot" label="Request a session" />
+                <EnquireButton id="buy-my-week-with-grok-bot-op" offer="my-week" />
               </div>
               <div>
                 <p>
-                  <b>Team Workflow Upgrade Session.</b> 2 hours, up to 8 senior leaders from one company, €4,999 per session, ex VAT, plus €499 per extra seat up to 10. Each person builds their own workflow in Grok Bot. The lunch and learn is a 20-minute talk for everyone; this is two hours of building for your senior team.
+                  <b>Senior Leaders AI Lab.</b> Half a day, up to 10 senior leaders from one company. Each person builds their own workflow. The lunch and learn is a 45-minute slot for a wider room. This is half a day of building for your senior team.
                 </p>
-                <CheckoutButton id="buy-team-workflow-upgrade-op" offer="team-workflow-upgrade" label="Request a session" />
+                <EnquireButton id="buy-team-workflow-upgrade-op" offer="team" />
               </div>
               <div>
                 <p>
-                  <b>Executive Workflow Upgrade Session.</b> 2 hours, one to one, €1,499, ex VAT. For the CEO: a Grok Bot introduction, a review of your workflow and an upgrade.
+                  <b>The CEO AI Session.</b> 3 hours, custom built for the CEO, with a briefing call first and a free seat for one exec.
                 </p>
-                <CheckoutButton id="buy-executive-workflow-upgrade-op" offer="executive-workflow-upgrade" label="Buy your executive session" />
+                <EnquireButton id="buy-executive-workflow-upgrade-op" offer="exec" />
               </div>
               <p className="coach-line">
-                Prefer ongoing support for yourself? Accountability business coaching is €399 a month, ex VAT.
+                Prefer ongoing support for yourself? Accountability business coaching is two calls a month, plus chat in between.
               </p>
+              <EnquireButton id="buy-coaching-op" offer="coaching" />
               <IntroCallLink />
             </div>
           </div>
@@ -464,7 +467,7 @@ export default async function OutputParadoxPage() {
             <div>
               <span className="mono">01</span>
               <h3>Book or enquire</h3>
-              <p>Book the lunch and learn online, or send me the details of a bigger event.</p>
+              <p>Book the lunch and learn on the calendar, or send me the details of a bigger event.</p>
             </div>
             <div>
               <span className="mono">02</span>
@@ -488,17 +491,25 @@ export default async function OutputParadoxPage() {
             />
             <h2>If your team is doing more and feeling less, this is the conversation they need next</h2>
             <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-              <CheckoutButton id="buy-lunch-and-learn-close" offer="lunch-and-learn" label="Buy now" />
-              <span>€999, ex VAT</span>
+              <a className="btn btn-wrap" id="buy-lunch-and-learn-close" href="#checkout">
+                Buy now
+              </a>
+              <span>€999 ex VAT</span>
               <IntroCallLink />
               <a className="quiet-link" href="/contact">
-                Talk to me first
+                Enquire to book a keynote
               </a>
             </div>
           </div>
         </div>
       </section>
-      <StickyBookBar />
+      <StickyBookBar
+        title="Lunch and learn"
+        detail="€999 ex VAT"
+        href="#checkout"
+        label="Buy"
+        id="buy-lunch-and-learn-sticky"
+      />
     </div>
   );
 }

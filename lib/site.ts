@@ -1,6 +1,6 @@
 /**
  * Shared v3 site facts: routes, booking link, and enquiry delivery.
- * Prices are euros. The Stripe checkout URL stays empty until Nic creates the product.
+ * The only public price is the lunch and learn, in lib/lunch-and-learn.ts.
  */
 
 export const SITE_URL = "https://www.nicharalambous.com";
@@ -50,25 +50,16 @@ export const ENQUIRY_ENDPOINT =
   `https://formsubmit.co/ajax/${ENQUIRY_EMAIL}`;
 
 /**
- * Stripe Checkout for the €999 lunch and learn.
- * Empty until Nic creates the product. Never point this at a test-mode URL.
+ * Nav "Book a lunch and learn" stays on the hero card (#book).
+ * The booking section itself is #checkout on the same page.
  */
-export function lunchLearnCheckoutUrl(): string {
-  return process.env.NEXT_PUBLIC_LUNCH_LEARN_CHECKOUT_URL?.trim() || "";
-}
-
-export function checkoutIsLive(): boolean {
-  return lunchLearnCheckoutUrl().length > 0;
-}
-
-/** Nav and "see the offer" links. The booking card until checkout exists. */
 export function bookOfferHref(): string {
-  return lunchLearnCheckoutUrl() || `${OUTPUT_PARADOX_PATH}#book`;
+  return `${OUTPUT_PARADOX_PATH}#book`;
 }
 
-/** Every "Book now" control. Contact form while checkout is empty. */
+/** Same destination as the nav booking button. */
 export function bookNowHref(): string {
-  return lunchLearnCheckoutUrl() || "/contact?format=virtual";
+  return bookOfferHref();
 }
 
 /** Replace em dashes in text that will be rendered. Does not write to Sanity. */
