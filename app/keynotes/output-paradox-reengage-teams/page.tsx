@@ -319,16 +319,13 @@ export default async function OutputParadoxPage() {
             <div className="fmt">
               <h3>In-person keynote</h3>
               <p>
-                For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast. In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&amp;A, podcasts and other extras.
+                For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast. 45 minutes. Travel is extra, and Q&amp;A, podcasts and other extras can be bundled.
               </p>
               <ul>
                 <li>45 minutes</li>
                 <li>Extended Q&amp;A available</li>
                 <li>Full day with delegates available</li>
               </ul>
-              <div className="price">
-                <small className="from">from</small>€4,500<span>ex VAT</span>
-              </div>
               <a className="btn ghost" href="/contact?format=in-person">
                 Enquire about a date
               </a>
