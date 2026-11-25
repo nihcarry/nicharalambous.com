@@ -1,5 +1,5 @@
 import { LunchLearnEmbed, PickSlotLink } from "@/components/site/lunch-learn-embed";
-import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL, lunchLearnEmbedUrl } from "@/lib/lunch-and-learn";
 import { INTRO_CALL_URL } from "@/lib/offers";
 
 /**
@@ -69,7 +69,7 @@ export function LunchLearnCheckout() {
             </div>
           </div>
 
-          <div className="widget" id="calendly" tabIndex={-1}>
+          <div className={`widget${lunchLearnEmbedUrl() ? "" : " is-fallback"}`} id="calendly" tabIndex={-1}>
             <LunchLearnEmbed />
           </div>
 

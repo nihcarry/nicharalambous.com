@@ -5031,15 +5031,16 @@ html.fullshot .sticky-book{display:none!important}
   outline-offset: 3px;
 }
 
+.v3 .checkout .widget.is-fallback {
+  align-self: start;
+}
+
 .v3 .checkout .widget-fallback {
-  padding: 36px;
+  padding: 28px 24px;
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   gap: 16px;
-  min-height: 280px;
 }
 
 .v3 .checkout .widget-fallback .btn { min-height: 44px; }
@@ -5097,9 +5098,9 @@ html.fullshot .sticky-book{display:none!important}
   .v3 .checkout .side { display: contents; margin: 0; }
   .v3 .checkout .co-head { order: 1; grid-area: auto; }
   .v3 .checkout .pricecard { order: 2; grid-area: auto; margin-top: 36px; }
-  .v3 .checkout .steps { order: 3; grid-area: auto; margin: 40px 0 36px; }
-  .v3 .checkout .get { order: 4; }
-  .v3 .checkout .widget { order: 5; grid-area: auto; margin-top: 40px; align-self: auto; }
+  .v3 .checkout .steps { order: 3; grid-area: auto; margin: 40px 0 0; }
+  .v3 .checkout .widget { order: 4; grid-area: auto; margin-top: 36px; align-self: auto; }
+  .v3 .checkout .get { order: 5; margin-top: 40px; }
   .v3 .checkout .after { order: 6; margin-top: 44px; }
   .v3 .checkout h2 { max-width: 22ch; }
 }
