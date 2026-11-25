@@ -5051,7 +5051,7 @@ html.fullshot .sticky-book{display:none!important}
   width: 100% !important;
   max-width: 100%;
   min-width: 0 !important;
-  height: 760px;
+  height: 860px;
   border: 0;
 }
 
@@ -5120,8 +5120,6 @@ html.fullshot .sticky-book{display:none!important}
   .v3 .checkout .pricecard { padding: 24px; }
   .v3 .checkout .price { font-size: 40px; }
   .v3 .checkout .btn-book { padding: 9px 16px 9px 9px; }
-  .v3 .checkout .calendly-inline-widget,
-  .v3 .checkout .widget iframe { height: 860px; }
   .v3 .checkout .widget { scroll-margin-top: 64px; }
   .v3 .checkout .widget-fallback { padding: 22px 16px; }
 }

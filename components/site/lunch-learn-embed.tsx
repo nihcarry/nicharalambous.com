@@ -36,8 +36,8 @@ export function PickSlotLink() {
 }
 
 /**
- * Calendly inline widget. The URL is NEXT_PUBLIC_LUNCH_AND_LEARN_CALENDLY_URL.
- * While that value is empty, the slot shows an enquire link instead of a calendar.
+ * Calendly inline widget. The URL defaults to the live lunch and learn event.
+ * An empty URL still shows the enquire link instead of a calendar.
  */
 export function LunchLearnEmbed() {
   const url = lunchLearnEmbedUrl();
@@ -82,7 +82,10 @@ export function LunchLearnEmbed() {
     <div
       className="calendly-inline-widget"
       data-url={url}
-      style={{ minWidth: "320px", height: "760px" }}
+      // Calendly's widget.js copies this attribute onto the iframe parent.
+      // An absent style becomes the literal "null", and a missing height
+      // leaves the booking calendar on its loading animation.
+      style={{ minWidth: "320px", height: "860px" }}
     />
   );
 }

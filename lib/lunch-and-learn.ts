@@ -1,12 +1,12 @@
 /**
  * The Output Paradox lunch and learn.
  *
- * NEXT_PUBLIC_LUNCH_AND_LEARN_CALENDLY_URL is the only booking URL.
- * Set it to the paid Calendly event page (Calendly's Stripe integration).
- * Leave it empty until that event exists. Do not invent a slug, and do not
- * create the Calendly event or a Stripe product from this repo.
+ * The booking page is public. The default is Nic's paid Calendly event, so a
+ * deploy picks it up with no env setup. NEXT_PUBLIC_LUNCH_AND_LEARN_CALENDLY_URL
+ * overrides that default when it is set to another URL. An empty value keeps
+ * the enquire fallback. Do not create Calendly events or Stripe products here.
  *
- * Nic, 25 Nov 2026. The event, when created on nic@nharry.com, is:
+ * Nic, 25 Nov 2026. The event on nic@nharry.com is:
  * - €999 ex VAT, euros only, charged at booking. Moneybird sends the invoice.
  *   EU reverse charge is on that invoice where it applies. No VAT logic here.
  * - Wednesdays and Fridays, 45-minute sessions starting 11:00, 12:00 or 13:00
@@ -18,8 +18,16 @@
  * - Confirmation is a Stripe receipt plus a Moneybird invoice.
  */
 
-export const LUNCH_AND_LEARN_CALENDLY_URL =
-  process.env.NEXT_PUBLIC_LUNCH_AND_LEARN_CALENDLY_URL?.trim() || "";
+/** Live paid event. Used when the env var is unset. */
+export const LUNCH_AND_LEARN_CALENDLY_DEFAULT =
+  "https://calendly.com/nharry/output-paradox-lunch-and-learn";
+
+const calendlyFromEnv = process.env.NEXT_PUBLIC_LUNCH_AND_LEARN_CALENDLY_URL;
+
+/** Booking URL. Unset env uses the default. An empty env keeps the fallback. */
+export const LUNCH_AND_LEARN_CALENDLY_URL = (
+  calendlyFromEnv === undefined ? LUNCH_AND_LEARN_CALENDLY_DEFAULT : calendlyFromEnv
+).trim();
 
 /** The booking section on the Output Paradox page. */
 export const LUNCH_AND_LEARN_PATH =
