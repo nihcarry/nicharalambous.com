@@ -2,25 +2,25 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { EnquiryForm } from "@/components/site/enquiry-form";
 import { breadcrumbJsonLd } from "@/lib/metadata";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 
 const URL = "https://www.nicharalambous.com/contact";
 
 export const metadata: Metadata = {
   title: { absolute: "Enquire | Nic Haralambous" },
   description:
-    "Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. Virtual lunch and learn, 20 minutes: €999, ex VAT. Virtual keynotes from €2,000, ex VAT. In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.",
+    "Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. The Output Paradox lunch and learn is a 45-minute slot at €999 ex VAT, booked on its own calendar.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Enquire | Nic Haralambous",
-    description:
-      "A two-minute enquiry for a virtual or in-person keynote. Fees in euros, excluding VAT.",
+    description: "A two-minute enquiry for a virtual or in-person keynote.",
     url: URL,
     images: [{ url: "/og/contact.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Enquire | Nic Haralambous",
-    description: "Book a keynote, in person or virtually. Fees in euros.",
+    description: "Enquire about a keynote, in person or virtually.",
     images: ["/og/contact.png"],
   },
 };
@@ -65,21 +65,22 @@ export default function ContactPage() {
               </ol>
             </div>
             <div className="card">
-              <h2 className="side-title">Fees, so there are no surprises</h2>
+              <h2 className="side-title">The lunch and learn</h2>
               <ul className="next">
                 <li>
                   <span className="mono">€</span>
-                  Virtual lunch and learn, 20 minutes: €999, ex VAT
+                  The Output Paradox lunch and learn: {LUNCH_AND_LEARN_LABEL}. {LUNCH_AND_LEARN_FACTS.priceLine}. You send the call link.
                 </li>
                 <li>
-                  <span className="mono">€</span>
-                  Virtual keynotes from €2,000, ex VAT
-                </li>
-                <li>
-                  <span className="mono">€</span>
-                  In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.
+                  <span className="mono">01</span>
+                  Keynotes, virtual or in person, are arranged from this form. The fee is in the proposal.
                 </li>
               </ul>
+              <p style={{ marginTop: 16 }}>
+                <a className="btn btn-wrap" href={LUNCH_AND_LEARN_PATH}>
+                  Book the lunch and learn
+                </a>
+              </p>
             </div>
           </aside>
           <EnquiryForm />

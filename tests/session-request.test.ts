@@ -14,13 +14,16 @@ const valid = {
   honey: "",
 };
 
-test("team and my week buttons go to the request form, Stripe offers go to Stripe", () => {
+test("workshop, exec and coaching buttons go to the request form", () => {
   assert.equal(checkoutHref("team-workflow-upgrade"), "/workshops/request-a-session?offer=team");
   assert.equal(checkoutHref("my-week-with-grok-bot"), "/workshops/request-a-session?offer=my-week");
-  assert.equal(isEnquiryOffer("accountability-coaching"), false);
-  assert.equal(isEnquiryOffer("executive-workflow-upgrade"), false);
-  assert.match(checkoutHref("accountability-coaching"), /^https:\/\/buy\.stripe\.com\//);
-  assert.match(checkoutHref("executive-workflow-upgrade"), /^https:\/\/buy\.stripe\.com\//);
+  assert.equal(checkoutHref("executive-workflow-upgrade"), "/workshops/request-a-session?offer=exec");
+  assert.equal(checkoutHref("accountability-coaching"), "/workshops/request-a-session?offer=coaching");
+  assert.equal(checkoutHref("lunch-and-learn"), "/keynotes/output-paradox-reengage-teams#checkout");
+  assert.equal(isEnquiryOffer("accountability-coaching"), true);
+  assert.equal(isEnquiryOffer("executive-workflow-upgrade"), true);
+  assert.equal(checkoutHref("accountability-coaching").includes("buy.stripe.com"), false);
+  assert.equal(checkoutHref("executive-workflow-upgrade").includes("buy.stripe.com"), false);
 });
 
 test("valid request passes and carries the offer", () => {

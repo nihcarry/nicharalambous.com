@@ -5,7 +5,7 @@
  * and JSON-LD structured data across all page templates.
  */
 import type { Metadata } from "next";
-import { lunchLearnCheckoutUrl } from "@/lib/site";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
 
 const SITE_URL = "https://www.nicharalambous.com";
 /**
@@ -283,36 +283,12 @@ export function outputParadoxServiceJsonLd() {
     offers: [
       {
         "@type": "Offer",
-        name: "20-minute virtual lunch and learn",
-        price: "999",
-        priceCurrency: "EUR",
+        name: LUNCH_AND_LEARN_FACTS.offerName,
+        price: String(LUNCH_AND_LEARN_FACTS.priceEuros),
+        priceCurrency: LUNCH_AND_LEARN_FACTS.priceCurrency,
         valueAddedTaxIncluded: false,
-        description: "€999 excluding VAT. 20 minutes, live on Zoom, Teams or Meet.",
-        url: `${url}#book`,
-        ...(lunchLearnCheckoutUrl()
-          ? { availability: "https://schema.org/InStock" }
-          : {}),
-      },
-      {
-        "@type": "Offer",
-        name: "Virtual keynote",
-        price: "2000",
-        priceCurrency: "EUR",
-        valueAddedTaxIncluded: false,
-        description: "Virtual keynotes from €2,000, ex VAT.",
-        url: `${url}#formats`,
-        availability: "https://schema.org/InStock",
-      },
-      {
-        "@type": "Offer",
-        name: "In-person keynote",
-        price: "4500",
-        priceCurrency: "EUR",
-        valueAddedTaxIncluded: false,
-        description:
-          "In-person keynotes from €4,500, ex VAT, 45 minutes. Travel is extra, and the price can be bundled with Q&A, podcasts and other extras.",
-        url: `${url}#formats`,
-        availability: "https://schema.org/InStock",
+        description: `${LUNCH_AND_LEARN_FACTS.priceLine}. A 45-minute session on Wednesday or Friday, starting 11:00, 12:00 or 13:00 Amsterdam time, shown in your time zone. Book at least 7 calendar days ahead.`,
+        url: `${SITE_URL}${LUNCH_AND_LEARN_PATH}`,
       },
     ],
   };

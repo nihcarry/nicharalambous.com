@@ -36,22 +36,6 @@ function pageUrl(path: string) {
   return `${SITE_URL}${path}`;
 }
 
-function pricedOffer(price: number, unitText: string) {
-  return {
-    "@type": "Offer",
-    price: String(price),
-    priceCurrency: "EUR",
-    valueAddedTaxIncluded: false,
-    priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      price: String(price),
-      priceCurrency: "EUR",
-      valueAddedTaxIncluded: false,
-      unitText,
-    },
-  };
-}
-
 /** Half a day for up to 10 senior leaders. No public price. */
 export function teamWorkshopJsonLd() {
   return {
@@ -88,10 +72,9 @@ export function grokWeekJsonLd() {
     name: "My week with AI",
     serviceType: "Workshop",
     description:
-      "A 90-minute show-and-tell for up to 20 people. €2,999 per session, excluding VAT. Virtual by default.",
+      "A 90-minute show-and-tell for up to 20 people. Virtual by default. Booked by enquiry.",
     url: pageUrl(PATHS.grokWeek),
     provider: PERSON,
-    offers: pricedOffer(2999, "session"),
   };
 }
 
@@ -102,14 +85,13 @@ export function coachingJsonLd() {
     name: "Accountability business coaching",
     serviceType: "Business coaching",
     description:
-      "Two 60-minute calls a month, plus ongoing accountability and chat support. €399 a month, excluding VAT.",
+      "Two 60-minute calls a month, plus ongoing accountability and chat support. Booked by enquiry.",
     url: pageUrl(PATHS.coaching),
     provider: PERSON,
-    offers: pricedOffer(399, "month"),
   };
 }
 
-/** Sessions named on the Output Paradox page. The team session has no price. */
+/** Sessions named on the Output Paradox page. None of these carry a price. */
 export function followOnSessionsJsonLd() {
   return {
     "@context": "https://schema.org",

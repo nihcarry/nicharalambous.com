@@ -10,7 +10,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "Request a session | Nic Haralambous" },
   description:
-    "Request The CEO AI Session, the Senior Leaders AI Lab or My week with AI. Nic replies by email within two working days.",
+    "Enquire to book The CEO AI Session, the Senior Leaders AI Lab, My week with AI or accountability coaching. Nic replies by email within two working days.",
   alternates: { canonical: URL },
   openGraph: {
     title: "Request a session | Nic Haralambous",
@@ -73,6 +73,10 @@ export default function RequestSessionPage() {
                 <li>
                   <span className="mono">03</span>
                   My week with AI: 90 minutes, up to 20 people.
+                </li>
+                <li>
+                  <span className="mono">04</span>
+                  Accountability business coaching: two calls a month, plus chat in between.
                 </li>
               </ul>
             </div>

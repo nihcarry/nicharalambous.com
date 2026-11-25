@@ -13,7 +13,7 @@ const CONTACT_EMAIL = "nic@nharry.com";
 const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 
 const inputStyles =
-  "mt-1 block w-full border border-brand-300 bg-white px-4 py-3 text-sm text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
+  "mt-1 block w-full border border-brand-300 bg-white px-4 py-3 text-base text-brand-900 placeholder:text-brand-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20";
 
 export function PwycaForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -188,7 +188,7 @@ export function PwycaForm() {
           <span className="text-red-500">*</span>
         </label>
         <p className="mt-1 font-mono text-sm leading-relaxed text-brand-500">
-          Paying €0 is totally fine. Nic limits this programme to 5 clients per
+          Paying nothing is totally fine. Nic limits this programme to 5 clients per
           month. That&apos;s why there&apos;s an application.
         </p>
         <input
@@ -197,7 +197,7 @@ export function PwycaForm() {
           name="afford"
           required
           className={inputStyles}
-          placeholder="e.g. €0, €50/session, or whatever works for you"
+          placeholder="What you can pay, or nothing"
         />
       </div>
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { CheckoutButton, IntroCallLink } from "@/components/site/checkout-cta";
+import { EnquireButton, IntroCallLink, enquireHref } from "@/components/site/checkout-cta";
 import { StickyBookBar } from "@/components/site/sticky-book";
 import { breadcrumbJsonLd } from "@/lib/metadata";
 import { grokWeekJsonLd, PATHS } from "@/lib/offers";
@@ -11,7 +11,7 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: "My week with AI",
   description:
-    "A 90-minute show-and-tell for up to 20 people. I take your team through my own Grok Bot setup. €2,999 per session, ex VAT. Virtual by default.",
+    "A 90-minute show-and-tell for up to 20 people. I take your team through my own setup. Virtual by default. Enquire to book.",
   alternates: { canonical: URL },
   openGraph: {
     title: "My week with AI | Nic Haralambous",
@@ -39,21 +39,21 @@ export default function MyWeekPage() {
               My week with <em>AI</em>
             </h1>
             <p className="say">
-              A show-and-tell for your team or organisation. I go through my own setup, how I work with Grok Bot and what&apos;s out there to do. We cover best practices and workflow ideas. 90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.
+              A show-and-tell for your team or organisation. I go through my own setup, how I work with it and what&apos;s out there to do. We cover best practices and workflow ideas. 90 minutes, up to 20 people. Virtual by default.
             </p>
             <div className="book" id="book">
               <div className="row">
                 <div>
                   <h2>My week with AI</h2>
-                  <p>A walk-through of my own setup, how I work with Grok Bot and what&apos;s out there to do.</p>
+                  <p>A walk-through of my own setup, how I work with AI and what&apos;s out there to do.</p>
                 </div>
                 <div className="price">
-                  €2,999
-                  <small>per session, ex VAT</small>
+                  90 min
+                  <small>up to 20 people</small>
                 </div>
               </div>
               <div className="acts">
-                <CheckoutButton id="buy-my-week-with-grok-bot" offer="my-week-with-grok-bot" label="Request a session" />
+                <EnquireButton id="buy-my-week-with-grok-bot" offer="my-week" />
                 <IntroCallLink />
               </div>
             </div>
@@ -84,10 +84,10 @@ export default function MyWeekPage() {
             I think the quickest way for a team to understand what Grok Bot can do is to watch someone use it on their real work, with nothing staged. So that&apos;s what this session is: My week with AI, shown to your people.
           </p>
           <p className="body">
-            For 90 minutes I take your team through my own setup. I show them how I work with Grok Bot day to day and what&apos;s out there for them to do with it. Your people watch, ask questions and see it working, before anyone has to commit to building something of their own.
+            For 90 minutes I take your team through my own setup. I show them how I work with AI day to day and what&apos;s out there for them to do with it. Your people watch, ask questions and see it working, before anyone has to commit to building something of their own.
           </p>
           <p className="body">
-            My week with AI is 90 minutes of me showing up to 20 of your people how I work with Grok Bot, for €2,999 a session, ex VAT.
+            My week with AI is 90 minutes of me showing up to 20 of your people how I work with AI.
           </p>
         </div>
       </section>
@@ -109,7 +109,7 @@ export default function MyWeekPage() {
             </div>
             <div className="has-stk">
               <img className="stk" src="/v3/new/sticker-thumbs.png" alt="" />
-              <p>Up to 20 people, €2,999 per session, ex VAT</p>
+              <p>Up to 20 people in the session</p>
             </div>
           </div>
         </div>
@@ -172,9 +172,9 @@ export default function MyWeekPage() {
         <div className="wrap">
           <div className="final op">
             <h2>My week with AI</h2>
-            <p className="final-sub">90 minutes, up to 20 people, €2,999 per session, ex VAT. Virtual by default.</p>
+            <p className="final-sub">90 minutes, up to 20 people. Virtual by default.</p>
             <div className="acts" style={{ justifyContent: "center", marginTop: 32 }}>
-              <CheckoutButton id="buy-my-week-final" offer="my-week-with-grok-bot" label="Request a session" />
+              <EnquireButton id="buy-my-week-final" offer="my-week" />
               <IntroCallLink />
             </div>
           </div>
@@ -182,9 +182,9 @@ export default function MyWeekPage() {
       </section>
       <StickyBookBar
         title="My week with AI"
-        detail="€2,999, ex VAT"
-        offer="my-week-with-grok-bot"
-        label="Request a session"
+        detail="90 minutes, up to 20 people"
+        href={enquireHref("my-week")}
+        label="Enquire to book"
         id="buy-my-week-sticky"
       />
     </div>

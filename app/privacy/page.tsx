@@ -47,7 +47,8 @@ const SECTIONS = [
   },
   {
     heading: "Payments",
-    body: "This section will explain Stripe, once the €999 lunch and learn checkout is live. Until that product exists, the site does not take card payments. Nic still needs to approve the legal wording.",
+    hidden: true,
+    body: "This section will explain card payments. The lunch and learn will be booked on a scheduling page, and payment is taken there. Until that page is connected, this site does not take card payments. Nic still needs to approve the legal wording.",
   },
   {
     heading: "Your rights",
@@ -79,7 +80,7 @@ export default function PrivacyPage() {
       <section>
         <div className="wrap">
           <div className="prose-col">
-            {SECTIONS.map((section) => (
+            {SECTIONS.filter((section) => !("hidden" in section && section.hidden)).map((section) => (
               <article key={section.heading}>
                 <h2>{section.heading}</h2>
                 <p>{section.body}</p>

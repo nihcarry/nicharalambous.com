@@ -14,7 +14,7 @@ export default function CoachingApplyPage() {
         <div className="wrap">
           <h1>Apply for pay-what-you-can-afford coaching</h1>
           <p className="lead">
-            Same coaching intent, at a price you can actually afford. Paying €0 is totally fine. I limit this to 5 clients per month, which is why there&apos;s an application.
+            Same coaching intent, at a price you can actually afford. Paying nothing is totally fine. I limit this to 5 clients per month, which is why there&apos;s an application.
           </p>
         </div>
       </section>
