@@ -1,121 +1,87 @@
+/* eslint-disable @next/next/no-img-element -- static export uses plain img, same as the other v3 pages */
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
+import { DetailsBlock } from "@/components/site/details-block";
+import { InfoBar } from "@/components/site/info-bar";
+import {
+  EnquireScrollButton,
+  KeynoteEnquiryForm,
+} from "@/components/site/keynote-enquiry-form";
 import { LogoStrip } from "@/components/site/logo-strip";
-import { LunchLearnCheckout } from "@/components/site/lunch-learn-checkout";
-import { StickyBookBar } from "@/components/site/sticky-book";
-import { WhatPeopleSay } from "@/components/what-people-say";
+import {
+  HUMAN_EDGE_ABOUT,
+  HUMAN_EDGE_COVERS,
+  HUMAN_EDGE_DETAILS,
+  HUMAN_EDGE_ENQUIRE_COPY,
+  HUMAN_EDGE_HERO,
+  HUMAN_EDGE_INFO_BAR,
+  HUMAN_EDGE_PROBLEM,
+  HUMAN_EDGE_QUOTES,
+  HUMAN_EDGE_TESTIMONIALS,
+} from "@/lib/human-edge";
+import { LUNCH_AND_LEARN_FACTS } from "@/lib/lunch-and-learn";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
-import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
-import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
 import { followOnSessionsJsonLd } from "@/lib/offers";
-import { v3ContentSettings } from "@/lib/v3-content";
+import "./human-edge.css";
 
 const PATH = "/keynotes/output-paradox-reengage-teams";
 const URL = `https://www.nicharalambous.com${PATH}`;
 
 export const metadata: Metadata = {
-  title: { absolute: "The Output Paradox | Nic Haralambous" },
-  description:
-    `The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. The virtual lunch and learn is a 45-minute slot, a 20-minute talk plus Q&A, at ${LUNCH_AND_LEARN_FACTS.priceLine}. Keynotes are booked by enquiry.`,
+  title: { absolute: "The Human Edge | Nic Haralambous" },
+  description: `The Human Edge is Nic Haralambous's keynote on why AI is making your team faster but feel less responsible for the work they deliver. Lunch and share at ${LUNCH_AND_LEARN_FACTS.priceLine}. Keynotes from €4,500.`,
   alternates: { canonical: URL },
   openGraph: {
-    title: "The Output Paradox | Nic Haralambous",
+    title: "The Human Edge | Nic Haralambous",
     description:
-      `I help leaders reengage teams in the age of AI. The virtual lunch and learn is ${LUNCH_AND_LEARN_FACTS.priceLine}. Keynotes are booked by enquiry.`,
+      "The future of work has someone's name on it. A keynote for C-suite and leadership teams on why AI is making your team faster but feel less responsible for the work they deliver.",
     url: URL,
     images: [{ url: "/og/output-paradox.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Output Paradox | Nic Haralambous",
-    description: `A keynote on reengaging teams in the age of AI. Virtual lunch and learn, ${LUNCH_AND_LEARN_FACTS.priceLine}.`,
+    title: "The Human Edge | Nic Haralambous",
+    description:
+      "The future of work has someone's name on it. Keynote for C-suite and leadership teams.",
     images: ["/og/output-paradox.png"],
   },
 };
 
-const QUOTES = [
-  {
-    quote:
-      "Thank you for bringing such important insights, energy, and engagement to a topic that truly matters to our team.",
-    who: "Outsystems",
-  },
-  {
-    quote:
-      "What a brilliant speaker. Engaging, professional and incredibly knowledgeable about the innovation space.",
-    who: "Motus",
-  },
-];
-
-export default async function OutputParadoxPage() {
-  const settings = await v3ContentSettings();
-
+export default function OutputParadoxPage() {
   return (
-    <div className="v3 has-sticky" data-no-orphan-opt-out="true">
-      <link rel="preload" as="image" href="/v3/nic-hero-3.webp" fetchPriority="high" />
+    <div className="v3 human-edge" data-no-orphan-opt-out="true">
+      <link rel="preload" as="image" href={HUMAN_EDGE_HERO.photoSrc} fetchPriority="high" />
       <JsonLd data={outputParadoxServiceJsonLd()} />
       <JsonLd data={followOnSessionsJsonLd()} />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Keynotes", path: "/keynotes/output-paradox-reengage-teams" },
-          { name: "The Output Paradox", path: PATH },
+          { name: "Keynotes", path: PATH },
+          { name: "The Human Edge", path: PATH },
         ])}
       />
 
-      <section className="hero op pd-spotlight">
+      {/* 1. Hero */}
+      <section className="hero op pd-spotlight" id="top">
         <div className="glow" aria-hidden="true" />
         <div className="wrap">
           <div className="copy">
             <h1>
-              The Output <em>Paradox</em>
+              {HUMAN_EDGE_HERO.titleBefore} <em>{HUMAN_EDGE_HERO.titleEm}</em>
             </h1>
-            <p className="say">
-              I help leaders reengage teams in the age of AI. <b>Your people are shipping more, and checking out faster.</b> That is the Output Paradox.
-            </p>
-            <div className="book" id="book">
-              <div className="row">
-                <div>
-                  <h2>{LUNCH_AND_LEARN_LABEL}</h2>
-                  <p>
-                    A short, live version of the talk for your team on Zoom, Teams or Meet. You pick the date, I tailor it to your people.
-                  </p>
-                </div>
-                <div className="price">
-                  {LUNCH_AND_LEARN_FACTS.priceAmount}
-                  <small>{LUNCH_AND_LEARN_FACTS.priceCaption}</small>
-                </div>
-              </div>
-              <div className="acts">
-                <a className="btn btn-wrap" id="buy-lunch-and-learn" href="#checkout">
-                  Buy now
-                </a>
-                <IntroCallLink />
-                <a className="quiet-link" href="/contact">
-                  Planning something bigger? Talk to me first
-                </a>
-              </div>
-            </div>
-            <div className="meter">
-              <div>
-                <b>Productivity up</b>
-                more shipped
-              </div>
-              <div>
-                <b>Activity up</b>
-                more meetings, more messages
-              </div>
-              <div className="dn">
-                <b>Engagement down</b>
-                people checking out
-              </div>
+            <p className="sub">{HUMAN_EDGE_HERO.subtitle}</p>
+            <p className="talk-line">{HUMAN_EDGE_HERO.talkLine}</p>
+            <p className="hero-for">{HUMAN_EDGE_HERO.forLine}</p>
+            <div className="acts">
+              <EnquireScrollButton>{HUMAN_EDGE_HERO.cta}</EnquireScrollButton>
             </div>
           </div>
           <div className="photo">
             <img
-              src="/v3/nic-hero-3.webp"
-              alt="Nic Haralambous on stage, clicker in hand, mid talk"
-              width={560}
-              height={841}
+              src={HUMAN_EDGE_HERO.photoSrc}
+              alt={HUMAN_EDGE_HERO.photoAlt}
+              width={HUMAN_EDGE_HERO.photoWidth}
+              height={HUMAN_EDGE_HERO.photoHeight}
               fetchPriority="high"
               decoding="sync"
             />
@@ -123,391 +89,221 @@ export default async function OutputParadoxPage() {
         </div>
       </section>
 
-      <div className="ip pd-calendar">
-        <div className="wrap">
-          <span>
-            <b>In-person keynotes, 45 minutes.</b> Travel is extra. Q&amp;A, podcasts and other extras can be bundled.
-          </span>
-          <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
-            Enquire to book
-          </a>
-        </div>
-      </div>
+      {/* 2. Sticky info bar */}
+      <InfoBar
+        responseText={HUMAN_EDGE_INFO_BAR.responseText}
+        trustedByLabel={HUMAN_EDGE_INFO_BAR.trustedByLabel}
+        logos={HUMAN_EDGE_INFO_BAR.logos}
+        deliveryText={HUMAN_EDGE_INFO_BAR.deliveryText}
+        ctaLabel={HUMAN_EDGE_INFO_BAR.ctaLabel}
+        ctaHref={HUMAN_EDGE_INFO_BAR.ctaHref}
+        focusTargetId="f-name"
+      />
 
+      {/* 3. Keynote details six-item grid */}
+      <DetailsBlock heading="Keynote details" items={HUMAN_EDGE_DETAILS} />
+
+      {/* 4. Trusted by logo strip */}
       <div className="proof p-broadcast">
         <div className="wrap">
           <LogoStrip />
         </div>
       </div>
 
-      {settings.stageClipUrl ? (
-        <section className="p-mic">
-          <div className="wrap clip">
-            <div>
-              <h2 style={{ margin: "20px 0" }}>Ninety seconds of the real thing</h2>
-              <p className="lead">
-                Watch how I open the talk and how a room responds when you name the thing everyone can feel but nobody has said out loud.
-              </p>
-            </div>
-            <a className="clip-frame" href={settings.stageClipUrl}>
-              Watch the stage clip
-            </a>
+      {/* 5. Pull quotes */}
+      <section className="edge p-speech" aria-label="The human edge">
+        <div className="wrap">
+          <blockquote className="edge-q edge-lead">
+            <p>{HUMAN_EDGE_QUOTES.lead}</p>
+          </blockquote>
+          <div className="edge-more">
+            {HUMAN_EDGE_QUOTES.secondary.map((quote) => (
+              <blockquote className="edge-q" key={quote}>
+                <p>{quote}</p>
+              </blockquote>
+            ))}
           </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
 
+      {/* 6. The problem section */}
       <section className="dark pd-bookmark">
         <div className="wrap">
           <div className="stat">
-            <div className="big">1 in 4</div>
+            <div className="big">{HUMAN_EDGE_PROBLEM.stat}</div>
             <div>
-              <h2 style={{ margin: "20px 0 22px" }}>
-                Nearly one in four of your employees is disengaged right now
-              </h2>
-              <p className="lead">
-                You can&apos;t see it clearly because AI is masking the signal. More documents, bigger roadmaps and more meetings about work nobody reads. Everything looks busy, and something still feels off.
-              </p>
+              <h2 style={{ margin: "20px 0 22px" }}>{HUMAN_EDGE_PROBLEM.heading}</h2>
+              <p className="lead">{HUMAN_EDGE_PROBLEM.lead}</p>
               <p className="mono" style={{ color: "#737a89", marginTop: 18 }}>
-                Source: ActivTrak State of the Workplace
+                {HUMAN_EDGE_PROBLEM.source}
               </p>
-            </div>
-          </div>
-          <div className="signals">
-            <div>
-              <h3>In what gets rewarded</h3>
-              <ul>
-                <li>Speed rewarded over thinking</li>
-                <li>Curiosity punished instead of rewarded</li>
-              </ul>
-            </div>
-            <div>
-              <h3>In how people show up</h3>
-              <ul>
-                <li>&ldquo;Stay in my lane&rdquo; as the internal motto</li>
-                <li>Teams waiting instead of initiating</li>
-                <li>Top talent underperforming after being put in their place</li>
-              </ul>
-            </div>
-            <div>
-              <h3>In how leaders respond</h3>
-              <ul>
-                <li>Endless alignment meetings with no ownership of outcomes</li>
-                <li>Leadership talking innovation while changing nothing</li>
-                <li>Managers protecting comfort over momentum</li>
-              </ul>
             </div>
           </div>
           <p className="pull">
-            Artificial Intelligence won&apos;t kill your business. The other AI you should be worried about is <em>Apathy and Indifference.</em>
+            {HUMAN_EDGE_PROBLEM.pullBefore} <em>{HUMAN_EDGE_PROBLEM.pullEm}</em>
           </p>
         </div>
       </section>
 
-      <section className="p-pen">
+      {/* 7. What the talk covers */}
+      <section className="covers p-pen" id="covers">
         <div className="wrap">
-          <h2 style={{ margin: "20px 0", maxWidth: 860 }}>
-            Curiosity doesn&apos;t vanish overnight. It erodes because it gets ignored.
-          </h2>
-          <p className="lead">
-            By the time your best people check out, you&apos;re already too late. AI often speeds up the slide, because easy work replaces hard thinking.
-          </p>
-          <div className="arch">
-            {[
-              ["arch-01-curiosity.png", "Curiosity", false],
-              ["arch-02-boredom.png", "Boredom", false],
-              ["arch-03-apathy.png", "Apathy", false],
-              ["arch-04-indifference.png", "Indifference", false],
-              ["arch-05-exit.png", "Exit", true],
-            ].map(([file, label, last], index) => (
-              <figure key={String(label)}>
-                <img
-                  src={`/v3/${file}`}
-                  alt={`${label}, step ${index + 1} of the Apathy Arch`}
-                  loading="lazy"
-                />
-                <span className="mono" style={last ? { color: "var(--blue)" } : undefined}>
-                  0{index + 1}
-                </span>
-                <h3>{label}</h3>
-              </figure>
+          <h2>{HUMAN_EDGE_COVERS.heading}</h2>
+          <ol className="covers-list">
+            <li className="cover">
+              <span className="cover-n" aria-hidden="true">
+                {HUMAN_EDGE_COVERS.outputParadox.number}
+              </span>
+              <div className="cover-body">
+                <h3>{HUMAN_EDGE_COVERS.outputParadox.heading}</h3>
+                {HUMAN_EDGE_COVERS.outputParadox.paragraphs.map((text) => (
+                  <p className="lead" key={text}>
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </li>
+
+            <li className="cover">
+              <span className="cover-n" aria-hidden="true">
+                {HUMAN_EDGE_COVERS.apathyTrap.number}
+              </span>
+              <div className="cover-body">
+                <h3>{HUMAN_EDGE_COVERS.apathyTrap.heading}</h3>
+                {HUMAN_EDGE_COVERS.apathyTrap.paragraphs.map((text) => (
+                  <p className="lead" key={text}>
+                    {text}
+                  </p>
+                ))}
+                <div className="arch">
+                  {HUMAN_EDGE_COVERS.apathyTrap.arch.map((step, index) => (
+                    <figure key={step.label}>
+                      <img
+                        src={`/v3/${step.file}`}
+                        alt={`${step.label}, step ${index + 1} of the Apathy Arch`}
+                        loading="lazy"
+                      />
+                      <span
+                        className="mono"
+                        style={step.highlight ? { color: "var(--blue)" } : undefined}
+                      >
+                        {step.step}
+                      </span>
+                      <h3>{step.label}</h3>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </li>
+
+            <li className="cover">
+              <span className="cover-n" aria-hidden="true">
+                {HUMAN_EDGE_COVERS.threeShifts.number}
+              </span>
+              <div className="cover-body">
+                <h3>{HUMAN_EDGE_COVERS.threeShifts.heading}</h3>
+                <div className="shifts">
+                  {HUMAN_EDGE_COVERS.threeShifts.shifts.map((shift) => (
+                    <article key={shift.number}>
+                      <span className="n">{shift.number}</span>
+                      <h3>{shift.heading}</h3>
+                      <p>{shift.body}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </li>
+
+            <li className="cover">
+              <span className="cover-n" aria-hidden="true">
+                {HUMAN_EDGE_COVERS.leavesWith.number}
+              </span>
+              <div className="cover-body">
+                <h3>{HUMAN_EDGE_COVERS.leavesWith.heading}</h3>
+                <div className="leaves">
+                  {HUMAN_EDGE_COVERS.leavesWith.items.map((item) => (
+                    <div key={item.number}>
+                      <span className="mono">{item.number}</span>
+                      {item.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* 8. What people say */}
+      <section className="p-speaker what-people-say" id="what-people-say">
+        <div className="wrap">
+          <h2>What people say</h2>
+          <ul className="say-cards">
+            {HUMAN_EDGE_TESTIMONIALS.map((item) => (
+              <li className="say-card" key={item.name}>
+                <p>{item.quote}</p>
+                <p className="who">
+                  <span className="initial" aria-hidden="true">
+                    {item.initial}
+                  </span>
+                  <span className="who-txt">
+                    <b>{item.name}</b>
+                    <span>{item.role}</span>
+                  </span>
+                </p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="p-lightbulb" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
-        <div className="wrap">
-          <h2 style={{ margin: "20px 0 0" }}>Three shifts. Not eight action items.</h2>
-          <div className="shifts">
-            <article>
-              <span className="n">01</span>
-              <h3>Rewire what you reward</h3>
-              <p>Stop rewarding speed and calling it culture.</p>
-            </article>
-            <article>
-              <span className="n">02</span>
-              <h3>Fix placement, not performance</h3>
-              <p>Most disengagement isn&apos;t a person problem. It&apos;s a seat problem.</p>
-            </article>
-            <article>
-              <span className="n">03</span>
-              <h3>Make curiosity a practice, not a poster</h3>
-              <p>Small bets, short cycles and permission to be wrong.</p>
-            </article>
-          </div>
-          <h3 className="h-sub">What your team leaves with</h3>
-          <div className="leaves">
-            <div>
-              <span className="mono">01</span>
-              A clear read on what your organisation actually rewards, versus what it says it values
-            </div>
-            <div>
-              <span className="mono">02</span>
-              A map of where your people sit on the Apathy Arch, and why that&apos;s a structure problem
-            </div>
-            <div>
-              <span className="mono">03</span>
-              A working model for turning curiosity into action, without waiting for permission
-            </div>
-            <div>
-              <span className="mono">04</span>
-              One change your team can make in the room, before the applause stops
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="dark pd-calendar" id="formats">
-        <div className="wrap">
-          <h2 style={{ margin: "20px 0 18px" }}>Pick the format that fits your team</h2>
-          <p className="lead">
-            Most teams start with the lunch and learn. If you want the full keynote for an all-hands, an offsite or a conference, talk to me first and I&apos;ll shape it around your event.
-          </p>
-          <div className="formats">
-            <div className="fmt lead1">
-              <h3>{LUNCH_AND_LEARN_LABEL}</h3>
-              <p>
-                20 minutes, live on Zoom, Teams or Meet. The core of the Output Paradox, tailored to your people, with time for a few questions.
-              </p>
-              <ul>
-                <li>You pick the date</li>
-                <li>Any team size</li>
-                <li>Works across time zones</li>
-              </ul>
-              <div className="price">
-                {LUNCH_AND_LEARN_FACTS.priceAmount}<span>{LUNCH_AND_LEARN_FACTS.priceCaption}</span>
-              </div>
-              <a className="btn" id="buy-lunch-and-learn-formats" href="#checkout">
-                Buy now
-              </a>
-              <IntroCallLink />
-            </div>
-            <div className="fmt">
-              <h3>Virtual keynote</h3>
-              <p>
-                The full 45 minute talk, built for remote and hybrid teams, with audience participation instead of a Q&amp;A tacked on at the end.
-              </p>
-              <ul>
-                <li>All-hands, offsites, webinars</li>
-                <li>Tailored stories and examples</li>
-                <li>Frameworks your team keeps</li>
-              </ul>
-              <a className="btn ghost" href="/contact?format=virtual">
-                Enquire to book
-              </a>
-            </div>
-            <div className="fmt">
-              <h3>In-person keynote</h3>
-              <p>
-                For conferences and leadership events. I come to you, anywhere from the UK and Europe to South Africa and the US East Coast. 45 minutes. Travel is extra, and Q&amp;A, podcasts and other extras can be bundled.
-              </p>
-              <ul>
-                <li>45 minutes</li>
-                <li>Extended Q&amp;A available</li>
-                <li>Full day with delegates available</li>
-              </ul>
-              <a className="btn ghost" href="/contact?format=in-person">
-                Enquire about a date
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <LunchLearnCheckout />
-
-      <section className="p-mic op-next" id="after-the-talk">
-        <div className="wrap">
-          <div className="next-band">
-            <div>
-              <h2>Your team heard why they&apos;re busy and checking out. This is where you fix the work.</h2>
-              <p className="body">
-                The talk explains the Output Paradox to the whole room. If you want your people to see what working with Grok Bot looks like, or your senior people to go back to their desks with their own work running differently, I run three sessions, after the talk or on their own. All three are virtual by default, and in person is possible, with travel extra.
-              </p>
-              <div className="op-photo">
-                <img src="/v3/new/op-14.jpg" alt="Nic Haralambous on stage, arms open" width={1200} height={800} />
-              </div>
-            </div>
-            <div className="next-list buy">
-              <div>
-                <p>
-                  <b>My week with AI.</b> 90 minutes, up to 20 people. A show-and-tell: I take your team through my own setup, how I work with it and what&apos;s out there to do.
-                </p>
-                <EnquireButton id="buy-my-week-with-grok-bot-op" offer="my-week" />
-              </div>
-              <div>
-                <p>
-                  <b>Senior Leaders AI Lab.</b> Half a day, up to 10 senior leaders from one company. Each person builds their own workflow. The lunch and learn is a 45-minute slot for a wider room. This is half a day of building for your senior team.
-                </p>
-                <EnquireButton id="buy-team-workflow-upgrade-op" offer="team" />
-              </div>
-              <div>
-                <p>
-                  <b>The CEO AI Session.</b> 3 hours, custom built for the CEO, with a briefing call first and a free seat for one exec.
-                </p>
-                <EnquireButton id="buy-executive-workflow-upgrade-op" offer="exec" />
-              </div>
-              <p className="coach-line">
-                Prefer ongoing support for yourself? Accountability business coaching is two calls a month, plus chat in between.
-              </p>
-              <EnquireButton id="buy-coaching-op" offer="coaching" />
-              <IntroCallLink />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="p-speech">
-        <div className="wrap">
-          <div className="quote-head">
-            <img
-              className="px pxq"
-              src="/v3/px/Nic_Ancient_greece_16bit.png"
-              alt="Pixel drawing of Nic as a Greek orator"
-              width={226}
-              height={280}
-              loading="lazy"
-            />
-            <h2 style={{ margin: "20px 0 0" }}>From the people who booked it</h2>
-          </div>
-          <div className={QUOTES.length + (settings.testimonial ? 1 : 0) === 2 ? "quotes quotes-2" : "quotes"}>
-            {QUOTES.map((quote) => (
-              <blockquote className="q" key={quote.who}>
-                <p>&ldquo;{quote.quote}&rdquo;</p>
-                <span className="who">{quote.who}</span>
-              </blockquote>
-            ))}
-            {settings.testimonial ? (
-              <blockquote className="q">
-                <p>&ldquo;{settings.testimonial.quote}&rdquo;</p>
-                <span className="who">
-                  <img
-                    src={settings.testimonial.photo}
-                    alt=""
-                    width={48}
-                    height={48}
-                    style={{ width: 48, height: 48, objectFit: "cover", marginBottom: 8 }}
-                  />
-                  {settings.testimonial.name}, {settings.testimonial.role}, {settings.testimonial.company}
-                </span>
-              </blockquote>
-            ) : null}
-          </div>
-        </div>
-      </section>
-
-      <WhatPeopleSay />
-
-      <section className="p-person" style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}>
+      {/* 9. About */}
+      <section
+        className="p-person about-nic"
+        style={{ background: "var(--paper2)", borderTop: "1px solid #D8D1C2" }}
+      >
         <div className="wrap bio">
           <div className="pic">
-            <img src="/v3/speaker.jpg" alt="Nic Haralambous, portrait" width={682} height={1024} loading="lazy" />
             <img
-              className="px pxb"
-              src="/v3/px/Nic_archeo_16bit.png"
-              alt="Pixel drawing of Nic digging, overlapping the portrait"
-              width={182}
-              height={220}
+              src={HUMAN_EDGE_ABOUT.photoSrc}
+              alt={HUMAN_EDGE_ABOUT.photoAlt}
+              width={420}
+              height={525}
               loading="lazy"
             />
           </div>
           <div>
-            <h2 style={{ margin: "20px 0 22px" }}>I&apos;ve been building businesses since I was 16</h2>
+            <h2 style={{ margin: "20px 0 22px" }}>{HUMAN_EDGE_ABOUT.heading}</h2>
             <p className="lead" style={{ color: "#4b4f5a" }}>
-              I&apos;ve sold four of them, written three books and spent more than 20 years learning through failure and success. I&apos;ve spoken at SXSW and for teams at Standard Bank, Vodacom, Old Mutual and Nedbank. Everything I&apos;ve seen comes back to one thing: culture creates change.
+              {HUMAN_EDGE_ABOUT.lead}
             </p>
             <div className="nums">
-              <div>
-                <b>4</b>
-                <span>startup exits</span>
-              </div>
-              <div>
-                <b>3</b>
-                <span>books</span>
-              </div>
-              <div>
-                <b>20+</b>
-                <span>years building</span>
-              </div>
-              <div>
-                <b>16+</b>
-                <span>years speaking</span>
-              </div>
+              {HUMAN_EDGE_ABOUT.stats.map((stat) => (
+                <div key={stat.label}>
+                  <b>{stat.value}</b>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="dark pd-cta">
+      {/* 10. Inline enquiry form */}
+      <section className="dark pd-cta enquire" id="enquire" aria-labelledby="enq-h">
         <div className="wrap">
-          <h2 style={{ margin: "20px 0 0" }}>From booking to the room in three steps</h2>
-          <div className="steps">
-            <div>
-              <span className="mono">01</span>
-              <h3>Book or enquire</h3>
-              <p>Book the lunch and learn on the calendar, or send me the details of a bigger event.</p>
-            </div>
-            <div>
-              <span className="mono">02</span>
-              <h3>We tailor it</h3>
-              <p>A short call about your team, your audience and what you want them to change.</p>
-            </div>
-            <div>
-              <span className="mono">03</span>
-              <h3>I deliver it</h3>
-              <p>Live on your platform or in your room, with frameworks your team keeps afterwards.</p>
-            </div>
+          <div className="enq-head">
+            <h2 id="enq-h">{HUMAN_EDGE_ENQUIRE_COPY.heading}</h2>
+            <p>{HUMAN_EDGE_ENQUIRE_COPY.lead}</p>
           </div>
-          <div className="final op final-rule">
-            <img
-              className="px pxf op"
-              src="/v3/px/Nic_Hunting_Pickaxe.png"
-              alt="Pixel drawing of Nic with a pickaxe"
-              width={170}
-              height={288}
-              loading="lazy"
-            />
-            <h2>If your team is doing more and feeling less, this is the conversation they need next</h2>
-            <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-              <a className="btn btn-wrap" id="buy-lunch-and-learn-close" href="#checkout">
-                Buy now
-              </a>
-              <span>{LUNCH_AND_LEARN_FACTS.priceLine}</span>
-              <IntroCallLink />
-              <a className="quiet-link" href="/contact">
-                Enquire to book a keynote
-              </a>
-            </div>
+          <KeynoteEnquiryForm />
+          <div className="enq-after">
+            <a className="quiet-link" href={HUMAN_EDGE_ENQUIRE_COPY.afterLinkHref}>
+              {HUMAN_EDGE_ENQUIRE_COPY.afterLinkLabel}
+            </a>
           </div>
         </div>
       </section>
-      <StickyBookBar
-        title="Lunch and learn"
-        detail={LUNCH_AND_LEARN_FACTS.priceLine}
-        href="#checkout"
-        label="Buy"
-        id="buy-lunch-and-learn-sticky"
-      />
     </div>
   );
 }
