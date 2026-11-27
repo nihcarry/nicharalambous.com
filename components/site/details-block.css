@@ -1,0 +1,76 @@
+/* Reusable DetailsBlock component (keynote and workshop pages) */
+.v3 section.talk-details,
+.talk-details {
+  background: var(--paper2);
+  border-bottom: 1px solid #d8d1c2;
+  padding: 72px 0;
+}
+
+.talk-details h2 {
+  margin: 0 0 40px;
+}
+
+.td-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px 48px;
+}
+
+.td-grid li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.td-ico {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  color: var(--blue);
+}
+
+.td-ico svg {
+  width: 28px;
+  height: 28px;
+}
+
+.td-k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.td-grid p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--text);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .td-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+  }
+
+  .v3 section.talk-details,
+  .talk-details {
+    padding: 56px 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .td-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
