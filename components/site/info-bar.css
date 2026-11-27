@@ -1,0 +1,134 @@
+/* Reusable sticky InfoBar component (keynote and workshop pages) */
+body:has(.info-bar) {
+  overflow-x: clip;
+}
+
+.info-bar-sentinel {
+  height: 1px;
+  margin-top: -1px;
+  pointer-events: none;
+}
+
+.info-bar {
+  position: sticky;
+  top: 0;
+  z-index: 45;
+  background: var(--paper);
+  border-bottom: 1px solid #d8d1c2;
+  box-shadow: 0 1px 0 rgba(22, 24, 29, 0.04);
+  transition: box-shadow 0.15s ease;
+}
+
+.info-bar.is-stuck {
+  box-shadow: 0 8px 20px -16px rgba(22, 24, 29, 0.55);
+}
+
+.info-bar .wrap {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 64px;
+}
+
+.info-bar .ib-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font: 500 14px/1.3 var(--sans);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.info-bar .ib-ico {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--blue);
+}
+
+.info-bar .ib-trust {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 0 auto;
+  min-width: 0;
+}
+
+.info-bar .ib-k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.info-bar .ib-logos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.info-bar .ib-logos img {
+  height: var(--ib-logo-h, 18px);
+  width: auto;
+  max-width: var(--ib-logo-max-w, 148px);
+  object-fit: contain;
+  filter: grayscale(1) brightness(0);
+  opacity: 0.72;
+  display: block;
+}
+
+.info-bar .ib-btn {
+  flex: none;
+  padding: 11px 18px;
+  font-size: 14px;
+  min-height: 44px;
+}
+
+.info-bar .ib-live {
+  margin-right: 4px;
+}
+
+@media (max-width: 1180px) {
+  .info-bar .wrap {
+    gap: 18px;
+  }
+
+  .info-bar .ib-logos {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .info-bar .ib-live {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .info-bar .wrap {
+    gap: 12px;
+    min-height: 56px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .info-bar .ib-trust,
+  .info-bar .ib-live {
+    display: none;
+  }
+
+  .info-bar .ib-item {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .info-bar .ib-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+    min-height: 44px;
+    margin-left: auto;
+  }
+}

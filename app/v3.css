@@ -1118,7 +1118,8 @@ html[data-nh-consent] .consent {
   border-bottom: 1px solid #d8d1c2;
 }
 
-.v3 .proof .mono {
+.v3 .proof .mono,
+.v3 .logos-label {
   color: var(--muted);
   margin-bottom: 24px;
   display: block;

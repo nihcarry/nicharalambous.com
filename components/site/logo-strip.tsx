@@ -18,26 +18,29 @@ const LOGOS: Array<
   { kind: "word", name: "FNB" },
 ];
 
-export function LogoStrip() {
+export function LogoStrip({ label = "Trusted by" }: { label?: string | null }) {
   return (
-    <div className="logos">
-      {LOGOS.map((logo) =>
-        logo.kind === "word" ? (
-          <span key={logo.name} className="wmk">
-            {logo.name}
-          </span>
-        ) : (
-          <img
-            key={logo.alt}
-            src={logo.src}
-            alt={logo.alt}
-            height={logo.height}
-            width={logo.width}
-            style={{ height: logo.height }}
-            loading="lazy"
-          />
-        ),
-      )}
-    </div>
+    <>
+      {label ? <p className="mono logos-label">{label}</p> : null}
+      <div className="logos">
+        {LOGOS.map((logo) =>
+          logo.kind === "word" ? (
+            <span key={logo.name} className="wmk">
+              {logo.name}
+            </span>
+          ) : (
+            <img
+              key={logo.alt}
+              src={logo.src}
+              alt={logo.alt}
+              height={logo.height}
+              width={logo.width}
+              style={{ height: logo.height }}
+              loading="lazy"
+            />
+          ),
+        )}
+      </div>
+    </>
   );
 }
