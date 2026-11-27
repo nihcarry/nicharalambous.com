@@ -6,7 +6,7 @@ import { StickyBookBar } from "@/components/site/sticky-book";
 import { WhatPeopleSay } from "@/components/what-people-say";
 import { breadcrumbJsonLd, outputParadoxServiceJsonLd } from "@/lib/metadata";
 import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
-import { LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
 import { followOnSessionsJsonLd } from "@/lib/offers";
 import { v3ContentSettings } from "@/lib/v3-content";
 
@@ -16,19 +16,19 @@ const URL = `https://www.nicharalambous.com${PATH}`;
 export const metadata: Metadata = {
   title: { absolute: "The Output Paradox | Nic Haralambous" },
   description:
-    "The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. The virtual lunch and learn is a 45-minute slot, a 20-minute talk plus Q&A, at €999 ex VAT. Keynotes are booked by enquiry.",
+    `The Output Paradox is Nic Haralambous's keynote on why teams ship more and check out faster. The virtual lunch and learn is a 45-minute slot, a 20-minute talk plus Q&A, at ${LUNCH_AND_LEARN_FACTS.priceLine}. Keynotes are booked by enquiry.`,
   alternates: { canonical: URL },
   openGraph: {
     title: "The Output Paradox | Nic Haralambous",
     description:
-      "I help leaders reengage teams in the age of AI. The virtual lunch and learn is €999 ex VAT. Keynotes are booked by enquiry.",
+      `I help leaders reengage teams in the age of AI. The virtual lunch and learn is ${LUNCH_AND_LEARN_FACTS.priceLine}. Keynotes are booked by enquiry.`,
     url: URL,
     images: [{ url: "/og/output-paradox.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "The Output Paradox | Nic Haralambous",
-    description: "A keynote on reengaging teams in the age of AI. Virtual lunch and learn, €999 ex VAT.",
+    description: `A keynote on reengaging teams in the age of AI. Virtual lunch and learn, ${LUNCH_AND_LEARN_FACTS.priceLine}.`,
     images: ["/og/output-paradox.png"],
   },
 };
@@ -81,8 +81,8 @@ export default async function OutputParadoxPage() {
                   </p>
                 </div>
                 <div className="price">
-                  €999
-                  <small>ex VAT</small>
+                  {LUNCH_AND_LEARN_FACTS.priceAmount}
+                  <small>{LUNCH_AND_LEARN_FACTS.priceCaption}</small>
                 </div>
               </div>
               <div className="acts">
@@ -295,7 +295,7 @@ export default async function OutputParadoxPage() {
                 <li>Works across time zones</li>
               </ul>
               <div className="price">
-                €999<span>ex VAT</span>
+                {LUNCH_AND_LEARN_FACTS.priceAmount}<span>{LUNCH_AND_LEARN_FACTS.priceCaption}</span>
               </div>
               <a className="btn" id="buy-lunch-and-learn-formats" href="#checkout">
                 Buy now
@@ -492,7 +492,7 @@ export default async function OutputParadoxPage() {
               <a className="btn btn-wrap" id="buy-lunch-and-learn-close" href="#checkout">
                 Buy now
               </a>
-              <span>€999 ex VAT</span>
+              <span>{LUNCH_AND_LEARN_FACTS.priceLine}</span>
               <IntroCallLink />
               <a className="quiet-link" href="/contact">
                 Enquire to book a keynote
@@ -503,7 +503,7 @@ export default async function OutputParadoxPage() {
       </section>
       <StickyBookBar
         title="Lunch and learn"
-        detail="€999 ex VAT"
+        detail={LUNCH_AND_LEARN_FACTS.priceLine}
         href="#checkout"
         label="Buy"
         id="buy-lunch-and-learn-sticky"

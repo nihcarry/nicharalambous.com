@@ -1,6 +1,7 @@
 /**
  * Qualifying enquiry validation. Dates are entered as DD/MM/YYYY and stored as ISO.
  */
+import { LUNCH_AND_LEARN_FACTS, LUNCH_AND_LEARN_LABEL } from "@/lib/lunch-and-learn";
 
 export const TEAM_SIZES = [
   "Under 50",
@@ -20,7 +21,7 @@ export const BUDGET_BANDS = [
 ] as const;
 
 export const FORMATS = [
-  { value: "lunch-and-learn", title: "Virtual lunch and learn: a 20-minute talk plus Q&A in a 45-minute slot", detail: "€999 ex VAT" },
+  { value: "lunch-and-learn", title: LUNCH_AND_LEARN_LABEL, detail: LUNCH_AND_LEARN_FACTS.priceLine },
   { value: "virtual", title: "Virtual keynote", detail: "Zoom, Teams or Meet" },
   { value: "in-person", title: "In-person keynote", detail: "At your venue" },
   { value: "unsure", title: "Not sure yet", detail: "Help me choose" },

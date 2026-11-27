@@ -6,8 +6,9 @@
  * overrides that default when it is set to another URL. An empty value keeps
  * the enquire fallback. Do not create Calendly events or Stripe products here.
  *
- * Nic, 25 Nov 2026. The event on nic@nharry.com is:
- * - €999 ex VAT, euros only, charged at booking. Moneybird sends the invoice.
+ * Nic, 27 Nov 2026. The price shown on the site is €399 ex VAT.
+ * The amount charged is set on the Calendly event, not in this file.
+ * - €399 ex VAT, euros only, charged at booking. Moneybird sends the invoice.
  *   EU reverse charge is on that invoice where it applies. No VAT logic here.
  * - Wednesdays and Fridays, 45-minute sessions starting 11:00, 12:00 or 13:00
  *   Amsterdam time. Calendly shows the visitor their own time zone.
@@ -42,11 +43,11 @@ export const LUNCH_AND_LEARN_LABEL =
 
 export const LUNCH_AND_LEARN_FACTS = {
   offerName: LUNCH_AND_LEARN_LABEL,
-  priceAmount: "€999",
+  priceAmount: "€399",
   priceCaption: "ex VAT",
   /** Literal euro string. Never localised. */
-  priceLine: "€999 ex VAT",
-  priceEuros: 999,
+  priceLine: "€399 ex VAT",
+  priceEuros: 399,
   priceCurrency: "EUR" as const,
 } as const;
 

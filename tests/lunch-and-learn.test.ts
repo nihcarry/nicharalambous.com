@@ -10,10 +10,10 @@ import { coachingJsonLd, grokWeekJsonLd } from "../lib/offers";
 import { outputParadoxServiceJsonLd } from "../lib/metadata";
 
 test("lunch and learn price is a literal euro string", () => {
-  assert.equal(LUNCH_AND_LEARN_FACTS.priceLine, "€999 ex VAT");
+  assert.equal(LUNCH_AND_LEARN_FACTS.priceLine, "€399 ex VAT");
   assert.equal(LUNCH_AND_LEARN_FACTS.priceCaption, "ex VAT");
   assert.equal(LUNCH_AND_LEARN_FACTS.priceCurrency, "EUR");
-  assert.equal(LUNCH_AND_LEARN_FACTS.priceEuros, 999);
+  assert.equal(LUNCH_AND_LEARN_FACTS.priceEuros, 399);
 });
 
 test("unset env uses the live lunch and learn event", () => {
@@ -41,10 +41,10 @@ test("embed url adds display params and stays empty without a base url", () => {
 test("only the lunch and learn offer carries a price in structured data", () => {
   const service = outputParadoxServiceJsonLd();
   assert.equal(service.offers.length, 1);
-  assert.equal(service.offers[0].price, "999");
+  assert.equal(service.offers[0].price, "399");
   assert.equal(service.offers[0].priceCurrency, "EUR");
   assert.equal(service.offers[0].valueAddedTaxIncluded, false);
-  assert.match(service.offers[0].description, /€999 ex VAT/);
+  assert.match(service.offers[0].description, /€399 ex VAT/);
   assert.match(service.offers[0].description, /7 calendar days/);
 
   const week = JSON.stringify(grokWeekJsonLd());
