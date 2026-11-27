@@ -376,9 +376,6 @@ export function SiteNav() {
             ))}
           </div>
         ) : null}
-        <a href="/contact" onClick={() => setMenuOpen(false)}>
-          Enquire
-        </a>
       </div>
     </header>
   );
