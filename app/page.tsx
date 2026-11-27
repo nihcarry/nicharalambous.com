@@ -1,374 +1,53 @@
 import type { Metadata } from "next";
+import { Mrs_Saint_Delafield, Newsreader } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
-import { LogoStrip } from "@/components/site/logo-strip";
-import { NewsletterBlock } from "@/components/site/newsletter-block";
-import { WhatPeopleSay } from "@/components/what-people-say";
-import { EnquireButton, IntroCallLink } from "@/components/site/checkout-cta";
-import { INTRO_CALL_URL } from "@/lib/offers";
-import { LUNCH_AND_LEARN_LABEL, LUNCH_AND_LEARN_PATH } from "@/lib/lunch-and-learn";
+import { HomeLetter } from "@/components/site/home-letter";
+import { HERO_COPY } from "@/lib/home-letter";
 import { HOME_URL, organizationJsonLd } from "@/lib/metadata";
-import { latestYouTubeVideo, v3ContentSettings, youtubePosterSrc } from "@/lib/v3-content";
+import "./home-letter.css";
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-newsreader",
+  adjustFontFallback: false,
+});
+
+const signature = Mrs_Saint_Delafield({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-signature",
+  adjustFontFallback: false,
+});
+
+const description = `${HERO_COPY.titleBefore} ${HERO_COPY.titleEm} ${HERO_COPY.lead1.trim()}`;
 
 export const metadata: Metadata = {
   title: { absolute: "Nic Haralambous | Keynote speaker" },
-  description:
-    "Nic Haralambous speaks to teams about the Output Paradox, runs AI workshops for leadership teams and coaches founders and CEOs. The Output Paradox lunch and learn is €999 ex VAT.",
+  description,
   alternates: { canonical: HOME_URL },
   openGraph: {
     title: "Nic Haralambous | Keynote speaker",
-    description:
-      "Do better work, not just more of it. Book the virtual lunch and learn for €999 ex VAT, or enquire about a keynote.",
+    description,
     url: HOME_URL,
     images: [{ url: "/og/home.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nic Haralambous | Keynote speaker",
-    description:
-      "Keynotes on the Output Paradox, in person or virtually. Lunch and learn €999 ex VAT.",
+    description,
     images: ["/og/home.png"],
   },
 };
 
-const POSTS = [
-  {
-    href: "/blog/canva-creates-1271-entrepreneurs",
-    meta: "6 Nov 2026 · 4 min",
-    title: "Canva creates 1271 entrepreneurs",
-    excerpt:
-      "Canva's layoff package gives departing staff six months' salary, MacBooks, coaching and a $10,000 grant to start their own business.",
-  },
-  {
-    href: "/blog/building-software-is-a-solved-problem-what-next",
-    meta: "14 Oct 2026 · 4 min",
-    title: "Building software is a solved problem. What next?",
-    excerpt:
-      "Anyone can build any software now. But building software is not the same as building a business.",
-  },
-  {
-    href: "/blog/hell-yeah-you-can-be-employed-an-entrepreneur",
-    meta: "23 Sep 2026 · 5 min",
-    title: "Hell yeah you can be employed and an entrepreneur",
-    excerpt:
-      "Figure out what success looks like for your business, match it to the time you can realistically spend, and build both.",
-  },
-];
-
-const BOOKS = [
-  {
-    href: "/books/do-fail-learn-repeat",
-    src: "/v3/books/Do_Fail_Learn_repeate.jpg",
-    alt: "Cover of Do. Fail. Learn. Repeat. by Nic Haralambous",
-    width: 304,
-    height: 466,
-  },
-  {
-    href: "/books/the-business-builders-toolkit",
-    src: "/v3/books/Business_Builders_Toolkit.jpg",
-    alt: "Cover of The Business Builder's Toolkit by Nic Haralambous",
-    width: 326,
-    height: 522,
-  },
-  {
-    href: "/books/how-to-start-a-side-hustle",
-    src: "/v3/books/How_to_start_a_side_Hustle.jpg",
-    alt: "Cover of How to Start a Side Hustle by Nic Haralambous",
-    width: 279,
-    height: 445,
-  },
-];
-
-export default async function HomePage() {
-  const [video, settings] = await Promise.all([latestYouTubeVideo(), v3ContentSettings()]);
-  const poster = video ? youtubePosterSrc(video.id) : null;
-
+export default function HomePage() {
   return (
-    <div className="v3" data-no-orphan-opt-out="true">
+    <>
       <link rel="preload" as="image" href="/v3/nic-hero-4-hd.webp" fetchPriority="high" />
       <JsonLd data={organizationJsonLd()} />
-      <section className="hero home pd-beard">
-        <div className="glow" aria-hidden="true" />
-        <div className="wrap">
-          <div className="copy">
-            <h1>
-              <span className="h-a">Do better work,</span>
-              <em className="h-b">not just<br className="hero-br-m" /> more of it</em>
-            </h1>
-            <p className="say">
-              I&apos;m Nic Haralambous. I&apos;ve built and sold four companies and written three books, and these days I speak to teams about <b>the Output Paradox</b>: why AI makes everyone busier and less engaged, and what leaders can do about it. I deliver it live on Zoom, Teams or Meet, or in your room. I also run hands-on AI workshops for leadership teams, and I coach founders and CEOs one to one.
-            </p>
-            <div className="acts">
-              <a className="btn btn-wrap" id="buy-lunch-and-learn-home" href={LUNCH_AND_LEARN_PATH}>
-                Book the lunch and learn
-              </a>
-              <span>€999 ex VAT</span>
-              <IntroCallLink />
-              <a className="quiet-link" href="/workshops">
-                See the workshops
-              </a>
-            </div>
-          </div>
-          <div className="photo">
-            <img
-              src="/v3/nic-hero-4-hd.webp"
-              alt="Nic Haralambous speaking, hands open, in a white shirt"
-              width={682}
-              height={1024}
-              fetchPriority="high"
-              decoding="sync"
-            />
-          </div>
-        </div>
-      </section>
-
-      <div className="ip pd-calendar">
-        <div className="wrap">
-          <span>
-            <b>In-person keynotes, 45 minutes.</b> Travel is extra. Q&amp;A, podcasts and other extras can be bundled.
-          </span>
-          <a className="link" href="/contact?format=in-person" style={{ color: "#fff" }}>
-            Enquire to book
-          </a>
-        </div>
-      </div>
-
-      <div className="proof p-broadcast">
-        <div className="wrap">
-          <LogoStrip />
-        </div>
-      </div>
-
-      <section className="p-mic">
-        <div className="wrap">
-          <h2 className="h-pillars">
-            I speak, I run workshops, I coach and I write. Pick the one you <br className="h-break" />
-            came for.
-          </h2>
-          <div className="pillars six">
-            <div className="pl k">
-              <img
-                className="px pxi s"
-                src="/v3/px/Nic_soap_16bit.png"
-                alt="Pixel drawing of Nic with a megaphone"
-                width={115}
-                height={240}
-                loading="lazy"
-              />
-              <h3>For your team or your stage</h3>
-              <p>
-                For People, L&amp;D and Talent leads at remote and hybrid companies, and for the organisers of conferences and leadership events.
-              </p>
-              <ul>
-                <li>
-                  <a href={LUNCH_AND_LEARN_PATH}>{LUNCH_AND_LEARN_LABEL}</a>
-                </li>
-                <li>Virtual keynote on Zoom, Teams or Meet</li>
-                <li>In-person keynote, 45 minutes, travel extra</li>
-              </ul>
-              <div className="card-links">
-              <a className="go buy" id="buy-lunch-and-learn-speak" href={LUNCH_AND_LEARN_PATH}>
-                Book the lunch and learn <span>→</span>
-              </a>
-              <a className="go" href="/contact">
-                Enquire to book <span>→</span>
-              </a>
-              <a className="go" href="/keynotes/output-paradox-reengage-teams">
-                See the Output Paradox <span>→</span>
-              </a>
-              </div>
-            </div>
-            <div className="pl gb">
-              <img className="pxi stk-card" src="/v3/new/sticker-laptop.png" alt="Emoji-style Nic with a laptop" width={160} height={160} />
-              <h3>My week with AI</h3>
-              <p>A show-and-tell: I take your team through my own AI setup, how I work with it and what&apos;s out there to do.</p>
-              <ul>
-                <li>90 minutes, up to 20 people</li>
-                <li>Virtual by default</li>
-              </ul>
-              <div className="card-links">
-                <EnquireButton id="buy-my-week-with-grok-bot-home" offer="my-week" />
-                <a className="session-link" href="/workshops/my-week-with-ai">See the session</a>
-              </div>
-            </div>
-            <div className="pl">
-              <img className="px pxi" src="/v3/px/Nic_Hunting_Pickaxe.png" alt="Pixel drawing of Nic with a pickaxe" width={170} height={288} />
-              <h3>Senior Leaders AI Lab</h3>
-              <p>A hands-on workshop. Each person builds their own workflows and keeps ownership of the thinking.</p>
-              <ul>
-                <li>Half day, hands-on</li>
-                <li>Up to 10 senior leaders from one company</li>
-                <li>Virtual by default</li>
-              </ul>
-              <div className="card-links">
-                <EnquireButton id="buy-team-workflow-upgrade-home" offer="team" />
-                <a className="session-link" href="/workshops/team-workflow-upgrade">See the session</a>
-              </div>
-            </div>
-            <div className="pl">
-              <img className="px pxi" src="/v3/px/Nic_Ancient_greece_16bit.png" alt="Pixel drawing of Nic as a Greek orator" width={226} height={280} />
-              <h3>The CEO AI Session</h3>
-              <p>For the CEO: a briefing call, then a custom session built for you.</p>
-              <ul>
-                <li>3 hours</li>
-                <li>One to one, plus one exec free</li>
-                <li>Virtual by default</li>
-              </ul>
-              <div className="card-links">
-                <EnquireButton id="buy-executive-workflow-upgrade-home" offer="exec" />
-                <a className="session-link" href="/workshops/executive-workflow-upgrade">See the session</a>
-              </div>
-            </div>
-            <div className="pl coach">
-              <img className="pxi photo-cut" src="/v3/new/card-coach-08.png" alt="Nic Haralambous" width={280} height={360} />
-              <h3>For founders and CEOs</h3>
-              <p>
-                Accountability business coaching. Two 60-minute calls a month with me, plus ongoing accountability and chat support in between, from someone who has built and sold four companies.
-              </p>
-              <ul>
-                <li>Two 60-minute calls a month</li>
-                <li>A sounding board for the decisions in your business</li>
-                <li>Can&apos;t afford it right now? Apply for pay-what-you-can-afford coaching</li>
-              </ul>
-              <div className="card-links">
-                <EnquireButton id="buy-accountability-coaching-home" offer="coaching" />
-                <a className="session-link" href="/coaching">See coaching</a>
-              </div>
-            </div>
-            <div className="pl">
-              <img
-                className="px pxi k"
-                src="/v3/px/Nic_archeo_16bit.png"
-                alt="Pixel drawing of Nic digging"
-                width={182}
-                height={220}
-                loading="lazy"
-              />
-              <h3>Read, watch, subscribe</h3>
-              <p>
-                I write to you every week, I make videos on YouTube and I&apos;ve been writing on this site since 2013.
-              </p>
-              <ul>
-                <li>The weekly newsletter</li>
-                <li>YouTube</li>
-                <li>The blog and three books</li>
-              </ul>
-              <div className="card-links">
-              <a className="go" href="#newsletter">
-                Get the newsletter <span>↓</span>
-              </a>
-              </div>
-            </div>
-          </div>
-          <p className="offer-follow">
-            <a className="link" href={INTRO_CALL_URL} target="_blank" rel="noopener noreferrer">
-              Not sure which one fits? Book a free 20-minute intro call
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="dark pd-speech">
-        <div className={settings.stageClipUrl ? "wrap talk" : "wrap talk solo"}>
-          <div>
-            <h2 style={{ margin: "0 0 22px" }}>
-              Artificial Intelligence won&apos;t kill your business. <em>Apathy and Indifference</em> might.
-            </h2>
-            <p className="lead">
-              Nearly one in four of your employees is disengaged right now, and AI is masking the signal. The Output Paradox gives your leaders three shifts and gives your team one change they can make before they leave the room.
-            </p>
-            <div className="acts2">
-              <a className="btn btn-wrap" id="buy-lunch-and-learn-home-talk" href={LUNCH_AND_LEARN_PATH}>
-                Buy now
-              </a>
-              <span>€999 ex VAT</span>
-              <IntroCallLink />
-              <a className="quiet-link" href="/keynotes/output-paradox-reengage-teams">
-                Read about the talk
-              </a>
-            </div>
-          </div>
-          {settings.stageClipUrl ? (
-            <a className="clip-frame" href={settings.stageClipUrl}>
-              Watch the stage clip
-            </a>
-          ) : null}
-        </div>
-      </section>
-
-      <WhatPeopleSay />
-
-      <NewsletterBlock />
-
-      <section className="p-quill">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <h2 style={{ margin: 0 }}>From the blog</h2>
-            </div>
-            <a className="link" href="/blog">
-              Read the blog
-            </a>
-          </div>
-          <div className="posts">
-            {POSTS.map((post) => (
-              <a className="post" href={post.href} key={post.href}>
-                <span className="mono">{post.meta}</span>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
-              </a>
-            ))}
-          </div>
-          <div className="content-row">
-            {video ? (
-              <div>
-                <a className="yt-card" href={`https://www.youtube.com/watch?v=${video.id}`}>
-                  {poster ? (
-                    <img src={poster} alt="" width={640} height={360} />
-                  ) : (
-                    <span className="yt-still" />
-                  )}
-                  <span>{video.title}</span>
-                </a>
-              </div>
-            ) : null}
-            <div>
-              <div className="books">
-                {BOOKS.map((book) => (
-                  <a href={book.href} key={book.href}>
-                    <img src={book.src} alt={book.alt} width={book.width} height={book.height} />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="dark pd-cta" style={{ position: "relative" }}>
-        <img
-          className="px pxf"
-          src="/v3/px/Nic_Ancient_greece_16bit.png"
-          alt="Pixel drawing of Nic as a Greek orator"
-          width={226}
-          height={280}
-          loading="lazy"
-        />
-        <div className="wrap final">
-          <h2>If your team is doing more and feeling less, let&apos;s talk</h2>
-          <div className="acts" style={{ justifyContent: "center", marginTop: 36 }}>
-            <a className="btn btn-wrap" id="buy-lunch-and-learn-home-final" href={LUNCH_AND_LEARN_PATH}>
-              Book the lunch and learn
-            </a>
-            <span>€999 ex VAT</span>
-            <a className="quiet-link" href="/contact">
-              Talk to me first
-            </a>
-            <span>
-              Or see the <a className="link" href="/workshops">workshops</a> and <a className="link" href="/coaching">coaching</a>
-            </span>
-          </div>
-        </div>
-      </section>
-    </div>
+      <HomeLetter fontClassName={`${newsreader.variable} ${signature.variable}`} />
+    </>
   );
 }
