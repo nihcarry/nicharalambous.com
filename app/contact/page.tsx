@@ -9,7 +9,7 @@ const URL = "https://www.nicharalambous.com/contact";
 export const metadata: Metadata = {
   title: { absolute: "Enquire | Nic Haralambous" },
   description:
-    "Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. The Output Paradox lunch and learn is a 45-minute slot at €999 ex VAT, booked on its own calendar.",
+    `Tell Nic about your team and your event. Keynotes in person or on Zoom, Teams or Meet. The Output Paradox lunch and learn is a 45-minute slot at ${LUNCH_AND_LEARN_FACTS.priceLine}, booked on its own calendar.`,
   alternates: { canonical: URL },
   openGraph: {
     title: "Enquire | Nic Haralambous",
