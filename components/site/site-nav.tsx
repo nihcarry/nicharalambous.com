@@ -2,31 +2,29 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { OUTPUT_PARADOX_PATH, SOCIAL, bookOfferHref } from "@/lib/site";
+import { OUTPUT_PARADOX_PATH, SOCIAL } from "@/lib/site";
 
 const KEYNOTE_LINKS = [
-  { href: OUTPUT_PARADOX_PATH, label: "The Output Paradox" },
-  { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "Virtual lunch and learn" },
-  { href: `${OUTPUT_PARADOX_PATH}#formats`, label: "In-person keynotes" },
-  { href: "/contact", label: "Enquire" },
+  { href: OUTPUT_PARADOX_PATH, label: "The Human Edge" },
+  { href: `${OUTPUT_PARADOX_PATH}#enquire`, label: "Enquire" },
 ];
 
 const WORKSHOP_LINKS = [
-  { href: "/workshops/my-week-with-ai", label: "My week" },
-  { href: "/workshops/team-workflow-upgrade", label: "Team" },
-  { href: "/workshops/executive-workflow-upgrade", label: "Exec" },
-  { href: "/workshops", label: "All workshops" },
+  { href: "/workshops", label: "All Workshops" },
+  { href: "/workshops/my-week-with-ai", label: "My week with AI" },
+  { href: "/workshops/executive-workflow-upgrade", label: "CEO Workflows" },
+  { href: "/workshops/team-workflow-upgrade", label: "Exec Teams" },
 ];
 
 const COACHING_LINKS = [
-  { href: SOCIAL.nobullship, label: "No Bull Ship (8 weeks)", external: true },
-  { href: "/coaching", label: "Accountability business coaching" },
+  { href: "/coaching", label: "Accountability" },
+  { href: "/coaching/apply", label: "Pay What You Can" },
 ];
 
 const CONTENT_LINKS = [
+  { href: "/blog", label: "Blog" },
   { href: "/#newsletter", label: "Newsletter" },
   { href: SOCIAL.youtube, label: "YouTube", external: true },
-  { href: "/blog", label: "Blog" },
   { href: "/books", label: "Books" },
 ];
 
@@ -59,7 +57,6 @@ function isAbout(pathname: string) {
 
 export function SiteNav() {
   const pathname = usePathname() || "/";
-  const bookHref = bookOfferHref();
   const menuId = useId();
   const keynotesId = useId();
   const workshopsId = useId();
@@ -211,13 +208,7 @@ export function SiteNav() {
             </button>
             <div className="drop-panel" id={coachingId} role="group" aria-label="Coaching">
               {COACHING_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  {...("external" in link && link.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                >
+                <a key={link.href} href={link.href}>
                   {link.label}
                 </a>
               ))}
@@ -268,10 +259,6 @@ export function SiteNav() {
             </div>
           </li>
         </ul>
-        <a className="btn" href={bookHref}>
-          <span className="dt">Book a lunch and learn</span>
-          <span className="mb">Book</span>
-        </a>
         <button
           ref={burgerRef}
           type="button"
@@ -340,14 +327,7 @@ export function SiteNav() {
         {mobileGroup === "coaching" ? (
           <div className="sub">
             {COACHING_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                {...("external" in link && link.external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
                 {link.label}
               </a>
             ))}
